@@ -2916,4 +2916,4 @@ export const articles = [
   }
 ] as const;
 export type Article = (typeof articles)[number];
-export const articleBySlug = new Map(articles.map((article) => [article.slug, article]));
+export const articleBySlug = new Map<string, Article>(articles.map((article): [string, Article] => [article.slug, article]));

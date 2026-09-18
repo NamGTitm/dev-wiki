@@ -116,6 +116,15 @@ Replace the filename with the pending migration and `DB` with your D1 binding na
 - `npm run start`: preview the built Worker locally with D1/R2 support
 - `npm run db:generate`: generate Drizzle migrations after schema changes
 
+## Cloudflare Workers deployment
+
+- Build: `npm run build`
+- Validate and dry-run the generated config: `npx wrangler deploy --dry-run --config dist/server/wrangler.json`
+- Deploy: `npx wrangler deploy --config dist/server/wrangler.json`
+- Worker: `python-wiki`
+- Production custom domain: `https://py.namgt.dev` (managed as a Cloudflare Workers Custom Domain)
+- Environment variables: none required for the static Python Wiki; never commit `.env*` or secrets.
+
 When using the Sites plugin, follow its skill instructions for installation, builds, and publishing. These npm commands remain available for standalone use.
 
 The portable build runs Vinext directly without a host `timeout` command. The managed-linux build uses `scripts/build-verified.sh` and its existing `SITES_BUILD_TIMEOUT` setting.
