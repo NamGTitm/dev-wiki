@@ -25,3 +25,15 @@ for line in non_empty_lines(["  deploy  ", "", "monitor"]):
 ```
 
 Generator chỉ đi một chiều và chỉ chạy khi được consume. Nếu cần truy cập ngẫu nhiên hoặc lặp lại nhiều lần, list có thể phù hợp hơn. Đừng biến mọi logic thành generator chỉ vì nó “tiết kiệm memory”; hãy chọn theo lifetime dữ liệu.
+
+## yield from và exhaustion
+
+`yield from child()` chuyển tiếp toàn bộ giá trị của generator con và cả return value cuối nếu cần. Khi generator bị consume hết, lần `next` tiếp theo ném `StopIteration`; vòng `for` tự bắt exception này.
+
+```python
+def all_lines(groups):
+    for group in groups:
+        yield from non_empty_lines(group)
+```
+
+Generator expression là cách gọn cho pipeline ngắn. Nếu cần rewind, random access hoặc debug từng bước nhiều lần, materialize có chủ đích thành list.

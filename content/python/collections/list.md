@@ -35,3 +35,15 @@ urgent = [task for task in tasks if task in {"review", "deploy"}]
 ```
 
 Giữ comprehension ngắn và đơn giản. Logic nhiều nhánh nên dùng vòng lặp thường để dễ debug.
+
+## Các method và chi phí
+
+`append` thêm một phần tử, `extend` thêm nhiều phần tử, `insert` chèn theo index, `remove` xóa theo value, `pop` xóa và trả về theo index, còn `clear` làm rỗng list. `sort` đổi list tại chỗ và trả `None`; `sorted` tạo list mới.
+
+`append` có chi phí amortized O(1), nhưng membership, `index` và `remove` thường O(n). Nếu cần xóa đầu queue nhiều lần, dùng `deque`. `copy()` là shallow copy, nên matrix lồng nhau vẫn có thể alias.
+
+```python
+matrix = [[0] * 3 for _ in range(3)]
+```
+
+Cách viết comprehension tạo row độc lập; `[[0] * 3] * 3` sẽ khiến mọi row dùng chung inner list.

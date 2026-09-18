@@ -23,3 +23,9 @@ content = notes.read_text(encoding="utf-8")
 ```
 
 Với file lớn, đọc từng dòng hoặc theo chunk thay vì nạp toàn bộ vào RAM. Khi xử lý đường dẫn do user cung cấp, kiểm tra scope cho phép và tránh để input trở thành đường dẫn tùy ý ra ngoài thư mục dữ liệu.
+
+## File object và mode
+
+`open(path, "r", encoding="utf-8")` mở text để đọc; `w` ghi đè, `a` append, `x` yêu cầu file chưa tồn tại. Thêm `b` cho binary như `rb`/`wb`. `readline` đọc một dòng, iterate file đọc streaming, `seek` di chuyển cursor và `tell` trả vị trí theo semantics của stream.
+
+Đừng dựa vào encoding mặc định của máy. Với file lớn, tránh `read()` toàn bộ. Khi ghi file quan trọng, cân nhắc ghi file tạm rồi replace atomic theo nhu cầu durability của ứng dụng.

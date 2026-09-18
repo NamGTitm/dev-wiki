@@ -34,3 +34,9 @@ content = Path("notes.txt").read_text(encoding="utf-8")
 ```
 
 `encode()` chuyển string thành bytes; `decode()` chuyển bytes về string. Đừng nhầm byte length với số ký tự Unicode.
+
+## Method thực tế
+
+`split` tách text, `join` ghép một iterable string, `strip` bỏ whitespace ở hai đầu, `replace` thay substring, `find` trả `-1` nếu không thấy còn `index` ném `ValueError`. `startswith` và `endswith` hữu ích để kiểm tra prefix/suffix mà không cần slice.
+
+String immutable nên mọi method tạo string mới. Tránh nối string trong loop rất lớn bằng `"".join(parts)`. Khi đưa text vào HTML, SQL hoặc shell, escaping phải theo đúng output context; f-string chỉ format, không phải sanitizer.

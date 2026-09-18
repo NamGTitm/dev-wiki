@@ -31,3 +31,17 @@ if __name__ == "__main__":
 ```
 
 Giữ package dependency một chiều để tránh circular import. Nếu hai module biết quá nhiều về nhau, hãy tách abstraction chung.
+
+## __name__ và chạy module
+
+Khi chạy `python file.py`, module đó có `__name__ == "__main__"`. Khi import `file` từ nơi khác, `__name__` là tên module và phần code top-level vẫn được thực thi một lần. Vì vậy entrypoint nên nằm sau guard:
+
+```python
+def main() -> int:
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+```
+
+Guard ngăn import module vô tình chạy CLI. Nó không ngăn mọi import side effect; code top-level vẫn nên nhẹ và khai báo rõ ràng.

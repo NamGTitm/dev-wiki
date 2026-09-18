@@ -22,6 +22,19 @@ except ValueError as error:
 
 Bắt exception cụ thể thay vì `except Exception` hoặc bare `except`. Nếu không thể khôi phục, hãy để lỗi nổi lên với message và context tốt.
 
+## EAFP và LBYL
+
+EAFP (“thử rồi xử lý lỗi”) hợp với operation atomic như đọc key hoặc mở file; LBYL (“kiểm tra trước”) hợp khi check rẻ và side effect đắt. Đừng biến EAFP thành bắt mọi exception, vì nó có thể nuốt cả bug trong body.
+
+```python
+try:
+    value = settings["timeout"]
+except KeyError:
+    value = 5
+```
+
+`raise NewError(...) from error` giữ nguyên nguyên nhân trong traceback. Khi re-raise cùng exception, dùng `raise` trần bên trong `except` để giữ traceback gốc.
+
 ## else và finally
 
 `else` chạy khi không có exception; `finally` chạy dù thành công hay thất bại, phù hợp để dọn tài nguyên. Với file và lock, ưu tiên context manager để tránh quên cleanup.
