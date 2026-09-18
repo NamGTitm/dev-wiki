@@ -2,15 +2,15 @@
 @import "tw-animate-css";
 @import "../vendor/shadcn-tailwind-4.13.0.css";
 
-:root { --background: #f7fafc; --foreground: #102a43; --surface: #ffffff; --surface-muted: #eef4f7; --border: #d9e2ec; --muted: #627d98; --accent: #e86a17; --accent-soft: #fff1e8; --teal: #0b7285; --sidebar: #edf3f5; --code: #102a43; --code-text: #eaf4f4; }
-.dark { --background: #0b1725; --foreground: #e6edf3; --surface: #112337; --surface-muted: #152b3f; --border: #294258; --muted: #9fb3c8; --accent: #ff9f43; --accent-soft: #3a281c; --teal: #69d2e7; --sidebar: #0e1f31; --code: #07131f; --code-text: #d8f3f0; }
+:root { --background: #f7f5f2; --foreground: #202020; --surface: #ffffff; --surface-muted: #eeece9; --border: #dad7d2; --muted: #706d68; --accent: #d96724; --accent-soft: #fff0e5; --teal: #d96724; --sidebar: #eeece9; --code: #191919; --code-text: #f5f5f5; }
+.dark { --background: #191919; --foreground: #f5f5f5; --surface: #2a2a2a; --surface-muted: #222222; --border: #414141; --muted: #a7a7a7; --accent: #ff8a3d; --accent-soft: #3c281d; --teal: #ff8a3d; --sidebar: #202020; --code: #101010; --code-text: #f5f5f5; }
 @theme inline { --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--surface); --color-card-foreground: var(--foreground); --color-muted: var(--surface-muted); --color-muted-foreground: var(--muted); --color-border: var(--border); --color-primary: var(--teal); --color-primary-foreground: #ffffff; --color-accent: var(--accent); --color-accent-foreground: #ffffff; --font-sans: "IBM Plex Sans", "Segoe UI", Arial, sans-serif; --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--background); color: var(--foreground); font-family: "IBM Plex Sans", "Segoe UI", Arial, sans-serif; }
 button, input { font: inherit; }
 a { color: inherit; text-decoration: none; }
-::selection { background: #f9c49e; color: #102a43; }
+::selection { background: #ffb07c; color: #191919; }
 .prose-wiki h2, .prose-wiki h3 { scroll-margin-top: 96px; }
 .prose-wiki p { max-width: 72ch; }
 .prose-wiki code:not(pre code) { border: 1px solid var(--border); background: var(--surface-muted); border-radius: 5px; padding: .12rem .35rem; color: var(--teal); font-family: var(--font-mono); font-size: .88em; }

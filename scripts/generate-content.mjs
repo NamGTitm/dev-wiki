@@ -4,7 +4,7 @@ import path from "node:path";
 const root = process.cwd();
 const contentRoot = path.join(root, "content", "python");
 const generatedPath = path.join(root, "lib", "content.generated.ts");
-const productionOrigin = "https://py.namgt.dev";
+const productionOrigin = "https://wiki.namgt.dev";
 
 function walk(dir) {
   return readdir(dir, { withFileTypes: true }).then(async (entries) => {

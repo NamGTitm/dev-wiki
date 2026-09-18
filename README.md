@@ -1,6 +1,6 @@
-# vinext-starter
+# DevHubs Wiki
 
-A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.
+DevHubs Wiki is a Vietnamese developer knowledge base, starting with a structured Python collection. It runs on [vinext](https://github.com/cloudflare/vinext) and deploys to Cloudflare Workers.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ The Sites initializer copies the shared starter and selects managed-linux only w
 
 Whenever reopening or moving a checkout, run `node <plugin-root>/scripts/configure-execution-profile.mjs` before project commands. Profile changes do not alter tracked source or require reinstalling otherwise-valid dependencies; restart an existing preview to use the new selection. Do not commit or upload `.sites-runtime/`.
 
-This starter does not use `wrangler.jsonc`.
+The production Worker configuration lives in `wrangler.jsonc`; the build generates the deployable config at `dist/server/wrangler.json`.
 
 `install:ci` runs `npm ci` once against the shared lockfile, disables parent-workspace discovery, and includes required dev/optional dependencies despite production/omit settings. Sharp defaults to prebuilt binaries unless explicitly configured otherwise. Do not overlap installers.
 
@@ -121,9 +121,10 @@ Replace the filename with the pending migration and `DB` with your D1 binding na
 - Build: `npm run build`
 - Validate and dry-run the generated config: `npx wrangler deploy --dry-run --config dist/server/wrangler.json`
 - Deploy: `npx wrangler deploy --config dist/server/wrangler.json`
-- Worker: `python-wiki`
-- Production custom domain: `https://py.namgt.dev` (managed as a Cloudflare Workers Custom Domain)
-- Environment variables: none required for the static Python Wiki; never commit `.env*` or secrets.
+- Worker: `dev-wiki`
+- Production custom domain: `https://wiki.namgt.dev` (managed as a Cloudflare Workers Custom Domain)
+- Repository: `https://github.com/NamGTitm/dev-wiki`
+- Environment variables: none required for the static DevHubs Wiki; never commit `.env*` or secrets.
 
 When using the Sites plugin, follow its skill instructions for installation, builds, and publishing. These npm commands remain available for standalone use.
 
