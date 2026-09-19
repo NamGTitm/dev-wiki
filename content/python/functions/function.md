@@ -11,24 +11,204 @@ updated: 2026-09-18
 related: ["/ham/scope", "/co-ban/bien", "/co-ban/kieu-du-lieu"]
 ---
 
-Hàm đóng gói một thao tác có tên, đầu vào và đầu ra rõ ràng. Hàm tốt thường làm một việc và dễ gọi lại.
+Hàm gom một đoạn logic thành một khối có tên để có thể gọi lại.
 
 ```python
 def calculate_total(subtotal: int, discount_rate: float = 0.0) -> int:
-    """Return the rounded total after a percentage discount."""
     return round(subtotal * (1 - discount_rate))
+```
 
+Gọi hàm:
+
+```python
 total = calculate_total(280_000, discount_rate=0.1)
 ```
 
 ## Parameter và argument
 
-Parameter là tên trong định nghĩa; argument là giá trị khi gọi. Dùng keyword argument cho giá trị dễ gây nhầm, đặc biệt khi hàm có nhiều tham số cùng kiểu.
+Trong:
 
-Tránh mutable default như `items=[]`; giá trị mặc định được tạo một lần khi định nghĩa hàm và có thể bị giữ lại giữa các lần gọi.
+```python
+def greet(name):
+    print(f"Hello {name}")
+```
 
-## Contract và return
+`name` là **parameter**.
 
-Không có `return` hoặc `return` trống đều trả `None`. Hãy ghi rõ output và side effect trong docstring khi function được dùng bởi module khác. Annotation giúp đọc contract nhưng không tự validate runtime; dữ liệu từ JSON vẫn cần kiểm tra.
+Khi gọi:
 
-Hàm nên nhận dependency qua parameter thay vì đọc global state ẩn. Khi function có quá nhiều flag làm thay đổi nhiều behavior, tách use case hoặc tạo object cấu hình có tên thường dễ test hơn.
+```python
+greet("Nam")
+```
+
+`"Nam"` là **argument**.
+
+Có thể truyền theo vị trí:
+
+```python
+calculate_total(280_000, 0.1)
+```
+
+hoặc theo tên:
+
+```python
+calculate_total(
+    subtotal=280_000,
+    discount_rate=0.1,
+)
+```
+
+Keyword argument dễ đọc hơn khi hàm có nhiều giá trị dễ nhầm.
+
+## `return`
+
+`return` gửi kết quả ra khỏi hàm:
+
+```python
+def add(a, b):
+    return a + b
+
+result = add(2, 3)
+```
+
+Nếu không có `return`:
+
+```python
+def log_message():
+    print("Done")
+```
+
+hàm sẽ trả:
+
+```python
+None
+```
+
+`print()` và `return` không giống nhau:
+
+```python
+def add(a, b):
+    print(a + b)
+```
+
+đoạn trên chỉ in kết quả, không trả nó cho code bên ngoài.
+
+## Default parameter
+
+Có thể đặt giá trị mặc định:
+
+```python
+def greet(name, prefix="Hello"):
+    return f"{prefix} {name}"
+```
+
+Khi đó:
+
+```python
+greet("Nam")
+greet("Nam", "Hi")
+```
+
+đều hợp lệ.
+
+## Tránh mutable default
+
+Không nên:
+
+```python
+def add_item(item, items=[]):
+    items.append(item)
+    return items
+```
+
+`items` được tạo một lần và có thể giữ dữ liệu giữa nhiều lần gọi.
+
+Dùng:
+
+```python
+def add_item(item, items=None):
+    if items is None:
+        items = []
+
+    items.append(item)
+    return items
+```
+
+Đây là bug Python rất dễ gặp khi debug state bất thường.
+
+## Type hint
+
+Type hint giúp mô tả contract của hàm:
+
+```python
+def add(a: int, b: int) -> int:
+    return a + b
+```
+
+Nhưng Python không tự chặn:
+
+```python
+add("1", "2")
+```
+
+chỉ vì đã khai báo `int`.
+
+Type hint hỗ trợ IDE, static checker và người đọc code, không thay thế runtime validation.
+
+## Hàm nên làm một việc
+
+Nên:
+
+```python
+def calculate_total(...):
+    ...
+
+def save_invoice(...):
+    ...
+```
+
+thay vì một hàm vừa tính toán, vừa ghi database, vừa gửi email, vừa log.
+
+Hàm nhỏ thường dễ:
+
+```text
+đọc
+test
+debug
+reuse
+```
+
+## Debug nhanh
+
+Nếu function trả kết quả lạ, kiểm tra:
+
+```python
+print(type(value))
+print(value)
+```
+
+Nếu nhận:
+
+```text
+None
+```
+
+hãy kiểm tra function có thật sự `return` hay chỉ `print`.
+
+Nếu state bị giữ lại giữa nhiều lần gọi, kiểm tra mutable default:
+
+```python
+items=[]
+config={}
+cache=set()
+```
+
+Quy tắc ngắn:
+
+```text
+input  -> parameter
+logic  -> function body
+output -> return
+```
+
+Một hàm tốt nên có input rõ, output rõ và ít side effect ẩn.
