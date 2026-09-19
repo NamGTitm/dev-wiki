@@ -2,7 +2,7 @@ import { readdir, readFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
-const contentRoot = path.join(root, "content", "python");
+const contentRoot = path.join(root, "content");
 const generatedPath = path.join(root, "lib", "content.generated.ts");
 const productionOrigin = "https://wiki.namgt.dev";
 
@@ -28,8 +28,16 @@ function parseValue(value) {
   return trimmed.replace(/^['"]|['"]$/g, "");
 }
 
+function titleCase(value) {
+  return value
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 function parseMarkdown(raw, filePath) {
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n-{3,}\r?\n([\s\S]*)$/);
   if (!match) throw new Error(`Missing frontmatter: ${filePath}`);
   const frontmatter = {};
   for (const line of match[1].split(/\r?\n/)) {
@@ -41,7 +49,21 @@ function parseMarkdown(raw, filePath) {
   for (const key of required) if (!(key in frontmatter)) throw new Error(`Missing ${key} in ${filePath}`);
   if (!Array.isArray(frontmatter.keywords)) throw new Error(`keywords must be an array in ${filePath}`);
   if (!frontmatter.slug.startsWith("/")) throw new Error(`slug must start with / in ${filePath}`);
-  return { ...frontmatter, body: match[2].trim(), source: path.relative(root, filePath).replaceAll("\\", "/") };
+  const relativePath = path.relative(contentRoot, filePath).split(path.sep);
+  const collection = String(frontmatter.collection ?? relativePath[0] ?? "general");
+  const collectionLabel = String(frontmatter.collectionLabel ?? titleCase(collection));
+  const collectionDescription = typeof frontmatter.collectionDescription === "string" ? frontmatter.collectionDescription : null;
+  const priority = typeof frontmatter.priority === "number" ? frontmatter.priority : frontmatter.order;
+  return {
+    ...frontmatter,
+    collection,
+    collectionLabel,
+    collectionDescription,
+    featured: frontmatter.featured === true,
+    priority,
+    body: match[2].trim(),
+    sourcePath: path.relative(root, filePath).replaceAll("\\", "/"),
+  };
 }
 
 function headingId(text) {

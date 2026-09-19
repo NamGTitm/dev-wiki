@@ -20,24 +20,25 @@ export const articles = [
       "/bat-dau/hello-world",
       "/co-ban/bien"
     ],
-    "body": "Python là một ngôn ngữ lập trình cấp cao, đa mục đích và ưu tiên khả năng đọc. Cú pháp của Python thường gần với cách con người diễn đạt ý tưởng, vì vậy bạn có thể tập trung vào bài toán thay vì viết nhiều mã lặp.\n\n## Python phù hợp với việc gì?\n\nPython được dùng trong web backend, tự động hóa, dữ liệu, AI, kiểm thử, công cụ dòng lệnh và giáo dục. Hệ sinh thái phong phú giúp một ý tưởng nhỏ có thể phát triển thành sản phẩm mà không phải đổi ngôn ngữ quá sớm.\n\n## Một chương trình Python trông như thế nào?\n\n```python\nfrom pathlib import Path\n\nproject = Path(\"reports\")\nprint(f\"Đang làm việc với thư mục: {project.resolve()}\")\n```\n\nĐiểm đáng chú ý là code không cần dấu ngoặc nhọn để biểu diễn khối lệnh. Thụt đầu dòng là một phần của cú pháp, giúp cấu trúc chương trình dễ nhìn hơn.\n\n## Khi nào nên chọn Python?\n\nChọn Python khi tốc độ phát triển, khả năng đọc và thư viện sẵn có quan trọng. Với ứng dụng đòi hỏi độ trễ cực thấp, chạy trên thiết bị rất hạn chế hoặc cần kiểm soát bộ nhớ tuyệt đối, bạn có thể cần cân nhắc thêm ngôn ngữ khác.\n\n## Lộ trình đọc tiếp\n\nBắt đầu bằng cách cài Python, chạy chương trình đầu tiên, sau đó học biến và các kiểu dữ liệu. Khi đã quen với cú pháp, hãy chuyển sang điều khiển luồng và hàm.",
-    "source": "content/python/getting-started/python-la-gi.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10,
+    "body": "Python là ngôn ngữ lập trình cấp cao, đa mục đích, nổi bật nhờ cú pháp dễ đọc và hệ sinh thái thư viện lớn.\n\nMột chương trình đơn giản:\n\n```python\nname = \"Nam\"\nprint(f\"Xin chào, {name}!\")\n```\n\nPython ưu tiên code rõ ràng, nên thường cần ít boilerplate hơn nhiều ngôn ngữ khác.\n\n## Python dùng để làm gì?\n\nPython phổ biến trong:\n\n```text\nWeb backend\nAutomation / scripting\nData analysis\nAI / Machine Learning\nTesting\nCLI tools\nDevOps\nCybersecurity tooling\n```\n\nNhờ hệ sinh thái package lớn, nhiều bài toán đã có thư viện hỗ trợ thay vì phải tự viết từ đầu.\n\n## Khi nào nên chọn Python?\n\nPython phù hợp khi ưu tiên:\n\n- phát triển nhanh,\n- code dễ đọc và maintain,\n- automation,\n- xử lý dữ liệu,\n- tận dụng thư viện có sẵn.\n\nCó thể cần cân nhắc ngôn ngữ khác nếu hệ thống yêu cầu:\n\n- độ trễ cực thấp,\n- hiệu năng CPU tối đa,\n- kiểm soát bộ nhớ rất sâu,\n- chạy trên thiết bị tài nguyên cực hạn chế.\n\nPython cũng có thể kết hợp với C, C++, Rust hoặc các hệ thống khác khi chỉ một phần chương trình cần hiệu năng cao.\n\n## Điều cần nhớ\n\n```text\nPython = ngôn ngữ\nCPython = implementation phổ biến nhất\npip = quản lý package\n.venv = môi trường riêng của project\n.py = file source Python\n```\n\nĐể bắt đầu:\n\n```text\nCài Python\n   ↓\nChạy file .py\n   ↓\nHọc biến và kiểu dữ liệu\n   ↓\nĐiều kiện, vòng lặp\n   ↓\nHàm, module, package\n```\n\nKhông cần học hết Python trước khi viết code. Nắm phần nền, viết chương trình thật, rồi tra cứu đúng phần đang cần là workflow hiệu quả hơn.",
+    "sourcePath": "content/python/getting-started/python-la-gi.md",
     "headings": [
       {
-        "title": "Python phù hợp với việc gì?",
-        "id": "python-phu-hop-voi-viec-gi"
-      },
-      {
-        "title": "Một chương trình Python trông như thế nào?",
-        "id": "mot-chuong-trinh-python-trong-nhu-the-nao"
+        "title": "Python dùng để làm gì?",
+        "id": "python-dung-e-lam-gi"
       },
       {
         "title": "Khi nào nên chọn Python?",
         "id": "khi-nao-nen-chon-python"
       },
       {
-        "title": "Lộ trình đọc tiếp",
-        "id": "lo-trinh-oc-tiep"
+        "title": "Điều cần nhớ",
+        "id": "ieu-can-nho"
       }
     ]
   },
@@ -62,20 +63,85 @@ export const articles = [
       "/bat-dau/hello-world",
       "/bat-dau/virtual-environment"
     ],
-    "body": "Hãy ưu tiên phiên bản Python 3 đang được hỗ trợ. Sau khi cài, kiểm tra bằng lệnh `python --version` hoặc `python3 --version` tùy hệ điều hành.\n\n## Kiểm tra trình thông dịch\n\n```bash\npython --version\npython -c \"import sys; print(sys.executable)\"\n```\n\nLệnh thứ hai cho biết chính xác executable nào đang được gọi. Đây là cách nhanh để phát hiện việc máy có nhiều bản Python.\n\n## Chuẩn bị project\n\nMỗi project nên có môi trường ảo riêng. Từ thư mục project, chạy:\n\n```bash\npython -m venv .venv\n```\n\nKích hoạt môi trường ảo trước khi cài thư viện. Trên Windows dùng `.venv\\\\Scripts\\\\activate`, còn macOS/Linux dùng `source .venv/bin/activate`.\n\n## Lỗi thường gặp\n\nNếu lệnh `python` không tồn tại, thử `python3` hoặc kiểm tra PATH. Đừng sửa PATH một cách mù quáng khi máy có nhiều bản Python; hãy xác định executable bằng `sys.executable` trước.",
-    "source": "content/python/getting-started/cai-dat-python.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 20,
+    "body": "Python cần được cài trên máy trước khi bạn có thể chạy chương trình, cài thư viện hoặc tạo môi trường phát triển riêng cho từng project.\n\nHiện nay, hãy sử dụng **Python 3** đang còn được hỗ trợ. Không nên cài Python 2 cho project mới vì phiên bản này đã ngừng hỗ trợ từ lâu.\n\nSau khi cài đặt, mục tiêu của chúng ta là đảm bảo ba thứ:\n\n- Python thực sự chạy được.\n- Terminal đang gọi đúng phiên bản Python.\n- Mỗi project có môi trường làm việc riêng, tránh thư viện của project này ảnh hưởng project khác.\n\n## Cài Python trên Windows\n\nCách đơn giản nhất là tải Python từ trang chính thức:\n\n`https://www.python.org/downloads/`\n\nChạy file cài đặt vừa tải.\n\nỞ màn hình đầu tiên, nên bật tùy chọn:\n\n```text\nAdd python.exe to PATH\n```\n\nSau đó chọn:\n\n```text\nInstall Now\n```\n\nPATH cho phép Windows tìm thấy Python khi bạn nhập lệnh `python` trong Terminal, PowerShell hoặc Command Prompt.\n\nSau khi cài xong, mở một cửa sổ terminal mới và kiểm tra:\n\n```bash\npython --version\n```\n\nVí dụ:\n\n```text\nPython 3.14.0\n```\n\nWindows cũng thường cài kèm **Python Launcher**, vì vậy bạn có thể kiểm tra bằng:\n\n```bash\npy --version\n```\n\nHoặc xem các phiên bản Python mà launcher nhận diện:\n\n```bash\npy -0\n```\n\nNếu máy có nhiều phiên bản Python, `py` thường tiện hơn việc phụ thuộc hoàn toàn vào PATH.\n\nVí dụ:\n\n```bash\npy -3.14\n```\n\nsẽ yêu cầu launcher chạy Python 3.14 nếu phiên bản đó đã được cài.\n\n## Cài Python trên macOS\n\nmacOS có thể đã chứa một số thành phần liên quan đến Python do hệ thống hoặc công cụ phát triển sử dụng. Không nên dựa vào các bản Python hệ thống cho project của bạn.\n\nBạn có thể cài Python trực tiếp từ:\n\n`https://www.python.org/downloads/`\n\nSau khi cài, kiểm tra:\n\n```bash\npython3 --version\n```\n\nTrên macOS, lệnh phổ biến thường là:\n\n```bash\npython3\n```\n\nthay vì:\n\n```bash\npython\n```\n\nNếu sử dụng Homebrew, bạn cũng có thể cài Python bằng:\n\n```bash\nbrew install python\n```\n\nSau đó kiểm tra:\n\n```bash\npython3 --version\n```\n\n## Cài Python trên Linux\n\nPhần lớn distro Linux đã có Python vì nhiều công cụ hệ thống phụ thuộc vào nó.\n\nKiểm tra trước:\n\n```bash\npython3 --version\n```\n\nNếu Python chưa được cài, hãy sử dụng package manager của distro.\n\nUbuntu hoặc Debian:\n\n```bash\nsudo apt update\nsudo apt install python3 python3-pip python3-venv\n```\n\nFedora:\n\n```bash\nsudo dnf install python3 python3-pip\n```\n\nArch Linux:\n\n```bash\nsudo pacman -S python python-pip\n```\n\nSau đó kiểm tra lại:\n\n```bash\npython3 --version\n```\n\nMột lưu ý quan trọng: **không nên xóa hoặc thay thế Python hệ thống trên Linux chỉ để nâng phiên bản cho project**.\n\nMột số thành phần của hệ điều hành có thể phụ thuộc vào phiên bản Python đó. Nếu cần một phiên bản khác cho project, hãy cài song song hoặc sử dụng công cụ quản lý phiên bản.\n\n## Kiểm tra Python đang được sử dụng\n\nViệc `python --version` chạy thành công chưa có nghĩa terminal đang sử dụng đúng Python mà bạn nghĩ.\n\nKiểm tra phiên bản:\n\n```bash\npython --version\n```\n\nNếu hệ điều hành sử dụng tên `python3`:\n\n```bash\npython3 --version\n```\n\nTiếp theo, kiểm tra chính xác executable đang chạy:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\n```\n\nHoặc:\n\n```bash\npython3 -c \"import sys; print(sys.executable)\"\n```\n\nVí dụ trên Windows:\n\n```text\nC:\\Users\\Nam\\AppData\\Local\\Programs\\Python\\Python314\\python.exe\n```\n\nVí dụ trên Linux:\n\n```text\n/usr/bin/python3\n```\n\n`sys.executable` rất hữu ích khi máy có nhiều bản Python.\n\nBạn có thể nghĩ `python` đang chạy Python mới cài, nhưng PATH lại trỏ tới một bản khác.\n\n## Kiểm tra pip\n\n`pip` là trình quản lý package phổ biến của Python.\n\nThay vì gọi trực tiếp:\n\n```bash\npip --version\n```\n\nnên dùng:\n\n```bash\npython -m pip --version\n```\n\nhoặc:\n\n```bash\npython3 -m pip --version\n```\n\nCách này đảm bảo `pip` thuộc đúng Python mà bạn đang sử dụng.\n\nVí dụ:\n\n```bash\npython -m pip install requests\n```\n\nan toàn hơn:\n\n```bash\npip install requests\n```\n\nkhi máy có nhiều phiên bản Python.\n\nBạn cũng có thể nâng cấp pip:\n\n```bash\npython -m pip install --upgrade pip\n```\n\n## Tạo thư mục project\n\nKhông nên viết tất cả chương trình Python vào Desktop hoặc một thư mục dùng chung.\n\nMỗi project nên có thư mục riêng.\n\nVí dụ:\n\n```text\npython-projects/\n└── hello-python/\n```\n\nDi chuyển terminal vào project:\n\n```bash\ncd hello-python\n```\n\nSau đó có thể tạo file:\n\n```text\nmain.py\n```\n\nProject lúc này:\n\n```text\nhello-python/\n└── main.py\n```\n\n## Tạo môi trường ảo\n\nMột trong những thói quen quan trọng nhất khi làm việc với Python là sử dụng **virtual environment**.\n\nTạo môi trường ảo:\n\n```bash\npython -m venv .venv\n```\n\nHoặc trên hệ thống sử dụng `python3`:\n\n```bash\npython3 -m venv .venv\n```\n\nSau đó project sẽ có dạng:\n\n```text\nhello-python/\n├── .venv/\n└── main.py\n```\n\n`.venv` chứa một môi trường Python riêng dành cho project hiện tại.\n\nVí dụ:\n\nProject A cần:\n\n```text\nrequests 2.x\n```\n\nProject B cần một phiên bản khác.\n\nNếu cả hai dùng Python toàn hệ thống, các dependency rất dễ va vào nhau.\n\nVirtual environment tách chúng ra:\n\n```text\nProject A\n└── .venv\n    └── dependencies của A\n\nProject B\n└── .venv\n    └── dependencies của B\n```\n\nMỗi project tự quản lý thư viện của mình.\n\n## Kích hoạt môi trường ảo\n\n### Windows Command Prompt\n\n```bat\n.venv\\Scripts\\activate\n```\n\n### Windows PowerShell\n\n```powershell\n.venv\\Scripts\\Activate.ps1\n```\n\n### macOS và Linux\n\n```bash\nsource .venv/bin/activate\n```\n\nSau khi kích hoạt, terminal thường hiển thị:\n\n```text\n(.venv)\n```\n\nVí dụ:\n\n```text\n(.venv) C:\\Projects\\hello-python>\n```\n\nĐiều đó cho biết terminal hiện đang sử dụng Python của môi trường ảo.\n\nKiểm tra:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\n```\n\nKết quả lúc này sẽ trỏ vào `.venv`.\n\nVí dụ:\n\n```text\nC:\\Projects\\hello-python\\.venv\\Scripts\\python.exe\n```\n\n## Cài thư viện vào project\n\nSau khi môi trường ảo đã được kích hoạt:\n\n```bash\npython -m pip install requests\n```\n\nPackage sẽ được cài vào `.venv`, thay vì môi trường Python toàn hệ thống.\n\nKiểm tra các package đang có:\n\n```bash\npython -m pip list\n```\n\nVí dụ:\n\n```text\nPackage     Version\n----------- -------\npip         25.x\nrequests    2.x\n```\n\n## Thoát khỏi môi trường ảo\n\nKhi làm việc xong:\n\n```bash\ndeactivate\n```\n\nTerminal sẽ quay lại Python mặc định của hệ thống.\n\nBạn không cần xóa `.venv`.\n\nLần sau mở project chỉ cần kích hoạt lại môi trường đó.\n\n## Không đưa `.venv` lên Git\n\nThư mục `.venv` có thể chứa rất nhiều file và phụ thuộc trực tiếp vào hệ điều hành đang sử dụng.\n\nKhông nên commit nó vào Git.\n\nThêm vào `.gitignore`:\n\n```gitignore\n.venv/\n```\n\nThông thường repository chỉ lưu source code và danh sách dependency, không lưu toàn bộ virtual environment.\n\n## Khi `python` không tồn tại\n\nNếu chạy:\n\n```bash\npython --version\n```\n\nvà nhận lỗi kiểu:\n\n```text\npython: command not found\n```\n\nhãy thử:\n\n```bash\npython3 --version\n```\n\nTrên Windows, cũng thử:\n\n```bash\npy --version\n```\n\nNếu một trong các lệnh trên hoạt động thì Python đã được cài, chỉ khác tên command.\n\nNếu tất cả đều không hoạt động, Python có thể chưa được cài hoặc chưa nằm trong PATH.\n\n## Khi máy có nhiều Python\n\nĐây là tình huống rất phổ biến.\n\nVí dụ máy có:\n\n```text\nPython 3.12\nPython 3.13\nPython 3.14\n```\n\nTrong trường hợp này, đừng đoán.\n\nKiểm tra:\n\n```bash\npython --version\n```\n\nvà:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\n```\n\nTrên Windows có thể dùng:\n\n```bash\npy -0\n```\n\nBạn cần biết rõ ba thứ đang trỏ tới đâu:\n\n```text\npython\npip\nvirtual environment\n```\n\nMột lỗi khá khó chịu là:\n\n```text\npython -> Python A\npip    -> Python B\n```\n\nKhi đó bạn cài package thành công nhưng chương trình vẫn báo:\n\n```text\nModuleNotFoundError\n```\n\nVì package đã được cài vào một Python khác.\n\nĐó cũng là lý do nên dùng:\n\n```bash\npython -m pip install ...\n```\n\nthay vì chỉ:\n\n```bash\npip install ...\n```\n\n## Khi PowerShell không cho kích hoạt `.venv`\n\nTrên Windows, PowerShell đôi khi báo lỗi liên quan đến execution policy khi chạy:\n\n```powershell\n.venv\\Scripts\\Activate.ps1\n```\n\nKhông nên thay đổi policy toàn hệ thống một cách tùy tiện chỉ để xử lý lỗi này.\n\nBạn vẫn có thể sử dụng Command Prompt:\n\n```bat\n.venv\\Scripts\\activate\n```\n\nHoặc chạy Python trong virtual environment trực tiếp:\n\n```powershell\n.venv\\Scripts\\python.exe main.py\n```\n\nVirtual environment không bắt buộc phải được \"activate\" mới hoạt động. Activation chủ yếu giúp terminal tự động sử dụng executable bên trong `.venv`.\n\n## Kiểm tra môi trường hoàn chỉnh\n\nSau khi cài đặt xong, bạn có thể kiểm tra nhanh:\n\n```bash\npython --version\npython -c \"import sys; print(sys.executable)\"\npython -m pip --version\n```\n\nSau đó tạo môi trường thử nghiệm:\n\n```bash\npython -m venv .venv\n```\n\nKích hoạt nó và chạy lại:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\n```\n\nNếu đường dẫn nằm bên trong:\n\n```text\n.venv\n```\n\nthì môi trường project đã hoạt động đúng.\n\nMột project Python cơ bản lúc này có thể trông như sau:\n\n```text\nhello-python/\n├── .venv/\n├── .gitignore\n└── main.py\n```\n\nVà workflow thông thường sẽ là:\n\n```text\nCài Python\n    ↓\nTạo project\n    ↓\nTạo .venv\n    ↓\nKích hoạt .venv\n    ↓\nCài dependency\n    ↓\nViết và chạy code\n```\n\nĐây là nền móng nên hình thành ngay từ đầu. Python cho phép chạy một file rất nhanh, nhưng một môi trường sạch sẽ giúp project không biến thành \"nồi lẩu dependency\" khi bắt đầu lớn lên.",
+    "sourcePath": "content/python/getting-started/cai-dat-python.md",
     "headings": [
       {
-        "title": "Kiểm tra trình thông dịch",
-        "id": "kiem-tra-trinh-thong-dich"
+        "title": "Cài Python trên Windows",
+        "id": "cai-python-tren-windows"
       },
       {
-        "title": "Chuẩn bị project",
-        "id": "chuan-bi-project"
+        "title": "Cài Python trên macOS",
+        "id": "cai-python-tren-macos"
       },
       {
-        "title": "Lỗi thường gặp",
-        "id": "loi-thuong-gap"
+        "title": "Cài Python trên Linux",
+        "id": "cai-python-tren-linux"
+      },
+      {
+        "title": "Kiểm tra Python đang được sử dụng",
+        "id": "kiem-tra-python-ang-uoc-su-dung"
+      },
+      {
+        "title": "Kiểm tra pip",
+        "id": "kiem-tra-pip"
+      },
+      {
+        "title": "Tạo thư mục project",
+        "id": "tao-thu-muc-project"
+      },
+      {
+        "title": "Tạo môi trường ảo",
+        "id": "tao-moi-truong-ao"
+      },
+      {
+        "title": "Kích hoạt môi trường ảo",
+        "id": "kich-hoat-moi-truong-ao"
+      },
+      {
+        "title": "Windows Command Prompt",
+        "id": "windows-command-prompt"
+      },
+      {
+        "title": "Windows PowerShell",
+        "id": "windows-powershell"
+      },
+      {
+        "title": "macOS và Linux",
+        "id": "macos-va-linux"
+      },
+      {
+        "title": "Cài thư viện vào project",
+        "id": "cai-thu-vien-vao-project"
+      },
+      {
+        "title": "Thoát khỏi môi trường ảo",
+        "id": "thoat-khoi-moi-truong-ao"
+      },
+      {
+        "title": "Không đưa `.venv` lên Git",
+        "id": "khong-ua-venv-len-git"
+      },
+      {
+        "title": "Khi `python` không tồn tại",
+        "id": "khi-python-khong-ton-tai"
+      },
+      {
+        "title": "Khi máy có nhiều Python",
+        "id": "khi-may-co-nhieu-python"
+      },
+      {
+        "title": "Khi PowerShell không cho kích hoạt `.venv`",
+        "id": "khi-powershell-khong-cho-kich-hoat-venv"
+      },
+      {
+        "title": "Kiểm tra môi trường hoàn chỉnh",
+        "id": "kiem-tra-moi-truong-hoan-chinh"
       }
     ]
   },
@@ -98,16 +164,37 @@ export const articles = [
       "/bat-dau/cai-dat-python",
       "/co-ban/string"
     ],
-    "body": "Tạo file `hello.py` và đặt một chương trình nhỏ có đầu ra rõ ràng:\n\n```python\nname = \"Nam\"\nprint(f\"Xin chào, {name}!\")\n```\n\nChạy file từ thư mục chứa nó:\n\n```bash\npython hello.py\n```\n\n## Vì sao nên chạy từ terminal?\n\nTerminal cho bạn biết chính xác interpreter, thư mục hiện tại và tham số truyền vào. Đây là nền tảng tốt trước khi dùng IDE hoặc hệ thống build.\n\n## REPL\n\nChạy `python` không kèm tên file để mở REPL, nơi phù hợp để thử nhanh một biểu thức:\n\n```python\n>>> 2 ** 10\n1024\n```\n\nREPL hữu ích để khám phá API, nhưng logic của ứng dụng nên nằm trong file để có thể kiểm thử và review.",
-    "source": "content/python/getting-started/hello-world.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 30,
+    "body": "Tạo file `hello.py`:\n\n```python\nname = \"Nam\"\nprint(f\"Xin chào, {name}!\")\n```\n\nChạy trong terminal:\n\n```bash\npython hello.py\n```\n\nTrên một số hệ thống:\n\n```bash\npython3 hello.py\n```\n\nKết quả:\n\n```text\nXin chào, Nam!\n```\n\n## File `.py`\n\nFile có đuôi `.py` chứa source code Python.\n\nVí dụ:\n\n```text\nproject/\n└── hello.py\n```\n\nPython đọc file từ trên xuống và thực thi từng câu lệnh.\n\n## `print()`\n\n`print()` đưa dữ liệu ra terminal:\n\n```python\nprint(\"Hello\")\nprint(123)\n```\n\nCó thể in biến:\n\n```python\nname = \"Nam\"\nprint(name)\n```\n\nHoặc dùng f-string:\n\n```python\nprint(f\"Xin chào, {name}\")\n```\n\n## Chạy đúng thư mục\n\nNếu terminal không nằm trong thư mục chứa file, Python có thể báo:\n\n```text\ncan't open file 'hello.py'\n```\n\nKiểm tra thư mục hiện tại:\n\n```bash\npython -c \"import os; print(os.getcwd())\"\n```\n\nHoặc truyền đúng đường dẫn:\n\n```bash\npython path/to/hello.py\n```\n\n## Kiểm tra interpreter\n\nNếu file chạy khác với trong IDE, kiểm tra Python đang được dùng:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\n```\n\nIDE và terminal có thể đang dùng hai interpreter khác nhau.\n\n## REPL\n\nChạy:\n\n```bash\npython\n```\n\nđể mở Python REPL.\n\nVí dụ:\n\n```python\n>>> 2 ** 10\n1024\n\n>>> \"Python\".upper()\n'PYTHON'\n```\n\nREPL phù hợp để thử nhanh biểu thức hoặc API.\n\nThoát bằng:\n\n```python\nexit()\n```\n\nLogic của project nên nằm trong file `.py` để dễ chạy lại, debug, test và review.\n\n## Debug nhanh\n\nNếu `hello.py` không chạy:\n\n```bash\npython --version\npython -c \"import sys; print(sys.executable)\"\npython -c \"import os; print(os.getcwd())\"\n```\n\nKiểm tra ba thứ trước:\n\n```text\nPython có tồn tại không\nđang dùng đúng interpreter không\nterminal có đang ở đúng thư mục không\n```\n\nVới Python, chương trình đầu tiên thực chất chỉ cần hiểu đúng chuỗi này:\n\n```text\nfile .py -> Python interpreter -> output\n```",
+    "sourcePath": "content/python/getting-started/hello-world.md",
     "headings": [
       {
-        "title": "Vì sao nên chạy từ terminal?",
-        "id": "vi-sao-nen-chay-tu-terminal"
+        "title": "File `.py`",
+        "id": "file-py"
+      },
+      {
+        "title": "`print()`",
+        "id": "print"
+      },
+      {
+        "title": "Chạy đúng thư mục",
+        "id": "chay-ung-thu-muc"
+      },
+      {
+        "title": "Kiểm tra interpreter",
+        "id": "kiem-tra-interpreter"
       },
       {
         "title": "REPL",
         "id": "repl"
+      },
+      {
+        "title": "Debug nhanh",
+        "id": "debug-nhanh"
       }
     ]
   },
@@ -130,12 +217,41 @@ export const articles = [
       "/bat-dau/cai-dat-python",
       "/packaging/pip"
     ],
-    "body": "Môi trường ảo là một thư mục chứa interpreter và package độc lập với các project khác. Nó tránh tình trạng project A vô tình dùng phiên bản thư viện của project B.\n\n```bash\npython -m venv .venv\npython -m pip install --upgrade pip\npython -m pip install requests\n```\n\nDùng `python -m pip` thay vì gọi `pip` trần giúp chắc chắn pip thuộc đúng interpreter đang hoạt động.\n\n## Đưa môi trường ảo vào workflow\n\nThêm `.venv/` vào `.gitignore`, ghi dependency vào `requirements.txt` hoặc `pyproject.toml`, và hướng dẫn contributor cách tạo lại môi trường. Không commit cả thư mục `.venv` vì nó phụ thuộc hệ điều hành và đường dẫn máy cá nhân.",
-    "source": "content/python/getting-started/virtual-environment.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 40,
+    "body": "Virtual environment tạo một môi trường Python riêng cho từng project, giúp dependency của project này không đè lên project khác.\n\n## Tạo môi trường\n\nTrong thư mục project:\n\n```bash\npython -m venv .venv\n```\n\nCấu trúc thường sẽ có:\n\n```text\nproject/\n├── .venv/\n└── main.py\n```\n\n## Kích hoạt\n\nWindows PowerShell:\n\n```powershell\n.venv\\Scripts\\Activate.ps1\n```\n\nWindows Command Prompt:\n\n```bat\n.venv\\Scripts\\activate\n```\n\nmacOS/Linux:\n\n```bash\nsource .venv/bin/activate\n```\n\nSau khi kích hoạt, terminal thường hiện:\n\n```text\n(.venv)\n```\n\n## Kiểm tra đúng interpreter\n\nĐừng chỉ nhìn chữ `(.venv)`. Kiểm tra thật:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\n```\n\nĐường dẫn phải nằm trong `.venv`.\n\nKiểm tra pip:\n\n```bash\npython -m pip --version\n```\n\nHai lệnh này là cách nhanh nhất để phát hiện đang dùng nhầm environment.\n\n## Cài dependency\n\n```bash\npython -m pip install requests\n```\n\nNên dùng:\n\n```bash\npython -m pip\n```\n\nthay vì:\n\n```bash\npip\n```\n\nđể chắc chắn pip thuộc đúng interpreter đang chạy.\n\n## Thoát môi trường\n\n```bash\ndeactivate\n```\n\n## Không commit `.venv`\n\nThêm vào `.gitignore`:\n\n```gitignore\n.venv/\n```\n\nVirtual environment phụ thuộc máy và hệ điều hành, nên không dùng nó làm cách chia sẻ dependency.\n\nHãy lưu dependency bằng:\n\n```text\nrequirements.txt\n```\n\nhoặc:\n\n```text\npyproject.toml\n```\n\nNgười khác sẽ tạo lại môi trường từ các file này.\n\n## Debug nhanh\n\nNếu package đã cài nhưng vẫn báo:\n\n```text\nModuleNotFoundError\n```\n\nkiểm tra:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\npython -m pip --version\n```\n\nNếu hai đường dẫn không thuộc cùng `.venv`, bạn đang cài package vào nhầm Python.\n\nWorkflow cần nhớ:\n\n```text\ntạo .venv\n   ↓\nkích hoạt\n   ↓\nkiểm tra interpreter\n   ↓\ncài dependency\n   ↓\nchạy project\n```\n\nMỗi project nên có virtual environment riêng. Đây là cách đơn giản nhất để dependency không biến thành bãi chiến trường.",
+    "sourcePath": "content/python/getting-started/virtual-environment.md",
     "headings": [
       {
-        "title": "Đưa môi trường ảo vào workflow",
-        "id": "ua-moi-truong-ao-vao-workflow"
+        "title": "Tạo môi trường",
+        "id": "tao-moi-truong"
+      },
+      {
+        "title": "Kích hoạt",
+        "id": "kich-hoat"
+      },
+      {
+        "title": "Kiểm tra đúng interpreter",
+        "id": "kiem-tra-ung-interpreter"
+      },
+      {
+        "title": "Cài dependency",
+        "id": "cai-dependency"
+      },
+      {
+        "title": "Thoát môi trường",
+        "id": "thoat-moi-truong"
+      },
+      {
+        "title": "Không commit `.venv`",
+        "id": "khong-commit-venv"
+      },
+      {
+        "title": "Debug nhanh",
+        "id": "debug-nhanh"
       }
     ]
   },
@@ -160,16 +276,29 @@ export const articles = [
       "/internals/cpython",
       "/internals/execution-model"
     ],
-    "body": "Python là tên của ngôn ngữ và tập hợp các quy tắc về cú pháp, object, module, exception cùng thư viện chuẩn. **Implementation** là chương trình thực thi các quy tắc đó.\n\n## CPython là gì?\n\nCPython là implementation mặc định và được dùng rộng rãi nhất. Nó viết chủ yếu bằng C, biên dịch source thành bytecode rồi chạy bytecode trong interpreter. Nhiều package native và chi tiết như reference counting, GIL hay layout object là đặc tính của CPython, không phải cam kết chung của mọi Python implementation.\n\nPyPy dùng JIT để tối ưu một số workload Python; các implementation khác phục vụ JVM, .NET hoặc môi trường đặc biệt. Code portable nên dựa vào behavior được ngôn ngữ hoặc standard library quy định, không dựa vào địa chỉ object hay memory layout nội bộ.\n\n## Cách dùng thông tin này\n\nKhi tài liệu nói “Python làm X”, hãy hỏi X là language guarantee hay implementation detail. Ví dụ dict giữ insertion order là behavior ngôn ngữ hiện đại; kích thước bucket của dict lại là chi tiết CPython có thể thay đổi.",
-    "source": "content/python/getting-started/python-implementation.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 50,
+    "body": "**Python** là ngôn ngữ: cú pháp, object model, module, exception và các behavior được đặc tả.\n\n**Implementation** là chương trình thực sự chạy code Python.\n\n## CPython\n\nCPython là implementation phổ biến và mặc định của Python.\n\nLuồng thực thi đơn giản:\n\n```text id=\"15x7rc\"\nsource .py\n   ↓\nbytecode\n   ↓\nCPython interpreter\n```\n\nCPython được viết chủ yếu bằng C.\n\nKiểm tra implementation đang chạy:\n\n```python id=\"hgkh9i\"\nimport platform\n\nprint(platform.python_implementation())\n```\n\nThường sẽ trả về:\n\n```text id=\"6e7o21\"\nCPython\n```\n\n## Implementation khác\n\nMột số implementation phổ biến:\n\n```text id=\"v8n6xl\"\nCPython -> implementation mặc định\nPyPy    -> có JIT, có thể nhanh hơn với một số workload\nJython  -> chạy trên JVM\nIronPython -> chạy trên .NET\n```\n\nKhông phải mọi implementation đều hoạt động giống nhau ở mức internals.\n\n## Language behavior và implementation detail\n\nĐiểm quan trọng nhất khi đọc tài liệu Python là phân biệt:\n\n```text id=\"ym06aw\"\nlanguage guarantee\nimplementation detail\n```\n\nVí dụ:\n\n```text id=\"9r2cex\"\ndict giữ insertion order\n```\n\nlà behavior của Python hiện đại.\n\nNhưng:\n\n```text id=\"mpp1i1\"\nmemory layout của dict\nreference counting\nchi tiết GIL\nkích thước object\n```\n\nchủ yếu là implementation detail của CPython.\n\n## Khi debug\n\nKiểm tra nhanh runtime:\n\n```python id=\"w5lsp7\"\nimport platform\nimport sys\n\nprint(platform.python_implementation())\nprint(sys.version)\n```\n\nNếu bug liên quan đến:\n\n- performance,\n- memory,\n- native extension,\n- garbage collection,\n- threading,\n\nhãy kiểm tra implementation trước khi kết luận behavior đó là \"do Python\".\n\nQuy tắc cần nhớ:\n\n```text id=\"3h93gh\"\nPython = ngôn ngữ\nCPython = một cách triển khai Python\n```\n\nCode portable nên dựa vào behavior được Python quy định, không phụ thuộc vào internals riêng của CPython trừ khi bạn chủ động chấp nhận ràng buộc đó.",
+    "sourcePath": "content/python/getting-started/python-implementation.md",
     "headings": [
       {
-        "title": "CPython là gì?",
-        "id": "cpython-la-gi"
+        "title": "CPython",
+        "id": "cpython"
       },
       {
-        "title": "Cách dùng thông tin này",
-        "id": "cach-dung-thong-tin-nay"
+        "title": "Implementation khác",
+        "id": "implementation-khac"
+      },
+      {
+        "title": "Language behavior và implementation detail",
+        "id": "language-behavior-va-implementation-detail"
+      },
+      {
+        "title": "Khi debug",
+        "id": "khi-debug"
       }
     ]
   },
@@ -195,9 +324,43 @@ export const articles = [
       "/co-ban/builtins",
       "/bat-dau/command-line"
     ],
-    "body": "REPL là viết tắt của Read–Eval–Print Loop: đọc biểu thức, đánh giá, in kết quả rồi lặp lại. Đây là nơi tốt để khám phá API hoặc kiểm tra một giả thuyết nhỏ, không phải nơi lý tưởng để lưu business logic.\n\n```python\n>>> from pathlib import Path\n>>> path = Path(\"report.txt\")\n>>> path.suffix\n'.txt'\n>>> help(Path.read_text)\n```\n\n`dir(value)` liệt kê tên có thể truy cập, `type(value)` cho biết type, còn `id(value)` trả identity trong runtime hiện tại. `help()` đọc docstring và thông tin help của object.\n\nKhi thử nghiệm xong, chuyển code có ý nghĩa vào file, module hoặc test. REPL state dễ chứa biến cũ khiến một đoạn code “chạy được” nhưng không tái lập được từ đầu.",
-    "source": "content/python/getting-started/interpreter-repl.md",
-    "headings": []
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 60,
+    "body": "Python interpreter là chương trình thực thi code Python.\n\nKiểm tra interpreter đang dùng:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\n```\n\nNếu máy có nhiều Python hoặc virtual environment, lệnh này giúp xác định chính xác bản đang chạy.\n\n## REPL\n\nChạy:\n\n```bash\npython\n```\n\nđể mở REPL.\n\nREPL là viết tắt của:\n\n```text\nRead -> Eval -> Print -> Loop\n```\n\nNó đọc biểu thức, thực thi, in kết quả rồi chờ lệnh tiếp theo.\n\nVí dụ:\n\n```python\n>>> 2 ** 10\n1024\n\n>>> \"python\".upper()\n'PYTHON'\n```\n\nREPL phù hợp để:\n\n- thử một biểu thức,\n- kiểm tra API,\n- test nhanh giả thuyết,\n- xem object đang chứa gì.\n\nKhông nên dùng REPL để lưu logic chính của project.\n\n## `type()`\n\nKiểm tra type của object:\n\n```python\n>>> value = 42\n>>> type(value)\n<class 'int'>\n```\n\nRất hữu ích khi debug dữ liệu không đúng kiểu mong đợi.\n\n## `dir()`\n\nLiệt kê các attribute và method có thể truy cập:\n\n```python\n>>> text = \"hello\"\n>>> dir(text)\n```\n\nNếu không nhớ object có method nào, `dir()` là cách tra nhanh ngay trong runtime.\n\n## `help()`\n\nXem tài liệu tích hợp:\n\n```python\n>>> help(str.split)\n```\n\nHoặc:\n\n```python\n>>> from pathlib import Path\n>>> help(Path.read_text)\n```\n\n`help()` thường hiển thị:\n\n- function signature,\n- docstring,\n- mô tả parameter,\n- thông tin object.\n\n## `id()`\n\nKiểm tra identity của object trong runtime hiện tại:\n\n```python\n>>> value = []\n>>> id(value)\n140234567890\n```\n\n`id()` chủ yếu hữu ích khi cần kiểm tra hai biến có đang tham chiếu cùng một object hay không.\n\nVí dụ:\n\n```python\n>>> a = []\n>>> b = a\n>>> id(a) == id(b)\nTrue\n```\n\n## REPL có state\n\nREPL giữ lại biến từ các lệnh trước:\n\n```python\n>>> x = 10\n>>> x + 5\n15\n```\n\nĐiều này tiện để thử nghiệm, nhưng cũng dễ gây nhầm.\n\nMột đoạn code có thể chạy trong REPL vì biến cũ vẫn còn, nhưng thất bại khi chạy lại từ đầu.\n\nKhi nghi ngờ, hãy restart REPL và thử lại trong trạng thái sạch.\n\n## Workflow nên dùng\n\nDùng REPL để thử nhanh:\n\n```text\nthử ý tưởng\n   ↓\nxác nhận behavior\n   ↓\nđưa code vào file/module/test\n```\n\nREPL là bàn thử nghiệm, không phải nơi lưu code lâu dài.\n\nNếu một đoạn code bắt đầu quan trọng, hãy đưa nó vào file `.py` để có thể chạy lại, test và review một cách tái lập.",
+    "sourcePath": "content/python/getting-started/interpreter-repl.md",
+    "headings": [
+      {
+        "title": "REPL",
+        "id": "repl"
+      },
+      {
+        "title": "`type()`",
+        "id": "type"
+      },
+      {
+        "title": "`dir()`",
+        "id": "dir"
+      },
+      {
+        "title": "`help()`",
+        "id": "help"
+      },
+      {
+        "title": "`id()`",
+        "id": "id"
+      },
+      {
+        "title": "REPL có state",
+        "id": "repl-co-state"
+      },
+      {
+        "title": "Workflow nên dùng",
+        "id": "workflow-nen-dung"
+      }
+    ]
   },
   {
     "title": "Cấu trúc project Python cơ bản",
@@ -220,9 +383,51 @@ export const articles = [
       "/module/packages",
       "/packaging/pyproject"
     ],
-    "body": "Một script nhỏ có thể chỉ cần `main.py` và `README.md`. Khi code có nhiều module hoặc cần phát hành, tách rõ source, test và cấu hình:\n\n```text\ninvoice_tool/\n├── pyproject.toml\n├── README.md\n├── src/invoice_tool/\n│   ├── __init__.py\n│   └── cli.py\n└── tests/\n    └── test_cli.py\n```\n\nKhông áp cấu trúc enterprise cho mọi bài tập. Điều quan trọng là người mới biết file nào là code chạy, file nào là test, dependency khai báo ở đâu và lệnh khởi động là gì. Khi package lớn dần, có thể tách theo domain thay vì tạo một module khổng lồ.",
-    "source": "content/python/getting-started/project-structure.md",
-    "headings": []
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 70,
+    "body": "Cấu trúc project nên đủ rõ để trả lời nhanh 4 câu:\n\n```text\ncode nằm đâu?\nchạy từ đâu?\ntest nằm đâu?\ndependency khai báo ở đâu?\n```\n\n## Script nhỏ\n\nVới script đơn giản:\n\n```text\nproject/\n├── main.py\n└── README.md\n```\n\nChạy:\n\n```bash\npython main.py\n```\n\nKhông cần tạo thêm nhiều folder nếu project chưa cần.\n\n## Project có nhiều module\n\nKhi code bắt đầu tách thành nhiều phần:\n\n```text\nproject/\n├── main.py\n├── config.py\n├── service.py\n└── utils.py\n```\n\nNên tách module theo trách nhiệm, tránh dồn toàn bộ logic vào một file.\n\nVí dụ:\n\n```text\nconfig.py   -> cấu hình\nservice.py  -> logic chính\nutils.py    -> helper nhỏ dùng chung\nmain.py     -> entry point\n```\n\n## Package hoàn chỉnh\n\nKhi project cần test, dependency rõ ràng hoặc chuẩn bị phát hành:\n\n```text\ninvoice_tool/\n├── pyproject.toml\n├── README.md\n├── src/\n│   └── invoice_tool/\n│       ├── __init__.py\n│       └── cli.py\n└── tests/\n    └── test_cli.py\n```\n\nÝ nghĩa:\n\n```text\nsrc/        -> source code\ntests/      -> test\npyproject.toml -> metadata, build và dependency\nREADME.md   -> cách dùng project\n```\n\n## Vì sao dùng `src/`\n\n`src` layout giúp tránh trường hợp Python import nhầm source trực tiếp từ thư mục project thay vì package đã được cài.\n\nVí dụ:\n\n```text\nsrc/\n└── invoice_tool/\n```\n\nKhi đó package thật là:\n\n```text\ninvoice_tool\n```\n\nkhông phải:\n\n```text\nsrc.invoice_tool\n```\n\n## `__init__.py`\n\nFile:\n\n```text\n__init__.py\n```\n\nthường đánh dấu thư mục là một Python package và có thể chứa API cấp package.\n\nVí dụ:\n\n```text\ninvoice_tool/\n├── __init__.py\n├── cli.py\n└── service.py\n```\n\nBạn có thể import:\n\n```python\nfrom invoice_tool import service\n```\n\nKhông nên nhét toàn bộ logic vào `__init__.py`.\n\n## Entry point\n\nProject nên có một nơi rõ ràng để bắt đầu chạy.\n\nVí dụ:\n\n```text\nmain.py\n```\n\nhoặc:\n\n```text\ninvoice_tool/cli.py\n```\n\nVới package:\n\n```bash\npython -m invoice_tool.cli\n```\n\nNgười đọc project không nên phải đoán file nào là file khởi động.\n\n## Tests\n\nTest nên tách khỏi source:\n\n```text\nproject/\n├── src/\n└── tests/\n```\n\nVí dụ:\n\n```text\ntests/\n├── test_cli.py\n└── test_service.py\n```\n\nTên test nên phản ánh module tương ứng để khi lỗi CI có thể khoanh vùng nhanh.\n\n## Khi project lớn hơn\n\nĐừng tiếp tục nhét tất cả vào:\n\n```text\nservice.py\n```\n\nđến khi file dài vài nghìn dòng.\n\nCó thể tách theo domain:\n\n```text\nsrc/app/\n├── users/\n├── billing/\n├── reports/\n└── cli/\n```\n\nƯu tiên nhóm code theo chức năng thực tế thay vì tạo hàng loạt folder chung chung như:\n\n```text\nmanagers/\nhelpers/\nhandlers/\nprocessors/\n```\n\nnếu chúng không mang ý nghĩa rõ ràng.\n\n## Tránh over-engineer\n\nMột bài tập 100 dòng không cần:\n\n```text\ncontrollers/\nservices/\nrepositories/\ninterfaces/\nfactories/\nadapters/\n```\n\nCấu trúc nên lớn dần cùng project.\n\nQuy tắc đơn giản:\n\n```text\n1 file đủ rõ       -> giữ 1 file\nnhiều trách nhiệm  -> tách module\ncó package/test    -> dùng structure rõ ràng\nproject lớn        -> tách theo domain\n```\n\nMục tiêu không phải có nhiều folder. Mục tiêu là mở project lên và hiểu được luồng code trong vài giây.",
+    "sourcePath": "content/python/getting-started/project-structure.md",
+    "headings": [
+      {
+        "title": "Script nhỏ",
+        "id": "script-nho"
+      },
+      {
+        "title": "Project có nhiều module",
+        "id": "project-co-nhieu-module"
+      },
+      {
+        "title": "Package hoàn chỉnh",
+        "id": "package-hoan-chinh"
+      },
+      {
+        "title": "Vì sao dùng `src/`",
+        "id": "vi-sao-dung-src"
+      },
+      {
+        "title": "`__init__.py`",
+        "id": "initpy"
+      },
+      {
+        "title": "Entry point",
+        "id": "entry-point"
+      },
+      {
+        "title": "Tests",
+        "id": "tests"
+      },
+      {
+        "title": "Khi project lớn hơn",
+        "id": "khi-project-lon-hon"
+      },
+      {
+        "title": "Tránh over-engineer",
+        "id": "tranh-over-engineer"
+      }
+    ]
   },
   {
     "title": "Command line cho Python developer",
@@ -246,9 +451,51 @@ export const articles = [
       "/cli/argparse",
       "/packaging/pip"
     ],
-    "body": "Hai lệnh thường gặp là `python file.py` và `python -m package.module`. Cách thứ hai chạy module trong ngữ cảnh package, vì vậy thường phù hợp với tool có import nội bộ.\n\n```bash\npython -m pip install -r requirements.txt\npython -m invoice_tool.cli --dry-run\n```\n\nProcess có exit code; `0` thường nghĩa là thành công, số khác báo lỗi. `stdout` dành cho output bình thường, `stderr` dành cho diagnostic. Khi viết CLI, đừng trộn log và dữ liệu machine-readable vào cùng một stream nếu shell script sẽ consume output.\n\nTrên Windows, `py -3.14` có thể chọn launcher version cụ thể; trên macOS/Linux, `python3` thường được dùng để tránh đụng Python hệ thống.",
-    "source": "content/python/getting-started/command-line.md",
-    "headings": []
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 80,
+    "body": "Command line là cách trực tiếp nhất để chạy và debug Python mà không phụ thuộc IDE.\n\n## Chạy Python\n\nChạy một file:\n\n```bash\npython main.py\n```\n\nTrên macOS/Linux có thể dùng:\n\n```bash\npython3 main.py\n```\n\nKiểm tra phiên bản:\n\n```bash\npython --version\n```\n\nKiểm tra chính xác interpreter đang chạy:\n\n```bash\npython -c \"import sys; print(sys.executable)\"\n```\n\nLệnh này đặc biệt hữu ích khi máy có nhiều Python hoặc đang dùng `.venv`.\n\n## `python -m`\n\n`-m` chạy một module thông qua hệ thống import của Python:\n\n```bash\npython -m package.module\n```\n\nVí dụ:\n\n```bash\npython -m pip install requests\npython -m invoice_tool.cli\n```\n\nVới code nằm trong package, nên ưu tiên:\n\n```bash\npython -m package.module\n```\n\nthay vì:\n\n```bash\npython package/module.py\n```\n\nCách này giữ đúng package context và tránh nhiều lỗi import nội bộ.\n\n## Pip đúng interpreter\n\nNếu máy có nhiều Python, tránh gọi `pip` một cách mù quáng.\n\nDùng:\n\n```bash\npython -m pip install requests\n```\n\nKiểm tra pip đang thuộc Python nào:\n\n```bash\npython -m pip --version\n```\n\nNếu `python` và `pip` trỏ sang hai environment khác nhau, package có thể cài thành công nhưng chương trình vẫn báo:\n\n```text\nModuleNotFoundError\n```\n\n## Truyền tham số\n\nVí dụ:\n\n```bash\npython app.py input.txt --verbose\n```\n\nPython nhận các argument qua:\n\n```python\nimport sys\n\nprint(sys.argv)\n```\n\nVới CLI thực tế có nhiều option như:\n\n```text\n--output\n--verbose\n--dry-run\n```\n\nnên dùng `argparse` thay vì tự parse `sys.argv`.\n\n## Working directory\n\nRelative path được tính từ thư mục hiện tại của terminal, không nhất thiết từ vị trí file Python.\n\nKiểm tra:\n\n```bash\npython -c \"import os; print(os.getcwd())\"\n```\n\nNếu code chạy ở thư mục này nhưng lỗi ở thư mục khác, hãy kiểm tra working directory trước.\n\n## `stdout` và `stderr`\n\nOutput bình thường đi vào `stdout`:\n\n```python\nprint(\"done\")\n```\n\nLỗi hoặc diagnostic nên đi vào `stderr`:\n\n```python\nimport sys\n\nprint(\"Invalid config\", file=sys.stderr)\n```\n\nQuy ước:\n\n```text\nstdout -> dữ liệu/kết quả\nstderr -> lỗi, warning, diagnostic\n```\n\nĐiều này quan trọng khi output được shell script, CI/CD hoặc chương trình khác đọc.\n\nVí dụ CLI xuất JSON thì đừng trộn log vào stdout:\n\n```python\nimport sys\n\nprint(\"Loading...\", file=sys.stderr)\nprint('{\"status\": \"ok\"}')\n```\n\n## Exit code\n\nProcess trả về một exit code khi kết thúc:\n\n```text\n0     -> thành công\nkhác 0 -> lỗi hoặc trạng thái thất bại\n```\n\nTrong Python:\n\n```python\nimport sys\n\nsys.exit(1)\n```\n\nCI/CD và shell script thường dựa vào exit code để xác định command có thành công hay không.\n\n## Windows và nhiều phiên bản Python\n\nWindows thường có Python Launcher:\n\n```bash\npy --version\n```\n\nChọn version cụ thể:\n\n```bash\npy -3.14\n```\n\nXem các version đã cài:\n\n```bash\npy -0\n```\n\n## Checklist debug nhanh\n\nKhi Python hoặc dependency có vấn đề, kiểm tra theo thứ tự:\n\n```bash\npython --version\npython -c \"import sys; print(sys.executable)\"\npython -m pip --version\npython -c \"import os; print(os.getcwd())\"\n```\n\nBốn lệnh này thường đủ để phát hiện phần lớn lỗi liên quan đến:\n\n```text\nsai Python version\nsai virtual environment\npip cài nhầm environment\nsai working directory\n```\n\nCommand line không cần học thuộc hàng chục lệnh. Với Python, quan trọng nhất là luôn biết **interpreter nào đang chạy, module chạy trong context nào, dependency được cài vào đâu và process kết thúc ra sao**.",
+    "sourcePath": "content/python/getting-started/command-line.md",
+    "headings": [
+      {
+        "title": "Chạy Python",
+        "id": "chay-python"
+      },
+      {
+        "title": "`python -m`",
+        "id": "python--m"
+      },
+      {
+        "title": "Pip đúng interpreter",
+        "id": "pip-ung-interpreter"
+      },
+      {
+        "title": "Truyền tham số",
+        "id": "truyen-tham-so"
+      },
+      {
+        "title": "Working directory",
+        "id": "working-directory"
+      },
+      {
+        "title": "`stdout` và `stderr`",
+        "id": "stdout-va-stderr"
+      },
+      {
+        "title": "Exit code",
+        "id": "exit-code"
+      },
+      {
+        "title": "Windows và nhiều phiên bản Python",
+        "id": "windows-va-nhieu-phien-ban-python"
+      },
+      {
+        "title": "Checklist debug nhanh",
+        "id": "checklist-debug-nhanh"
+      }
+    ]
   },
   {
     "title": "Python 2 và Python 3",
@@ -270,9 +517,43 @@ export const articles = [
       "/bat-dau/python-la-gi",
       "/co-ban/syntax"
     ],
-    "body": "Python 2 đã hết vòng đời hỗ trợ; project mới nên dùng Python 3 được hỗ trợ, hiện wiki target Python 3.14. Những khác biệt dễ gặp khi đọc code cũ gồm `print` là statement trong Python 2, phép chia số nguyên, text/bytes và syntax exception.\n\n```python\nprint(\"Đây là Python 3\")\n```\n\nĐừng chỉ đổi `print` để gọi là migration. Kiểm tra encoding, dependency, test và behavior khi chia số. Nếu phải bảo trì code Python 2, cô lập môi trường và lập kế hoạch chuyển dần thay vì trộn syntax hai thế hệ trong cùng module.",
-    "source": "content/python/getting-started/python2-vs-python3.md",
-    "headings": []
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 90,
+    "body": "Python 2 đã hết hỗ trợ. Project mới nên dùng Python 3; wiki này target **Python 3.14**.\n\n## Khác biệt dễ gặp\n\n### `print`\n\nPython 2:\n\n```python\nprint \"Hello\"\n```\n\nPython 3:\n\n```python\nprint(\"Hello\")\n```\n\n### Phép chia\n\nPython 2:\n\n```python\n5 / 2\n# 2\n```\n\nPython 3:\n\n```python\n5 / 2\n# 2.5\n\n5 // 2\n# 2\n```\n\n### Text và bytes\n\nPython 3 phân biệt rõ:\n\n```python\n\"hello\"   # str\nb\"hello\"  # bytes\n```\n\nĐây là nguồn lỗi phổ biến khi migrate code xử lý:\n\n- file,\n- network,\n- encoding,\n- database.\n\n### Exception syntax\n\nCode Python 2 có thể dùng:\n\n```python\nexcept ValueError, error:\n    pass\n```\n\nPython 3 dùng:\n\n```python\nexcept ValueError as error:\n    pass\n```\n\n## Khi gặp project Python 2\n\nĐừng chỉ sửa syntax.\n\nCần kiểm tra:\n\n```text\ndependency có hỗ trợ Python 3 không\ntext và bytes có thay đổi behavior không\nphép chia có ảnh hưởng kết quả không\nencoding có assumptions cũ không\ntest có cover logic quan trọng không\n```\n\nNếu buộc phải bảo trì Python 2, hãy cô lập environment riêng.\n\nKhông nên trộn Python 2 và Python 3 trong cùng codebase nếu có thể tránh.\n\n## Debug nhanh\n\nKiểm tra version đang chạy:\n\n```bash\npython --version\n```\n\nTrong code:\n\n```python\nimport sys\n\nprint(sys.version)\n```\n\nNếu gặp syntax lạ, Unicode bug hoặc behavior chia số khác dự kiến, hãy kiểm tra Python version trước.\n\nQuy tắc ngắn:\n\n```text\ncode mới     -> Python 3\ncode Python 2 -> xem như legacy cần migrate\n```",
+    "sourcePath": "content/python/getting-started/python2-vs-python3.md",
+    "headings": [
+      {
+        "title": "Khác biệt dễ gặp",
+        "id": "khac-biet-de-gap"
+      },
+      {
+        "title": "`print`",
+        "id": "print"
+      },
+      {
+        "title": "Phép chia",
+        "id": "phep-chia"
+      },
+      {
+        "title": "Text và bytes",
+        "id": "text-va-bytes"
+      },
+      {
+        "title": "Exception syntax",
+        "id": "exception-syntax"
+      },
+      {
+        "title": "Khi gặp project Python 2",
+        "id": "khi-gap-project-python-2"
+      },
+      {
+        "title": "Debug nhanh",
+        "id": "debug-nhanh"
+      }
+    ]
   },
   {
     "title": "Biến trong Python",
@@ -294,20 +575,33 @@ export const articles = [
       "/co-ban/toan-tu",
       "/collection/list"
     ],
-    "body": "Trong Python, biến là một cái tên trỏ tới object, không phải chiếc hộp có kiểu cố định. Assignment tạo hoặc cập nhật liên kết đó:\n\n```python\ndeadline_days = 14\ndeadline_days = deadline_days - 2\nprint(deadline_days)  # 12\n```\n\n## Đặt tên\n\nDùng `snake_case` cho biến và hàm, đặt tên thể hiện ý nghĩa: `retry_limit` tốt hơn `n`. Hằng số theo quy ước viết hoa như `DEFAULT_TIMEOUT = 10`.\n\n## Multiple assignment\n\n```python\nwidth, height = 1280, 720\nwidth, height = height, width\n```\n\nPython đánh giá vế phải trước rồi mới gán, nên phép hoán đổi trên không cần biến tạm.\n\n## Dễ nhầm\n\nHai tên có thể trỏ cùng một object. Điều này quan trọng với object mutable như list: `backup = items` không tạo bản sao. Khi cần bản sao, dùng `items.copy()` hoặc `copy.deepcopy()` tùy cấu trúc dữ liệu.",
-    "source": "content/python/fundamentals/bien.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 100,
+    "body": "Trong Python, biến là **tên tham chiếu tới một object**.\n\n```python\ncount = 10\nname = \"Nam\"\n```\n\nPython không khóa kiểu của biến:\n\n```python\nvalue = 10\nvalue = \"hello\"\n```\n\nTên `value` chỉ được gắn sang object khác.\n\n## Assignment\n\nDấu `=` dùng để gán:\n\n```python\ndeadline_days = 14\ndeadline_days = deadline_days - 2\n```\n\nSau đó:\n\n```python\nprint(deadline_days)\n```\n\nkết quả:\n\n```text\n12\n```\n\nCó thể viết ngắn:\n\n```python\ndeadline_days -= 2\n```\n\n## Đặt tên\n\nNên dùng `snake_case`:\n\n```python\nretry_limit = 3\nuser_name = \"Nam\"\n```\n\nTránh tên mơ hồ:\n\n```python\nx = 3\nn = 10\n```\n\nnếu chúng đại diện cho dữ liệu có ý nghĩa rõ ràng.\n\nHằng số thường viết hoa theo quy ước:\n\n```python\nDEFAULT_TIMEOUT = 10\nMAX_RETRIES = 3\n```\n\nPython không ngăn việc thay đổi các giá trị này; đây chỉ là convention.\n\n## Gán nhiều biến\n\n```python\nwidth, height = 1280, 720\n```\n\nHoán đổi:\n\n```python\nwidth, height = height, width\n```\n\nKhông cần biến tạm.\n\n## Hai biến có thể trỏ cùng object\n\n```python\nitems = [\"a\", \"b\"]\nbackup = items\n```\n\n`backup` không phải bản sao.\n\n```python\nbackup.append(\"c\")\n\nprint(items)\n```\n\nkết quả:\n\n```text\n['a', 'b', 'c']\n```\n\nVì cả hai tên cùng trỏ tới một list.\n\nMuốn tạo bản sao nông:\n\n```python\nbackup = items.copy()\n```\n\nVới cấu trúc nested cần copy hoàn toàn:\n\n```python\nfrom copy import deepcopy\n\nbackup = deepcopy(items)\n```\n\n## Kiểm tra khi debug\n\nXem giá trị:\n\n```python\nprint(value)\n```\n\nXem kiểu:\n\n```python\nprint(type(value))\n```\n\nKiểm tra hai tên có trỏ cùng object không:\n\n```python\nprint(a is b)\n```\n\nĐiểm cần nhớ:\n\n```text\nbiến = tên\nobject = dữ liệu thực\nassignment = gắn tên với object\n```\n\nVới object mutable như `list` và `dict`, hãy đặc biệt chú ý việc nhiều biến cùng tham chiếu tới một object.",
+    "sourcePath": "content/python/fundamentals/bien.md",
     "headings": [
+      {
+        "title": "Assignment",
+        "id": "assignment"
+      },
       {
         "title": "Đặt tên",
         "id": "at-ten"
       },
       {
-        "title": "Multiple assignment",
-        "id": "multiple-assignment"
+        "title": "Gán nhiều biến",
+        "id": "gan-nhieu-bien"
       },
       {
-        "title": "Dễ nhầm",
-        "id": "de-nham"
+        "title": "Hai biến có thể trỏ cùng object",
+        "id": "hai-bien-co-the-tro-cung-object"
+      },
+      {
+        "title": "Kiểm tra khi debug",
+        "id": "kiem-tra-khi-debug"
       }
     ]
   },
@@ -335,8 +629,13 @@ export const articles = [
       "/co-ban/toan-tu",
       "/collection/list"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 110,
     "body": "Python có một hệ thống object thống nhất. Một số kiểu nền tảng thường gặp:\n\n```python\ncount = 3                 # int\nratio = 0.75              # float\nenabled = True            # bool\nlabel = \"production\"     # str\npayload = b\"OK\"          # bytes\nmissing = None            # NoneType\n```\n\n## Chuyển đổi kiểu\n\nChuyển đổi tường minh giúp code dễ đọc và tránh bất ngờ từ input luôn là chuỗi:\n\n```python\nraw_port = \"8080\"\nport = int(raw_port)\nassert port > 0\n```\n\n## Mutable và immutable\n\n`int`, `float`, `bool`, `str`, `tuple` là immutable: thao tác “thay đổi” tạo object mới. `list`, `dict`, `set` là mutable và có thể thay đổi tại chỗ. Khi truyền object vào hàm, hãy biết hàm đang mutate hay tạo object mới để tránh side effect.",
-    "source": "content/python/data-types/kieu-du-lieu.md",
+    "sourcePath": "content/python/data-types/kieu-du-lieu.md",
     "headings": [
       {
         "title": "Chuyển đổi kiểu",
@@ -368,12 +667,45 @@ export const articles = [
       "/co-ban/bien",
       "/dieu-khien/if-elif-else"
     ],
-    "body": "Biểu thức là code tạo ra một giá trị. Toán tử kết hợp các giá trị đó thành logic của chương trình.\n\n```python\nsubtotal = 280_000\ndiscount = 0.1 if subtotal >= 200_000 else 0\ntotal = subtotal * (1 - discount)\n```\n\nCác nhóm chính gồm số học (`+`, `-`, `*`, `/`, `//`, `%`, `**`), so sánh (`==`, `!=`, `<`, `>=`) và logic (`and`, `or`, `not`). Dùng ngoặc khi ưu tiên chưa rõ thay vì dựa vào trí nhớ về precedence.\n\n## `is` và `==`\n\n`==` so sánh giá trị, còn `is` kiểm tra identity. Dùng `is None` để kiểm tra `None`, nhưng không dùng `is` thay cho `==` khi so sánh chuỗi hoặc số.",
-    "source": "content/python/fundamentals/toan-tu.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 120,
+    "body": "**Biểu thức** là đoạn code tạo ra một giá trị.\n\n```python\ntotal = price * quantity\nis_valid = age >= 18\n```\n\nToán tử dùng để tính toán, so sánh hoặc kết hợp các giá trị.\n\n## Toán tử số học\n\n```python\na + b    # cộng\na - b    # trừ\na * b    # nhân\na / b    # chia\na // b   # chia lấy phần nguyên\na % b    # chia lấy dư\na ** b   # lũy thừa\n```\n\nVí dụ:\n\n```python\n10 / 3\n# 3.333...\n\n10 // 3\n# 3\n\n10 % 3\n# 1\n\n2 ** 3\n# 8\n```\n\n`/` luôn là phép chia thông thường, còn `//` là floor division.\n\n## Toán tử so sánh\n\n```python\na == b   # bằng\na != b   # khác\na > b\na >= b\na < b\na <= b\n```\n\nKết quả là `True` hoặc `False`:\n\n```python\nage = 20\n\nage >= 18\n# True\n```\n\nPython hỗ trợ chained comparison:\n\n```python\n0 <= score <= 100\n```\n\nthay vì:\n\n```python\nscore >= 0 and score <= 100\n```\n\n## Toán tử logic\n\n```python\nand\nor\nnot\n```\n\nVí dụ:\n\n```python\nif is_logged_in and is_admin:\n    ...\n\nif is_owner or is_admin:\n    ...\n\nif not is_active:\n    ...\n```\n\n`and` cần cả hai điều kiện đúng.\n\n`or` chỉ cần một điều kiện đúng.\n\n`not` đảo giá trị logic.\n\n## `==` và `is`\n\n`==` so sánh **giá trị**:\n\n```python\na = [1, 2]\nb = [1, 2]\n\na == b\n# True\n```\n\n`is` kiểm tra hai biến có trỏ tới **cùng object**:\n\n```python\na is b\n# False\n```\n\nDùng `is` khi kiểm tra `None`:\n\n```python\nif value is None:\n    ...\n```\n\nKhông dùng:\n\n```python\nvalue == None\n```\n\nVà không dùng `is` để so sánh string hoặc số:\n\n```python\nname == \"Nam\"\n```\n\n## Toán tử gán\n\n```python\ncount += 1\ncount -= 1\nprice *= 2\ntotal /= 10\n```\n\nVí dụ:\n\n```python\ncount = 5\ncount += 1\n\nprint(count)\n# 6\n```\n\nTương đương:\n\n```python\ncount = count + 1\n```\n\n## Thứ tự tính toán\n\nPython có operator precedence:\n\n```python\nresult = 2 + 3 * 4\n# 14\n```\n\nPhép nhân chạy trước phép cộng.\n\nNếu biểu thức có thể gây nhầm, dùng ngoặc:\n\n```python\nresult = (2 + 3) * 4\n# 20\n```\n\nĐừng bắt người đọc phải nhớ toàn bộ bảng precedence chỉ để hiểu một dòng code.\n\n## Conditional expression\n\nCó thể chọn giá trị bằng một biểu thức ngắn:\n\n```python\nstatus = \"adult\" if age >= 18 else \"minor\"\n```\n\nPhù hợp với logic đơn giản.\n\nNếu điều kiện bắt đầu dài hoặc có nhiều nhánh, dùng `if` / `elif` / `else`.\n\n## Debug nhanh\n\nNếu biểu thức cho kết quả lạ, tách nó ra:\n\n```python\nhas_access = is_active and is_admin\n\nprint(is_active)\nprint(is_admin)\nprint(has_access)\n```\n\nĐừng debug một biểu thức boolean dài 200 ký tự trong đầu.\n\nNhớ nhanh:\n\n```text\n+ - * / // % **  -> tính toán\n== != < > <= >=  -> so sánh\nand or not       -> logic\n==               -> cùng giá trị\nis               -> cùng object\n```",
+    "sourcePath": "content/python/fundamentals/toan-tu.md",
     "headings": [
       {
-        "title": "`is` và `==`",
-        "id": "is-va"
+        "title": "Toán tử số học",
+        "id": "toan-tu-so-hoc"
+      },
+      {
+        "title": "Toán tử so sánh",
+        "id": "toan-tu-so-sanh"
+      },
+      {
+        "title": "Toán tử logic",
+        "id": "toan-tu-logic"
+      },
+      {
+        "title": "`==` và `is`",
+        "id": "va-is"
+      },
+      {
+        "title": "Toán tử gán",
+        "id": "toan-tu-gan"
+      },
+      {
+        "title": "Thứ tự tính toán",
+        "id": "thu-tu-tinh-toan"
+      },
+      {
+        "title": "Conditional expression",
+        "id": "conditional-expression"
+      },
+      {
+        "title": "Debug nhanh",
+        "id": "debug-nhanh"
       }
     ]
   },
@@ -400,9 +732,51 @@ export const articles = [
       "/co-ban/toan-tu",
       "/bat-dau/interpreter-repl"
     ],
-    "body": "Expression là đoạn code tạo ra giá trị, như `price * quantity`. Statement là một chỉ dẫn hoàn chỉnh, như assignment, `if`, `for` hoặc `return`. Một statement có thể chứa nhiều expression.\n\n```python\nsubtotal = price * quantity  # expression ở vế phải, assignment là statement\n```\n\nIdentifier là tên của variable, function hoặc class; keyword như `if`, `class`, `return` dành riêng cho syntax. Literal là cách viết trực tiếp một giá trị như `42`, `\"ready\"`, `[1, 2]`.\n\nIndentation không chỉ để format; nó xác định block. Whitespace thừa ở cuối dòng không thay đổi behavior nhưng nên để formatter xử lý. Semicolon có thể tách statement trên một dòng nhưng làm code khó đọc; hãy dùng mỗi dòng một statement. Dấu `\\\\` cho multiline cũ dễ lỗi, ưu tiên ngoặc cho expression dài.",
-    "source": "content/python/fundamentals/syntax-and-execution.md",
-    "headings": []
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 130,
+    "body": "**Syntax** là tập quy tắc xác định code Python viết thế nào mới hợp lệ.\n\n## Expression\n\nExpression tạo ra một giá trị:\n\n```python id=\"x4m3qp\"\nprice * quantity\nage >= 18\nname.upper()\n```\n\nVí dụ:\n\n```python id=\"8j4mps\"\nsubtotal = price * quantity\n```\n\n`price * quantity` là expression.\n\n## Statement\n\nStatement là một chỉ dẫn hoàn chỉnh:\n\n```python id=\"hbd3zr\"\ntotal = 100\n\nif total > 50:\n    print(total)\n\nreturn total\n```\n\nAssignment, `if`, `for`, `while`, `import` và `return` đều là statement.\n\nMột statement có thể chứa nhiều expression.\n\n## Literal\n\nLiteral là giá trị được viết trực tiếp trong code:\n\n```python id=\"7nqcb8\"\n42\n3.14\n\"hello\"\nTrue\nNone\n[1, 2, 3]\n{\"name\": \"Nam\"}\n```\n\n## Identifier\n\nIdentifier là tên do bạn đặt:\n\n```python id=\"4ntux9\"\nuser_name = \"Nam\"\n\ndef calculate_total():\n    ...\n```\n\n`user_name` và `calculate_total` là identifier.\n\nTên hợp lệ có thể chứa:\n\n```text id=\"73pxcv\"\nchữ cái\nsố\n_\n```\n\nnhưng không được bắt đầu bằng số:\n\n```python id=\"0eswmp\"\nuser2 = \"Nam\"    # hợp lệ\n2user = \"Nam\"    # SyntaxError\n```\n\n## Keyword\n\nKeyword là từ Python dành riêng cho syntax:\n\n```text id=\"cz44vh\"\nif\nelse\nfor\nwhile\ndef\nclass\nreturn\nimport\nTrue\nFalse\nNone\n```\n\nKhông thể dùng chúng làm tên biến:\n\n```python id=\"dprc2s\"\nclass = \"admin\"\n```\n\nsẽ gây `SyntaxError`.\n\n## Indentation\n\nPython dùng indentation để xác định block:\n\n```python id=\"3mt16u\"\nif is_admin:\n    print(\"Admin\")\n    show_panel()\n\nprint(\"Done\")\n```\n\nHai dòng thụt vào thuộc `if`.\n\nDòng cuối nằm ngoài block.\n\nSai indentation có thể gây:\n\n```text id=\"sufbp1\"\nIndentationError\n```\n\nhoặc tệ hơn, code vẫn chạy nhưng sai logic.\n\nThông thường dùng **4 spaces** cho mỗi cấp indentation.\n\n## Multiline\n\nVới expression dài, ưu tiên ngoặc:\n\n```python id=\"ui4kxu\"\ncan_publish = (\n    is_active\n    and is_verified\n    and not is_banned\n)\n```\n\nTránh dùng `\\` nếu không cần:\n\n```python id=\"2xdj0w\"\ncan_publish = is_active and \\\n    is_verified\n```\n\nNgoặc ít lỗi hơn và formatter xử lý tốt hơn.\n\n## Một statement mỗi dòng\n\nPython cho phép:\n\n```python id=\"a1h7g5\"\na = 1; b = 2\n```\n\nnhưng nên viết:\n\n```python id=\"3u0gy3\"\na = 1\nb = 2\n```\n\nDễ đọc và debug hơn.\n\n## Debug nhanh\n\nNếu gặp:\n\n```text id=\"ngmxad\"\nSyntaxError\nIndentationError\n```\n\nkiểm tra trước:\n\n```text id=\"66ol9s\"\nthiếu dấu :\nngoặc chưa đóng\nstring chưa đóng\nindent sai\ndùng keyword làm tên\n```\n\nNhớ nhanh:\n\n```text id=\"bdh5ac\"\nexpression -> tạo giá trị\nstatement  -> thực hiện chỉ dẫn\nliteral    -> giá trị viết trực tiếp\nidentifier -> tên do mình đặt\nkeyword    -> từ dành riêng của Python\nindentation -> xác định block\n```",
+    "sourcePath": "content/python/fundamentals/syntax-and-execution.md",
+    "headings": [
+      {
+        "title": "Expression",
+        "id": "expression"
+      },
+      {
+        "title": "Statement",
+        "id": "statement"
+      },
+      {
+        "title": "Literal",
+        "id": "literal"
+      },
+      {
+        "title": "Identifier",
+        "id": "identifier"
+      },
+      {
+        "title": "Keyword",
+        "id": "keyword"
+      },
+      {
+        "title": "Indentation",
+        "id": "indentation"
+      },
+      {
+        "title": "Multiline",
+        "id": "multiline"
+      },
+      {
+        "title": "Một statement mỗi dòng",
+        "id": "mot-statement-moi-dong"
+      },
+      {
+        "title": "Debug nhanh",
+        "id": "debug-nhanh"
+      }
+    ]
   },
   {
     "title": "Python object model",
@@ -427,8 +801,13 @@ export const articles = [
       "/co-ban/kieu-du-lieu",
       "/co-ban/copying-aliasing"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 140,
     "body": "Trong Python, mọi giá trị đều là object. Object có identity, type và value. Tên được bind tới object; tên không phải chiếc hộp chứa dữ liệu và type không “nằm trong” variable.\n\n```python\na = [1, 2]\nb = a\nb.append(3)\nprint(a)  # [1, 2, 3]\nprint(a is b)  # True\n```\n\n`b = a` tạo thêm binding tới cùng list. `a == b` hỏi hai object có value tương đương hay không; `a is b` hỏi có cùng identity hay không. Chỉ dùng `is` cho singleton như `None`, không dùng để so sánh string hoặc số.\n\nObject có lifecycle: được tạo, được bind bởi tên hoặc container, rồi có thể được thu hồi khi không còn reference hữu ích. Chi tiết thu hồi phụ thuộc implementation; code đúng không nên dựa vào thời điểm destructor chạy.",
-    "source": "content/python/fundamentals/object-model.md",
+    "sourcePath": "content/python/fundamentals/object-model.md",
     "headings": []
   },
   {
@@ -452,8 +831,13 @@ export const articles = [
       "/collection/list",
       "/best-practices/common-mistakes"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 150,
     "body": "Assignment không copy object mutable:\n\n```python\noriginal = {\"tags\": [\"python\"]}\nalias = original\nalias[\"tags\"].append(\"docs\")\n```\n\n`original` cũng đổi vì cả hai tên trỏ cùng dict. `original.copy()` hoặc `copy.copy()` chỉ copy lớp ngoài; list `tags` bên trong vẫn dùng chung. `copy.deepcopy()` duyệt và copy sâu hơn, nhưng có thể đắt, không phù hợp với mọi object và có thể gặp vòng tham chiếu.\n\nHãy chọn cách copy theo ownership: nếu object immutable, share thường an toàn; nếu cần snapshot của dữ liệu lồng nhau, copy rõ ràng; nếu có thể, thiết kế API trả object mới và tránh chia sẻ state mutable giữa các boundary.",
-    "source": "content/python/fundamentals/copying-aliasing.md",
+    "sourcePath": "content/python/fundamentals/copying-aliasing.md",
     "headings": []
   },
   {
@@ -477,8 +861,13 @@ export const articles = [
       "/co-ban/syntax",
       "/collection/tuple"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 160,
     "body": "Unpacking tách một iterable thành nhiều tên:\n\n```python\nfirst, *middle, last = [\"draft\", \"review\", \"ship\", \"monitor\"]\n```\n\nStarred expression cũng dùng khi gọi hàm: `send(*recipients, **options)`. Hãy chắc chắn shape dữ liệu đúng; unpack sai số phần tử sẽ ném `ValueError`.\n\nWalrus `:=` vừa gán vừa trả lại giá trị, có từ Python 3.8. Nó hữu ích khi kết quả cần dùng trong điều kiện và trong cùng scope:\n\n```python\nwhile (line := stream.readline()):\n    process(line)\n```\n\nĐừng dùng walrus để nhồi logic vào điều kiện khó đọc. Nếu tên tạm cần xuất hiện ở nhiều bước, assignment riêng thường rõ hơn.",
-    "source": "content/python/fundamentals/unpacking-walrus.md",
+    "sourcePath": "content/python/fundamentals/unpacking-walrus.md",
     "headings": []
   },
   {
@@ -506,8 +895,13 @@ export const articles = [
       "/collection/comprehensions",
       "/co-ban/object-model"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 170,
     "body": "Built-in là tên có sẵn trong namespace `builtins`, không cần import. Nhóm tạo/biến đổi gồm `int`, `float`, `str`, `list`, `dict`, `set`; nhóm kiểm tra gồm `type`, `isinstance`, `callable`, `hasattr`; nhóm duyệt gồm `len`, `iter`, `next`, `enumerate`, `zip`, `reversed`.\n\n```python\nrecords = [(\"An\", 82), (\"Bình\", 91)]\nfor rank, (name, score) in enumerate(sorted(records, key=lambda item: item[1], reverse=True), start=1):\n    print(rank, name, score)\n```\n\n`all` và `any` short-circuit; `sum`, `min`, `max` nhận iterable; `repr` dành cho representation có ích khi debug; `help`, `dir`, `id` hữu ích trong khám phá. Cẩn thận shadow built-in như đặt variable tên `list` hoặc `id`, vì tên gốc sẽ khó gọi lại trong scope đó.",
-    "source": "content/python/fundamentals/builtins.md",
+    "sourcePath": "content/python/fundamentals/builtins.md",
     "headings": []
   },
   {
@@ -534,8 +928,13 @@ export const articles = [
       "/co-ban/toan-tu",
       "/standard-library/datetime"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 180,
     "body": "`int` có precision tùy kích thước bộ nhớ, nên không overflow ở một giới hạn 32-bit cố định như nhiều ngôn ngữ. `float` thường là IEEE 754 double precision và có sai số biểu diễn:\n\n```python\nprint(0.1 + 0.2 == 0.3)  # False\n```\n\nĐây không phải lỗi của phép cộng; nhiều phân số thập phân không có biểu diễn nhị phân hữu hạn. Dùng `math.isclose` cho so sánh gần đúng. Với tiền tệ hoặc decimal cần kiểm soát, dùng `decimal.Decimal` thay vì cộng float rồi round ở cuối.\n\n`complex` dùng phần thực và ảo; `bool` là subtype của `int`, nên `True == 1` là đúng nhưng không có nghĩa nên trộn chúng trong mọi API. `float(\"nan\")` không bằng chính nó, còn infinity cần xử lý trước khi tính toán.",
-    "source": "content/python/data-types/numbers.md",
+    "sourcePath": "content/python/data-types/numbers.md",
     "headings": []
   },
   {
@@ -560,8 +959,13 @@ export const articles = [
       "/file",
       "/standard-library/security-modules"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 190,
     "body": "`str` là text; `bytes` là chuỗi byte bất biến; `bytearray` là phiên bản mutable; `memoryview` cho phép nhìn vào buffer mà không copy dữ liệu.\n\n```python\nmessage = \"Xin chào\"\npayload = message.encode(\"utf-8\")\ndecoded = payload.decode(\"utf-8\")\n```\n\nEncoding phải thống nhất giữa producer và consumer. Không gọi `.decode()` lên string hoặc `.encode()` lên bytes một cách tùy tiện. Khi xử lý file, socket hay hash, giữ dữ liệu ở bytes càng lâu càng tốt và chỉ decode tại boundary text.",
-    "source": "content/python/data-types/binary-data.md",
+    "sourcePath": "content/python/data-types/binary-data.md",
     "headings": []
   },
   {
@@ -585,12 +989,37 @@ export const articles = [
       "/dieu-khien/for",
       "/dieu-khien/while"
     ],
-    "body": "`if` chạy một khối khi điều kiện đúng. `elif` cho các nhánh thay thế và `else` xử lý phần còn lại.\n\n```python\nscore = 82\n\nif score >= 90:\n    level = \"excellent\"\nelif score >= 70:\n    level = \"good\"\nelse:\n    level = \"needs-review\"\n```\n\n## Guard clauses\n\nTrong hàm, trả về sớm cho trường hợp không hợp lệ giúp giảm nesting:\n\n```python\ndef can_publish(is_owner: bool, has_draft: bool) -> bool:\n    if not is_owner or not has_draft:\n        return False\n    return True\n```\n\nĐừng nhồi nhiều điều kiện không liên quan vào một dòng. Nếu điều kiện có tên riêng, hãy tách thành biến boolean hoặc hàm nhỏ.",
-    "source": "content/python/control-flow/if-elif-else.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 200,
+    "body": "`if` dùng để chạy code khi một điều kiện đúng.\n\n```python\nage = 18\n\nif age >= 18:\n    print(\"Đủ tuổi\")\n```\n\n## `if`, `elif`, `else`\n\n```python\nscore = 82\n\nif score >= 90:\n    level = \"excellent\"\nelif score >= 70:\n    level = \"good\"\nelse:\n    level = \"needs-review\"\n```\n\nPython kiểm tra từ trên xuống.\n\nNhánh đầu tiên đúng sẽ được chạy, các `elif` phía sau bị bỏ qua.\n\n```text\nscore = 82\n\nscore >= 90  -> False\nscore >= 70  -> True\nelse         -> không chạy\n```\n\nVì vậy thứ tự điều kiện rất quan trọng.\n\nSai:\n\n```python\nif score >= 70:\n    level = \"good\"\nelif score >= 90:\n    level = \"excellent\"\n```\n\nĐiểm `95` sẽ vào nhánh đầu tiên và không bao giờ tới `>= 90`.\n\n## Không bắt buộc có `else`\n\n```python\nif is_admin:\n    show_admin_panel()\n```\n\nChỉ thêm `else` khi thực sự có logic cho trường hợp còn lại.\n\n## Kết hợp điều kiện\n\nDùng `and` khi tất cả điều kiện phải đúng:\n\n```python\nif is_logged_in and is_admin:\n    show_admin_panel()\n```\n\nDùng `or` khi chỉ cần một điều kiện đúng:\n\n```python\nif is_owner or is_admin:\n    allow_edit()\n```\n\nDùng `not` để đảo điều kiện:\n\n```python\nif not is_logged_in:\n    redirect_login()\n```\n\n## Guard clause\n\nTrong function, xử lý trường hợp lỗi hoặc không hợp lệ trước:\n\n```python\ndef can_publish(is_owner: bool, has_draft: bool) -> bool:\n    if not is_owner or not has_draft:\n        return False\n\n    return True\n```\n\nCách này thường dễ đọc hơn nesting:\n\n```python\ndef can_publish(is_owner, has_draft):\n    if is_owner:\n        if has_draft:\n            return True\n\n    return False\n```\n\n## Tránh điều kiện quá dài\n\nKhó đọc:\n\n```python\nif user.is_active and user.email_verified and not user.banned and user.role == \"admin\":\n    ...\n```\n\nRõ hơn:\n\n```python\ncan_manage = (\n    user.is_active\n    and user.email_verified\n    and not user.banned\n    and user.role == \"admin\"\n)\n\nif can_manage:\n    ...\n```\n\nNếu điều kiện có ý nghĩa riêng, đặt tên cho nó thay vì để một dòng boolean dài ngoằng.\n\n## Debug nhanh\n\nNếu code chạy sai nhánh, kiểm tra:\n\n```python\nprint(condition)\nprint(type(condition))\n```\n\nVà đặc biệt xem lại **thứ tự `if` / `elif`**.\n\nQuy tắc cần nhớ:\n\n```text\nif   -> điều kiện đầu tiên\nelif -> thử tiếp nếu nhánh trước sai\nelse -> trường hợp còn lại\n```\n\nPython chỉ chạy một nhánh trong cùng chuỗi `if` / `elif` / `else`.",
+    "sourcePath": "content/python/control-flow/if-elif-else.md",
     "headings": [
       {
-        "title": "Guard clauses",
-        "id": "guard-clauses"
+        "title": "`if`, `elif`, `else`",
+        "id": "if-elif-else"
+      },
+      {
+        "title": "Không bắt buộc có `else`",
+        "id": "khong-bat-buoc-co-else"
+      },
+      {
+        "title": "Kết hợp điều kiện",
+        "id": "ket-hop-ieu-kien"
+      },
+      {
+        "title": "Guard clause",
+        "id": "guard-clause"
+      },
+      {
+        "title": "Tránh điều kiện quá dài",
+        "id": "tranh-ieu-kien-qua-dai"
+      },
+      {
+        "title": "Debug nhanh",
+        "id": "debug-nhanh"
       }
     ]
   },
@@ -615,8 +1044,13 @@ export const articles = [
       "/collection/list",
       "/ham/function"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 210,
     "body": "`for` duyệt từng phần tử của một iterable. Hãy duyệt trực tiếp collection khi không cần index:\n\n```python\npending = [\"invoice-104\", \"invoice-105\", \"invoice-106\"]\nfor invoice_id in pending:\n    print(f\"Đang xử lý {invoice_id}\")\n```\n\nKhi cần vị trí, dùng `enumerate`; khi ghép hai dãy, dùng `zip`:\n\n```python\nfor position, invoice_id in enumerate(pending, start=1):\n    print(position, invoice_id)\n```\n\nTránh xóa phần tử ngay trên list đang duyệt. Hãy tạo list mới bằng comprehension hoặc lọc trước để không bỏ sót phần tử.",
-    "source": "content/python/control-flow/for.md",
+    "sourcePath": "content/python/control-flow/for.md",
     "headings": []
   },
   {
@@ -638,8 +1072,13 @@ export const articles = [
       "/dieu-khien/for",
       "/dieu-khien/break-continue"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 220,
     "body": "Dùng `while` khi số lần lặp phụ thuộc vào một trạng thái thay đổi dần, chẳng hạn retry đến khi thành công hoặc đọc đến cuối stream.\n\n```python\nattempt = 0\nmax_attempts = 3\nwhile attempt < max_attempts:\n    attempt += 1\n    print(f\"Thử lần {attempt}\")\n```\n\nMọi nhánh dẫn tới lần kiểm tra tiếp theo phải cập nhật trạng thái hoặc kết thúc vòng lặp. Nếu không, chương trình có thể treo vì vòng lặp vô hạn.",
-    "source": "content/python/control-flow/while.md",
+    "sourcePath": "content/python/control-flow/while.md",
     "headings": []
   },
   {
@@ -661,8 +1100,13 @@ export const articles = [
       "/dieu-khien/for",
       "/co-ban/bien"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 230,
     "body": "`range` biểu diễn một dãy số theo kiểu lazy, nên không tạo sẵn cả list trong bộ nhớ.\n\n```python\nfor page in range(1, 4):\n    print(f\"Tải trang {page}\")\n\nfor index in range(10, 2, -2):\n    print(index)  # 10, 8, 6, 4\n```\n\nGiá trị `stop` không bao giờ được bao gồm. Nếu bạn chỉ cần duyệt phần tử của collection, ưu tiên duyệt collection trực tiếp thay vì `range(len(items))`.",
-    "source": "content/python/control-flow/range.md",
+    "sourcePath": "content/python/control-flow/range.md",
     "headings": []
   },
   {
@@ -684,8 +1128,13 @@ export const articles = [
       "/dieu-khien/for",
       "/dieu-khien/while"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 240,
     "body": "`break` kết thúc vòng lặp ngay; `continue` bỏ qua phần còn lại của lượt hiện tại và chuyển sang lượt kế tiếp.\n\n```python\nfor event in events:\n    if event is None:\n        continue\n    if event == \"shutdown\":\n        break\n    handle(event)\n```\n\nNếu có quá nhiều `break` và `continue`, hãy tách logic xử lý thành hàm hoặc đổi sang pipeline rõ ràng hơn. `for ... else` cũng có thể diễn đạt “không tìm thấy” mà không cần cờ trạng thái riêng.",
-    "source": "content/python/control-flow/break-continue.md",
+    "sourcePath": "content/python/control-flow/break-continue.md",
     "headings": []
   },
   {
@@ -709,8 +1158,13 @@ export const articles = [
       "/co-ban/object-model",
       "/oop/dataclasses"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 250,
     "body": "`match` so khớp shape và value, không chỉ là `switch` đổi tên. Feature có từ Python 3.10:\n\n```python\ndef describe(message: dict[str, object]) -> str:\n    match message:\n        case {\"kind\": \"created\", \"id\": item_id}:\n            return f\"Created {item_id}\"\n        case {\"kind\": kind} if kind in {\"deleted\", \"archived\"}:\n            return f\"Closed: {kind}\"\n        case _:\n            return \"Unknown event\"\n```\n\n`case _` là wildcard; guard sau pattern là điều kiện bổ sung. Pattern matching có thể destructure sequence, mapping và class. Dùng khi cấu trúc input là trọng tâm; với vài điều kiện đơn giản, `if/elif` thường dễ đọc hơn.",
-    "source": "content/python/control-flow/match.md",
+    "sourcePath": "content/python/control-flow/match.md",
     "headings": []
   },
   {
@@ -734,8 +1188,13 @@ export const articles = [
       "/collection/dictionary",
       "/co-ban/kieu-du-lieu"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 300,
     "body": "List đại diện cho một dãy phần tử có thứ tự. Nó phù hợp với hàng đợi nhỏ, kết quả truy vấn, danh sách bước xử lý hoặc dữ liệu cần cập nhật.\n\n```python\ntasks = [\"review\", \"test\", \"deploy\"]\nfirst_task = tasks[0]\nlast_two = tasks[-2:]\ntasks.append(\"monitor\")\n```\n\n## Indexing và slicing\n\nIndex bắt đầu từ `0`, index âm đếm từ cuối. Slicing tạo một list mới và dùng quy tắc `start:stop:step`, trong đó `stop` không bao gồm.\n\n## Khi nào không nên dùng list?\n\nNếu cần tra cứu theo khóa, dùng `dict`; cần loại trùng, dùng `set`; cần dữ liệu bất biến, cân nhắc `tuple`. Xóa đầu list nhiều lần có thể chậm; với queue, dùng `collections.deque`.\n\n## Comprehension\n\n```python\nurgent = [task for task in tasks if task in {\"review\", \"deploy\"}]\n```\n\nGiữ comprehension ngắn và đơn giản. Logic nhiều nhánh nên dùng vòng lặp thường để dễ debug.\n\n## Các method và chi phí\n\n`append` thêm một phần tử, `extend` thêm nhiều phần tử, `insert` chèn theo index, `remove` xóa theo value, `pop` xóa và trả về theo index, còn `clear` làm rỗng list. `sort` đổi list tại chỗ và trả `None`; `sorted` tạo list mới.\n\n`append` có chi phí amortized O(1), nhưng membership, `index` và `remove` thường O(n). Nếu cần xóa đầu queue nhiều lần, dùng `deque`. `copy()` là shallow copy, nên matrix lồng nhau vẫn có thể alias.\n\n```python\nmatrix = [[0] * 3 for _ in range(3)]\n```\n\nCách viết comprehension tạo row độc lập; `[[0] * 3] * 3` sẽ khiến mọi row dùng chung inner list.",
-    "source": "content/python/collections/list.md",
+    "sourcePath": "content/python/collections/list.md",
     "headings": [
       {
         "title": "Indexing và slicing",
@@ -774,8 +1233,13 @@ export const articles = [
       "/collection/list",
       "/co-ban/kieu-du-lieu"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 310,
     "body": "Tuple là sequence immutable. Nó diễn đạt tốt một bản ghi nhỏ có cấu trúc cố định:\n\n```python\npoint = (10, 24)\nx, y = point\n```\n\nTuple có thể làm key của dict nếu mọi phần tử bên trong đều hashable. Dùng tuple để thể hiện “số lượng và thứ tự này là một phần của dữ liệu”, còn list khi collection cần thay đổi.\n\n## Unpacking an toàn\n\n```python\nfirst, *middle, last = [\"a\", \"b\", \"c\", \"d\"]\n```\n\nNếu bản ghi có nhiều trường và cần tên rõ nghĩa, `dataclass` thường dễ đọc hơn tuple vị trí.",
-    "source": "content/python/collections/tuple.md",
+    "sourcePath": "content/python/collections/tuple.md",
     "headings": [
       {
         "title": "Unpacking an toàn",
@@ -803,8 +1267,13 @@ export const articles = [
       "/collection/set",
       "/co-ban/kieu-du-lieu"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 320,
     "body": "Dictionary ánh xạ key sang value. Dùng nó khi dữ liệu được truy cập bằng tên hoặc mã định danh thay vì vị trí.\n\n```python\nuser = {\"id\": 42, \"name\": \"An\", \"roles\": [\"editor\"]}\nuser[\"active\"] = True\n\nfor key, value in user.items():\n    print(key, value)\n```\n\n`dict.get(key, default)` hữu ích khi key có thể vắng mặt. Tránh dùng `if key in data` rồi truy cập lại nếu bạn chỉ cần lấy giá trị một lần.\n\nKey phải hashable, nên list không thể làm key nhưng tuple phù hợp nếu các phần tử của tuple cũng hashable.\n\n## API thường dùng\n\n`get` đọc với default; `setdefault` đọc hoặc tạo value khi thiếu; `update` merge mapping; `pop` xóa một key và trả value; `popitem` lấy cặp cuối cùng theo insertion order hiện hành. `keys`, `values`, `items` trả view object phản ánh thay đổi của dict, không phải snapshot list.\n\nTừ Python 3.9, `left | right` tạo dict merge mới còn `left |= right` cập nhật tại chỗ. Khi key trùng, value bên phải thắng. Dictionary giữ insertion order như language behavior hiện đại, nhưng không nên nhầm điều đó với sorted order.",
-    "source": "content/python/collections/dictionary.md",
+    "sourcePath": "content/python/collections/dictionary.md",
     "headings": [
       {
         "title": "API thường dùng",
@@ -831,8 +1300,13 @@ export const articles = [
       "/collection/list",
       "/collection/dictionary"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 330,
     "body": "Set chứa các phần tử không trùng nhau và không nên được dùng khi thứ tự là dữ liệu quan trọng.\n\n```python\nfrontend = {\"alice\", \"minh\", \"lan\"}\nreviewers = {\"lan\", \"duy\"}\nboth = frontend & reviewers\nonly_frontend = frontend - reviewers\n```\n\nSet thường là lựa chọn tốt để kiểm tra membership nhiều lần hoặc loại trùng. Nếu cần giữ thứ tự xuất hiện và chỉ loại trùng, hãy cân nhắc `dict.fromkeys(items)`.",
-    "source": "content/python/collections/set.md",
+    "sourcePath": "content/python/collections/set.md",
     "headings": []
   },
   {
@@ -856,8 +1330,13 @@ export const articles = [
       "/co-ban/bien",
       "/co-ban/toan-tu"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 340,
     "body": "String là sequence immutable của các ký tự Unicode. Bạn có thể index, slice và gọi method mà không làm thay đổi string gốc.\n\n```python\ncustomer = \"Nguyễn An\"\ndisplay = customer.strip().title()\nmessage = f\"Xin chào {display}\"\n```\n\n## Formatting\n\nƯu tiên f-string khi ghép giá trị vào câu. Với dữ liệu do người dùng nhập, xử lý và escape theo ngữ cảnh trước khi đưa vào HTML, SQL hoặc shell.\n\n## Encoding\n\nKhi đọc ghi file, nêu rõ encoding nếu dữ liệu đi qua nhiều hệ thống:\n\n```python\nfrom pathlib import Path\n\ncontent = Path(\"notes.txt\").read_text(encoding=\"utf-8\")\n```\n\n`encode()` chuyển string thành bytes; `decode()` chuyển bytes về string. Đừng nhầm byte length với số ký tự Unicode.\n\n## Method thực tế\n\n`split` tách text, `join` ghép một iterable string, `strip` bỏ whitespace ở hai đầu, `replace` thay substring, `find` trả `-1` nếu không thấy còn `index` ném `ValueError`. `startswith` và `endswith` hữu ích để kiểm tra prefix/suffix mà không cần slice.\n\nString immutable nên mọi method tạo string mới. Tránh nối string trong loop rất lớn bằng `\"\".join(parts)`. Khi đưa text vào HTML, SQL hoặc shell, escaping phải theo đúng output context; f-string chỉ format, không phải sanitizer.",
-    "source": "content/python/strings/string.md",
+    "sourcePath": "content/python/strings/string.md",
     "headings": [
       {
         "title": "Formatting",
@@ -893,8 +1372,13 @@ export const articles = [
       "/collection/dictionary",
       "/advanced/generator"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 350,
     "body": "Comprehension diễn đạt “tạo collection từ iterable” trong một expression:\n\n```python\nprices = [120_000, 85_000, 240_000]\nvat_by_price = {price: round(price * 1.08) for price in prices}\nlarge_prices = [price for price in prices if price >= 100_000]\n```\n\nCó thể có nhiều `for`, điều kiện và destructuring, nhưng mỗi lớp lồng làm mental model nặng hơn. Khi body cần side effect, nhiều nhánh hoặc exception handling, quay về loop thường.\n\nGenerator expression dùng ngoặc tròn và lazy hơn list comprehension:\n\n```python\ntotal = sum(price for price in prices if price >= 100_000)\n```\n\nĐừng dùng comprehension chỉ để gọi function có side effect rồi bỏ kết quả; loop nói rõ ý định hơn.",
-    "source": "content/python/collections/comprehensions.md",
+    "sourcePath": "content/python/collections/comprehensions.md",
     "headings": []
   },
   {
@@ -918,8 +1402,13 @@ export const articles = [
       "/collection/dictionary",
       "/collection/set"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 360,
     "body": "Chọn theo câu hỏi mà code cần trả lời:\n\n- Cần sequence có thứ tự và cập nhật: `list`.\n- Cần record nhỏ, ổn định, unpack được: `tuple` hoặc dataclass nếu cần tên field.\n- Cần tra cứu theo key: `dict`.\n- Cần membership và phép tập hợp: `set`/`frozenset`.\n- Cần queue hai đầu: `collections.deque`.\n\nList membership thường quét tuyến tính; dict/set lookup trung bình nhanh nhưng phụ thuộc hash và workload. Đừng chọn set chỉ vì “O(1)” nếu thứ tự là một phần semantics. Với dữ liệu lồng nhau, quyết định mutable hay immutable cũng quan trọng như tốc độ.",
-    "source": "content/python/collections/choose-collection.md",
+    "sourcePath": "content/python/collections/choose-collection.md",
     "headings": []
   },
   {
@@ -943,16 +1432,41 @@ export const articles = [
       "/co-ban/bien",
       "/co-ban/kieu-du-lieu"
     ],
-    "body": "Hàm đóng gói một thao tác có tên, đầu vào và đầu ra rõ ràng. Hàm tốt thường làm một việc và dễ gọi lại.\n\n```python\ndef calculate_total(subtotal: int, discount_rate: float = 0.0) -> int:\n    \"\"\"Return the rounded total after a percentage discount.\"\"\"\n    return round(subtotal * (1 - discount_rate))\n\ntotal = calculate_total(280_000, discount_rate=0.1)\n```\n\n## Parameter và argument\n\nParameter là tên trong định nghĩa; argument là giá trị khi gọi. Dùng keyword argument cho giá trị dễ gây nhầm, đặc biệt khi hàm có nhiều tham số cùng kiểu.\n\nTránh mutable default như `items=[]`; giá trị mặc định được tạo một lần khi định nghĩa hàm và có thể bị giữ lại giữa các lần gọi.\n\n## Contract và return\n\nKhông có `return` hoặc `return` trống đều trả `None`. Hãy ghi rõ output và side effect trong docstring khi function được dùng bởi module khác. Annotation giúp đọc contract nhưng không tự validate runtime; dữ liệu từ JSON vẫn cần kiểm tra.\n\nHàm nên nhận dependency qua parameter thay vì đọc global state ẩn. Khi function có quá nhiều flag làm thay đổi nhiều behavior, tách use case hoặc tạo object cấu hình có tên thường dễ test hơn.",
-    "source": "content/python/functions/function.md",
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 400,
+    "body": "Hàm gom một đoạn logic thành một khối có tên để có thể gọi lại.\n\n```python\ndef calculate_total(subtotal: int, discount_rate: float = 0.0) -> int:\n    return round(subtotal * (1 - discount_rate))\n```\n\nGọi hàm:\n\n```python\ntotal = calculate_total(280_000, discount_rate=0.1)\n```\n\n## Parameter và argument\n\nTrong:\n\n```python\ndef greet(name):\n    print(f\"Hello {name}\")\n```\n\n`name` là **parameter**.\n\nKhi gọi:\n\n```python\ngreet(\"Nam\")\n```\n\n`\"Nam\"` là **argument**.\n\nCó thể truyền theo vị trí:\n\n```python\ncalculate_total(280_000, 0.1)\n```\n\nhoặc theo tên:\n\n```python\ncalculate_total(\n    subtotal=280_000,\n    discount_rate=0.1,\n)\n```\n\nKeyword argument dễ đọc hơn khi hàm có nhiều giá trị dễ nhầm.\n\n## `return`\n\n`return` gửi kết quả ra khỏi hàm:\n\n```python\ndef add(a, b):\n    return a + b\n\nresult = add(2, 3)\n```\n\nNếu không có `return`:\n\n```python\ndef log_message():\n    print(\"Done\")\n```\n\nhàm sẽ trả:\n\n```python\nNone\n```\n\n`print()` và `return` không giống nhau:\n\n```python\ndef add(a, b):\n    print(a + b)\n```\n\nđoạn trên chỉ in kết quả, không trả nó cho code bên ngoài.\n\n## Default parameter\n\nCó thể đặt giá trị mặc định:\n\n```python\ndef greet(name, prefix=\"Hello\"):\n    return f\"{prefix} {name}\"\n```\n\nKhi đó:\n\n```python\ngreet(\"Nam\")\ngreet(\"Nam\", \"Hi\")\n```\n\nđều hợp lệ.\n\n## Tránh mutable default\n\nKhông nên:\n\n```python\ndef add_item(item, items=[]):\n    items.append(item)\n    return items\n```\n\n`items` được tạo một lần và có thể giữ dữ liệu giữa nhiều lần gọi.\n\nDùng:\n\n```python\ndef add_item(item, items=None):\n    if items is None:\n        items = []\n\n    items.append(item)\n    return items\n```\n\nĐây là bug Python rất dễ gặp khi debug state bất thường.\n\n## Type hint\n\nType hint giúp mô tả contract của hàm:\n\n```python\ndef add(a: int, b: int) -> int:\n    return a + b\n```\n\nNhưng Python không tự chặn:\n\n```python\nadd(\"1\", \"2\")\n```\n\nchỉ vì đã khai báo `int`.\n\nType hint hỗ trợ IDE, static checker và người đọc code, không thay thế runtime validation.\n\n## Hàm nên làm một việc\n\nNên:\n\n```python\ndef calculate_total(...):\n    ...\n\ndef save_invoice(...):\n    ...\n```\n\nthay vì một hàm vừa tính toán, vừa ghi database, vừa gửi email, vừa log.\n\nHàm nhỏ thường dễ:\n\n```text\nđọc\ntest\ndebug\nreuse\n```\n\n## Debug nhanh\n\nNếu function trả kết quả lạ, kiểm tra:\n\n```python\nprint(type(value))\nprint(value)\n```\n\nNếu nhận:\n\n```text\nNone\n```\n\nhãy kiểm tra function có thật sự `return` hay chỉ `print`.\n\nNếu state bị giữ lại giữa nhiều lần gọi, kiểm tra mutable default:\n\n```python\nitems=[]\nconfig={}\ncache=set()\n```\n\nQuy tắc ngắn:\n\n```text\ninput  -> parameter\nlogic  -> function body\noutput -> return\n```\n\nMột hàm tốt nên có input rõ, output rõ và ít side effect ẩn.",
+    "sourcePath": "content/python/functions/function.md",
     "headings": [
       {
         "title": "Parameter và argument",
         "id": "parameter-va-argument"
       },
       {
-        "title": "Contract và return",
-        "id": "contract-va-return"
+        "title": "`return`",
+        "id": "return"
+      },
+      {
+        "title": "Default parameter",
+        "id": "default-parameter"
+      },
+      {
+        "title": "Tránh mutable default",
+        "id": "tranh-mutable-default"
+      },
+      {
+        "title": "Type hint",
+        "id": "type-hint"
+      },
+      {
+        "title": "Hàm nên làm một việc",
+        "id": "ham-nen-lam-mot-viec"
+      },
+      {
+        "title": "Debug nhanh",
+        "id": "debug-nhanh"
       }
     ]
   },
@@ -975,8 +1489,13 @@ export const articles = [
       "/ham/function",
       "/ham/decorator"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 410,
     "body": "Python tìm tên theo thứ tự LEGB: Local, Enclosing, Global, Built-in. Khi đọc một tên, interpreter tìm từ phạm vi gần nhất ra ngoài.\n\n```python\ntax_rate = 0.08\n\ndef total_with_tax(amount: float) -> float:\n    return amount * (1 + tax_rate)\n```\n\nCode dựa vào global dễ khó kiểm thử. Ưu tiên truyền dependency qua parameter. `nonlocal` và `global` có chỗ dùng, nhưng nên hạn chế vì chúng làm thay đổi state bên ngoài hàm.\n\nClosure là hàm giữ lại giá trị từ enclosing scope. Decorator tận dụng cơ chế này để bọc hành vi mà không sửa body hàm gốc.",
-    "source": "content/python/functions/scope.md",
+    "sourcePath": "content/python/functions/scope.md",
     "headings": []
   },
   {
@@ -999,8 +1518,13 @@ export const articles = [
       "/ham/scope",
       "/standard-library/functools"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 420,
     "body": "Decorator là callable nhận một callable khác và trả về callable mới. Dùng `functools.wraps` để giữ metadata của hàm gốc.\n\n```python\nfrom functools import wraps\n\ndef traced(function):\n    @wraps(function)\n    def wrapper(*args, **kwargs):\n        print(f\"calling {function.__name__}\")\n        return function(*args, **kwargs)\n    return wrapper\n\n@traced\ndef publish(title: str) -> None:\n    print(title)\n```\n\nDecorator phù hợp cho cross-cutting concern như logging, retry hoặc authorization. Đừng ẩn business rule quan trọng trong quá nhiều lớp wrapper; khi debug, sự trong suốt của call stack cũng là một tính năng.",
-    "source": "content/python/functions/decorator.md",
+    "sourcePath": "content/python/functions/decorator.md",
     "headings": []
   },
   {
@@ -1026,8 +1550,13 @@ export const articles = [
       "/co-ban/unpacking-walrus",
       "/best-practices/common-mistakes"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 430,
     "body": "Signature hiện đại có thể quy định cách caller truyền argument:\n\n```python\ndef connect(host, /, port=443, *, timeout=5, secure=True):\n    ...\n```\n\nTham số trước `/` chỉ truyền positional; sau `*` chỉ truyền keyword. Ràng buộc này làm API tự mô tả và cho phép đổi tên implementation mà không phá caller.\n\n`*args` gom positional arguments thành tuple; `**kwargs` gom keyword arguments thành dict. Khi gọi, `func(*values, **options)` unpack theo chiều ngược lại. Default argument được tạo tại thời điểm định nghĩa, nên mutable default như `items=[]` có thể giữ state giữa các lần gọi. Dùng `None` làm sentinel rồi tạo list bên trong.",
-    "source": "content/python/functions/parameters.md",
+    "sourcePath": "content/python/functions/parameters.md",
     "headings": []
   },
   {
@@ -1050,8 +1579,13 @@ export const articles = [
       "/collection/comprehensions",
       "/standard-library/functools"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 440,
     "body": "Function là first-class object: có thể gán cho tên, lưu trong collection, truyền vào hàm khác hoặc trả về từ hàm.\n\n```python\ndef apply_discount(prices: list[int], rule) -> list[int]:\n    return [rule(price) for price in prices]\n\ndiscounted = apply_discount([100_000, 200_000], lambda price: round(price * 0.9))\n```\n\nLambda phù hợp với callback ngắn, không có statement và không cần docstring. Nếu logic có tên, nhiều nhánh hoặc được dùng lại, viết `def` sẽ rõ hơn. Khi callback cần giữ state, closure hoặc `functools.partial` thường biểu đạt ý định tốt hơn lambda lồng nhiều lớp.",
-    "source": "content/python/functions/lambda-callbacks.md",
+    "sourcePath": "content/python/functions/lambda-callbacks.md",
     "headings": []
   },
   {
@@ -1075,8 +1609,13 @@ export const articles = [
       "/ham/scope",
       "/ham/decorator"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 450,
     "body": "Recursion là hàm gọi lại chính nó và phải có base case. Mỗi lần gọi tạo frame mới, vì vậy recursion sâu có thể chạm giới hạn và không tự được tối ưu thành loop.\n\n```python\ndef walk(tree):\n    yield tree[\"name\"]\n    for child in tree.get(\"children\", []):\n        yield from walk(child)\n```\n\nClosure là function giữ được binding từ enclosing scope sau khi function ngoài đã return:\n\n```python\ndef make_counter():\n    count = 0\n    def increment():\n        nonlocal count\n        count += 1\n        return count\n    return increment\n```\n\nLate binding của closure khiến lambda trong loop thường đọc giá trị cuối cùng; bind giá trị qua default argument hoặc dùng factory để tạo scope riêng.",
-    "source": "content/python/functions/recursion-closures.md",
+    "sourcePath": "content/python/functions/recursion-closures.md",
     "headings": []
   },
   {
@@ -1101,8 +1640,13 @@ export const articles = [
       "/advanced/generator",
       "/co-ban/builtins"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 450,
     "body": "Iterable là object có thể cung cấp iterator, thường qua `__iter__`. Iterator có `__next__` và báo hết dữ liệu bằng `StopIteration`.\n\n```python\nitems = [\"draft\", \"review\"]\niterator = iter(items)\nprint(next(iterator))  # draft\nprint(next(iterator))  # review\n```\n\n`for item in items` gần tương đương việc gọi `iter(items)`, gọi `next` lặp lại, rồi bắt `StopIteration`. Iterator thường bị consume; gọi lại `iter(iterator)` không nhất thiết reset nó. Nếu cần lặp lại nhiều lần, giữ iterable có thể tạo iterator mới.\n\nCustom iterator cần cẩn thận state và exception. Generator tự động implement protocol nên thường là lựa chọn gọn hơn.",
-    "source": "content/python/iteration/iterable-iterator.md",
+    "sourcePath": "content/python/iteration/iterable-iterator.md",
     "headings": []
   },
   {
@@ -1126,8 +1670,13 @@ export const articles = [
       "/oop/class-object",
       "/packaging/pyproject"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 500,
     "body": "Mỗi file `.py` là một module. Package gom các module liên quan thành một namespace có cấu trúc.\n\n```python\nfrom app.billing import calculate_total\n\ntotal = calculate_total(120_000)\n```\n\n## Import rõ ràng\n\nƯu tiên import tên cụ thể để đọc code biết dependency đến từ đâu. Tránh `from module import *` vì nó làm namespace khó đoán.\n\n`__name__ == \"__main__\"` cho phép một file vừa được import như module vừa chạy như script:\n\n```python\nif __name__ == \"__main__\":\n    main()\n```\n\nGiữ package dependency một chiều để tránh circular import. Nếu hai module biết quá nhiều về nhau, hãy tách abstraction chung.\n\n## __name__ và chạy module\n\nKhi chạy `python file.py`, module đó có `__name__ == \"__main__\"`. Khi import `file` từ nơi khác, `__name__` là tên module và phần code top-level vẫn được thực thi một lần. Vì vậy entrypoint nên nằm sau guard:\n\n```python\ndef main() -> int:\n    return 0\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n```\n\nGuard ngăn import module vô tình chạy CLI. Nó không ngăn mọi import side effect; code top-level vẫn nên nhẹ và khai báo rõ ràng.",
-    "source": "content/python/modules/module.md",
+    "sourcePath": "content/python/modules/module.md",
     "headings": [
       {
         "title": "Import rõ ràng",
@@ -1160,8 +1709,13 @@ export const articles = [
       "/module/packages",
       "/internals/execution-model"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 510,
     "body": "Khi gặp `import service`, Python tìm module theo import machinery và `sys.path`. Nếu tìm thấy, module được tạo và thực thi lần đầu; object module sau đó được cache trong `sys.modules`.\n\n```python\nimport sys\nimport json\n\nassert \"json\" in sys.modules\n```\n\nCache tránh chạy lại top-level code trong mỗi lần import. Vì vậy import có side effect như mở connection hoặc đăng ký global handler cần được cân nhắc. `importlib.reload` chạy lại module nhưng không reset mọi reference đã được import sang nơi khác.\n\nCircular import xảy ra khi A cần B trong lúc B chưa khởi tạo xong. Giải pháp tốt thường là tách dependency chung, chuyển import vào boundary thật sự cần, hoặc thiết kế module dependency một chiều; không nên dùng local import như cách che một vòng phụ thuộc không rõ ràng.",
-    "source": "content/python/modules/import-system.md",
+    "sourcePath": "content/python/modules/import-system.md",
     "headings": []
   },
   {
@@ -1185,8 +1739,13 @@ export const articles = [
       "/module/import-system",
       "/packaging/src-layout"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 520,
     "body": "Package là namespace chứa module và package con. Regular package thường có `__init__.py`; namespace package có thể ghép từ nhiều thư mục và không bắt buộc file đó.\n\n`__init__.py` nên nhẹ: định nghĩa public API nhỏ hoặc metadata, không nên chạy migration hay tạo network connection khi chỉ import package. `__all__` ảnh hưởng wildcard import và có thể tài liệu hóa tên công khai, nhưng không phải security boundary.\n\nEntry point của package có thể là `python -m package` khi có `__main__.py`, hoặc console script khai báo trong packaging metadata. Relative import làm dependency nội bộ rõ hơn trong package; absolute import thường dễ đọc hơn ở project lớn.",
-    "source": "content/python/modules/packages.md",
+    "sourcePath": "content/python/modules/packages.md",
     "headings": []
   },
   {
@@ -1209,8 +1768,13 @@ export const articles = [
       "/ham/function",
       "/best-practices/error-handling"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 600,
     "body": "Exception diễn tả một điều kiện khiến luồng bình thường không thể tiếp tục. Bắt exception ở nơi bạn có đủ thông tin để xử lý hoặc thêm context.\n\n```python\ntry:\n    port = int(raw_port)\nexcept ValueError as error:\n    raise ValueError(\"PORT phải là một số nguyên\") from error\n```\n\nBắt exception cụ thể thay vì `except Exception` hoặc bare `except`. Nếu không thể khôi phục, hãy để lỗi nổi lên với message và context tốt.\n\n## EAFP và LBYL\n\nEAFP (“thử rồi xử lý lỗi”) hợp với operation atomic như đọc key hoặc mở file; LBYL (“kiểm tra trước”) hợp khi check rẻ và side effect đắt. Đừng biến EAFP thành bắt mọi exception, vì nó có thể nuốt cả bug trong body.\n\n```python\ntry:\n    value = settings[\"timeout\"]\nexcept KeyError:\n    value = 5\n```\n\n`raise NewError(...) from error` giữ nguyên nguyên nhân trong traceback. Khi re-raise cùng exception, dùng `raise` trần bên trong `except` để giữ traceback gốc.\n\n## else và finally\n\n`else` chạy khi không có exception; `finally` chạy dù thành công hay thất bại, phù hợp để dọn tài nguyên. Với file và lock, ưu tiên context manager để tránh quên cleanup.",
-    "source": "content/python/errors/exception.md",
+    "sourcePath": "content/python/errors/exception.md",
     "headings": [
       {
         "title": "EAFP và LBYL",
@@ -1244,8 +1808,13 @@ export const articles = [
       "/debugging/workflow",
       "/standard-library/logging"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 610,
     "body": "Traceback cho biết exception đi qua những frame nào. Thường hãy đọc dòng cuối trước để biết exception type và message, sau đó đi ngược lên frame trong code của bạn để tìm input hoặc assumption sai.\n\n```python\ndef load_limit(raw: str) -> int:\n    return int(raw)\n\nload_limit(\"ten\")  # ValueError\n```\n\n`breakpoint()` mở debugger mặc định của Python; `pdb` cho phép xem local variable, step và stack. Debug tốt là thu nhỏ input đến case tái hiện được, kiểm tra invariant tại boundary và sửa nguyên nhân thay vì chỉ bắt exception để đổi message.\n\nTrong production, dùng logger có context và giữ exception chaining. Không paste secret vào traceback hoặc issue tracker.",
-    "source": "content/python/errors/traceback-debugging.md",
+    "sourcePath": "content/python/errors/traceback-debugging.md",
     "headings": []
   },
   {
@@ -1269,8 +1838,13 @@ export const articles = [
       "/async/cancellation",
       "/async/concurrency"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 620,
     "body": "Khi nhiều task chạy đồng thời có thể cùng thất bại, một exception đơn không đủ biểu đạt toàn bộ lỗi. `ExceptionGroup` chứa nhiều exception và `except*` lọc các thành phần phù hợp:\n\n```python\ntry:\n    raise ExceptionGroup(\"validation\", [ValueError(\"email\"), TypeError(\"age\")])\nexcept* ValueError as group:\n    print(\"Sửa input:\", group.exceptions)\nexcept* TypeError as group:\n    print(\"Sai type:\", group.exceptions)\n```\n\nFeature có từ Python 3.11 và xuất hiện trong structured concurrency như `asyncio.TaskGroup`. `except*` không phải bản thay thế mọi `except`; dùng khi thật sự có nhiều lỗi cần xử lý độc lập. Không nuốt nhóm lỗi mà không log hoặc re-raise phần không xử lý.",
-    "source": "content/python/errors/exception-groups.md",
+    "sourcePath": "content/python/errors/exception-groups.md",
     "headings": []
   },
   {
@@ -1295,8 +1869,13 @@ export const articles = [
       "/co-ban/string",
       "/module/module"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 700,
     "body": "`pathlib.Path` biểu diễn đường dẫn theo cách độc lập hệ điều hành. Dùng `with` để file luôn được đóng đúng cách.\n\n```python\nfrom pathlib import Path\n\nnotes = Path(\"data\") / \"notes.txt\"\nnotes.parent.mkdir(parents=True, exist_ok=True)\nnotes.write_text(\"Ship small changes.\\n\", encoding=\"utf-8\")\ncontent = notes.read_text(encoding=\"utf-8\")\n```\n\nVới file lớn, đọc từng dòng hoặc theo chunk thay vì nạp toàn bộ vào RAM. Khi xử lý đường dẫn do user cung cấp, kiểm tra scope cho phép và tránh để input trở thành đường dẫn tùy ý ra ngoài thư mục dữ liệu.\n\n## File object và mode\n\n`open(path, \"r\", encoding=\"utf-8\")` mở text để đọc; `w` ghi đè, `a` append, `x` yêu cầu file chưa tồn tại. Thêm `b` cho binary như `rb`/`wb`. `readline` đọc một dòng, iterate file đọc streaming, `seek` di chuyển cursor và `tell` trả vị trí theo semantics của stream.\n\nĐừng dựa vào encoding mặc định của máy. Với file lớn, tránh `read()` toàn bộ. Khi ghi file quan trọng, cân nhắc ghi file tạm rồi replace atomic theo nhu cầu durability của ứng dụng.",
-    "source": "content/python/files/file.md",
+    "sourcePath": "content/python/files/file.md",
     "headings": [
       {
         "title": "File object và mode",
@@ -1326,8 +1905,13 @@ export const articles = [
       "/exception",
       "/async/cancellation"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 710,
     "body": "Context manager quản lý một khoảng thời gian sử dụng tài nguyên. `with resource() as value` gọi `__enter__`, chạy body, rồi gọi `__exit__` kể cả khi body ném exception.\n\n```python\nfrom contextlib import contextmanager\n\n@contextmanager\ndef transaction():\n    print(\"begin\")\n    try:\n        yield\n    except Exception:\n        print(\"rollback\")\n        raise\n    else:\n        print(\"commit\")\n```\n\n`__exit__` trả `True` sẽ suppress exception; mặc định nên để lỗi nổi lên. Có thể ghép nhiều context manager trong một `with`. Với coroutine, dùng `async with` và async context manager để cleanup không blocking event loop.",
-    "source": "content/python/files/context-managers.md",
+    "sourcePath": "content/python/files/context-managers.md",
     "headings": []
   },
   {
@@ -1352,8 +1936,13 @@ export const articles = [
       "/security/secure-coding",
       "/standard-library/json"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 720,
     "body": "JSON phù hợp cho object, list, string, number và boolean có schema rõ. CSV phù hợp với bảng phẳng cần trao đổi với spreadsheet. Cả hai đều là text format, không phải cơ chế lưu object Python tùy ý.\n\n```python\nimport json\nfrom pathlib import Path\n\nsettings = json.loads(Path(\"settings.json\").read_text(encoding=\"utf-8\"))\nPath(\"settings.out.json\").write_text(json.dumps(settings, indent=2), encoding=\"utf-8\")\n```\n\nDữ liệu từ file hoặc user là untrusted input: validate field, type và giới hạn kích thước trước khi dùng. Không dùng `pickle` để thay JSON khi input có thể bị sửa. Với CSV, luôn cân nhắc delimiter, header, newline và encoding thay vì giả định file luôn chuẩn.",
-    "source": "content/python/files/json-csv.md",
+    "sourcePath": "content/python/files/json-csv.md",
     "headings": []
   },
   {
@@ -1377,8 +1966,13 @@ export const articles = [
       "/co-ban/kieu-du-lieu",
       "/module/module"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 800,
     "body": "Class là khuôn mô tả dữ liệu và hành vi; object là một instance cụ thể của class.\n\n```python\nfrom dataclasses import dataclass\n\n@dataclass(frozen=True)\nclass Money:\n    amount: int\n    currency: str = \"VND\"\n\n    def display(self) -> str:\n        return f\"{self.amount:,} {self.currency}\"\n```\n\n`self` là instance hiện tại. Hãy giữ invariant của object rõ ràng và hạn chế public mutable state nếu có nhiều rule cần bảo vệ.\n\nKhông phải mọi dữ liệu đều cần class. Với record đơn giản, dataclass gọn hơn; với logic thuần biến đổi input thành output, function thường dễ test hơn.\n\nInstance attribute nằm trong từng object; class attribute được chia sẻ qua class và các instance nếu không bị shadow. Đặt mutable class attribute như `tags = []` dễ tạo shared state ngoài ý muốn. `property` phù hợp khi cần giữ invariant nhưng vẫn cung cấp API attribute-like.\n\n`__new__` tạo instance trước `__init__` khởi tạo state; phần lớn class thông thường chỉ cần `__init__`. Khi cần behavior protocol như iteration, indexing hoặc context manager, hãy đọc thêm bài Python Data Model thay vì tạo method tùy ý.",
-    "source": "content/python/oop/class-object.md",
+    "sourcePath": "content/python/oop/class-object.md",
     "headings": []
   },
   {
@@ -1400,8 +1994,13 @@ export const articles = [
       "/oop/class-object",
       "/ham/decorator"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 810,
     "body": "Inheritance mô tả quan hệ “is-a”; composition mô tả “has-a”. Trong ứng dụng lớn, composition thường linh hoạt hơn vì bạn có thể thay collaborator mà không tạo cây class sâu.\n\n```python\nclass EmailNotifier:\n    def send(self, message: str) -> None:\n        print(f\"Email: {message}\")\n\nclass OrderService:\n    def __init__(self, notifier: EmailNotifier) -> None:\n        self.notifier = notifier\n```\n\nPolymorphism không nhất thiết cần inheritance: chỉ cần object cung cấp method mà consumer cần. Đây là tinh thần duck typing, nhưng interface nên được làm rõ bằng Protocol khi project lớn.",
-    "source": "content/python/oop/inheritance.md",
+    "sourcePath": "content/python/oop/inheritance.md",
     "headings": []
   },
   {
@@ -1425,8 +2024,13 @@ export const articles = [
       "/oop/descriptors",
       "/co-ban/object-model"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 820,
     "body": "Python không hỏi object có thuộc class cụ thể hay không cho mọi thao tác; nó thường gọi protocol. `len(value)` tìm `__len__`, `for value in items` dùng `__iter__`, `a + b` tìm special method số học.\n\n```python\nclass Batch:\n    def __init__(self, items):\n        self.items = list(items)\n    def __len__(self):\n        return len(self.items)\n    def __iter__(self):\n        return iter(self.items)\n```\n\nProtocol giúp object custom hòa vào ngôn ngữ, nhưng special method cần giữ invariant của protocol. Nếu `__eq__` thay đổi mà `__hash__` không còn nhất quán, object có thể hỏng khi làm dict key. Đây là nơi duck typing, data model và type Protocol gặp nhau.",
-    "source": "content/python/oop/data-model.md",
+    "sourcePath": "content/python/oop/data-model.md",
     "headings": []
   },
   {
@@ -1452,8 +2056,13 @@ export const articles = [
       "/oop/class-object",
       "/oop/descriptors"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 830,
     "body": "`__repr__` nên hữu ích cho developer và cố gắng không mơ hồ; `__str__` dành cho text thân thiện. `__bool__` quyết định truth value, `__len__` có thể làm object falsey khi trả `0`.\n\n`__eq__` định nghĩa equality; object mutable hoặc equality tùy state thường không nên hash. `__getitem__`, `__setitem__`, `__contains__` tạo cảm giác mapping/sequence. `__call__` cho phép instance được gọi như function.\n\nArithmetic dunder như `__add__` nên trả `NotImplemented` khi gặp operand không hỗ trợ thay vì cố đoán. `NotImplemented` khác `NotImplementedError`: cái đầu là tín hiệu cho binary operation thử phép phản xạ hoặc trả TypeError; cái sau là exception báo API chưa triển khai.",
-    "source": "content/python/oop/dunder-methods.md",
+    "sourcePath": "content/python/oop/dunder-methods.md",
     "headings": []
   },
   {
@@ -1478,8 +2087,13 @@ export const articles = [
       "/oop/class-object",
       "/oop/dataclasses"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 840,
     "body": "Descriptor là object định nghĩa `__get__`, `__set__` hoặc `__delete__`. Khi đặt trên class, descriptor điều khiển attribute access.\n\n```python\nclass Positive:\n    def __set_name__(self, owner, name): self.name = name\n    def __get__(self, instance, owner=None): return instance.__dict__[self.name]\n    def __set__(self, instance, value):\n        if value <= 0: raise ValueError(\"must be positive\")\n        instance.__dict__[self.name] = value\n```\n\nData descriptor có `__set__`/`__delete__` và thường ưu tiên hơn instance dictionary; non-data descriptor chỉ có `__get__` và có thể bị instance attribute che. `property`, bound method và nhiều framework field đều dựa trên cơ chế này. Đây là implementation behavior cụ thể của object attribute lookup, nên hãy kiểm tra lookup order trước khi viết descriptor phức tạp.",
-    "source": "content/python/oop/descriptors.md",
+    "sourcePath": "content/python/oop/descriptors.md",
     "headings": []
   },
   {
@@ -1504,8 +2118,13 @@ export const articles = [
       "/oop/data-model",
       "/collection/choose-collection"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 850,
     "body": "`@dataclass` sinh `__init__`, `__repr__`, so sánh và các method khác từ annotation:\n\n```python\nfrom dataclasses import dataclass, field\n\n@dataclass(slots=True)\nclass Job:\n    name: str\n    tags: list[str] = field(default_factory=list)\n```\n\n`default_factory` tạo list mới cho từng instance; dùng `tags=[]` sẽ chia sẻ mutable default. `frozen=True` ngăn assignment sau khởi tạo nhưng không tự biến object lồng nhau thành immutable. `slots=True` giảm overhead instance dictionary và chặn attribute tùy ý, nhưng có trade-off với inheritance và reflection.\n\nDataclass phù hợp cho data object nội bộ. Nếu cần tuple semantics hoặc backward-compatible positional record, NamedTuple là lựa chọn khác; nếu behavior nhiều hơn data, normal class có thể rõ hơn.",
-    "source": "content/python/oop/dataclasses.md",
+    "sourcePath": "content/python/oop/dataclasses.md",
     "headings": []
   },
   {
@@ -1530,8 +2149,13 @@ export const articles = [
       "/dieu-khien/match",
       "/standard-library/enum"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 860,
     "body": "`Enum` biểu diễn các lựa chọn có identity và tên rõ:\n\n```python\nfrom enum import Enum, auto\n\nclass Status(Enum):\n    DRAFT = auto()\n    PUBLISHED = auto()\n```\n\nDùng `Status.PUBLISHED` thay vì rải string `\"published\"` khắp code. `IntEnum` tương thích với integer nhưng có thể khiến equality với số gây bất ngờ. `Flag` phù hợp với bit flags có thể kết hợp; `auto()` sinh value và giúp tránh tự quản lý số không cần thiết.\n\nKhi serialize, quyết định rõ dùng member name hay value và validate khi parse input bên ngoài.",
-    "source": "content/python/oop/enum.md",
+    "sourcePath": "content/python/oop/enum.md",
     "headings": []
   },
   {
@@ -1555,8 +2179,13 @@ export const articles = [
       "/oop/data-model",
       "/oop/descriptors"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 870,
     "body": "Python dùng C3 linearization để tính Method Resolution Order (MRO), thứ tự class được tìm khi lookup method. `Class.mro()` cho phép xem kết quả.\n\n```python\nclass LoggedMixin:\n    def save(self):\n        print(\"saving\")\n        return super().save()\n```\n\n`super()` không đơn giản là “gọi parent trực tiếp”; nó tiếp tục tìm trong MRO từ vị trí hiện tại. Cooperative multiple inheritance yêu cầu mọi class nhận signature tương thích và gọi `super()` đúng cách. Mixin nên nhỏ, không giữ state ẩn và mô tả một capability.\n\nNếu hierarchy bắt đầu cần giải thích bằng sơ đồ dài, composition thường là lựa chọn bền hơn. Đừng dùng multiple inheritance chỉ để tái sử dụng vài dòng code.",
-    "source": "content/python/oop/mro-super.md",
+    "sourcePath": "content/python/oop/mro-super.md",
     "headings": []
   },
   {
@@ -1579,8 +2208,13 @@ export const articles = [
       "/async",
       "/collection/list"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 900,
     "body": "Generator function tạm dừng tại `yield` và tiếp tục khi consumer yêu cầu giá trị tiếp theo. Nó phù hợp với file lớn, cursor hoặc pipeline dữ liệu.\n\n```python\ndef non_empty_lines(lines):\n    for line in lines:\n        cleaned = line.strip()\n        if cleaned:\n            yield cleaned\n\nfor line in non_empty_lines([\"  deploy  \", \"\", \"monitor\"]):\n    print(line)\n```\n\nGenerator chỉ đi một chiều và chỉ chạy khi được consume. Nếu cần truy cập ngẫu nhiên hoặc lặp lại nhiều lần, list có thể phù hợp hơn. Đừng biến mọi logic thành generator chỉ vì nó “tiết kiệm memory”; hãy chọn theo lifetime dữ liệu.\n\n## yield from và exhaustion\n\n`yield from child()` chuyển tiếp toàn bộ giá trị của generator con và cả return value cuối nếu cần. Khi generator bị consume hết, lần `next` tiếp theo ném `StopIteration`; vòng `for` tự bắt exception này.\n\n```python\ndef all_lines(groups):\n    for group in groups:\n        yield from non_empty_lines(group)\n```\n\nGenerator expression là cách gọn cho pipeline ngắn. Nếu cần rewind, random access hoặc debug từng bước nhiều lần, materialize có chủ đích thành list.",
-    "source": "content/python/advanced/generator.md",
+    "sourcePath": "content/python/advanced/generator.md",
     "headings": [
       {
         "title": "yield from và exhaustion",
@@ -1610,8 +2244,13 @@ export const articles = [
       "/exception",
       "/typing"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1000,
     "body": "`async def` tạo coroutine function. `await` nhường quyền điều khiển trong lúc chờ một thao tác I/O, cho phép event loop phục vụ task khác.\n\n```python\nimport asyncio\n\nasync def refresh_cache() -> str:\n    await asyncio.sleep(0.1)  # mô phỏng I/O\n    return \"cache-ready\"\n\nasync def main() -> None:\n    result = await refresh_cache()\n    print(result)\n\nasyncio.run(main())\n```\n\nAsync không làm CPU-bound code tự nhiên nhanh hơn. Nếu một hàm blocking chạy trong event loop, nó chặn mọi task khác. Với nhiều thao tác I/O độc lập, `asyncio.gather` có thể chạy chúng đồng thời; hãy xử lý timeout, cancellation và exception một cách tường minh.\n\n## Tạo task và structured concurrency\n\n`await refresh_cache()` chạy coroutine tại điểm đó. Nếu muốn bắt đầu nhiều công việc I/O trước khi chờ kết quả, tạo task:\n\n```python\nasync def main() -> None:\n    first = asyncio.create_task(fetch(\"/first\"))\n    second = asyncio.create_task(fetch(\"/second\"))\n    results = await asyncio.gather(first, second)\n```\n\nTask là handle có lifecycle riêng; nếu tạo task mà không giữ hoặc await nó, exception có thể bị báo muộn và task có thể sống lâu hơn dự kiến. Với code mới cần nhiều task có cùng scope, `asyncio.TaskGroup` (Python 3.11+) thể hiện structured concurrency tốt hơn: khi một task lỗi, nhóm sẽ hủy các task còn lại và gom lỗi theo quy tắc `ExceptionGroup`.\n\nCoroutine có thể bị hủy tại điểm await và thường nên để `asyncio.CancelledError` lan truyền sau khi đã cleanup. Đừng nuốt cancellation bằng `except Exception` hay `except BaseException` nếu không có lý do rất rõ; timeout và shutdown phụ thuộc vào tín hiệu này. Dùng `asyncio.to_thread` cho một hàm blocking ngắn khi cần giữ event loop responsive, nhưng vẫn phải giới hạn worker và không biến nó thành hàng đợi vô hạn.",
-    "source": "content/python/async/async-await.md",
+    "sourcePath": "content/python/async/async-await.md",
     "headings": [
       {
         "title": "Tạo task và structured concurrency",
@@ -1642,8 +2281,13 @@ export const articles = [
       "/async/cancellation",
       "/concurrency/threading"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1010,
     "body": "Concurrency là nhiều công việc cùng tiến triển; parallelism là thực sự chạy đồng thời trên nhiều execution unit. `asyncio` thường dùng một event loop điều phối coroutine khi chúng `await` I/O.\n\n```python\nimport asyncio\n\nasync def fetch(name: str, delay: float) -> str:\n    await asyncio.sleep(delay)\n    return name\n\nasync def main():\n    first, second = await asyncio.gather(fetch(\"A\", .1), fetch(\"B\", .1))\n    return first, second\n```\n\n`asyncio.create_task` schedule coroutine chạy trong background của loop; `Future` là placeholder kết quả thấp-level hơn Task. Async code không làm CPU-bound work tự nhiên nhanh hơn. Một lệnh blocking như `time.sleep()` trong event loop sẽ chặn mọi task khác; dùng async API hoặc chuyển blocking work sang thread/process phù hợp.",
-    "source": "content/python/async/concurrency.md",
+    "sourcePath": "content/python/async/concurrency.md",
     "headings": []
   },
   {
@@ -1667,8 +2311,13 @@ export const articles = [
       "/async/concurrency",
       "/exception/exception-groups"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1020,
     "body": "Task bị cancel sẽ nhận `asyncio.CancelledError` tại một điểm await. Cleanup nên đặt trong `finally` và thường phải re-raise sau khi dọn xong:\n\n```python\nasync def worker():\n    try:\n        await do_io()\n    finally:\n        await close_resource()\n```\n\n`asyncio.timeout()` giới hạn thời gian; `TaskGroup` gom task theo structured concurrency. Khi một task thất bại, task còn lại bị cancel và lỗi có thể được gom thành ExceptionGroup. Nuốt `CancelledError` có thể làm TaskGroup hoặc timeout hoạt động sai.\n\n`shield` chỉ bảo vệ một awaitable khỏi cancellation bên ngoài trong phạm vi cụ thể; nó không phải cách biến mọi work thành “không thể hủy”. Luôn đặt policy timeout và retry theo business operation.",
-    "source": "content/python/async/cancellation.md",
+    "sourcePath": "content/python/async/cancellation.md",
     "headings": []
   },
   {
@@ -1694,8 +2343,13 @@ export const articles = [
       "/internals/gil",
       "/concurrency/multiprocessing"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1030,
     "body": "Thread hữu ích khi nhiều công việc chờ I/O hoặc khi thư viện native nhả GIL. Race condition xảy ra khi nhiều thread đọc/ghi state chung mà invariant không được bảo vệ.\n\n```python\nfrom concurrent.futures import ThreadPoolExecutor\n\nwith ThreadPoolExecutor(max_workers=4) as pool:\n    results = list(pool.map(fetch_url, urls))\n```\n\n`Lock`, `RLock`, `Semaphore`, `Event` và `Queue` là các primitive chính. Ưu tiên truyền message qua Queue hoặc giữ state immutable thay vì chia sẻ mutable state. GIL của build CPython mặc định hạn chế việc chạy đồng thời bytecode Python CPU-bound, nhưng không có nghĩa Python không multithreading được.",
-    "source": "content/python/concurrency/threading.md",
+    "sourcePath": "content/python/concurrency/threading.md",
     "headings": []
   },
   {
@@ -1719,8 +2373,13 @@ export const articles = [
       "/performance/profiling",
       "/internals/gil"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1040,
     "body": "Process có address space riêng, nên phù hợp hơn cho CPU-bound workload trên CPython GIL-enabled. `ProcessPoolExecutor` cung cấp API pool tương tự thread nhưng argument/result phải serialize được.\n\n```python\nfrom concurrent.futures import ProcessPoolExecutor\n\nwith ProcessPoolExecutor() as pool:\n    totals = list(pool.map(score_document, documents))\n```\n\nMỗi process có startup cost và memory riêng. Code khởi động process cần bảo vệ entrypoint bằng `if __name__ == \"__main__\":`, đặc biệt trên Windows. Shared state cần IPC như Queue, Pipe, Manager hoặc storage ngoài; đừng giả định biến global được chia sẻ như thread.",
-    "source": "content/python/concurrency/multiprocessing.md",
+    "sourcePath": "content/python/concurrency/multiprocessing.md",
     "headings": []
   },
   {
@@ -1745,8 +2404,13 @@ export const articles = [
       "/oop/class-object",
       "/async"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1100,
     "body": "Type hint không thay đổi runtime semantics của Python, nhưng giúp IDE, type checker và người đọc hiểu contract.\n\n```python\nfrom collections.abc import Iterable\n\ndef total(values: Iterable[int]) -> int:\n    return sum(values)\n```\n\n## Chọn abstraction phù hợp\n\nDùng `TypedDict` cho mapping có schema cố định, `Protocol` cho interface dựa trên behavior, và generic khi một hàm bảo toàn mối quan hệ kiểu giữa input và output. Với Python hiện đại, `list[str]` và `str | None` thường dễ đọc hơn syntax cũ.\n\nType hint tốt vẫn cần test runtime: dữ liệu từ JSON, network hoặc user input không tự trở nên an toàn chỉ vì đã annotate.\n\n## Syntax và narrowing hiện đại\n\nPython 3.12 hỗ trợ type parameter syntax ngay trên định nghĩa:\n\n```python\ndef first[T](items: list[T]) -> T:\n    if not items:\n        raise ValueError(\"empty\")\n    return items[0]\n```\n\nKhi cần hỗ trợ Python cũ hơn, dùng `TypeVar` và kiểm tra cú pháp mà project target cho phép. `TypeIs` (Python 3.13+) mô tả type guard trả về boolean và giúp checker thu hẹp kiểu ở cả nhánh đúng lẫn nhánh sai; `TypeGuard` vẫn phù hợp cho các trường hợp chỉ chứng minh được nhánh đúng.\n\nAnnotation không mặc định là validation, dependency injection hay runtime cast. Nếu boundary nhận dữ liệu không tin cậy, parse và validate thành object nội bộ trước; nếu API công khai cần runtime schema, dùng validator phù hợp và giữ static type đồng bộ với schema đó.",
-    "source": "content/python/typing/typing.md",
+    "sourcePath": "content/python/typing/typing.md",
     "headings": [
       {
         "title": "Chọn abstraction phù hợp",
@@ -1781,8 +2445,13 @@ export const articles = [
       "/oop/data-model",
       "/ham/function"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1110,
     "body": "`Protocol` mô tả behavior cần có thay vì yêu cầu class kế thừa một base class. Đây là structural typing: object phù hợp nếu có các member cần thiết.\n\n```python\nfrom typing import Protocol\n\nclass Storable(Protocol):\n    def save(self) -> None: ...\n\ndef persist(item: Storable) -> None:\n    item.save()\n```\n\n`TypeVar` giữ mối quan hệ kiểu giữa input/output; `Generic` đóng gói class hoặc function có tham số kiểu. `TypeGuard` cho phép narrowing sang kiểu không nhất thiết là subtype; `TypeIs` có từ Python 3.13 và cho phép checker thu hẹp cả nhánh false khi predicate đúng contract.\n\nType checker mới diễn giải các annotation này; runtime Python không tự chặn argument sai kiểu. Đừng dùng `cast` để che dữ liệu chưa validate.",
-    "source": "content/python/typing/protocols-generics.md",
+    "sourcePath": "content/python/typing/protocols-generics.md",
     "headings": []
   },
   {
@@ -1805,8 +2474,13 @@ export const articles = [
       "/bat-dau/virtual-environment",
       "/packaging/pyproject"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1200,
     "body": "`pip` là package installer phổ biến của Python. Luôn chạy qua interpreter đang dùng:\n\n```bash\npython -m pip install httpx\npython -m pip freeze > requirements.txt\n```\n\nTrong project mới, `pyproject.toml` thường là nơi tốt hơn để khai báo metadata và dependency. Pin phiên bản trực tiếp hoặc dùng lockfile theo công cụ của đội để build có thể tái lập.\n\nKhông cài package tùy tiện vào global Python. Review license, nguồn phát hành và quyền của dependency trước khi đưa vào production.",
-    "source": "content/python/packaging/pip.md",
+    "sourcePath": "content/python/packaging/pip.md",
     "headings": []
   },
   {
@@ -1828,8 +2502,13 @@ export const articles = [
       "/packaging/pip",
       "/module/module"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1210,
     "body": "`pyproject.toml` là điểm cấu hình tiêu chuẩn cho nhiều công cụ Python: build backend, metadata package, lint, formatter và test.\n\n```toml\n[project]\nname = \"billing-service\"\nversion = \"0.1.0\"\nrequires-python = \">=3.12\"\ndependencies = [\"httpx>=0.27\"]\n```\n\nTách dependency chạy production khỏi dependency phát triển khi công cụ hỗ trợ. Khi publish wheel, kiểm tra file nào thực sự được đưa vào package và chạy test từ một môi trường sạch.",
-    "source": "content/python/packaging/pyproject.md",
+    "sourcePath": "content/python/packaging/pyproject.md",
     "headings": []
   },
   {
@@ -1854,8 +2533,13 @@ export const articles = [
       "/packaging/src-layout",
       "/packaging/pip"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1220,
     "body": "Source distribution (`sdist`) chứa source và metadata để build; wheel (`.whl`) là artifact cài đặt nhanh hơn, có thể chứa code đã build cho platform/ABI cụ thể. PyPI là index phân phối package, không phải dependency resolver duy nhất.\n\nFlow hiện đại là khai báo `pyproject.toml`, build artifact bằng tool build, kiểm tra nội dung rồi upload lên TestPyPI/PyPI. Cài package từ PyPI không đồng nghĩa code đã an toàn; review maintainer, release và dependency supply chain vẫn cần thiết.\n\nPackage metadata nên khai báo `requires-python`, dependencies, optional dependencies và license rõ. Đừng xây workflow mới quanh `python setup.py install`; dùng frontend như `python -m pip install .` hoặc công cụ build theo backend.",
-    "source": "content/python/packaging/wheel-pypi.md",
+    "sourcePath": "content/python/packaging/wheel-pypi.md",
     "headings": []
   },
   {
@@ -1878,8 +2562,13 @@ export const articles = [
       "/module/packages",
       "/packaging/pyproject"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1230,
     "body": "Trong src layout, package nằm dưới `src/`, không nằm ngay root repository. Điều này buộc project cài đặt package trước khi import, giúp phát hiện package data hoặc import path sai sớm hơn.\n\n```bash\npython -m pip install --editable .\n```\n\nEditable install tạo liên kết để thay đổi source phản ánh ngay trong môi trường dev, nhưng không phải bản build để phát hành. Test package từ wheel/sdist trong môi trường sạch để tránh phụ thuộc vào file chỉ tồn tại trong checkout.",
-    "source": "content/python/packaging/src-layout.md",
+    "sourcePath": "content/python/packaging/src-layout.md",
     "headings": []
   },
   {
@@ -1905,8 +2594,13 @@ export const articles = [
       "/security/subprocess-paths",
       "/file/json-csv"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1240,
     "body": "Mọi input từ user, network, file upload hoặc package bên ngoài đều là untrusted cho đến khi được validate. Không dùng `eval`/`exec` để biến text thành code; không dùng `pickle.loads` trên dữ liệu có thể bị sửa vì pickle có thể thực thi hành vi tùy ý trong quá trình deserialize.\n\nPassword không lưu plaintext; token tạo bằng `secrets`; secret không commit vào source, log hoặc client bundle. Parameterize SQL, giới hạn path, kiểm tra dependency và pin/lock theo workflow của project.\n\nSecurity là property của boundary: xác thực, phân quyền, validation, encoding output và audit log cần nằm đúng nơi dữ liệu đi qua hệ thống. Không có một hàm “sanitize” chung cho mọi context HTML, SQL, shell và filesystem.",
-    "source": "content/python/security/secure-coding.md",
+    "sourcePath": "content/python/security/secure-coding.md",
     "headings": []
   },
   {
@@ -1931,8 +2625,13 @@ export const articles = [
       "/standard-library/pathlib",
       "/security/secure-coding"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1250,
     "body": "Nếu ghép input vào shell command, attacker có thể chèn metacharacter. Truyền argv list cho `subprocess.run` và tránh `shell=True` là mặc định an toàn hơn, nhưng executable, environment và working directory vẫn cần kiểm soát.\n\nPath traversal xảy ra khi input như `../../secret` thoát khỏi thư mục cho phép. Resolve path, kiểm tra quan hệ với allowed root và từ chối symlink/extension không phù hợp nếu threat model yêu cầu. Không chỉ kiểm tra string bắt đầu bằng prefix vì `/safe-other` có thể cùng prefix với `/safe`.\n\nDefense cần theo context và quyền process tối thiểu; không coi validation client-side là security boundary.",
-    "source": "content/python/security/subprocess-paths.md",
+    "sourcePath": "content/python/security/subprocess-paths.md",
     "headings": []
   },
   {
@@ -1955,8 +2654,13 @@ export const articles = [
       "/ham/decorator",
       "/advanced/generator"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1300,
     "body": "`functools` chứa các tiện ích khi làm việc với callable. `wraps` giữ metadata khi viết decorator; `partial` cố định một phần argument; `lru_cache` memoize các hàm thuần với input hashable.\n\n```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=128)\ndef fibonacci(n: int) -> int:\n    if n < 2:\n        return n\n    return fibonacci(n - 1) + fibonacci(n - 2)\n```\n\nCache cần policy: dữ liệu có thay đổi không, key có thể tăng vô hạn không và khi nào cần invalidation. Đừng thêm cache trước khi đo đạc bottleneck.",
-    "source": "content/python/standard-library/functools.md",
+    "sourcePath": "content/python/standard-library/functools.md",
     "headings": []
   },
   {
@@ -1979,8 +2683,13 @@ export const articles = [
       "/standard-library/logging",
       "/packaging/pip"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1310,
     "body": "Standard library đi kèm Python: `pathlib`, `os`, `shutil` cho file; `json`, `csv`, `sqlite3` cho dữ liệu; `datetime`, `zoneinfo` cho thời gian; `re` cho regex; `logging`, `argparse`, `subprocess` cho ứng dụng; `collections`, `itertools`, `functools` cho data processing.\n\nHãy tìm standard library trước khi thêm dependency, nhưng đừng biến “không cài thêm package” thành mục tiêu tuyệt đối. Third-party có thể cho API tốt hơn, hiệu năng tốt hơn hoặc hỗ trợ protocol thực tế. Document này là bản đồ; mỗi module quan trọng có bài riêng trong nhóm Standard library.",
-    "source": "content/python/standard-library/overview.md",
+    "sourcePath": "content/python/standard-library/overview.md",
     "headings": []
   },
   {
@@ -2005,8 +2714,13 @@ export const articles = [
       "/standard-library/overview",
       "/security/secure-coding"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1320,
     "body": "`Path` biểu diễn đường dẫn theo semantics của hệ điều hành:\n\n```python\nfrom pathlib import Path\n\nroot = Path(\"reports\")\nfor file in root.glob(\"*.csv\"):\n    print(file.name, file.stat().st_size)\n```\n\nDùng `/` để ghép path, `exists`, `is_file`, `mkdir`, `read_text`, `write_text`, `open` cho thao tác phổ biến. Nêu rõ encoding khi đọc text. Với path đến từ user, resolve và kiểm tra nó nằm trong thư mục được phép trước khi đọc/ghi để tránh path traversal.",
-    "source": "content/python/standard-library/pathlib.md",
+    "sourcePath": "content/python/standard-library/pathlib.md",
     "headings": []
   },
   {
@@ -2031,8 +2745,13 @@ export const articles = [
       "/standard-library/overview",
       "/security/secure-coding"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1330,
     "body": "`json` biến giữa JSON text và object Python. `json.loads` nhận string, `json.load` nhận file-like object; chiều ngược lại là `dumps` và `dump`.\n\n```python\nimport json\n\npayload = {\"name\": \"Nam\", \"enabled\": True, \"tags\": [\"python\", \"docs\"]}\ntext = json.dumps(payload, ensure_ascii=False, indent=2)\ndecoded = json.loads(text)\n```\n\nJSON chỉ có một tập kiểu giới hạn: object, array, string, number, boolean và null. `datetime`, `Decimal` hay custom class cần một quy ước serialize riêng, chẳng hạn chuyển sang ISO 8601 hoặc string định danh. Không dùng `pickle` để đọc dữ liệu không đáng tin cậy: pickle có thể thực thi code khi unpickle.\n\nVới CSV, dùng `csv.DictReader`/`DictWriter` thay vì tự `split(\",\")`; CSV có quoting, delimiter và dòng chứa dấu phẩy. Ghi rõ newline khi mở file để tránh dòng trống trên một số nền tảng.\n\n## Ranh giới tin cậy\n\nParse thành công không có nghĩa dữ liệu đúng schema. Sau `json.loads`, hãy kiểm tra field bắt buộc, kiểu dữ liệu, giới hạn kích thước và giá trị cho phép trước khi đưa vào business logic. Khi xuất JSON cho API, cố định format và test cả field vắng lẫn field thừa.",
-    "source": "content/python/standard-library/json.md",
+    "sourcePath": "content/python/standard-library/json.md",
     "headings": [
       {
         "title": "Ranh giới tin cậy",
@@ -2063,8 +2782,13 @@ export const articles = [
       "/standard-library/overview",
       "/security/secure-coding"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1330,
     "body": "Regex mô tả pattern text. `re.search` tìm ở bất kỳ vị trí nào, `re.match` bắt đầu từ đầu string, `re.fullmatch` yêu cầu toàn bộ string khớp; `finditer` cho iterator các Match object.\n\n```python\nimport re\n\npattern = re.compile(r\"(?P<user>[a-z0-9._-]+)@(?P<host>[a-z0-9.-]+)\")\nmatch = pattern.fullmatch(\"nam@example.com\")\nif match:\n    print(match.group(\"user\"), match.group(\"host\"))\n```\n\nDùng raw string cho pattern để backslash không bị Python string parser xử lý trước. Quantifier greedy có thể backtrack nhiều; với input lớn hoặc không tin cậy, pattern phức tạp có thể gây chậm. Regex không phải parser cho mọi ngôn ngữ lồng nhau.",
-    "source": "content/python/standard-library/re.md",
+    "sourcePath": "content/python/standard-library/re.md",
     "headings": []
   },
   {
@@ -2091,8 +2815,13 @@ export const articles = [
       "/standard-library/overview",
       "/best-practices/common-mistakes"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1340,
     "body": "Naive datetime không mang timezone; aware datetime có offset/timezone. Trong hệ thống phân tán, lưu và truyền instant ở UTC, chỉ chuyển sang timezone hiển thị ở boundary.\n\n```python\nfrom datetime import datetime, timezone\n\ncreated_at = datetime.now(timezone.utc)\nprint(created_at.isoformat())\n```\n\n`timedelta` biểu diễn khoảng thời gian, không phải timezone. Với timezone thực tế có DST, dùng `zoneinfo.ZoneInfo(\"Asia/Ho_Chi_Minh\")` thay vì tự cộng offset. Parse input phải biết format và timezone; đừng gọi `.replace(tzinfo=...)` để “convert” một instant nếu bạn chưa hiểu giá trị ban đầu.",
-    "source": "content/python/standard-library/datetime.md",
+    "sourcePath": "content/python/standard-library/datetime.md",
     "headings": []
   },
   {
@@ -2117,8 +2846,13 @@ export const articles = [
       "/dieu-khien/match",
       "/standard-library/json"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1340,
     "body": "`Enum` biểu diễn một tập giá trị có tên:\n\n```python\nfrom enum import StrEnum, auto\n\nclass State(StrEnum):\n    queued = auto()\n    running = auto()\n    done = auto()\n\nif current is State.running:\n    print(\"đang xử lý\")\n```\n\nSo sánh identity với member (`current is State.running`) thường dễ đọc. `member.name` là tên member và `member.value` là giá trị; đừng mặc định rằng value sẽ serialize đúng hợp đồng API. `StrEnum` hữu ích khi giá trị cần hoạt động như string; `IntEnum` chỉ nên dùng khi tương thích số nguyên là yêu cầu thật sự, vì phép tính số có thể làm mất ngữ nghĩa enum.\n\nEnum hợp với trạng thái, quyền hạn, protocol version và lựa chọn hữu hạn. Nếu tập giá trị đến từ database hoặc user có thể mở rộng tùy ý, dùng string/record có validation sẽ linh hoạt hơn. Khi đổi tên member, cân nhắc tương thích dữ liệu đã lưu và migration.",
-    "source": "content/python/standard-library/enum.md",
+    "sourcePath": "content/python/standard-library/enum.md",
     "headings": []
   },
   {
@@ -2143,8 +2877,13 @@ export const articles = [
       "/exception/traceback",
       "/best-practices/configuration"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1350,
     "body": "Dùng logger theo module thay vì `print()` rải khắp code:\n\n```python\nimport logging\n\nlogger = logging.getLogger(__name__)\nlogger.info(\"processing invoice_id=%s\", invoice_id)\n```\n\nLogger tạo record; handler quyết định nơi xuất; formatter quyết định hình thức; level lọc mức chi tiết. `logger.exception` dùng trong `except` để ghi traceback. Không nối string eager nếu format argument đủ, và không ghi password, token hoặc dữ liệu cá nhân nhạy cảm.\n\nRoot logger phù hợp để cấu hình ở entrypoint. Library nên tạo logger nhưng không tự cấu hình global handler khiến ứng dụng dùng library bị đổi output ngoài ý muốn.",
-    "source": "content/python/standard-library/logging.md",
+    "sourcePath": "content/python/standard-library/logging.md",
     "headings": []
   },
   {
@@ -2171,8 +2910,13 @@ export const articles = [
       "/standard-library/subprocess",
       "/module/import-system"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1350,
     "body": "`pathlib` nên là API chính cho path; `os` vẫn quan trọng khi đọc environment (`os.environ`), quyền/process hiện tại và các primitive hệ điều hành. `sys.argv`, `sys.path`, `sys.stderr` mô tả interpreter đang chạy; tránh sửa `sys.path` tùy tiện vì nó che giấu lỗi đóng gói.\n\n`shutil.copytree`, `move`, `rmtree` giúp thao tác cây thư mục. Các hàm xóa là destructive: kiểm tra path đã resolve và giới hạn trong thư mục được phép trước khi gọi. Với dữ liệu tạm, `tempfile.TemporaryDirectory` tự dọn dẹp tốt hơn tự ghép tên file trong `/tmp`.\n\n```python\nimport os\nimport tempfile\nfrom pathlib import Path\n\nwith tempfile.TemporaryDirectory() as name:\n    output = Path(name) / \"result.txt\"\n    output.write_text(os.environ.get(\"APP_MESSAGE\", \"ok\"), encoding=\"utf-8\")\n```\n\n`importlib.import_module(\"package.plugin\")` hữu ích cho plugin system, nhưng tên module đến từ cấu hình phải được allowlist và load lỗi cần được báo rõ. Import động không thay thế thiết kế dependency rõ ràng.",
-    "source": "content/python/standard-library/system-tools.md",
+    "sourcePath": "content/python/standard-library/system-tools.md",
     "headings": []
   },
   {
@@ -2199,8 +2943,13 @@ export const articles = [
       "/standard-library/security-modules",
       "/best-practices/common-mistakes"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1360,
     "body": "`math` cung cấp hàm số thực như `sqrt`, `isclose`, `ceil`, `floor`, `gcd`; dùng `math.isclose` khi so sánh float do sai số biểu diễn nhị phân. `decimal.Decimal` phù hợp cho tiền tệ khi cần quy tắc làm tròn rõ ràng. `fractions.Fraction` giữ phân số chính xác và hữu ích trong tính toán hữu tỉ.\n\n`random` là PRNG cho mô phỏng, shuffle và dữ liệu test; không dùng nó cho token, mật khẩu hoặc quyết định bảo mật. Với mục đích đó, dùng `secrets`. `statistics` cung cấp mean, median, quantiles cho dữ liệu nhỏ trong bộ nhớ; dataset lớn hoặc phân tích chuyên sâu cần công cụ phù hợp hơn.\n\n```python\nfrom decimal import Decimal\nfrom math import isclose\n\ntotal = Decimal(\"0.10\") + Decimal(\"0.20\")\nassert total == Decimal(\"0.30\")\nassert isclose(0.1 + 0.2, 0.3, rel_tol=1e-12)\n```\n\nHãy ghi rõ đơn vị, precision và cách rounding trong domain model. Đừng trộn `float` và `Decimal` ngầm; chuyển đổi tại boundary với quy ước được kiểm thử.",
-    "source": "content/python/standard-library/math-tools.md",
+    "sourcePath": "content/python/standard-library/math-tools.md",
     "headings": []
   },
   {
@@ -2226,8 +2975,13 @@ export const articles = [
       "/security/subprocess-paths",
       "/standard-library/overview"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1360,
     "body": "`subprocess.run` là API cấp cao cho command hoàn thành:\n\n```python\nfrom subprocess import run\n\nresult = run([\"python\", \"--version\"], capture_output=True, text=True, check=True, timeout=5)\nprint(result.stdout or result.stderr)\n```\n\nTruyền argv dạng list, không bật `shell=True` nếu không cần. `check=True` biến exit code khác 0 thành `CalledProcessError`; `timeout` tránh process treo vô hạn. Với stream dài hoặc process sống lâu, dùng `Popen` và thiết kế backpressure thay vì gọi `communicate` không giới hạn.",
-    "source": "content/python/standard-library/subprocess.md",
+    "sourcePath": "content/python/standard-library/subprocess.md",
     "headings": []
   },
   {
@@ -2254,8 +3008,13 @@ export const articles = [
       "/standard-library/subprocess",
       "/async/concurrency"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1370,
     "body": "`urllib.parse` dùng để parse và build URL; `urllib.request` có thể thực hiện HTTP request cơ bản. Luôn đặt timeout, kiểm tra status/content type, giới hạn kích thước body và xử lý redirect theo threat model. Khi ứng dụng cần retry, connection pooling, proxy hoặc async HTTP, thư viện chuyên dụng thường phù hợp hơn.\n\n`socket` là abstraction thấp hơn: TCP là stream byte, không phải “mỗi lần recv là một message”. Có thể nhận thiếu hoặc gộp nhiều message, nên protocol phải định nghĩa framing, length prefix hoặc delimiter. Socket server cần timeout, đóng tài nguyên và giới hạn client.\n\nKhông tự tắt kiểm tra TLS để “sửa” lỗi certificate. URL đến từ user cần chống SSRF: allowlist scheme/host, chặn địa chỉ private sau DNS resolution và không cho truy cập metadata endpoint trong môi trường cloud. Log request nên loại bỏ token, cookie và dữ liệu nhạy cảm.",
-    "source": "content/python/standard-library/networking.md",
+    "sourcePath": "content/python/standard-library/networking.md",
     "headings": []
   },
   {
@@ -2281,8 +3040,13 @@ export const articles = [
       "/security/secure-coding",
       "/standard-library/overview"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1370,
     "body": "SQLite là database serverless phù hợp cho local app, tool và dữ liệu nhỏ-vừa. Luôn dùng parameterized query:\n\n```python\nimport sqlite3\n\nwith sqlite3.connect(\"app.db\") as connection:\n    connection.execute(\"CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)\")\n    connection.execute(\"INSERT INTO users (name) VALUES (?)\", (\"An\",))\n```\n\nKhông f-string user input vào SQL; đó là SQL injection. Context manager commit khi block thành công và rollback khi exception. Với workload concurrent hoặc production nhiều writer, hiểu transaction isolation, locking và giới hạn SQLite trước khi coi nó là database server tổng quát.",
-    "source": "content/python/standard-library/sqlite3.md",
+    "sourcePath": "content/python/standard-library/sqlite3.md",
     "headings": []
   },
   {
@@ -2308,8 +3072,13 @@ export const articles = [
       "/advanced/generator",
       "/standard-library/functools"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1380,
     "body": "`Counter` đếm frequency, `defaultdict` tạo default khi thiếu key, `deque` hỗ trợ append/pop hai đầu. `itertools` cung cấp iterator building blocks như `chain`, `islice`, `product`, `groupby` và `accumulate`.\n\n```python\nfrom collections import Counter\n\ncounts = Counter([\"ok\", \"failed\", \"ok\"])\nprint(counts[\"ok\"])  # 2\n```\n\n`groupby` chỉ gom các phần tử kề nhau có cùng key, nên thường cần sort trước. Các công cụ này tạo pipeline lazy; hãy biết lúc nào consumer consume hết và lúc nào cần materialize thành list.",
-    "source": "content/python/standard-library/collections-itertools.md",
+    "sourcePath": "content/python/standard-library/collections-itertools.md",
     "headings": []
   },
   {
@@ -2337,8 +3106,13 @@ export const articles = [
       "/standard-library/collections-itertools",
       "/oop/data-model"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1380,
     "body": "`inspect.signature` và `getmembers` hữu ích cho framework, plugin và tooling; code ứng dụng thông thường nên ưu tiên API tường minh. `copy.copy` sao chép nông còn `copy.deepcopy` đi qua object graph, có thể đắt hoặc không phù hợp với object chứa resource.\n\n`pprint` giúp đọc cấu trúc lồng nhau khi debug. `textwrap` xử lý wrap/dedent; `string.Template` là lựa chọn đơn giản cho template không cần full engine. `operator.itemgetter`/`attrgetter` làm key function ngắn gọn cho `sorted` và `groupby`.\n\n`heapq` phù hợp priority queue tối thiểu; `bisect` tìm/chèn trong list đã sắp xếp nhưng không biến nó thành cấu trúc concurrent hay thay thế database index. Mọi helper nhỏ vẫn cần nêu invariant: list có được sort chưa, object có mutable không, và ai sở hữu dữ liệu.",
-    "source": "content/python/standard-library/text-tools.md",
+    "sourcePath": "content/python/standard-library/text-tools.md",
     "headings": []
   },
   {
@@ -2363,8 +3137,13 @@ export const articles = [
       "/standard-library/subprocess",
       "/best-practices/project-structure"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1390,
     "body": "`argparse` đọc `sys.argv` và sinh help/validation cho command-line app:\n\n```python\nimport argparse\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"path\")\nparser.add_argument(\"--dry-run\", action=\"store_true\")\nargs = parser.parse_args()\n```\n\nPositional argument phù hợp với input bắt buộc theo thứ tự; option phù hợp với cấu hình có tên. Xác định kiểu và default rõ ràng, dùng exit code khác 0 cho lỗi input. Với CLI nhiều subcommand, dùng `add_subparsers` và mỗi command một handler để không tạo `main` khổng lồ.",
-    "source": "content/python/standard-library/argparse.md",
+    "sourcePath": "content/python/standard-library/argparse.md",
     "headings": []
   },
   {
@@ -2388,8 +3167,13 @@ export const articles = [
       "/testing/unittest-mocking",
       "/testing/pytest-overview"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1390,
     "body": "`unittest` cung cấp `TestCase`, assertions, fixtures và `unittest.mock`; chạy bằng `python -m unittest`. Nó phù hợp khi muốn không phụ thuộc framework ngoài hoặc cần tương thích hệ sinh thái unittest.\n\n`doctest` chạy các ví dụ prompt trong docstring, hữu ích cho ví dụ nhỏ và tài liệu API. Nó không thay thế test edge case, integration test hay property test: output phải ổn định, và doctest dễ trở nên giòn nếu format hiển thị thay đổi.\n\nTách test khỏi implementation detail. Mock boundary như network/client clock, không mock mọi hàm nội bộ; nếu test phải biết quá nhiều call order thì có thể contract đang quá chặt. Dù dùng runner nào, test vẫn cần deterministic, isolation và failure message có ích.",
-    "source": "content/python/standard-library/testing-tools.md",
+    "sourcePath": "content/python/standard-library/testing-tools.md",
     "headings": []
   },
   {
@@ -2412,8 +3196,13 @@ export const articles = [
       "/file",
       "/typing"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1400,
     "body": "Lỗi tốt giúp người vận hành biết chuyện gì xảy ra, ở đâu và có thể làm gì tiếp theo. Hãy bắt exception gần boundary nơi bạn có thể thêm context hoặc trả response phù hợp.\n\n```python\ntry:\n    config = load_config()\nexcept OSError as error:\n    logger.exception(\"Không thể đọc cấu hình từ %s\", config_path)\n    raise RuntimeError(\"Ứng dụng không thể khởi động\") from error\n```\n\nKhông dùng bare `except`, không log rồi nuốt lỗi, và không đưa secret vào message. Ở boundary, chuyển lỗi nội bộ sang error code ổn định; trong core, giữ exception gốc để debug.",
-    "source": "content/python/best-practices/error-handling.md",
+    "sourcePath": "content/python/best-practices/error-handling.md",
     "headings": []
   },
   {
@@ -2440,8 +3229,13 @@ export const articles = [
       "/co-ban/binary-data",
       "/standard-library/overview"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1400,
     "body": "`random` dành cho mô phỏng và không nên dùng để tạo token bảo mật. `secrets` dùng nguồn entropy phù hợp hơn cho token reset hoặc secret ngẫu nhiên:\n\n```python\nimport secrets\n\ntoken = secrets.token_urlsafe(32)\n```\n\nHashing là một chiều; encryption được thiết kế để giải mã bằng key. `hashlib` cung cấp hash, còn `hmac` kiểm tra integrity/authenticity khi hai bên chia sẻ secret. Password không nên hash bằng SHA-256 trực tiếp; dùng password hashing scheme chuyên dụng do thư viện phù hợp cung cấp và quản lý salt/cost đúng cách.\n\n`base64` chỉ là encoding để biểu diễn byte bằng text, không phải encryption. Dùng nó cho payload cần vận chuyển qua text/URL, nhưng đừng dùng Base64 để “che” secret; ai có dữ liệu cũng decode được.",
-    "source": "content/python/standard-library/security-modules.md",
+    "sourcePath": "content/python/standard-library/security-modules.md",
     "headings": []
   },
   {
@@ -2466,8 +3260,13 @@ export const articles = [
       "/module/packages",
       "/packaging/src-layout"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1410,
     "body": "Script một file nên giữ một file cho đến khi việc tách giúp đọc/test tốt hơn. Library nên có public API ổn định, tests và packaging metadata. CLI nên tách parse arguments, orchestration và domain logic để có thể gọi logic từ test hoặc API khác.\n\nỨng dụng lớn thường tổ chức theo domain/use case, không phải một folder `utils` chứa mọi thứ. Dependency direction nên dễ nhìn; module cấp thấp không import ngược entrypoint. Khi structure phản ánh boundary thật, refactor ít đau hơn việc áp một template enterprise từ ngày đầu.",
-    "source": "content/python/best-practices/project-structure.md",
+    "sourcePath": "content/python/best-practices/project-structure.md",
     "headings": []
   },
   {
@@ -2491,8 +3290,13 @@ export const articles = [
       "/security/secure-coding",
       "/file/json-csv"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1420,
     "body": "Configuration gồm giá trị thay đổi theo environment; code gồm behavior. Parse và validate config ở startup để lỗi xuất hiện sớm, thay vì để string thiếu field chạy sâu rồi fail khó đọc.\n\nEnvironment variable phù hợp cho secret và deployment-specific value, nhưng không tự an toàn: process, log hoặc crash report có thể làm lộ chúng. File config cần được phân quyền và không commit credential. Tách `dev`, `test`, `prod` bằng explicit settings, không dùng `if hostname == ...` rải khắp code.\n\nMột object settings bất biến sau validation thường giúp dependency rõ hơn và test dễ hơn.",
-    "source": "content/python/best-practices/configuration.md",
+    "sourcePath": "content/python/best-practices/configuration.md",
     "headings": []
   },
   {
@@ -2519,8 +3323,13 @@ export const articles = [
       "/testing/strategy",
       "/packaging/pyproject"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1430,
     "body": "PEP là Python Enhancement Proposal; PEP 8 là style guide, PEP 257 nói về docstring. Đây là convention, không phải compiler requirement. Formatter tự động định dạng; linter tìm pattern đáng ngờ; type checker phân tích annotation. Chúng giải quyết các vấn đề khác nhau.\n\nRuff, Black, mypy và Pyright là third-party tools, không đi kèm Python. Cấu hình trong `pyproject.toml`, chạy trong CI và thống nhất version tool. Đừng dùng lint để thay code review; rule nên giảm noise và bắt lỗi thật.",
-    "source": "content/python/best-practices/style-tooling.md",
+    "sourcePath": "content/python/best-practices/style-tooling.md",
     "headings": []
   },
   {
@@ -2546,8 +3355,13 @@ export const articles = [
       "/async",
       "/security/secure-coding"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1440,
     "body": "**Mutable default:** `def add(x, items=[]): ...` giữ list giữa các lần gọi; dùng `None` rồi tạo list trong hàm. **Identity:** `is` dành cho singleton như `None`, còn value dùng `==`. **List mutation:** không xóa phần tử ngay khi đang duyệt nếu không hiểu index shift.\n\n**Scope:** closure trong loop có late binding; bind value hoặc tạo factory. **Import:** wildcard import và circular import làm namespace khó đoán. **Time:** naive datetime và giả định encoding mặc định gây bug theo máy. **Async:** quên `await` trả coroutine chưa chạy; `time.sleep` chặn event loop.\n\n**Security:** `eval`, `pickle`, `shell=True` và SQL string interpolation có trust boundary nguy hiểm. Mỗi warning cần một fix cụ thể, không chỉ “hãy cẩn thận”.",
-    "source": "content/python/best-practices/common-mistakes.md",
+    "sourcePath": "content/python/best-practices/common-mistakes.md",
     "headings": []
   },
   {
@@ -2576,8 +3390,13 @@ export const articles = [
       "/iteration/iterable-iterator",
       "/internals/gil"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1450,
     "body": "- **Object:** giá trị có identity, type và value.\n- **Binding:** liên kết một name với object.\n- **Namespace:** mapping từ name tới object.\n- **Iterable:** object có thể cung cấp iterator.\n- **Iterator:** object trả phần tử kế tiếp qua `__next__`.\n- **Generator:** iterator được tạo bằng function có `yield`.\n- **Coroutine:** computation có thể tạm dừng bằng `await`.\n- **Descriptor:** object điều khiển attribute access qua `__get__`/`__set__`.\n- **MRO:** thứ tự lookup method trong hierarchy.\n- **GIL:** lock của CPython build mặc định liên quan thực thi bytecode.\n\nGlossary chỉ là điểm vào; mỗi thuật ngữ nên dẫn tới bài giải thích behavior và trade-off đầy đủ.",
-    "source": "content/python/best-practices/glossary.md",
+    "sourcePath": "content/python/best-practices/glossary.md",
     "headings": []
   },
   {
@@ -2603,8 +3422,13 @@ export const articles = [
       "/collection/dictionary",
       "/file"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1460,
     "body": "```python\nitems = [\"a\", \"b\"]\nitems.append(\"c\")\nitems.extend([\"d\", \"e\"])\nmapping = {key: value for key, value in pairs}\nfor index, item in enumerate(items, start=1):\n    print(f\"{index:02d}: {item}\")\n```\n\nFile mode thường dùng: `r` đọc, `w` ghi đè, `a` append, `x` tạo mới, thêm `b` cho binary, thêm `+` cho đọc/ghi. Dùng `with open(..., encoding=\"utf-8\")`. Bắt exception cụ thể, log context và để lỗi nổi lên nếu không thể recover.\n\nCheatsheet là bảng nhớ nhanh, không thay thế bài giải thích semantics hoặc security boundary.",
-    "source": "content/python/best-practices/cheatsheets.md",
+    "sourcePath": "content/python/best-practices/cheatsheets.md",
     "headings": []
   },
   {
@@ -2629,8 +3453,13 @@ export const articles = [
       "/standard-library/logging",
       "/testing/strategy"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1470,
     "body": "Bắt đầu bằng một reproduction nhỏ và xác định expected behavior. Ghi input, môi trường, phiên bản Python và bước gây lỗi; nếu chưa tái hiện được, đừng vội sửa code theo phỏng đoán.\n\nTraceback đọc từ dòng cuối lên: exception type/message ở cuối, frame gần nơi lỗi nhất ở ngay phía trên. `breakpoint()` hoặc `python -m pdb script.py` cho phép inspect local state, step qua branch và xem call stack. Với lỗi production, structured logging nên có request id và context đủ để nối các sự kiện nhưng không ghi secret.\n\nSau khi tìm nguyên nhân, viết regression test tối thiểu trước hoặc cùng lúc với fix. Kiểm tra cả path thành công, input biên và failure mode. Một fix tốt giải thích được vì sao lỗi xảy ra; chỉ thêm `try/except: pass` làm mất tín hiệu và khiến lỗi quay lại khó hơn.",
-    "source": "content/python/debugging/workflow.md",
+    "sourcePath": "content/python/debugging/workflow.md",
     "headings": []
   },
   {
@@ -2654,8 +3483,13 @@ export const articles = [
       "/exception",
       "/typing"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1500,
     "body": "`assert condition` kiểm tra một giả định trong code. Khi giả định sai, Python ném `AssertionError`, giúp lỗi lộ ra gần nguyên nhân.\n\n```python\ndef split_total(total: int, parts: int) -> list[int]:\n    assert total >= 0\n    assert parts > 0\n    return [total // parts] * parts\n```\n\nAssert phù hợp cho invariant nội bộ, không phải để validate input không tin cậy hoặc thay thế kiểm thử. Khi chạy với tối ưu hóa, assertion có thể bị loại bỏ. Với hành vi cần đảm bảo ở production, hãy dùng điều kiện và exception rõ ràng.",
-    "source": "content/python/testing/assert.md",
+    "sourcePath": "content/python/testing/assert.md",
     "headings": []
   },
   {
@@ -2679,8 +3513,13 @@ export const articles = [
       "/testing/unittest-mocking",
       "/typing"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1510,
     "body": "Unit test kiểm tra một đơn vị nhỏ với dependency được kiểm soát; integration test kiểm tra boundary thật như database hoặc filesystem; regression test giữ lại case từng gây bug. Một suite tốt không tối ưu số lượng test mà tối ưu độ tin cậy của signal.\n\n```python\ndef test_total_uses_discount():\n    assert calculate_total(200_000, 0.1) == 180_000\n```\n\nTest behavior observable, tên test nói rõ scenario và tránh kiểm tra implementation detail. Mock ở boundary bạn sở hữu, không mock từng function nội bộ. Khi test flaky, tìm race, clock, network và shared state thay vì retry vô hạn.",
-    "source": "content/python/testing/strategy.md",
+    "sourcePath": "content/python/testing/strategy.md",
     "headings": []
   },
   {
@@ -2705,8 +3544,13 @@ export const articles = [
       "/testing/assert",
       "/module/import-system"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1520,
     "body": "`unittest` là standard library, cung cấp `TestCase`, assertion, setup/teardown và mock. `pytest` là third-party và có workflow riêng.\n\n```python\nfrom unittest.mock import patch\n\n@patch(\"billing.service.fetch_rate\")\ndef test_total_uses_rate(fetch_rate):\n    fetch_rate.return_value = 1.08\n    assert calculate_with_rate(100, \"VND\") == 108\n```\n\nPatch nơi code đang lookup tên, không nhất thiết nơi object được định nghĩa. Mock quá sâu khiến test xanh nhưng refactor nhỏ cũng làm vỡ suite. Dùng fake đơn giản khi behavior quan trọng hơn call count, và luôn assert output/side effect mà user thật sự quan tâm.",
-    "source": "content/python/testing/unittest-mocking.md",
+    "sourcePath": "content/python/testing/unittest-mocking.md",
     "headings": []
   },
   {
@@ -2730,8 +3574,13 @@ export const articles = [
       "/testing/unittest-mocking",
       "/packaging/pip"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1530,
     "body": "pytest là test framework third-party phổ biến, không đi kèm Python. Nó phát hiện function test, dùng plain `assert`, fixture dependency injection và plugin ecosystem.\n\n```python\ndef test_slug_is_stable():\n    assert make_slug(\"Hello Python\") == \"hello-python\"\n```\n\nFixture nên cung cấp resource và cleanup rõ ràng. Parametrize giúp chạy cùng behavior trên nhiều input. Dù dùng pytest hay unittest, nguyên tắc vẫn là test behavior, cô lập boundary hợp lý và chạy suite trong môi trường sạch.",
-    "source": "content/python/testing/pytest-overview.md",
+    "sourcePath": "content/python/testing/pytest-overview.md",
     "headings": []
   },
   {
@@ -2755,8 +3604,13 @@ export const articles = [
       "/advanced/generator",
       "/standard-library/functools"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1600,
     "body": "Tối ưu hiệu năng nên bắt đầu bằng câu hỏi “đo ở đâu?” thay vì đoán. `timeit` phù hợp cho micro-benchmark nhỏ; profiler phù hợp để tìm hot path trong chương trình thật.\n\n```python\nfrom timeit import timeit\n\nduration = timeit(\"sum(range(10_000))\", number=1_000)\nprint(f\"{duration:.3f}s\")\n```\n\nKiểm tra cả độ phức tạp và memory. List comprehension thường nhanh và rõ, nhưng generator giúp giảm memory khi pipeline lớn. Cache chỉ tốt khi hit rate, invalidation và giới hạn bộ nhớ đã được hiểu.",
-    "source": "content/python/performance/profiling.md",
+    "sourcePath": "content/python/performance/profiling.md",
     "headings": []
   },
   {
@@ -2780,8 +3634,13 @@ export const articles = [
       "/performance/profiling",
       "/standard-library/collections-itertools"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1610,
     "body": "Complexity mô tả cách thời gian hoặc memory tăng theo input. List membership thường O(n), append amortized O(1), dict/set lookup average-case O(1) nhưng không phải guarantee tuyệt đối cho mọi hash collision hay workload.\n\n```python\nallowed = set(allowed_ids)\nmatches = [row for row in rows if row[\"id\"] in allowed]\n```\n\nĐổi list lookup lặp lại sang set có thể giảm thời gian, nhưng phải trả memory và mất semantics thứ tự. Space complexity tính cả object tạm, cache và materialization của generator. Đo workload thật sau khi hiểu bottleneck; Big-O không thay thế benchmark.",
-    "source": "content/python/performance/complexity.md",
+    "sourcePath": "content/python/performance/complexity.md",
     "headings": []
   },
   {
@@ -2806,8 +3665,13 @@ export const articles = [
       "/internals/memory-management",
       "/performance/profiling"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1620,
     "body": "List giữ toàn bộ phần tử; generator chỉ tạo phần tử khi consumer yêu cầu. Với file hoặc stream lớn, lazy pipeline có thể giảm peak memory, nhưng iterator chỉ đi một lần và giữ closure/captured object nếu thiết kế bất cẩn.\n\nCPython có reference counting và cyclic garbage collector, nhưng “memory leak” ở app Python vẫn có thể đến từ cache không giới hạn, global collection, callback giữ reference hoặc extension native. `weakref` cho phép tham chiếu không giữ object sống, phù hợp cho cache phụ trợ.\n\nĐo bằng profiler/memory tracer trước khi tối ưu; gọi `gc.collect()` bừa bãi hiếm khi là fix đúng cho ownership sai.",
-    "source": "content/python/performance/memory.md",
+    "sourcePath": "content/python/performance/memory.md",
     "headings": []
   },
   {
@@ -2831,8 +3695,13 @@ export const articles = [
       "/performance/profiling",
       "/async"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1700,
     "body": "CPython là một implementation của Python, không phải toàn bộ ngôn ngữ Python. Nó biên dịch source thành bytecode rồi thực thi qua virtual machine.\n\n```python\nimport dis\n\ndef add(left: int, right: int) -> int:\n    return left + right\n\ndis.dis(add)\n```\n\nChi tiết quản lý object, reference counting và cyclic garbage collection là đặc tính của CPython và có thể thay đổi theo phiên bản. GIL cũng không nên được mô tả như “Python không chạy song song”: I/O concurrency, multiprocessing và các extension nhả GIL tạo ra những trade-off khác nhau.",
-    "source": "content/python/internals/cpython.md",
+    "sourcePath": "content/python/internals/cpython.md",
     "headings": []
   },
   {
@@ -2857,8 +3726,13 @@ export const articles = [
       "/performance/memory",
       "/co-ban/object-model"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1710,
     "body": "CPython theo dõi reference count của nhiều object; khi count về zero, object thường được giải phóng ngay. Reference cycle có thể khiến count không về zero, nên cyclic GC phát hiện và xử lý các cycle không còn reachable.\n\nĐây là implementation detail, không phải language guarantee về thời điểm cleanup. `__del__` làm lifecycle phức tạp và không nên là cơ chế duy nhất để đóng file/socket; dùng context manager cho resource ngoài Python heap.\n\nObject giữ reference gián tiếp qua closure, cache, class attribute hoặc callback rất dễ sống lâu hơn mong muốn. Dùng ownership rõ, weakref khi phù hợp và profiler khi nghi ngờ leak.",
-    "source": "content/python/internals/memory-management.md",
+    "sourcePath": "content/python/internals/memory-management.md",
     "headings": []
   },
   {
@@ -2883,8 +3757,13 @@ export const articles = [
       "/concurrency/multiprocessing",
       "/internals/cpython"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1720,
     "body": "GIL là lock trong build CPython mặc định bảo vệ một số invariant khi thực thi bytecode Python. Nó khiến nhiều thread không đồng thời chạy bytecode Python CPU-bound trong cùng interpreter theo cách nhiều người kỳ vọng, nhưng thread vẫn hữu ích cho I/O và extension có nhả GIL.\n\nCPU-bound cần throughput thường cân nhắc multiprocessing, native extension hoặc thuật toán tốt hơn. I/O-bound thường dùng thread hoặc asyncio. Đây là trade-off của CPython, không phải câu “Python không chạy đa luồng”.\n\nPython 3.13 giới thiệu free-threaded build tùy chọn; Python 3.14 tiếp tục cải thiện nhưng build này có trade-off và compatibility riêng. Tài liệu phải ghi rõ interpreter/build target, không suy ra mọi Python đều free-threaded hay mọi package native đã thread-safe.",
-    "source": "content/python/internals/gil.md",
+    "sourcePath": "content/python/internals/gil.md",
     "headings": []
   },
   {
@@ -2910,8 +3789,13 @@ export const articles = [
       "/internals/cpython",
       "/standard-library/overview"
     ],
+    "collection": "python",
+    "collectionLabel": "Python",
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 1730,
     "body": "CPython parse source, tạo code object chứa bytecode và metadata, rồi thực thi trong interpreter. Frame giữ execution state như local namespace, instruction position và reference tới code object.\n\n```python\nimport dis\n\ndef total(a, b):\n    return a + b\n\ndis.dis(total)\n```\n\n`.pyc` trong `__pycache__` là cache bytecode cho import; không phải source portable độc lập và không nên commit. Opcode, frame layout và cache strategy là implementation details có thể thay đổi theo version. Dùng `dis`, `inspect` và official docs để học, nhưng đừng dùng opcode cụ thể làm API contract của ứng dụng.",
-    "source": "content/python/internals/execution-model.md",
+    "sourcePath": "content/python/internals/execution-model.md",
     "headings": []
   }
 ] as const;

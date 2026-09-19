@@ -1,8 +1,12 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "dev-wiki",
-  "compatibility_date": "2026-09-18",
+  "main": "./dist/server/index.js",
+  "compatibility_date": "2026-09-19",
   "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist/client"
+  },
   "workers_dev": true,
   "routes": [
     {
