@@ -11,27 +11,75 @@ updated: 2026-09-18
 related: ["/bat-dau/cai-dat-python", "/bat-dau/hello-world", "/co-ban/bien"]
 ---
 
-Python là một ngôn ngữ lập trình cấp cao, đa mục đích và ưu tiên khả năng đọc. Cú pháp của Python thường gần với cách con người diễn đạt ý tưởng, vì vậy bạn có thể tập trung vào bài toán thay vì viết nhiều mã lặp.
+Python là ngôn ngữ lập trình cấp cao, đa mục đích, nổi bật nhờ cú pháp dễ đọc và hệ sinh thái thư viện lớn.
 
-## Python phù hợp với việc gì?
-
-Python được dùng trong web backend, tự động hóa, dữ liệu, AI, kiểm thử, công cụ dòng lệnh và giáo dục. Hệ sinh thái phong phú giúp một ý tưởng nhỏ có thể phát triển thành sản phẩm mà không phải đổi ngôn ngữ quá sớm.
-
-## Một chương trình Python trông như thế nào?
+Một chương trình đơn giản:
 
 ```python
-from pathlib import Path
-
-project = Path("reports")
-print(f"Đang làm việc với thư mục: {project.resolve()}")
+name = "Nam"
+print(f"Xin chào, {name}!")
 ```
 
-Điểm đáng chú ý là code không cần dấu ngoặc nhọn để biểu diễn khối lệnh. Thụt đầu dòng là một phần của cú pháp, giúp cấu trúc chương trình dễ nhìn hơn.
+Python ưu tiên code rõ ràng, nên thường cần ít boilerplate hơn nhiều ngôn ngữ khác.
+
+## Python dùng để làm gì?
+
+Python phổ biến trong:
+
+```text
+Web backend
+Automation / scripting
+Data analysis
+AI / Machine Learning
+Testing
+CLI tools
+DevOps
+Cybersecurity tooling
+```
+
+Nhờ hệ sinh thái package lớn, nhiều bài toán đã có thư viện hỗ trợ thay vì phải tự viết từ đầu.
 
 ## Khi nào nên chọn Python?
 
-Chọn Python khi tốc độ phát triển, khả năng đọc và thư viện sẵn có quan trọng. Với ứng dụng đòi hỏi độ trễ cực thấp, chạy trên thiết bị rất hạn chế hoặc cần kiểm soát bộ nhớ tuyệt đối, bạn có thể cần cân nhắc thêm ngôn ngữ khác.
+Python phù hợp khi ưu tiên:
 
-## Lộ trình đọc tiếp
+- phát triển nhanh,
+- code dễ đọc và maintain,
+- automation,
+- xử lý dữ liệu,
+- tận dụng thư viện có sẵn.
 
-Bắt đầu bằng cách cài Python, chạy chương trình đầu tiên, sau đó học biến và các kiểu dữ liệu. Khi đã quen với cú pháp, hãy chuyển sang điều khiển luồng và hàm.
+Có thể cần cân nhắc ngôn ngữ khác nếu hệ thống yêu cầu:
+
+- độ trễ cực thấp,
+- hiệu năng CPU tối đa,
+- kiểm soát bộ nhớ rất sâu,
+- chạy trên thiết bị tài nguyên cực hạn chế.
+
+Python cũng có thể kết hợp với C, C++, Rust hoặc các hệ thống khác khi chỉ một phần chương trình cần hiệu năng cao.
+
+## Điều cần nhớ
+
+```text
+Python = ngôn ngữ
+CPython = implementation phổ biến nhất
+pip = quản lý package
+.venv = môi trường riêng của project
+.py = file source Python
+```
+
+Để bắt đầu:
+
+```text
+Cài Python
+   ↓
+Chạy file .py
+   ↓
+Học biến và kiểu dữ liệu
+   ↓
+Điều kiện, vòng lặp
+   ↓
+Hàm, module, package
+```
+
+Không cần học hết Python trước khi viết code. Nắm phần nền, viết chương trình thật, rồi tra cứu đúng phần đang cần là workflow hiệu quả hơn.

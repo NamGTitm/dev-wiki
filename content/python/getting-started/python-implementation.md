@@ -11,14 +11,108 @@ updated: 2026-09-18
 related: ["/bat-dau/python-la-gi", "/internals/cpython", "/internals/execution-model"]
 ---
 
-Python là tên của ngôn ngữ và tập hợp các quy tắc về cú pháp, object, module, exception cùng thư viện chuẩn. **Implementation** là chương trình thực thi các quy tắc đó.
+**Python** là ngôn ngữ: cú pháp, object model, module, exception và các behavior được đặc tả.
 
-## CPython là gì?
+**Implementation** là chương trình thực sự chạy code Python.
 
-CPython là implementation mặc định và được dùng rộng rãi nhất. Nó viết chủ yếu bằng C, biên dịch source thành bytecode rồi chạy bytecode trong interpreter. Nhiều package native và chi tiết như reference counting, GIL hay layout object là đặc tính của CPython, không phải cam kết chung của mọi Python implementation.
+## CPython
 
-PyPy dùng JIT để tối ưu một số workload Python; các implementation khác phục vụ JVM, .NET hoặc môi trường đặc biệt. Code portable nên dựa vào behavior được ngôn ngữ hoặc standard library quy định, không dựa vào địa chỉ object hay memory layout nội bộ.
+CPython là implementation phổ biến và mặc định của Python.
 
-## Cách dùng thông tin này
+Luồng thực thi đơn giản:
 
-Khi tài liệu nói “Python làm X”, hãy hỏi X là language guarantee hay implementation detail. Ví dụ dict giữ insertion order là behavior ngôn ngữ hiện đại; kích thước bucket của dict lại là chi tiết CPython có thể thay đổi.
+```text id="15x7rc"
+source .py
+   ↓
+bytecode
+   ↓
+CPython interpreter
+```
+
+CPython được viết chủ yếu bằng C.
+
+Kiểm tra implementation đang chạy:
+
+```python id="hgkh9i"
+import platform
+
+print(platform.python_implementation())
+```
+
+Thường sẽ trả về:
+
+```text id="6e7o21"
+CPython
+```
+
+## Implementation khác
+
+Một số implementation phổ biến:
+
+```text id="v8n6xl"
+CPython -> implementation mặc định
+PyPy    -> có JIT, có thể nhanh hơn với một số workload
+Jython  -> chạy trên JVM
+IronPython -> chạy trên .NET
+```
+
+Không phải mọi implementation đều hoạt động giống nhau ở mức internals.
+
+## Language behavior và implementation detail
+
+Điểm quan trọng nhất khi đọc tài liệu Python là phân biệt:
+
+```text id="ym06aw"
+language guarantee
+implementation detail
+```
+
+Ví dụ:
+
+```text id="9r2cex"
+dict giữ insertion order
+```
+
+là behavior của Python hiện đại.
+
+Nhưng:
+
+```text id="mpp1i1"
+memory layout của dict
+reference counting
+chi tiết GIL
+kích thước object
+```
+
+chủ yếu là implementation detail của CPython.
+
+## Khi debug
+
+Kiểm tra nhanh runtime:
+
+```python id="w5lsp7"
+import platform
+import sys
+
+print(platform.python_implementation())
+print(sys.version)
+```
+
+Nếu bug liên quan đến:
+
+- performance,
+- memory,
+- native extension,
+- garbage collection,
+- threading,
+
+hãy kiểm tra implementation trước khi kết luận behavior đó là "do Python".
+
+Quy tắc cần nhớ:
+
+```text id="3h93gh"
+Python = ngôn ngữ
+CPython = một cách triển khai Python
+```
+
+Code portable nên dựa vào behavior được Python quy định, không phụ thuộc vào internals riêng của CPython trừ khi bạn chủ động chấp nhận ràng buộc đó.
