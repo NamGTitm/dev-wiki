@@ -1,5 +1,5 @@
 ---
-title: Nhập xuất, câu lệnh điều kiện và vòng lặp trong C++
+title: Nhập xuất, câu lệnh điều kiện và vòng lặp
 description: Hướng dẫn sử dụng cin, cout, if-else, switch, for, while và do-while trong C++17, kèm ví dụ thực tế, xử lý lỗi và bài tập.
 slug: /cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap
 category: fundamentals
@@ -346,7 +346,7 @@ Một lỗi phổ biến là viết `if (a = 5)` thay vì `if (a == 5)`.
 
 Biểu thức đầu tiên thực hiện phép gán, sau đó chuyển giá trị được gán thành `bool` để kiểm tra. Với giá trị `5`, điều kiện luôn đúng.
 
-### 2.3. Câu lệnh if-else if-else
+### 2.3. Câu lệnh else if if-else
 
 Khi chương trình có nhiều trường hợp, sử dụng chuỗi `else if`.
 

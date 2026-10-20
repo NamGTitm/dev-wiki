@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Copy, Layers3, Menu, Moon, Search, Sun, X } from "lucide-react";
+import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronDown, ChevronRight, Copy, Layers3, Menu, Moon, Search, Sun, X } from "lucide-react";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { articleBadges, articles, collections, getCollectionGroups, getFeaturedArticles, type Article, type Collection } from "@/lib/content";
 import { getGithubEditUrl } from "@/lib/github";
@@ -118,10 +118,195 @@ function highlightCpp(code: string): ReactNode[] {
 
 function CodeBlock({ language, code }: { language: string; code: string }) { const [copied, setCopied] = useState(false); const highlighted = language.toLowerCase() === "cpp" ? highlightCpp(code) : code; return <div className="my-7 overflow-hidden rounded-xl border border-white/10 bg-[var(--code)] shadow-[0_12px_30px_rgba(16,42,67,0.12)]"><div className="flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-white/55"><span className="font-mono uppercase tracking-[0.12em]">{language}</span><button onClick={() => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1400); }} className="inline-flex items-center gap-1.5 rounded px-2 py-1 hover:bg-white/10 hover:text-white">{copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}{copied ? "Đã copy" : "Copy"}</button></div><pre className="overflow-x-auto p-5 text-[13px] leading-6 text-[var(--code-text)]"><code>{highlighted}</code></pre></div>; }
 
+function splitMarkdownTableRow(row: string): string[] {
+  let source = row.trim();
+  if (source.startsWith("|")) source = source.slice(1);
+
+  const trailingPipe = source.length - 1;
+  let trailingBackslashes = 0;
+  for (let cursor = trailingPipe - 1; cursor >= 0 && source[cursor] === "\\"; cursor -= 1) {
+    trailingBackslashes += 1;
+  }
+  if (source.endsWith("|") && trailingBackslashes % 2 === 0) {
+    source = source.slice(0, -1);
+  }
+
+  const cells: string[] = [];
+  let cell = "";
+  let codeDelimiterLength = 0;
+
+  for (let index = 0; index < source.length;) {
+    if (source[index] === "`") {
+      let end = index + 1;
+      while (source[end] === "`") end += 1;
+      const delimiterLength = end - index;
+      if (codeDelimiterLength === 0) codeDelimiterLength = delimiterLength;
+      else if (codeDelimiterLength === delimiterLength) codeDelimiterLength = 0;
+      cell += source.slice(index, end);
+      index = end;
+      continue;
+    }
+
+    if (source[index] === "|" && codeDelimiterLength === 0) {
+      let precedingBackslashes = 0;
+      for (let cursor = index - 1; cursor >= 0 && source[cursor] === "\\"; cursor -= 1) {
+        precedingBackslashes += 1;
+      }
+      if (precedingBackslashes % 2 === 1) {
+        cell = `${cell.slice(0, -1)}|`;
+      } else {
+        cells.push(cell.trim());
+        cell = "";
+      }
+      index += 1;
+      continue;
+    }
+
+    cell += source[index];
+    index += 1;
+  }
+
+  cells.push(cell.trim());
+  return cells;
+}
+
+type MarkdownTableAlignment = "left" | "center" | "right";
+
+function parseMarkdownTableHeader(
+  lines: string[],
+  index: number,
+): { headers: string[]; alignments: MarkdownTableAlignment[] } | undefined {
+  const headerLine = lines[index];
+  const separatorLine = lines[index + 1];
+  if (!headerLine?.includes("|") || !separatorLine) return undefined;
+
+  const headers = splitMarkdownTableRow(headerLine);
+  const separators = splitMarkdownTableRow(separatorLine);
+  if (
+    headers.length < 2 ||
+    headers.length !== separators.length ||
+    !separators.every((cell) => /^:?-+:?$/.test(cell))
+  ) {
+    return undefined;
+  }
+
+  const alignments = separators.map((cell): MarkdownTableAlignment => {
+    if (cell.startsWith(":") && cell.endsWith(":")) return "center";
+    if (cell.endsWith(":")) return "right";
+    return "left";
+  });
+  return { headers, alignments };
+}
+
 function Markdown({ body }: { body: string }) {
-  const lines = body.split("\n"); const nodes: ReactNode[] = []; let index = 0;
-  const inline = (value: string): ReactNode[] => value.split(/(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\([^\)]+\))/g).filter(Boolean).map((part, partIndex) => { if (part.startsWith("`") && part.endsWith("`")) return <code key={partIndex}>{part.slice(1, -1)}</code>; if (part.startsWith("**") && part.endsWith("**")) return <strong key={partIndex}>{part.slice(2, -2)}</strong>; const link = part.match(/^\[([^\]]+)\]\(([^\)]+)\)$/); if (link) return <Link key={partIndex} href={link[2]}>{link[1]}</Link>; return part; });
-  while (index < lines.length) { const line = lines[index]; if (line.startsWith("```")) { const language = line.slice(3).trim() || "text"; const code: string[] = []; index += 1; while (index < lines.length && !lines[index].startsWith("```")) code.push(lines[index++]); index += 1; nodes.push(<CodeBlock key={nodes.length} language={language} code={code.join("\n")} />); continue; } if (line.startsWith("## ") || line.startsWith("### ")) { const level = line.startsWith("### ") ? 3 : 2; const text = line.slice(level + 1); const id = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-"); const Heading = level === 2 ? "h2" : "h3"; nodes.push(<Heading key={nodes.length} id={id} className={level === 2 ? "mt-12 border-t border-[var(--border)] pt-8 text-2xl font-bold tracking-tight" : "mt-8 text-lg font-bold"}>{inline(text)}</Heading>); index += 1; continue; } if (!line.trim()) { index += 1; continue; } if (line.startsWith("> ")) { nodes.push(<blockquote key={nodes.length}>{inline(line.slice(2))}</blockquote>); index += 1; continue; } if (line.startsWith("- ")) { const items: string[] = []; while (index < lines.length && lines[index].startsWith("- ")) items.push(lines[index++].slice(2)); nodes.push(<ul key={nodes.length}>{items.map((item) => <li key={item}>{inline(item)}</li>)}</ul>); continue; } const paragraph: string[] = [line]; index += 1; while (index < lines.length && lines[index].trim() && !/^#{2,3} /.test(lines[index]) && !lines[index].startsWith("```") && !lines[index].startsWith("> ") && !lines[index].startsWith("- ")) paragraph.push(lines[index++]); nodes.push(<p key={nodes.length}>{inline(paragraph.join(" "))}</p>); }
+  const lines = body.split("\n");
+  const nodes: ReactNode[] = [];
+  let index = 0;
+
+  const inline = (value: string): ReactNode[] => value
+    .split(/(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\([^\)]+\))/g)
+    .filter(Boolean)
+    .map((part, partIndex) => {
+      if (part.startsWith("`") && part.endsWith("`")) {
+        return <code key={partIndex}>{part.slice(1, -1)}</code>;
+      }
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={partIndex}>{part.slice(2, -2)}</strong>;
+      }
+      const link = part.match(/^\[([^\]]+)\]\(([^\)]+)\)$/);
+      if (link) return <Link key={partIndex} href={link[2]}>{link[1]}</Link>;
+      return part;
+    });
+
+  while (index < lines.length) {
+    const line = lines[index];
+    if (line.startsWith("```")) {
+      const language = line.slice(3).trim() || "text";
+      const code: string[] = [];
+      index += 1;
+      while (index < lines.length && !lines[index].startsWith("```")) code.push(lines[index++]);
+      index += 1;
+      nodes.push(<CodeBlock key={nodes.length} language={language} code={code.join("\n")} />);
+      continue;
+    }
+
+    const table = parseMarkdownTableHeader(lines, index);
+    if (table) {
+      index += 2;
+      const rows: string[][] = [];
+      while (index < lines.length && lines[index].trim() && lines[index].includes("|")) {
+        const cells = splitMarkdownTableRow(lines[index]);
+        if (cells.length < 2) break;
+        rows.push(table.headers.map((_, columnIndex) => cells[columnIndex] ?? ""));
+        index += 1;
+      }
+
+      nodes.push(<div key={nodes.length} className="my-7 w-full overflow-x-auto rounded-xl border border-[var(--border)]">
+        <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
+          <thead className="bg-[var(--surface-muted)]">
+            <tr>{table.headers.map((header, columnIndex) => <th
+              key={columnIndex}
+              scope="col"
+              style={{ textAlign: table.alignments[columnIndex] }}
+              className="border-b border-[var(--border)] px-4 py-3 font-semibold text-[var(--foreground)]"
+            >{inline(header)}</th>)}</tr>
+          </thead>
+          <tbody>{rows.map((row, rowIndex) => <tr key={rowIndex}>
+            {row.map((cell, columnIndex) => <td
+              key={columnIndex}
+              style={{ textAlign: table.alignments[columnIndex] }}
+              className="border-b border-[var(--border)] px-4 py-3 align-top text-[color-mix(in_srgb,var(--foreground)_84%,var(--muted))] last:border-b-0"
+            >{inline(cell)}</td>)}
+          </tr>)}</tbody>
+        </table>
+      </div>);
+      continue;
+    }
+
+    if (line.startsWith("## ") || line.startsWith("### ")) {
+      const level = line.startsWith("### ") ? 3 : 2;
+      const text = line.slice(level + 1);
+      const id = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-");
+      const Heading = level === 2 ? "h2" : "h3";
+      nodes.push(<Heading key={nodes.length} id={id} className={level === 2 ? "mt-12 border-t border-[var(--border)] pt-8 text-2xl font-bold tracking-tight" : "mt-8 text-lg font-bold"}>{inline(text)}</Heading>);
+      index += 1;
+      continue;
+    }
+
+    if (!line.trim()) {
+      index += 1;
+      continue;
+    }
+
+    if (line.startsWith("> ")) {
+      nodes.push(<blockquote key={nodes.length}>{inline(line.slice(2))}</blockquote>);
+      index += 1;
+      continue;
+    }
+
+    if (line.startsWith("- ")) {
+      const items: string[] = [];
+      while (index < lines.length && lines[index].startsWith("- ")) items.push(lines[index++].slice(2));
+      nodes.push(<ul key={nodes.length}>{items.map((item) => <li key={item}>{inline(item)}</li>)}</ul>);
+      continue;
+    }
+
+    const paragraph: string[] = [line];
+    index += 1;
+    while (
+      index < lines.length &&
+      lines[index].trim() &&
+      !/^#{2,3} /.test(lines[index]) &&
+      !lines[index].startsWith("```") &&
+      !lines[index].startsWith("> ") &&
+      !lines[index].startsWith("- ") &&
+      !parseMarkdownTableHeader(lines, index)
+    ) {
+      paragraph.push(lines[index++]);
+    }
+    nodes.push(<p key={nodes.length}>{inline(paragraph.join(" "))}</p>);
+  }
+
   return <div className="prose-wiki text-[17px] leading-8 text-[color-mix(in_srgb,var(--foreground)_84%,var(--muted))]">{nodes}</div>;
 }
 
@@ -133,7 +318,78 @@ function GithubEditLink({ sourcePath }: { sourcePath?: string }) {
 }
 
 function Breadcrumb({ article }: { article: Article }) { return <div className="mb-7 flex flex-wrap items-center justify-between gap-4"><div className="flex min-w-0 flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]"><Link href="/" className="hover:text-[var(--teal)]">DevHubs Wiki</Link><ChevronRight className="size-3" /><Link href={`/${article.collection}`} className="hover:text-[var(--teal)]">{article.collectionLabel}</Link><ChevronRight className="size-3" /><span>{article.categoryLabel}</span><ChevronRight className="size-3" /><span className="text-[var(--teal)]">{article.title}</span></div><GithubEditLink sourcePath={article.sourcePath} /></div>; }
-function TableOfContents({ article }: { article: Article }) { return <aside className="hidden w-[190px] shrink-0 xl:block"><div className="sticky top-28 border-l border-[var(--border)] pl-5"><p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Trong bài này</p><nav className="space-y-2">{article.headings.map((heading) => <a key={heading.id} href={`#${heading.id}`} className="block text-[13px] leading-5 text-[var(--muted)] hover:text-[var(--teal)]">{heading.title}</a>)}</nav></div></aside>; }
+function TableOfContents({ article, mobile = false }: { article: Article; mobile?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const [selectedHeadingId, setSelectedHeadingId] = useState("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuId = useId();
+  const selectedHeading = article.headings.find((heading) => heading.id === selectedHeadingId) ?? article.headings[0];
+
+  useEffect(() => {
+    if (!open) return;
+
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (event.target instanceof Node && !dropdownRef.current?.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      triggerRef.current?.focus();
+    };
+
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsideClick);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
+  if (article.headings.length === 0) return null;
+
+  const menuClassName = mobile
+    ? `mt-2 max-h-[min(55vh,22rem)] w-full overflow-y-auto overscroll-contain rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-xl ${open ? "block" : "hidden"}`
+    : `absolute right-0 top-full z-40 mt-2 max-h-[min(60vh,26rem)] w-[min(320px,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-2xl ${open ? "block" : "hidden"}`;
+
+  return <aside className={mobile ? "mb-8 w-full xl:hidden" : "hidden w-[190px] shrink-0 xl:block"}>
+    <div className={mobile ? "rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3 sm:p-4" : "sticky top-28 border-l border-[var(--border)] pl-5"}>
+      <p className={mobile ? "mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]" : "mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]"}>Trong bài này</p>
+      <div ref={dropdownRef} className="relative">
+        <button
+          ref={triggerRef}
+          type="button"
+          aria-expanded={open}
+          aria-controls={menuId}
+          onClick={() => setOpen((isOpen) => !isOpen)}
+          className="flex w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-left text-[13px] text-[var(--foreground)] shadow-sm transition hover:border-[var(--teal)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)]"
+        >
+          <span className="min-w-0 flex-1 truncate">{selectedHeading?.title ?? "Chọn mục trong bài"}</span>
+          <span className="shrink-0 font-mono text-[10px] text-[var(--muted)]">{article.headings.length}</span>
+          <ChevronDown aria-hidden="true" className={`size-4 shrink-0 text-[var(--muted)] transition-transform ${open ? "rotate-180" : ""}`} />
+        </button>
+        <div
+          id={menuId}
+          className={menuClassName}
+        >
+          <nav aria-label="Các tiêu đề trong bài">
+            {article.headings.map((heading) => <a
+              key={heading.id}
+              href={`#${heading.id}`}
+              onClick={() => {
+                setSelectedHeadingId(heading.id);
+                setOpen(false);
+              }}
+              className={`block rounded-lg px-3 py-2 text-[13px] leading-5 transition ${heading.id === selectedHeading?.id ? "bg-[var(--accent-soft)] text-[var(--accent)]" : "text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--foreground)]"}`}
+            >{heading.title}</a>)}
+          </nav>
+        </div>
+      </div>
+    </div>
+  </aside>;
+}
 
 function ArticleMetadata({ article }: { article: Article }) {
   const badges = [
@@ -151,7 +407,47 @@ function ArticleMetadata({ article }: { article: Article }) {
   </div>;
 }
 
-function ArticlePage({ article }: { article: Article }) { const index = articles.findIndex((item) => item.slug === article.slug); const previous = articles[index - 1]; const next = articles[index + 1]; const related = (article.related ?? []).map((slug) => articles.find((item) => item.slug === slug)).filter(Boolean) as Article[]; return <main id="main-content" className="mx-auto flex w-full max-w-[1080px] gap-12 px-5 py-10 sm:px-8 lg:py-14"><article className="min-w-0 max-w-[780px] flex-1"><Breadcrumb article={article} /><div className="mb-10"><ArticleMetadata article={article} /><h1 className="max-w-3xl text-4xl font-bold tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">{article.title}</h1><p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{article.description}</p></div><Markdown body={article.body} /><div className="mt-14 border-t border-[var(--border)] pt-8"><p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Đọc tiếp</p><div className="grid gap-3 sm:grid-cols-2">{related.map((item) => <Link key={item.slug} href={item.slug} className="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 transition hover:-translate-y-0.5 hover:border-[var(--teal)]"><span className="text-xs font-semibold text-[var(--teal)]">{item.categoryLabel}</span><p className="mt-1 font-semibold group-hover:text-[var(--teal)]">{item.title}</p></Link>)}</div></div><div className="mt-10 grid gap-3 border-t border-[var(--border)] pt-5 sm:grid-cols-2">{previous ? <Link href={previous.slug} className="group rounded-xl border border-[var(--border)] p-4"><span className="flex items-center gap-2 text-xs text-[var(--muted)]"><ArrowLeft className="size-3" /> Bài trước</span><p className="mt-2 font-semibold group-hover:text-[var(--teal)]">{previous.title}</p></Link> : <div />}{next && <Link href={next.slug} className="group rounded-xl border border-[var(--border)] p-4 text-right"><span className="flex items-center justify-end gap-2 text-xs text-[var(--muted)]">Bài tiếp theo <ArrowRight className="size-3" /></span><p className="mt-2 font-semibold group-hover:text-[var(--teal)]">{next.title}</p></Link>}</div></article><TableOfContents article={article} /></main>; }
+function ArticlePage({ article }: { article: Article }) {
+  const index = articles.findIndex((item) => item.slug === article.slug);
+  const previous = articles[index - 1];
+  const next = articles[index + 1];
+  const related = (article.related ?? [])
+    .map((slug) => articles.find((item) => item.slug === slug))
+    .filter(Boolean) as Article[];
+
+  return <main id="main-content" className="mx-auto flex w-full max-w-[1080px] gap-12 px-5 py-10 sm:px-8 lg:py-14">
+    <article className="min-w-0 max-w-[780px] flex-1">
+      <Breadcrumb article={article} />
+      <div className="mb-10">
+        <ArticleMetadata article={article} />
+        <h1 className="max-w-3xl text-4xl font-bold tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">{article.title}</h1>
+        <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{article.description}</p>
+      </div>
+      <TableOfContents key={`${article.slug}-mobile`} article={article} mobile />
+      <Markdown body={article.body} />
+      <div className="mt-14 border-t border-[var(--border)] pt-8">
+        <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Đọc tiếp</p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {related.map((item) => <Link key={item.slug} href={item.slug} className="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 transition hover:-translate-y-0.5 hover:border-[var(--teal)]">
+            <span className="text-xs font-semibold text-[var(--teal)]">{item.categoryLabel}</span>
+            <p className="mt-1 font-semibold group-hover:text-[var(--teal)]">{item.title}</p>
+          </Link>)}
+        </div>
+      </div>
+      <div className="mt-10 grid gap-3 border-t border-[var(--border)] pt-5 sm:grid-cols-2">
+        {previous ? <Link href={previous.slug} className="group rounded-xl border border-[var(--border)] p-4">
+          <span className="flex items-center gap-2 text-xs text-[var(--muted)]"><ArrowLeft className="size-3" /> Bài trước</span>
+          <p className="mt-2 font-semibold group-hover:text-[var(--teal)]">{previous.title}</p>
+        </Link> : <div />}
+        {next && <Link href={next.slug} className="group rounded-xl border border-[var(--border)] p-4 text-right">
+          <span className="flex items-center justify-end gap-2 text-xs text-[var(--muted)]">Bài tiếp theo <ArrowRight className="size-3" /></span>
+          <p className="mt-2 font-semibold group-hover:text-[var(--teal)]">{next.title}</p>
+        </Link>}
+      </div>
+    </article>
+    <TableOfContents key={`${article.slug}-desktop`} article={article} />
+  </main>;
+}
 
 function scoreArticle(article: Article, query: string) { const q = query.trim().toLowerCase(); if (!q) return 0; return q.split(/\s+/).reduce((score, token) => score + (article.title.toLowerCase().includes(token) ? 100 : 0) + (article.description.toLowerCase().includes(token) ? 45 : 0) + (article.keywords.join(" ").toLowerCase().includes(token) ? 35 : 0) + (article.collectionLabel.toLowerCase().includes(token) ? 30 : 0) + (article.headings.some((heading) => heading.title.toLowerCase().includes(token)) ? 25 : 0) + (article.body.toLowerCase().includes(token) ? 5 : 0), 0); }
 

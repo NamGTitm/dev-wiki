@@ -1,5 +1,5 @@
 ---
-title: Mảng và chuỗi trong C++
+title: Mảng và chuỗi
 description: Duyệt mảng một chiều, biểu diễn bảng hai chiều và thao tác chuỗi bằng std::string.
 slug: /cpp/bat-dau/mang-string
 category: fundamentals

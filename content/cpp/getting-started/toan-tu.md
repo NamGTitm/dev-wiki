@@ -1,11 +1,12 @@
 ---
-title: Toán tử và biểu thức trong C++
+title: Toán tử và biểu thức
 description: Hướng dẫn chi tiết các toán tử số học, so sánh, logic, gán, tăng giảm và thứ tự ưu tiên trong C++17, kèm ví dụ và bài tập thực hành.
 slug: /cpp/bat-dau/toan-tu
 category: fundamentals
 categoryLabel: C++ căn bản
 order: 20050
 difficulty: beginner
+badge: [Cốt lõi]
 keywords: [toán tử C++, biểu thức C++, arithmetic, comparison, logical, assignment, precedence, modulo, increment, decrement]
 updated: 2026-10-20
 collection: cpp

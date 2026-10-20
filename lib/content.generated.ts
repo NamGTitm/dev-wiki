@@ -4693,19 +4693,26 @@ export const articles = [
   },
   {
     "title": "Toán tử và biểu thức",
-    "description": "Dùng toán tử số học, so sánh, logic, gán và hiểu thứ tự đánh giá trong C++.",
+    "description": "Hướng dẫn chi tiết các toán tử số học, so sánh, logic, gán, tăng giảm và thứ tự ưu tiên trong C++17, kèm ví dụ và bài tập thực hành.",
     "slug": "/cpp/bat-dau/toan-tu",
     "category": "fundamentals",
     "categoryLabel": "C++ căn bản",
     "order": 20050,
     "difficulty": "beginner",
+    "badge": [
+      "Cốt lõi"
+    ],
     "keywords": [
       "toán tử C++",
+      "biểu thức C++",
       "arithmetic",
       "comparison",
       "logical",
+      "assignment",
       "precedence",
-      "modulo"
+      "modulo",
+      "increment",
+      "decrement"
     ],
     "updated": "2026-10-20",
     "collection": "cpp",
@@ -4718,24 +4725,244 @@ export const articles = [
     ],
     "featured": false,
     "priority": 20050,
-    "body": "Biểu thức kết hợp giá trị và toán tử để tạo ra một giá trị mới. Hiểu kiểu toán hạng và thứ tự đánh giá giúp tránh lỗi khó nhìn thấy.\n\n## Các nhóm thường dùng\n\n- Số học: `+`, `-`, `*`, `/`, `%` với số nguyên.\n- So sánh: `==`, `!=`, `<`, `<=`, `>`, `>=` trả về `bool`.\n- Logic: `&&`, `||`, `!`; `&&` và `||` short-circuit, nghĩa là vế phải có thể không được tính.\n- Gán: `=`, `+=`, `-=`, `*=`, `/=`.\n- Tăng giảm: `++i`, `i++`, `--i`, `i--`.\n\n```cpp\n#include <iostream>\n\nint main() {\n    const int total{17};\n    const int people{5};\n    const int quotient{total / people};\n    const int remainder{total % people};\n    const bool valid{people > 0 && total >= people};\n    std::cout << quotient << ' ' << remainder << ' ' << valid << '\\n';\n}\n```\n\nKhi cả hai toán hạng là số nguyên, `/` bỏ phần lẻ theo hướng về 0. Dùng `17.0 / 5` nếu cần kết quả dấu phẩy động.\n\n## Ưu tiên và ngoặc\n\n`*` có ưu tiên cao hơn `+`, còn toán tử so sánh thường được đánh giá trước `&&`. Đừng bắt người đọc phải nhớ cả bảng ưu tiên cho biểu thức phức tạp:\n\n```cpp\n#include <iostream>\n\nint main() {\n    const int age{20};\n    const bool has_ticket{true};\n    const bool is_guest{false};\n    const bool can_enter{(age >= 18) && (has_ticket || is_guest)};\n    std::cout << can_enter << '\\n';\n}\n```\n\nThứ tự ưu tiên không đồng nghĩa với thứ tự đánh giá mọi toán hạng. Tránh biểu thức thay đổi cùng một biến nhiều lần như `i++ + i++`; kết quả có thể không xác định hoặc không được thứ tự hóa như mong muốn.\n\n## Lỗi thường gặp\n\n- Viết `=` thay vì `==` khi so sánh.\n- Chia nguyên nhưng mong nhận số thực.\n- Chia cho 0 hoặc để số nguyên có dấu tràn miền.\n- Ghép nhiều phép tăng giảm vào một biểu thức.\n\n## Tự luyện\n\nViết biểu thức kiểm tra một số nằm trong đoạn đóng `[low, high]`. Gợi ý: dùng hai so sánh và `&&`.\n\n## Đọc tiếp\n\nÁp dụng biểu thức vào [nhập xuất, điều kiện và vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap).",
+    "body": "# Toán tử và biểu thức trong C++\n\nTrong lập trình, chúng ta thường xuyên thực hiện các phép tính, so sánh giá trị hoặc kiểm tra điều kiện.\n\nVí dụ, một chương trình có thể cần:\n\n- Tính tổng điểm của học sinh.\n- Kiểm tra một số có chia hết cho 2 hay không.\n- Xác định người dùng có đủ tuổi sử dụng dịch vụ.\n- Cập nhật số lượng sản phẩm trong kho.\n- Kết hợp nhiều điều kiện để đưa ra quyết định.\n\nĐể thực hiện những công việc này, C++ cung cấp **toán tử (operators)** và **biểu thức (expressions)**.\n\nĐây là kiến thức nền tảng trước khi học câu lệnh điều kiện, vòng lặp và xây dựng thuật toán.\n\n## 1. Toán tử và biểu thức là gì?\n\n### 1.1. Toán tử (Operator)\n\nToán tử là ký hiệu hoặc từ khóa được sử dụng để thực hiện một phép toán trên một hoặc nhiều giá trị.\n\nVí dụ:\n\n```cpp\nint a{10};\nint b{5};\n\nint sum = a + b;\n```\n\nTrong câu lệnh `a + b`:\n\n- `a` và `b` là các toán hạng (operands).\n- `+` là toán tử (operator).\n- `a + b` là một biểu thức (expression).\n\nToán tử `+` thực hiện phép cộng hai giá trị.\n\n### 1.2. Biểu thức (Expression)\n\nBiểu thức là sự kết hợp của giá trị, biến, toán tử hoặc lời gọi hàm để thực hiện một phép tính hoặc thao tác.\n\nVí dụ:\n\n```cpp\nint a{10};\nint b{5};\n\nint result = a + b * 2;\n```\n\nBiểu thức:\n\n```cpp\na + b * 2\n```\n\nđược tính như sau:\n\n\\[\n10 + 5 \\times 2 = 20\n\\]\n\nPhép nhân được thực hiện trước phép cộng theo quy tắc ưu tiên toán tử.\n\n### 1.3. Phân loại toán tử\n\nC++ cung cấp nhiều nhóm toán tử khác nhau.\n\n| Nhóm | Ví dụ | Công dụng |\n|---|---|---|\n| Số học | `+`, `-`, `*`, `/`, `%` | Thực hiện phép tính |\n| So sánh | `==`, `!=`, `<`, `>` | So sánh giá trị |\n| Logic | `&&`, `\\|\\|`, `!` | Kết hợp điều kiện |\n| Gán | `=`, `+=`, `-=`, `*=` | Gán và cập nhật giá trị |\n| Tăng giảm | `++`, `--` | Tăng hoặc giảm một đơn vị |\n| Điều kiện | `?:` | Lựa chọn biểu thức theo điều kiện |\n| Bitwise | `&`, `\\|`, `^`, `~` | Thao tác trên các bit |\n\nTrong bài này, chúng ta tập trung vào những nhóm toán tử thường xuyên xuất hiện trong chương trình C++ cơ bản.\n\n---\n\n## 2. Toán tử số học (Arithmetic Operators)\n\nToán tử số học dùng để thực hiện các phép tính toán học.\n\n### 2.1. Các toán tử cơ bản\n\n| Toán tử | Ý nghĩa | Ví dụ | Kết quả |\n|---|---|---|---|\n| `+` | Cộng | `10 + 3` | `13` |\n| `-` | Trừ | `10 - 3` | `7` |\n| `*` | Nhân | `10 * 3` | `30` |\n| `/` | Chia | `10 / 3` | `3` |\n| `%` | Chia lấy dư | `10 % 3` | `1` |\n\nVí dụ chương trình:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{17};\n    int b{5};\n\n    std::cout << \"Tong: \" << a + b << '\\n';\n    std::cout << \"Hieu: \" << a - b << '\\n';\n    std::cout << \"Tich: \" << a * b << '\\n';\n    std::cout << \"Thuong: \" << a / b << '\\n';\n    std::cout << \"So du: \" << a % b << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nTong: 22\nHieu: 12\nTich: 85\nThuong: 3\nSo du: 2\n```\n\n**Giải thích:**\n\n- `17 + 5 = 22`\n- `17 - 5 = 12`\n- `17 × 5 = 85`\n- `17 / 5 = 3` khi thực hiện phép chia nguyên.\n- `17 % 5 = 2`, vì 17 chia 5 được 3 và dư 2.\n\n### 2.2. Phép chia số nguyên và số thực\n\nĐây là một trong những điểm dễ nhầm lẫn nhất khi mới học C++.\n\nXét chương trình:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{7};\n    int b{2};\n\n    std::cout << a / b << '\\n';\n    std::cout << 7.0 / 2 << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n3\n3.5\n```\n\n**Tại sao `7 / 2` lại bằng `3`?**\n\nKhi cả hai toán hạng đều là số nguyên, C++ thực hiện phép chia nguyên. Phần thập phân bị loại bỏ theo hướng về 0.\n\nMuốn nhận kết quả dạng số thực, ít nhất một toán hạng cần có kiểu số thực.\n\nVí dụ:\n\n```cpp\ndouble result = 7.0 / 2;\n```\n\nHoặc chuyển kiểu tường minh:\n\n```cpp\nint a{7};\nint b{2};\n\ndouble result = static_cast<double>(a) / b;\n```\n\nKết quả:\n\n```text\n3.5\n```\n\n`static_cast<double>(a)` chuyển giá trị của `a` sang kiểu `double` trước khi thực hiện phép chia.\n\n**Một lỗi thường gặp:**\n\n```cpp\nint a{7};\nint b{2};\n\ndouble result = a / b;\n```\n\nMặc dù `result` có kiểu `double`, kết quả vẫn là `3.0`.\n\nNguyên nhân là phép chia nguyên đã được thực hiện trước khi gán kết quả cho biến `result`.\n\n### 2.3. Toán tử chia lấy dư (%)\n\nToán tử `%` trả về phần dư của phép chia số nguyên.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << 10 % 3 << '\\n';\n    std::cout << 20 % 5 << '\\n';\n    std::cout << 17 % 4 << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1\n0\n1\n```\n\n**Ứng dụng phổ biến nhất là kiểm tra tính chia hết.**\n\nMột số nguyên `n` chia hết cho `k` khác `0` khi:\n\n```cpp\nn % k == 0\n```\n\nVí dụ kiểm tra một số chẵn:\n\n```cpp\nint n{12};\n\nbool isEven = (n % 2 == 0);\n```\n\nVì `12 % 2 == 0`, biến `isEven` có giá trị `true`.\n\nMột số ứng dụng khác của `%`:\n\n- Xác định số chẵn, số lẻ.\n- Kiểm tra tính chia hết.\n- Tách chữ số cuối của số nguyên không âm.\n- Tính thời gian theo chu kỳ.\n- Xử lý các bài toán số học và thuật toán.\n\n**Lưu ý về số âm:**\n\nTrong C++17, phép chia số nguyên cắt phần thập phân theo hướng về 0. Phần dư có cùng dấu với số bị chia nếu phần dư khác 0.\n\nVí dụ:\n\n```cpp\nstd::cout << -17 / 5 << '\\n';\nstd::cout << -17 % 5 << '\\n';\n```\n\nKết quả:\n\n```text\n-3\n-2\n```\n\nKhông nên mặc định kết quả `%` luôn không âm.\n\nNgoài ra, toán tử `%` chỉ áp dụng cho kiểu số nguyên, không sử dụng trực tiếp với `double` hoặc `float`.\n\n### 2.4. Phép chia cho 0\n\nTrong số học, phép chia cho 0 không được xác định.\n\nVới kiểu số nguyên trong C++, phép chia hoặc chia lấy dư cho 0 gây ra hành vi không xác định (*undefined behavior*).\n\nVí dụ không an toàn:\n\n```cpp\nint a{10};\nint b{0};\n\nint result = a / b;\n```\n\nCách xử lý:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{};\n    int b{};\n\n    if (!(std::cin >> a >> b)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    if (b == 0) {\n        std::cerr << \"Khong the chia cho 0.\\n\";\n        return 1;\n    }\n\n    std::cout << a / b << '\\n';\n\n    return 0;\n}\n```\n\nNgoài trường hợp chia cho 0, phép chia nguyên có dấu cũng có thể gặp trường hợp tràn số, chẳng hạn giá trị nhỏ nhất của `int` chia cho `-1`.\n\n**Nguyên tắc:** Luôn kiểm tra các điều kiện có thể khiến phép tính không hợp lệ trước khi thực hiện.\n\n---\n\n## 3. Toán tử so sánh (Comparison Operators)\n\nToán tử so sánh được sử dụng để kiểm tra mối quan hệ giữa hai giá trị.\n\nKết quả của phép so sánh có kiểu `bool`, nhận một trong hai giá trị:\n\n- `true`: Điều kiện đúng.\n- `false`: Điều kiện sai.\n\n### 3.1. Bảng toán tử so sánh\n\n| Toán tử | Ý nghĩa | Ví dụ | Kết quả |\n|---|---|---|---|\n| `==` | Bằng nhau | `5 == 5` | `true` |\n| `!=` | Khác nhau | `5 != 3` | `true` |\n| `>` | Lớn hơn | `5 > 3` | `true` |\n| `<` | Nhỏ hơn | `5 < 3` | `false` |\n| `>=` | Lớn hơn hoặc bằng | `5 >= 5` | `true` |\n| `<=` | Nhỏ hơn hoặc bằng | `3 <= 5` | `true` |\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{10};\n    int b{5};\n\n    std::cout << (a > b) << '\\n';\n    std::cout << (a == b) << '\\n';\n    std::cout << (a != b) << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1\n0\n1\n```\n\nMặc định, `std::cout` hiển thị giá trị `bool` dưới dạng:\n\n- `1` tương ứng với `true`.\n- `0` tương ứng với `false`.\n\nNếu muốn in chữ `true` và `false`, sử dụng `std::boolalpha`:\n\n```cpp\nstd::cout << std::boolalpha;\nstd::cout << (10 > 5) << '\\n';\n```\n\nKết quả:\n\n```text\ntrue\n```\n\n### 3.2. Phân biệt = và ==\n\nĐây là hai toán tử hoàn toàn khác nhau.\n\n**Toán tử `=` dùng để gán giá trị:**\n\n```cpp\nint a{5};\n\na = 10;\n```\n\nSau câu lệnh trên, `a` có giá trị `10`.\n\n**Toán tử `==` dùng để so sánh:**\n\n```cpp\nint a{5};\n\nbool result = (a == 10);\n```\n\nBiến `result` có giá trị `false`.\n\nMột lỗi phổ biến:\n\n```cpp\nint a{5};\n\nif (a = 10) {\n    std::cout << \"Dieu kien dung\\n\";\n}\n```\n\nỞ đây, `a = 10` là phép gán. Biểu thức trả về giá trị vừa gán, sau đó được chuyển sang kiểu `bool`.\n\nVì `10` khác `0`, điều kiện được xem là đúng.\n\nCách viết đúng khi muốn so sánh:\n\n```cpp\nif (a == 10) {\n    std::cout << \"a bang 10\\n\";\n}\n```\n\n### 3.3. So sánh trong một khoảng giá trị\n\nGiả sử cần kiểm tra điểm số nằm trong khoảng từ 0 đến 10.\n\nTrong toán học, ta có thể viết:\n\n\\[\n0 \\le x \\le 10\n\\]\n\nNhưng trong C++, không nên viết:\n\n```cpp\n0 <= x <= 10\n```\n\nBiểu thức này không được hiểu là hai phép so sánh độc lập cùng áp dụng lên `x`.\n\nThay vào đó, C++ sẽ nhóm thành:\n\n```cpp\n(0 <= x) <= 10\n```\n\nKết quả của `0 <= x` là `bool`, được chuyển thành `0` hoặc `1` khi so sánh với `10`.\n\nVì vậy, biểu thức trên luôn đúng với các giá trị `x` số học thông thường.\n\n**Cách viết chính xác:**\n\n```cpp\nbool valid = (x >= 0) && (x <= 10);\n```\n\nToán tử `&&` yêu cầu cả hai điều kiện đều đúng.\n\n### 3.4. So sánh số thực\n\nKiểu `float` và `double` có giới hạn về độ chính xác.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    double a{0.1};\n    double b{0.2};\n\n    std::cout << std::boolalpha;\n    std::cout << (a + b == 0.3) << '\\n';\n\n    return 0;\n}\n```\n\nTrên các hệ thống thông dụng sử dụng số thực IEEE 754, kết quả thường là:\n\n```text\nfalse\n```\n\nNguyên nhân là những giá trị như `0.1` không thể được biểu diễn chính xác tuyệt đối trong hệ nhị phân dấu phẩy động.\n\nVới các phép tính gần đúng, có thể so sánh sai số:\n\n```cpp\n#include <cmath>\n#include <iostream>\n\nint main() {\n    double a{0.1};\n    double b{0.2};\n    double expected{0.3};\n\n    constexpr double epsilon{1e-9};\n\n    bool equal = std::abs((a + b) - expected) < epsilon;\n\n    std::cout << std::boolalpha << equal << '\\n';\n}\n```\n\nKết quả trên các hệ thống thông dụng:\n\n```text\ntrue\n```\n\n`epsilon` là ngưỡng sai số cho phép.\n\nTuy nhiên, giá trị `1e-9` không phù hợp với mọi bài toán. Khi làm việc với những số có độ lớn rất khác nhau, cần cân nhắc sai số tuyệt đối, sai số tương đối hoặc kết hợp cả hai.\n\n---\n\n## 4. Toán tử logic (Logical Operators)\n\nToán tử logic cho phép kết hợp nhiều điều kiện trong một biểu thức.\n\nC++ có ba toán tử logic cơ bản:\n\n| Toán tử | Tên | Ý nghĩa |\n|---|---|---|\n| `&&` | AND | Cả hai điều kiện đều đúng |\n| `\\|\\|` | OR | Ít nhất một điều kiện đúng |\n| `!` | NOT | Đảo ngược giá trị logic |\n\n### 4.1. Toán tử AND (&&)\n\nBiểu thức:\n\n```cpp\na && b\n```\n\nchỉ cho kết quả `true` khi cả `a` và `b` đều đúng.\n\nBảng chân trị:\n\n| a | b | a && b |\n|---|---|---|\n| false | false | false |\n| false | true | false |\n| true | false | false |\n| true | true | true |\n\nVí dụ kiểm tra điều kiện tham gia một hoạt động:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{20};\n    bool hasTicket{true};\n\n    bool canEnter = (age >= 18) && hasTicket;\n\n    std::cout << std::boolalpha << canEnter << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\ntrue\n```\n\nNgười dùng chỉ được phép tham gia nếu đồng thời đủ tuổi và có vé.\n\n### 4.2. Toán tử OR (||)\n\nBiểu thức:\n\n```cpp\na || b\n```\n\ncho kết quả `true` nếu có ít nhất một điều kiện đúng.\n\nBảng chân trị:\n\n| a | b | a \\|\\| b |\n|---|---|---|\n| false | false | false |\n| false | true | true |\n| true | false | true |\n| true | true | true |\n\nVí dụ:\n\n```cpp\nbool isAdmin{false};\nbool isOwner{true};\n\nbool hasAccess = isAdmin || isOwner;\n```\n\nBiến `hasAccess` có giá trị `true`, vì người dùng là chủ sở hữu.\n\n### 4.3. Toán tử NOT (!)\n\nToán tử `!` đảo ngược giá trị logic.\n\n| a | !a |\n|---|---|\n| true | false |\n| false | true |\n\nVí dụ:\n\n```cpp\nbool isBanned{false};\n\nbool canAccess = !isBanned;\n```\n\nVì `isBanned` bằng `false`, giá trị `canAccess` sẽ là `true`.\n\n### 4.4. Kết hợp nhiều điều kiện\n\nGiả sử hệ thống có quy tắc:\n\n- Người dùng phải từ 18 tuổi.\n- Có vé hoặc thuộc nhóm khách mời.\n- Không bị cấm truy cập.\n\nBiểu thức:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{20};\n\n    bool hasTicket{false};\n    bool isGuest{true};\n    bool isBanned{false};\n\n    bool canEnter =\n        (age >= 18) &&\n        (hasTicket || isGuest) &&\n        !isBanned;\n\n    std::cout << std::boolalpha << canEnter << '\\n';\n}\n```\n\nKết quả:\n\n```text\ntrue\n```\n\nSử dụng dấu ngoặc giúp biểu thức rõ ràng hơn và giảm nguy cơ hiểu nhầm thứ tự ưu tiên.\n\n### 4.5. Short-circuit: Đánh giá ngắn mạch\n\nHai toán tử `&&` và `||` có cơ chế *short-circuit evaluation*.\n\nĐiều này có nghĩa là chương trình có thể bỏ qua vế phải khi kết quả đã được xác định từ vế trái.\n\n**Với toán tử &&:**\n\nNếu vế trái là `false`, toàn bộ biểu thức chắc chắn là `false`.\n\nVí dụ:\n\n```cpp\nint divisor{0};\n\nbool valid =\n    (divisor != 0) &&\n    (10 / divisor > 2);\n```\n\nChương trình không thực hiện phép chia khi `divisor == 0`.\n\n**Với toán tử ||:**\n\nNếu vế trái là `true`, toàn bộ biểu thức chắc chắn là `true`.\n\nVí dụ:\n\n```cpp\nbool isAdmin{true};\nbool hasPermission{false};\n\nbool allowed = isAdmin || hasPermission;\n```\n\nChương trình không cần đánh giá vế phải khi `isAdmin` đã là `true`.\n\nShort-circuit là một cơ chế quan trọng trong việc bảo vệ các phép toán hoặc thao tác có điều kiện.\n\n**Lưu ý:** Không nhầm lẫn `&&` với `&`, hoặc `||` với `|`. Các toán tử bitwise có cách hoạt động khác và không cung cấp cơ chế short-circuit tương tự.\n\n---\n\n## 5. Toán tử gán (Assignment Operators)\n\nToán tử gán được sử dụng để thay đổi giá trị của biến.\n\n### 5.1. Phép gán cơ bản\n\n```cpp\nint score{10};\n\nscore = 20;\n```\n\nSau khi thực hiện:\n\n```text\nscore = 20\n```\n\nGiá trị cũ của biến được thay bằng giá trị mới.\n\n### 5.2. Các toán tử gán kết hợp\n\nC++ cung cấp cú pháp rút gọn để cập nhật giá trị của biến.\n\n| Toán tử | Ví dụ | Ý nghĩa tương ứng |\n|---|---|---|\n| `+=` | `a += 5` | `a = a + 5` |\n| `-=` | `a -= 5` | `a = a - 5` |\n| `*=` | `a *= 5` | `a = a * 5` |\n| `/=` | `a /= 5` | `a = a / 5` |\n| `%=` | `a %= 5` | `a = a % 5` |\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int score{10};\n\n    score += 5;\n    std::cout << score << '\\n';\n\n    score *= 2;\n    std::cout << score << '\\n';\n\n    score -= 10;\n    std::cout << score << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n15\n30\n20\n```\n\nVề mặt kết quả trong các ví dụ đơn giản, `a += b` tương đương với `a = a + b`.\n\nTuy nhiên, phép gán kết hợp chỉ đánh giá toán hạng bên trái một lần, nên hai cách viết không hoàn toàn giống nhau trong mọi biểu thức phức tạp.\n\n### 5.3. Ứng dụng thực tế\n\nGiả sử chương trình quản lý số lượng sản phẩm:\n\n```cpp\nint stock{100};\n\nstock += 20;\nstock -= 15;\n```\n\nKết quả cuối cùng:\n\n```text\nstock = 105\n```\n\nTuy nhiên, trong phần mềm thực tế, không nên cho phép trừ số lượng tùy ý mà thiếu kiểm tra.\n\nVí dụ:\n\n```cpp\nint stock{10};\nint requested{15};\n\nif (requested >= 0 && requested <= stock) {\n    stock -= requested;\n}\n```\n\nĐiều kiện này ngăn việc trừ số lượng âm hoặc vượt quá số lượng hiện có.\n\n---\n\n## 6. Toán tử tăng và giảm (Increment & Decrement)\n\nC++ hỗ trợ hai toán tử:\n\n- `++`: Tăng một đơn vị.\n- `--`: Giảm một đơn vị.\n\nCó hai cách sử dụng:\n\n- Tiền tố (prefix).\n- Hậu tố (postfix).\n\n### 6.1. Toán tử tiền tố\n\nVí dụ:\n\n```cpp\nint a{5};\n\nint b = ++a;\n```\n\nToán tử `++a` tăng `a` trước, sau đó biểu thức cho giá trị mới.\n\nKết quả:\n\n```text\na = 6\nb = 6\n```\n\n### 6.2. Toán tử hậu tố\n\nVí dụ:\n\n```cpp\nint a{5};\n\nint b = a++;\n```\n\nToán tử `a++` tạo ra giá trị cũ của `a` làm kết quả biểu thức, đồng thời tăng `a` lên một đơn vị.\n\nKết quả:\n\n```text\na = 6\nb = 5\n```\n\n### 6.3. So sánh tiền tố và hậu tố\n\n| Biểu thức | Thao tác | Giá trị biểu thức |\n|---|---|---|\n| `++a` | Tăng a | Giá trị mới |\n| `a++` | Tăng a | Giá trị cũ |\n| `--a` | Giảm a | Giá trị mới |\n| `a--` | Giảm a | Giá trị cũ |\n\nVí dụ đầy đủ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{5};\n    int b{5};\n\n    std::cout << ++a << '\\n';\n    std::cout << b++ << '\\n';\n\n    std::cout << a << '\\n';\n    std::cout << b << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n6\n5\n6\n6\n```\n\nTrong vòng lặp `for` sử dụng biến kiểu số nguyên, hai cách sau thường mang lại cùng hành vi:\n\n```cpp\nfor (int i = 0; i < 10; ++i) {\n}\n```\n\n```cpp\nfor (int i = 0; i < 10; i++) {\n}\n```\n\nCó thể ưu tiên `++i` khi không cần giá trị cũ, giúp thể hiện rõ ý định.\n\n### 6.4. Tránh thay đổi một biến nhiều lần trong cùng biểu thức\n\nKhông nên viết:\n\n```cpp\nint i{1};\n\nint result = i++ + i++;\n```\n\nBiểu thức trên có hành vi không xác định trong C++17 vì hai phép tăng trên cùng một biến không được sắp thứ tự phù hợp với nhau.\n\nCách viết rõ ràng hơn:\n\n```cpp\nint i{1};\n\nint a = i++;\nint b = i++;\n\nint result = a + b;\n```\n\nKết quả:\n\n```text\na = 1\nb = 2\nresult = 3\ni = 3\n```\n\n**Nguyên tắc:** Nếu biểu thức có nhiều thao tác thay đổi trạng thái, hãy tách thành những câu lệnh đơn giản để dễ đọc, dễ kiểm tra và tránh lỗi thứ tự đánh giá.\n\n---\n\n## 7. Thứ tự ưu tiên toán tử (Operator Precedence)\n\nC++ cho phép kết hợp nhiều toán tử trong cùng một biểu thức.\n\nTuy nhiên, chúng không có cùng mức độ ưu tiên.\n\n### 7.1. Ví dụ cơ bản\n\nXét biểu thức:\n\n```cpp\nint result = 10 + 5 * 2;\n```\n\nKết quả:\n\n```text\n20\n```\n\nVì phép nhân có ưu tiên cao hơn phép cộng.\n\nNếu muốn thực hiện phép cộng trước:\n\n```cpp\nint result = (10 + 5) * 2;\n```\n\nKết quả:\n\n```text\n30\n```\n\nDấu ngoặc đơn `()` giúp xác định rõ cách nhóm các phép toán.\n\n### 7.2. Bảng ưu tiên các toán tử thường gặp\n\nBảng sau được sắp xếp từ mức ưu tiên cao đến thấp, chỉ bao gồm những nhóm toán tử cơ bản trong bài.\n\n| Mức | Toán tử | Chức năng |\n|---|---|---|\n| 1 | `()` | Nhóm biểu thức |\n| 2 | `++`, `--` hậu tố | Tăng, giảm hậu tố |\n| 3 | `++`, `--` tiền tố, `!`, `+`, `-` một ngôi | Toán tử một ngôi |\n| 4 | `*`, `/`, `%` | Nhân, chia, lấy dư |\n| 5 | `+`, `-` | Cộng, trừ |\n| 6 | `<`, `<=`, `>`, `>=` | So sánh quan hệ |\n| 7 | `==`, `!=` | So sánh bằng, khác |\n| 8 | `&&` | Logic AND |\n| 9 | `\\|\\|` | Logic OR |\n| 10 | `?:` | Toán tử điều kiện |\n| 11 | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | Gán |\n\nĐây là bảng rút gọn, không phải toàn bộ bảng ưu tiên của C++17. Những toán tử khác như dịch bit và bitwise cũng có vị trí riêng.\n\n### 7.3. Ví dụ kết hợp toán tử\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{10};\n    int b{5};\n    int c{2};\n\n    int result = a + b * c;\n\n    bool valid = a > b && b > c;\n\n    std::cout << result << '\\n';\n    std::cout << std::boolalpha << valid << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n20\ntrue\n```\n\nBiểu thức:\n\n```cpp\na + b * c\n```\n\nđược nhóm thành:\n\n```cpp\na + (b * c)\n```\n\nBiểu thức:\n\n```cpp\na > b && b > c\n```\n\nđược nhóm thành:\n\n```cpp\n(a > b) && (b > c)\n```\n\n### 7.4. Ưu tiên không đồng nghĩa với thứ tự đánh giá\n\nĐây là hai khái niệm khác nhau.\n\n**Thứ tự ưu tiên (precedence)** quy định các toán tử được nhóm với toán hạng như thế nào.\n\n**Thứ tự đánh giá (evaluation order)** quy định khi nào các toán hạng hoặc thao tác được thực hiện.\n\nVí dụ:\n\n```cpp\nint result = first() + second();\n```\n\nDấu `+` không đảm bảo `first()` luôn được gọi trước `second()`.\n\nTrong C++17, thứ tự đánh giá hai toán hạng của phép cộng không được chỉ định.\n\nNếu thứ tự thực hiện quan trọng, hãy viết:\n\n```cpp\nint a = first();\nint b = second();\n\nint result = a + b;\n```\n\nNhờ đó, việc gọi `first()` hoàn tất trước câu lệnh gọi `second()`.\n\n**Khuyến nghị:** Sử dụng dấu ngoặc để làm rõ cách nhóm biểu thức, nhưng đừng cho rằng dấu ngoặc luôn giải quyết được vấn đề thứ tự đánh giá.\n\n---\n\n## 8. Toán tử điều kiện ba ngôi (Conditional Operator)\n\nC++ cung cấp toán tử `?:` để lựa chọn một trong hai biểu thức dựa trên điều kiện.\n\nCú pháp:\n\n```cpp\ncondition ? valueIfTrue : valueIfFalse\n```\n\nNếu điều kiện đúng, biểu thức thứ hai được đánh giá.\n\nNếu điều kiện sai, biểu thức thứ ba được đánh giá.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{20};\n\n    const char* result =\n        (age >= 18) ? \"Nguoi lon\" : \"Chua du tuoi\";\n\n    std::cout << result << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNguoi lon\n```\n\nMột ví dụ khác:\n\n```cpp\nint a{10};\nint b{20};\n\nint maximum = (a > b) ? a : b;\n```\n\nKết quả:\n\n```text\nmaximum = 20\n```\n\nToán tử ba ngôi phù hợp khi cần chọn một giá trị trong hai giá trị.\n\nTuy nhiên, với những đoạn xử lý dài hoặc có nhiều điều kiện lồng nhau, sử dụng `if-else` thường rõ ràng hơn.\n\nKhông nên cố gắng rút gọn mọi logic vào một biểu thức duy nhất.\n\n---\n\n## 9. Chuyển đổi kiểu dữ liệu trong biểu thức\n\nKhi hai toán hạng có kiểu khác nhau, C++ có thể thực hiện chuyển đổi kiểu dữ liệu theo các quy tắc của ngôn ngữ.\n\nVí dụ:\n\n```cpp\nint a{5};\ndouble b{2.5};\n\ndouble result = a + b;\n```\n\nKết quả:\n\n```text\nresult = 7.5\n```\n\nTrong biểu thức này, `a` được chuyển sang kiểu `double` để thực hiện phép cộng.\n\n### 9.1. Chuyển đổi kiểu tường minh\n\nĐôi khi cần chủ động quyết định kiểu dữ liệu sử dụng trong phép tính.\n\nVí dụ tính trung bình cộng:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{7};\n    int b{8};\n\n    double average =\n        (static_cast<double>(a) + b) / 2;\n\n    std::cout << average << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n7.5\n```\n\n### 9.2. Tràn số nguyên (Integer Overflow)\n\nMỗi kiểu số nguyên có giới hạn giá trị có thể biểu diễn.\n\nGiả sử một phép tính vượt quá giới hạn của kiểu `int` có dấu:\n\n```cpp\nint a{2'000'000'000};\n\nint result = a * 2;\n```\n\nTrong môi trường phổ biến mà `int` có độ rộng 32 bit, phép nhân này vượt quá phạm vi biểu diễn.\n\nTràn số nguyên có dấu gây ra hành vi không xác định trong C++17.\n\nMột cách xử lý là sử dụng kiểu đủ rộng và thực hiện phép tính trên kiểu đó:\n\n```cpp\nlong long a{2'000'000'000LL};\n\nlong long result = a * 2;\n```\n\nKết quả:\n\n```text\n4000000000\n```\n\nTuy nhiên, `long long` cũng có giới hạn. Cần lựa chọn kiểu dữ liệu theo phạm vi thực tế của bài toán.\n\n**Lưu ý quan trọng:**\n\n```cpp\nint a{2'000'000'000};\n\nlong long result = a * 2;\n```\n\nDòng trên vẫn không an toàn trong môi trường `int` 32 bit, vì phép nhân được thực hiện bằng kiểu `int` trước khi kết quả được chuyển sang `long long`.\n\nCách đúng:\n\n```cpp\nlong long result = 1LL * a * 2;\n```\n\nToán hạng `1LL` giúp phép nhân được thực hiện bằng kiểu `long long`.\n\n---\n\n## 10. Ví dụ thực hành tổng hợp\n\n### Bài toán: Kiểm tra số nguyên hợp lệ\n\n**Yêu cầu:**\n\nViết chương trình nhập số nguyên `n` và kiểm tra:\n\n1. `n` có nằm trong đoạn `[1, 100]` không?\n2. `n` có phải số chẵn không?\n3. `n` có chia hết cho 3 và 5 không?\n\n### 10.1. Phân tích\n\nCác điều kiện cần sử dụng:\n\nKiểm tra phạm vi:\n\n```cpp\nn >= 1 && n <= 100\n```\n\nKiểm tra số chẵn:\n\n```cpp\nn % 2 == 0\n```\n\nKiểm tra chia hết cho cả 3 và 5:\n\n```cpp\nn % 3 == 0 && n % 5 == 0\n```\n\n### 10.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    std::cout << \"Nhap n: \";\n\n    if (!(std::cin >> n)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    const bool inRange = (n >= 1) && (n <= 100);\n    const bool isEven = (n % 2 == 0);\n    const bool divisibleBy3And5 =\n        (n % 3 == 0) && (n % 5 == 0);\n\n    std::cout << std::boolalpha;\n\n    std::cout << \"Trong pham vi: \"\n              << inRange << '\\n';\n\n    std::cout << \"La so chan: \"\n              << isEven << '\\n';\n\n    std::cout << \"Chia het cho 3 va 5: \"\n              << divisibleBy3And5 << '\\n';\n\n    return 0;\n}\n```\n\nVí dụ đầu vào:\n\n```text\n30\n```\n\nKết quả:\n\n```text\nNhap n: 30\nTrong pham vi: true\nLa so chan: true\nChia het cho 3 va 5: true\n```\n\n### 10.3. Phân tích trường hợp biên\n\n| n | Trong [1,100] | Chẵn | Chia hết cho 3 và 5 |\n|---|---|---|---|\n| 0 | false | true | true |\n| 1 | true | false | false |\n| 15 | true | false | true |\n| 30 | true | true | true |\n| 100 | true | true | false |\n| 105 | false | false | true |\n\n**Điểm cần chú ý:**\n\nCác biểu thức `isEven` và `divisibleBy3And5` vẫn được tính kể cả khi `n` nằm ngoài phạm vi `[1,100]`.\n\nĐây là hành vi có chủ đích trong ví dụ: ba điều kiện được kiểm tra độc lập.\n\nNếu yêu cầu nghiệp vụ là chỉ xử lý số nằm trong đoạn hợp lệ, chương trình nên kiểm tra `inRange` trước khi thực hiện các thao tác tiếp theo.\n\nViệc xác định chính xác yêu cầu quan trọng không kém việc viết đúng cú pháp.\n\n---\n\n## 11. Những lỗi thường gặp\n\n### 11.1. Nhầm toán tử gán với so sánh\n\nSai:\n\n```cpp\nif (a = 5) {\n}\n```\n\nĐúng khi muốn kiểm tra bằng nhau:\n\n```cpp\nif (a == 5) {\n}\n```\n\n### 11.2. Chia nguyên nhưng mong kết quả số thực\n\n```cpp\ndouble result = 5 / 2;\n```\n\nKết quả là `2.0`, không phải `2.5`.\n\nCách sửa:\n\n```cpp\ndouble result = 5.0 / 2;\n```\n\n### 11.3. Chia hoặc lấy dư cho 0\n\nSai:\n\n```cpp\nint result = a % 0;\n```\n\nCần kiểm tra mẫu số khác 0 trước khi thực hiện phép chia hoặc chia lấy dư.\n\n### 11.4. Nhầm toán tử logic với bitwise\n\n- `&&`: Logic AND.\n- `||`: Logic OR.\n- `&`: Bitwise AND.\n- `|`: Bitwise OR.\n\nChúng không thể được thay thế tùy ý cho nhau.\n\n### 11.5. Viết điều kiện khoảng không đúng\n\nSai:\n\n```cpp\nif (1 <= n <= 100) {\n}\n```\n\nĐúng:\n\n```cpp\nif (n >= 1 && n <= 100) {\n}\n```\n\n### 11.6. Biểu thức có quá nhiều tác dụng phụ\n\nKhông nên viết những biểu thức phức tạp vừa đọc, vừa thay đổi giá trị của cùng một biến nhiều lần.\n\nHãy tách thành các câu lệnh có thứ tự rõ ràng để tránh hành vi không xác định và giúp việc debug dễ dàng hơn.\n\n### 11.7. Chọn kiểu dữ liệu không đủ lớn\n\nCác phép cộng và nhân trên số nguyên có thể vượt phạm vi biểu diễn.\n\nCần xác định giới hạn đầu vào và giới hạn kết quả trước khi lựa chọn kiểu dữ liệu.\n\n---\n\n## 12. Bài tập tự luyện\n\nCác bài tập được sắp xếp từ cơ bản đến vận dụng.\n\n### Bài 1. Tính toán hai số\n\n**Yêu cầu:** Nhập hai số nguyên `a` và `b`, lần lượt tính:\n\n- Tổng.\n- Hiệu.\n- Tích.\n- Thương nguyên nếu `b` khác `0`.\n- Phần dư nếu `b` khác `0`.\n\nVí dụ:\n\n```text\nInput:\n10 3\n\nOutput:\nTong: 13\nHieu: 7\nTich: 30\nThuong: 3\nDu: 1\n```\n\n**Gợi ý:** Sử dụng năm toán tử số học cơ bản và kiểm tra dữ liệu trước phép chia. Cân nhắc phạm vi giá trị để tránh tràn số.\n\n### Bài 2. Kiểm tra chia hết\n\n**Yêu cầu:** Nhập số nguyên `n`. Kiểm tra số đó có chia hết cho cả `3` và `5` hay không.\n\nVí dụ:\n\n```text\nInput:\n30\n\nOutput:\ntrue\n```\n\n**Gợi ý:** Kết hợp toán tử `%`, `==` và `&&`.\n\n### Bài 3. Kiểm tra khoảng giá trị\n\n**Yêu cầu:** Nhập ba số nguyên `low`, `high`, `n`. Kiểm tra `n` có nằm trong đoạn đóng `[low, high]` hay không.\n\nVí dụ:\n\n```text\nInput:\n1 100 50\n\nOutput:\ntrue\n```\n\n**Gợi ý:** Sử dụng hai phép so sánh và `&&`.\n\nXử lý trường hợp `low > high` bằng cách thông báo khoảng không hợp lệ.\n\n### Bài 4. Tính điểm trung bình\n\n**Yêu cầu:** Nhập ba điểm số, tính trung bình cộng và in kết quả dưới dạng số thực.\n\nVí dụ:\n\n```text\nInput:\n7 8 9\n\nOutput:\n8\n```\n\n**Gợi ý:** Sử dụng kiểu `double` để giữ phần thập phân. Kiểm tra điểm nằm trong phạm vi hợp lệ.\n\n### Bài 5. Tách chữ số\n\n**Yêu cầu:** Nhập số nguyên không âm `n`. Xác định chữ số cuối cùng và phần còn lại sau khi bỏ chữ số cuối.\n\nVí dụ:\n\n```text\nInput:\n1234\n\nOutput:\nChu so cuoi: 4\nPhan con lai: 123\n```\n\n**Gợi ý:**\n\n- Chữ số cuối: `n % 10`.\n- Phần còn lại: `n / 10`.\n\n### Bài 6. Kiểm tra năm nhuận\n\n**Yêu cầu:** Nhập năm dương `year`. Xác định năm đó có phải năm nhuận theo lịch Gregory hay không.\n\nQuy tắc:\n\n- Năm chia hết cho `400` là năm nhuận.\n- Hoặc năm chia hết cho `4` nhưng không chia hết cho `100` là năm nhuận.\n- Những năm còn lại không phải năm nhuận.\n\nVí dụ:\n\n```text\nInput:\n2024\n\nOutput:\nNam nhuan\n```\n\n**Gợi ý:** Kết hợp `%`, `==`, `!=`, `&&` và `||`.\n\nThử nghiệm với các năm `1900`, `2000`, `2024` và `2025`.\n\n---\n\n## 13. Tổng kết kiến thức\n\n| Nhóm | Toán tử | Chức năng |\n|---|---|---|\n| Số học | `+`, `-`, `*`, `/`, `%` | Thực hiện phép tính |\n| So sánh | `==`, `!=`, `<`, `<=`, `>`, `>=` | So sánh giá trị |\n| Logic | `&&`, `\\|\\|`, `!` | Xử lý điều kiện logic |\n| Gán | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | Cập nhật biến |\n| Tăng giảm | `++`, `--` | Tăng hoặc giảm một đơn vị |\n| Điều kiện | `?:` | Chọn một trong hai biểu thức |\n\nSau khi hoàn thành bài học, bạn cần nắm được:\n\n1. Phân biệt toán tử, toán hạng và biểu thức.\n2. Thực hiện đúng các phép toán số học, đặc biệt là phép chia nguyên.\n3. Sử dụng toán tử so sánh để tạo biểu thức `bool`.\n4. Kết hợp điều kiện với `&&`, `||` và `!`.\n5. Hiểu sự khác biệt giữa tăng giảm tiền tố và hậu tố.\n6. Sử dụng dấu ngoặc để thể hiện rõ cách nhóm biểu thức.\n7. Phân biệt thứ tự ưu tiên với thứ tự đánh giá.\n8. Nhận diện lỗi chia cho 0, tràn số và chuyển đổi kiểu dữ liệu.\n\n**Điều quan trọng nhất:** Một biểu thức tốt không chỉ cho kết quả đúng mà còn phải dễ đọc, rõ ý nghĩa và có hành vi xác định với dữ liệu đầu vào được hỗ trợ.\n\n## Đọc tiếp\n\n- [Biến và kiểu dữ liệu](/cpp/bat-dau/bien-kieu-du-lieu): Hiểu các kiểu dữ liệu cơ bản và phạm vi biểu diễn.\n- [Nhập xuất, điều kiện và vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap): Ứng dụng toán tử vào chương trình có khả năng rẽ nhánh và lặp.\n- [Tra cứu cú pháp C++](/cpp/tra-cuu/cu-phap): Tổng hợp cú pháp thường gặp khi lập trình C++17.",
     "sourcePath": "content/cpp/getting-started/toan-tu.md",
     "headings": [
       {
-        "title": "Các nhóm thường dùng",
-        "id": "cac-nhom-thuong-dung"
+        "title": "1. Toán tử và biểu thức là gì?",
+        "id": "1-toan-tu-va-bieu-thuc-la-gi"
       },
       {
-        "title": "Ưu tiên và ngoặc",
-        "id": "uu-tien-va-ngoac"
+        "title": "1.1. Toán tử (Operator)",
+        "id": "11-toan-tu-operator"
       },
       {
-        "title": "Lỗi thường gặp",
-        "id": "loi-thuong-gap"
+        "title": "1.2. Biểu thức (Expression)",
+        "id": "12-bieu-thuc-expression"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "1.3. Phân loại toán tử",
+        "id": "13-phan-loai-toan-tu"
+      },
+      {
+        "title": "2. Toán tử số học (Arithmetic Operators)",
+        "id": "2-toan-tu-so-hoc-arithmetic-operators"
+      },
+      {
+        "title": "2.1. Các toán tử cơ bản",
+        "id": "21-cac-toan-tu-co-ban"
+      },
+      {
+        "title": "2.2. Phép chia số nguyên và số thực",
+        "id": "22-phep-chia-so-nguyen-va-so-thuc"
+      },
+      {
+        "title": "2.3. Toán tử chia lấy dư (%)",
+        "id": "23-toan-tu-chia-lay-du"
+      },
+      {
+        "title": "2.4. Phép chia cho 0",
+        "id": "24-phep-chia-cho-0"
+      },
+      {
+        "title": "3. Toán tử so sánh (Comparison Operators)",
+        "id": "3-toan-tu-so-sanh-comparison-operators"
+      },
+      {
+        "title": "3.1. Bảng toán tử so sánh",
+        "id": "31-bang-toan-tu-so-sanh"
+      },
+      {
+        "title": "3.2. Phân biệt = và ==",
+        "id": "32-phan-biet-va"
+      },
+      {
+        "title": "3.3. So sánh trong một khoảng giá trị",
+        "id": "33-so-sanh-trong-mot-khoang-gia-tri"
+      },
+      {
+        "title": "3.4. So sánh số thực",
+        "id": "34-so-sanh-so-thuc"
+      },
+      {
+        "title": "4. Toán tử logic (Logical Operators)",
+        "id": "4-toan-tu-logic-logical-operators"
+      },
+      {
+        "title": "4.1. Toán tử AND (&&)",
+        "id": "41-toan-tu-and"
+      },
+      {
+        "title": "4.2. Toán tử OR (||)",
+        "id": "42-toan-tu-or"
+      },
+      {
+        "title": "4.3. Toán tử NOT (!)",
+        "id": "43-toan-tu-not"
+      },
+      {
+        "title": "4.4. Kết hợp nhiều điều kiện",
+        "id": "44-ket-hop-nhieu-ieu-kien"
+      },
+      {
+        "title": "4.5. Short-circuit: Đánh giá ngắn mạch",
+        "id": "45-short-circuit-anh-gia-ngan-mach"
+      },
+      {
+        "title": "5. Toán tử gán (Assignment Operators)",
+        "id": "5-toan-tu-gan-assignment-operators"
+      },
+      {
+        "title": "5.1. Phép gán cơ bản",
+        "id": "51-phep-gan-co-ban"
+      },
+      {
+        "title": "5.2. Các toán tử gán kết hợp",
+        "id": "52-cac-toan-tu-gan-ket-hop"
+      },
+      {
+        "title": "5.3. Ứng dụng thực tế",
+        "id": "53-ung-dung-thuc-te"
+      },
+      {
+        "title": "6. Toán tử tăng và giảm (Increment & Decrement)",
+        "id": "6-toan-tu-tang-va-giam-increment-decrement"
+      },
+      {
+        "title": "6.1. Toán tử tiền tố",
+        "id": "61-toan-tu-tien-to"
+      },
+      {
+        "title": "6.2. Toán tử hậu tố",
+        "id": "62-toan-tu-hau-to"
+      },
+      {
+        "title": "6.3. So sánh tiền tố và hậu tố",
+        "id": "63-so-sanh-tien-to-va-hau-to"
+      },
+      {
+        "title": "6.4. Tránh thay đổi một biến nhiều lần trong cùng biểu thức",
+        "id": "64-tranh-thay-oi-mot-bien-nhieu-lan-trong-cung-bieu-thuc"
+      },
+      {
+        "title": "7. Thứ tự ưu tiên toán tử (Operator Precedence)",
+        "id": "7-thu-tu-uu-tien-toan-tu-operator-precedence"
+      },
+      {
+        "title": "7.1. Ví dụ cơ bản",
+        "id": "71-vi-du-co-ban"
+      },
+      {
+        "title": "7.2. Bảng ưu tiên các toán tử thường gặp",
+        "id": "72-bang-uu-tien-cac-toan-tu-thuong-gap"
+      },
+      {
+        "title": "7.3. Ví dụ kết hợp toán tử",
+        "id": "73-vi-du-ket-hop-toan-tu"
+      },
+      {
+        "title": "7.4. Ưu tiên không đồng nghĩa với thứ tự đánh giá",
+        "id": "74-uu-tien-khong-ong-nghia-voi-thu-tu-anh-gia"
+      },
+      {
+        "title": "8. Toán tử điều kiện ba ngôi (Conditional Operator)",
+        "id": "8-toan-tu-ieu-kien-ba-ngoi-conditional-operator"
+      },
+      {
+        "title": "9. Chuyển đổi kiểu dữ liệu trong biểu thức",
+        "id": "9-chuyen-oi-kieu-du-lieu-trong-bieu-thuc"
+      },
+      {
+        "title": "9.1. Chuyển đổi kiểu tường minh",
+        "id": "91-chuyen-oi-kieu-tuong-minh"
+      },
+      {
+        "title": "9.2. Tràn số nguyên (Integer Overflow)",
+        "id": "92-tran-so-nguyen-integer-overflow"
+      },
+      {
+        "title": "10. Ví dụ thực hành tổng hợp",
+        "id": "10-vi-du-thuc-hanh-tong-hop"
+      },
+      {
+        "title": "Bài toán: Kiểm tra số nguyên hợp lệ",
+        "id": "bai-toan-kiem-tra-so-nguyen-hop-le"
+      },
+      {
+        "title": "10.1. Phân tích",
+        "id": "101-phan-tich"
+      },
+      {
+        "title": "10.2. Chương trình C++17",
+        "id": "102-chuong-trinh-c17"
+      },
+      {
+        "title": "10.3. Phân tích trường hợp biên",
+        "id": "103-phan-tich-truong-hop-bien"
+      },
+      {
+        "title": "11. Những lỗi thường gặp",
+        "id": "11-nhung-loi-thuong-gap"
+      },
+      {
+        "title": "11.1. Nhầm toán tử gán với so sánh",
+        "id": "111-nham-toan-tu-gan-voi-so-sanh"
+      },
+      {
+        "title": "11.2. Chia nguyên nhưng mong kết quả số thực",
+        "id": "112-chia-nguyen-nhung-mong-ket-qua-so-thuc"
+      },
+      {
+        "title": "11.3. Chia hoặc lấy dư cho 0",
+        "id": "113-chia-hoac-lay-du-cho-0"
+      },
+      {
+        "title": "11.4. Nhầm toán tử logic với bitwise",
+        "id": "114-nham-toan-tu-logic-voi-bitwise"
+      },
+      {
+        "title": "11.5. Viết điều kiện khoảng không đúng",
+        "id": "115-viet-ieu-kien-khoang-khong-ung"
+      },
+      {
+        "title": "11.6. Biểu thức có quá nhiều tác dụng phụ",
+        "id": "116-bieu-thuc-co-qua-nhieu-tac-dung-phu"
+      },
+      {
+        "title": "11.7. Chọn kiểu dữ liệu không đủ lớn",
+        "id": "117-chon-kieu-du-lieu-khong-u-lon"
+      },
+      {
+        "title": "12. Bài tập tự luyện",
+        "id": "12-bai-tap-tu-luyen"
+      },
+      {
+        "title": "Bài 1. Tính toán hai số",
+        "id": "bai-1-tinh-toan-hai-so"
+      },
+      {
+        "title": "Bài 2. Kiểm tra chia hết",
+        "id": "bai-2-kiem-tra-chia-het"
+      },
+      {
+        "title": "Bài 3. Kiểm tra khoảng giá trị",
+        "id": "bai-3-kiem-tra-khoang-gia-tri"
+      },
+      {
+        "title": "Bài 4. Tính điểm trung bình",
+        "id": "bai-4-tinh-iem-trung-binh"
+      },
+      {
+        "title": "Bài 5. Tách chữ số",
+        "id": "bai-5-tach-chu-so"
+      },
+      {
+        "title": "Bài 6. Kiểm tra năm nhuận",
+        "id": "bai-6-kiem-tra-nam-nhuan"
+      },
+      {
+        "title": "13. Tổng kết kiến thức",
+        "id": "13-tong-ket-kien-thuc"
       },
       {
         "title": "Đọc tiếp",
@@ -4744,7 +4971,7 @@ export const articles = [
     ]
   },
   {
-    "title": "Nhập xuất, câu lệnh điều kiện và vòng lặp trong C++",
+    "title": "Nhập xuất, câu lệnh điều kiện và vòng lặp",
     "description": "Hướng dẫn sử dụng cin, cout, if-else, switch, for, while và do-while trong C++17, kèm ví dụ thực tế, xử lý lỗi và bài tập.",
     "slug": "/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap",
     "category": "fundamentals",
@@ -4776,7 +5003,7 @@ export const articles = [
     ],
     "featured": false,
     "priority": 20060,
-    "body": "# Nhập xuất, câu lệnh điều kiện và vòng lặp trong C++\n\nMột chương trình không chỉ thực hiện các phép tính. Nó còn cần tiếp nhận dữ liệu, đưa ra quyết định và thực hiện những công việc lặp lại.\n\nTrong C++, ba nhóm kiến thức này đóng vai trò nền tảng:\n\n- **Nhập xuất (Input/Output):** Nhận dữ liệu đầu vào và hiển thị kết quả.\n- **Câu lệnh điều kiện (Conditional Statements):** Quyết định chương trình sẽ thực hiện công việc nào.\n- **Vòng lặp (Loops):** Thực hiện một công việc nhiều lần mà không cần viết lại cùng một đoạn mã.\n\nĐây cũng là những kiến thức được sử dụng thường xuyên khi giải bài tập lập trình, xây dựng thuật toán và phát triển phần mềm.\n\n## 1. Nhập và xuất dữ liệu\n\n### 1.1. Thư viện iostream\n\nĐể nhập xuất dữ liệu thông qua thiết bị đầu cuối (terminal), C++ cung cấp thư viện `<iostream>`.\n\nBa đối tượng thường gặp:\n\n| Đối tượng | Chức năng |\n|---|---|\n| `std::cin` | Đọc dữ liệu từ đầu vào chuẩn |\n| `std::cout` | Ghi dữ liệu ra đầu ra chuẩn |\n| `std::cerr` | Ghi thông báo lỗi ra luồng lỗi chuẩn |\n\nVí dụ đầu tiên:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cout << \"Nhap tuoi cua ban: \";\n    std::cin >> age;\n\n    std::cout << \"Ban \" << age << \" tuoi.\\n\";\n\n    return 0;\n}\n```\n\nKết quả khi nhập `16`:\n\n```text\nNhap tuoi cua ban: 16\nBan 16 tuoi.\n```\n\n**Giải thích:**\n\n- `#include <iostream>`: Khai báo sử dụng thư viện nhập xuất.\n- `int age{}`: Tạo biến số nguyên `age`, khởi tạo giá trị bằng `0`.\n- `std::cout <<`: Gửi dữ liệu ra màn hình.\n- `std::cin >>`: Đọc dữ liệu vào biến.\n- `'\\n'`: Xuống dòng.\n- `return 0`: Kết thúc chương trình và thông báo thực thi thành công.\n\nCần phân biệt hai toán tử:\n\n- `<<`: Toán tử chèn dữ liệu vào luồng xuất.\n- `>>`: Toán tử trích xuất dữ liệu từ luồng nhập.\n\n### 1.2. Nhập nhiều giá trị\n\nCó thể đọc nhiều biến trong một câu lệnh:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{};\n    int b{};\n\n    std::cin >> a >> b;\n\n    std::cout << \"Tong: \" << a + b << '\\n';\n\n    return 0;\n}\n```\n\nDữ liệu đầu vào:\n\n```text\n5 8\n```\n\nKết quả:\n\n```text\nTong: 13\n```\n\nNgười dùng cũng có thể nhập:\n\n```text\n5\n8\n```\n\nKết quả vẫn giống nhau.\n\n**Vì sao?**\n\nVới các kiểu dữ liệu số, `std::cin >>` tự động bỏ qua khoảng trắng, tab và ký tự xuống dòng ở đầu dữ liệu cần đọc.\n\nĐiều này đặc biệt hữu ích trong các bài toán lập trình thi đấu, khi dữ liệu được cung cấp qua nhiều dòng.\n\n### 1.3. Đọc một dòng văn bản với getline\n\n`std::cin >>` chỉ đọc một từ đối với kiểu `std::string`, vì quá trình đọc dừng tại khoảng trắng.\n\nVí dụ, nếu nhập `Nguyen Van A`, câu lệnh:\n\n```cpp\nstd::cin >> name;\n```\n\nchỉ lấy được `Nguyen`.\n\nĐể đọc toàn bộ dòng, sử dụng `std::getline()`:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n\n    std::cout << \"Nhap ho ten: \";\n    std::getline(std::cin, name);\n\n    std::cout << \"Xin chao, \" << name << \"!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNhap ho ten: Nguyen Van A\nXin chao, Nguyen Van A!\n```\n\n**Lưu ý quan trọng:** Nếu sử dụng `std::getline()` ngay sau `std::cin >>`, ký tự xuống dòng còn lại trong bộ đệm có thể khiến `getline()` đọc một dòng rỗng.\n\nCó thể loại bỏ phần còn lại của dòng trước khi đọc:\n\n```cpp\n#include <iostream>\n#include <limits>\n#include <string>\n\nint main() {\n    int age{};\n    std::string name;\n\n    if (!(std::cin >> age)) {\n        return 1;\n    }\n\n    std::cin.ignore(\n        std::numeric_limits<std::streamsize>::max(),\n        '\\n'\n    );\n\n    std::getline(std::cin, name);\n\n    std::cout << name << \": \" << age << '\\n';\n}\n```\n\n### 1.4. Kiểm tra dữ liệu đầu vào\n\nKhông phải người dùng lúc nào cũng nhập đúng.\n\nGiả sử chương trình yêu cầu một số nguyên nhưng nhận được chữ cái, quá trình đọc có thể thất bại.\n\nVì vậy, thay vì mặc định dữ liệu luôn hợp lệ, hãy kiểm tra kết quả:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cout << \"Nhap tuoi: \";\n\n    if (!(std::cin >> age)) {\n        std::cerr << \"Loi: Tuoi phai la so nguyen.\\n\";\n        return 1;\n    }\n\n    if (age < 0 || age > 150) {\n        std::cerr << \"Loi: Tuoi khong hop le.\\n\";\n        return 1;\n    }\n\n    std::cout << \"Tuoi hop le: \" << age << '\\n';\n\n    return 0;\n}\n```\n\nỞ đây có hai loại kiểm tra khác nhau:\n\n1. **Kiểm tra cú pháp dữ liệu:** Đầu vào có đọc được thành số nguyên hay không?\n2. **Kiểm tra tính hợp lệ:** Số nguyên đó có nằm trong phạm vi cho phép không?\n\nChẳng hạn:\n\n| Dữ liệu nhập | Kết quả |\n|---|---|\n| `16` | Hợp lệ |\n| `-5` | Không hợp lệ |\n| `200` | Không hợp lệ |\n| `abc` | Đọc thất bại |\n\nLưu ý rằng `std::cin >> age` có thể đọc thành công phần số của một chuỗi như `16abc` và để lại `abc` trong luồng nhập. Nếu cần xác thực toàn bộ dòng, phải xử lý thêm phần dữ liệu còn lại.\n\nĐây là một nguyên tắc quan trọng: **Đọc được dữ liệu không đồng nghĩa với dữ liệu hợp lệ.**\n\n---\n\n## 2. Câu lệnh điều kiện\n\nTrong thực tế, chương trình thường cần đưa ra quyết định.\n\nVí dụ:\n\n- Nếu điểm lớn hơn hoặc bằng 5, học sinh đạt yêu cầu.\n- Nếu mật khẩu không chính xác, từ chối đăng nhập.\n- Nếu số chia bằng 0, không thực hiện phép chia.\n- Nếu người dùng không có quyền, từ chối thao tác.\n\nC++ cung cấp các câu lệnh điều kiện để xử lý những tình huống này.\n\n### 2.1. Câu lệnh if\n\nCú pháp:\n\n```cpp\nif (condition) {\n    // Thuc hien khi dieu kien dung\n}\n```\n\nPhần thân chỉ được thực hiện khi biểu thức điều kiện có giá trị `true`.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cin >> age;\n\n    if (age >= 18) {\n        std::cout << \"Ban da du 18 tuoi.\\n\";\n    }\n\n    return 0;\n}\n```\n\nNếu nhập `20`, thông báo được hiển thị.\n\nNếu nhập `15`, chương trình bỏ qua khối `if`.\n\n### 2.2. Câu lệnh if-else\n\nKhi cần xử lý cả hai trường hợp đúng và sai, sử dụng `if-else`.\n\nCú pháp:\n\n```cpp\nif (condition) {\n    // Khi dieu kien dung\n} else {\n    // Khi dieu kien sai\n}\n```\n\nVí dụ kiểm tra số chẵn, lẻ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        return 1;\n    }\n\n    if (n % 2 == 0) {\n        std::cout << \"So chan\\n\";\n    } else {\n        std::cout << \"So le\\n\";\n    }\n\n    return 0;\n}\n```\n\nToán tử `%` trả về phần dư của phép chia nguyên.\n\n- Nếu `n % 2 == 0`, số đó là số chẵn.\n- Ngược lại, số đó là số lẻ.\n\n**Phân biệt `=` và `==`:**\n\n| Toán tử | Ý nghĩa |\n|---|---|\n| `=` | Gán giá trị |\n| `==` | So sánh bằng nhau |\n| `!=` | So sánh khác nhau |\n| `>` | Lớn hơn |\n| `<` | Nhỏ hơn |\n| `>=` | Lớn hơn hoặc bằng |\n| `<=` | Nhỏ hơn hoặc bằng |\n\nMột lỗi phổ biến là viết `if (a = 5)` thay vì `if (a == 5)`.\n\nBiểu thức đầu tiên thực hiện phép gán, sau đó chuyển giá trị được gán thành `bool` để kiểm tra. Với giá trị `5`, điều kiện luôn đúng.\n\n### 2.3. Câu lệnh if-else if-else\n\nKhi chương trình có nhiều trường hợp, sử dụng chuỗi `else if`.\n\nVí dụ xếp loại điểm:\n\n```cpp\n#include <iostream>\n\nint main() {\n    double score{};\n\n    std::cout << \"Nhap diem: \";\n\n    if (!(std::cin >> score)) {\n        std::cerr << \"Diem khong hop le.\\n\";\n        return 1;\n    }\n\n    if (score < 0 || score > 10) {\n        std::cerr << \"Diem phai nam trong [0, 10].\\n\";\n        return 1;\n    }\n\n    if (score >= 8) {\n        std::cout << \"Gioi\\n\";\n    } else if (score >= 6.5) {\n        std::cout << \"Kha\\n\";\n    } else if (score >= 5) {\n        std::cout << \"Trung binh\\n\";\n    } else {\n        std::cout << \"Chua dat\\n\";\n    }\n\n    return 0;\n}\n```\n\nVí dụ nhập:\n\n```text\n7.5\n```\n\nKết quả:\n\n```text\nKha\n```\n\n**Cách chương trình hoạt động:**\n\n1. Kiểm tra `score >= 8`, kết quả sai.\n2. Kiểm tra `score >= 6.5`, kết quả đúng.\n3. Thực hiện nhánh in `Kha`.\n4. Bỏ qua những nhánh còn lại.\n\nĐiều quan trọng là **thứ tự kiểm tra ảnh hưởng trực tiếp đến kết quả**.\n\nNếu kiểm tra `score >= 5` trước `score >= 8`, điểm `9` có thể bị xếp vào nhóm trung bình.\n\n### 2.4. Câu lệnh switch\n\n`switch` phù hợp khi cần so sánh một biểu thức với nhiều giá trị rời rạc.\n\nVí dụ xây dựng menu:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int choice{};\n\n    std::cout << \"1. Bat dau\\n\";\n    std::cout << \"2. Cai dat\\n\";\n    std::cout << \"3. Thoat\\n\";\n\n    if (!(std::cin >> choice)) {\n        return 1;\n    }\n\n    switch (choice) {\n        case 1:\n            std::cout << \"Bat dau chuong trinh\\n\";\n            break;\n\n        case 2:\n            std::cout << \"Mo cai dat\\n\";\n            break;\n\n        case 3:\n            std::cout << \"Tam biet!\\n\";\n            break;\n\n        default:\n            std::cout << \"Lua chon khong hop le\\n\";\n            break;\n    }\n\n    return 0;\n}\n```\n\nCác thành phần chính:\n\n- `switch`: Nhận biểu thức cần kiểm tra.\n- `case`: Định nghĩa một giá trị có thể xảy ra.\n- `break`: Thoát khỏi câu lệnh `switch`.\n- `default`: Xử lý khi không có `case` nào phù hợp.\n\nNếu thiếu `break`, chương trình có thể tiếp tục chạy vào nhánh tiếp theo. Hành vi này được gọi là *fallthrough*.\n\nTrong C++17, có thể dùng `[[fallthrough]];` để thể hiện rõ trường hợp cố ý chạy xuyên nhánh.\n\n**Khi nào chọn if-else, khi nào chọn switch?**\n\n| Tình huống | Nên sử dụng |\n|---|---|\n| So sánh khoảng giá trị | `if-else` |\n| Kết hợp nhiều điều kiện logic | `if-else` |\n| Kiểm tra các giá trị nguyên cụ thể | `switch` |\n| Xử lý các giá trị enum | `switch` |\n\n`switch` không hỗ trợ trực tiếp so sánh khoảng như `score >= 8`, cũng không hỗ trợ `std::string` làm biểu thức lựa chọn trong C++17.\n\n---\n\n## 3. Vòng lặp trong C++\n\nGiả sử cần in các số từ 1 đến 100.\n\nViết 100 câu lệnh `std::cout` là cách làm dài dòng, khó bảo trì và rất dễ sai.\n\nVòng lặp giải quyết vấn đề bằng cách thực hiện một khối lệnh nhiều lần.\n\nC++ có ba dạng vòng lặp cơ bản:\n\n- `for`\n- `while`\n- `do-while`\n\n### 3.1. Vòng lặp for\n\n`for` thường được sử dụng khi có biến đếm hoặc khi biết trước số lần cần lặp.\n\nCú pháp:\n\n```cpp\nfor (initialization; condition; update) {\n    // Cong viec can lap\n}\n```\n\nTrong đó:\n\n- `initialization`: Khởi tạo biến đếm.\n- `condition`: Điều kiện tiếp tục vòng lặp.\n- `update`: Cập nhật biến đếm sau mỗi lần lặp.\n\nVí dụ in các số từ 1 đến 5:\n\n```cpp\n#include <iostream>\n\nint main() {\n    for (int i = 1; i <= 5; ++i) {\n        std::cout << i << ' ';\n    }\n\n    std::cout << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1 2 3 4 5\n```\n\n**Phân tích từng lần lặp:**\n\n| Lần lặp | Giá trị i | Điều kiện i <= 5 | Hành động |\n|---|---|---|---|\n| 1 | 1 | Đúng | In 1 |\n| 2 | 2 | Đúng | In 2 |\n| 3 | 3 | Đúng | In 3 |\n| 4 | 4 | Đúng | In 4 |\n| 5 | 5 | Đúng | In 5 |\n| 6 | 6 | Sai | Kết thúc |\n\nCâu lệnh `++i` tăng biến `i` lên một đơn vị.\n\nTrong ví dụ này, `i++` cũng cho kết quả tương đương.\n\n**Ví dụ: In số chẵn từ 2 đến 10**\n\n```cpp\nfor (int i = 2; i <= 10; i += 2) {\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n2 4 6 8 10\n```\n\nKhông bắt buộc mỗi vòng lặp chỉ tăng một đơn vị. Biến đếm có thể tăng hoặc giảm theo bước phù hợp.\n\n### 3.2. Vòng lặp while\n\n`while` phù hợp khi số lần lặp phụ thuộc vào một điều kiện và chưa xác định trước.\n\nCú pháp:\n\n```cpp\nwhile (condition) {\n    // Cong viec can lap\n}\n```\n\nĐiều kiện được kiểm tra **trước mỗi lần thực hiện thân vòng lặp**.\n\nVí dụ đếm ngược:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int count{5};\n\n    while (count > 0) {\n        std::cout << count << ' ';\n        --count;\n    }\n\n    std::cout << \"Bat dau!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n5 4 3 2 1 Bat dau!\n```\n\nChương trình thực hiện:\n\n1. Kiểm tra `count > 0`.\n2. In giá trị hiện tại.\n3. Giảm `count` đi một.\n4. Quay lại kiểm tra điều kiện.\n5. Thoát khi `count` bằng `0`.\n\nNếu điều kiện sai ngay từ đầu, thân vòng lặp sẽ không được thực hiện lần nào.\n\n### 3.3. Vòng lặp do-while\n\nKhác với `while`, vòng lặp `do-while` kiểm tra điều kiện **sau khi thực hiện thân vòng lặp**.\n\nVì vậy, thân vòng lặp luôn được thực hiện ít nhất một lần.\n\nCú pháp:\n\n```cpp\ndo {\n    // Cong viec can lap\n} while (condition);\n```\n\nVí dụ yêu cầu người dùng nhập `0` để thoát:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int choice{};\n\n    do {\n        std::cout << \"Nhap 0 de thoat: \";\n\n        if (!(std::cin >> choice)) {\n            std::cerr << \"Du lieu khong hop le.\\n\";\n            return 1;\n        }\n    } while (choice != 0);\n\n    std::cout << \"Da thoat chuong trinh.\\n\";\n\n    return 0;\n}\n```\n\nVí dụ quá trình chạy:\n\n```text\nNhap 0 de thoat: 5\nNhap 0 de thoat: 2\nNhap 0 de thoat: 0\nDa thoat chuong trinh.\n```\n\nỞ đây vòng lặp tiếp tục cho đến khi người dùng nhập `0`.\n\n**Lưu ý:** Khác với `while` và `for`, cú pháp `do-while` bắt buộc có dấu `;` sau điều kiện.\n\n### 3.4. So sánh ba loại vòng lặp\n\n| Tiêu chí | for | while | do-while |\n|---|---|---|---|\n| Kiểm tra điều kiện | Trước thân | Trước thân | Sau thân |\n| Có thể chạy 0 lần | Có | Có | Không |\n| Phù hợp với biến đếm | Rất tốt | Có thể | Có thể |\n| Phù hợp với nhập liệu lặp lại | Có thể | Tốt | Rất tốt |\n| Thường sử dụng | Duyệt, đếm | Lặp theo điều kiện | Menu, yêu cầu nhập lại |\n\nKhông có vòng lặp nào tốt nhất cho mọi trường hợp. Hãy chọn kiểu giúp người đọc hiểu rõ ý định của chương trình.\n\n---\n\n## 4. Điều khiển vòng lặp với break và continue\n\nNgoài điều kiện lặp, C++ cung cấp hai câu lệnh để thay đổi luồng thực thi.\n\n### 4.1. break: Thoát khỏi vòng lặp\n\n`break` lập tức kết thúc vòng lặp gần nhất bao quanh nó.\n\nVí dụ:\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i == 5) {\n        break;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 2 3 4\n```\n\nKhi `i` bằng `5`, vòng lặp kết thúc, không tiếp tục đến `10`.\n\n### 4.2. continue: Bỏ qua lần lặp hiện tại\n\n`continue` bỏ qua phần còn lại của thân vòng lặp hiện tại và chuyển sang bước lặp tiếp theo.\n\nVí dụ chỉ in số lẻ:\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i % 2 == 0) {\n        continue;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 3 5 7 9\n```\n\nKhác biệt cần nhớ:\n\n- `break`: Kết thúc toàn bộ vòng lặp hiện tại.\n- `continue`: Chỉ bỏ qua phần còn lại của lần lặp hiện tại.\n\nVới vòng lặp lồng nhau, `break` chỉ thoát khỏi vòng lặp gần nhất, không tự động thoát khỏi tất cả các vòng.\n\n---\n\n## 5. Bài toán thực hành: Tính tổng từ 1 đến n\n\nHãy vận dụng kiến thức vừa học vào một bài toán hoàn chỉnh.\n\n**Đề bài**\n\nNhập số nguyên dương `n`. Tính tổng:\n\n\\[\nS = 1 + 2 + 3 + \\cdots + n\n\\]\n\nVí dụ:\n\n**Input**\n\n```text\n5\n```\n\n**Output**\n\n```text\n15\n```\n\nVì:\n\n\\[\n1 + 2 + 3 + 4 + 5 = 15\n\\]\n\n### 5.1. Phân tích thuật toán\n\nCác bước giải quyết:\n\n1. Đọc số nguyên `n`.\n2. Kiểm tra `n` có hợp lệ không.\n3. Khởi tạo biến `sum = 0`.\n4. Dùng vòng lặp chạy từ `1` đến `n`.\n5. Cộng giá trị hiện tại vào `sum`.\n6. In kết quả.\n\n### 5.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    if (n <= 0 || n > 1'000'000) {\n        std::cerr << \"n phai nam trong [1, 1000000].\\n\";\n        return 1;\n    }\n\n    long long sum{};\n\n    for (int i = 1; i <= n; ++i) {\n        sum += i;\n    }\n\n    std::cout << sum << '\\n';\n\n    return 0;\n}\n```\n\n### 5.3. Phân tích chương trình\n\n**Biến n**\n\nLưu số nguyên đầu vào. Chương trình giới hạn `n` trong đoạn `[1, 1000000]` để xác định rõ phạm vi được hỗ trợ.\n\n**Biến sum**\n\nĐược khai báo dưới kiểu `long long`, có khả năng chứa các giá trị nguyên lớn hơn kiểu `int` thông thường.\n\n**Vòng lặp for**\n\nThực hiện phép cộng lần lượt:\n\n| i | sum trước phép cộng | sum sau phép cộng |\n|---|---|---|\n| 1 | 0 | 1 |\n| 2 | 1 | 3 |\n| 3 | 3 | 6 |\n| 4 | 6 | 10 |\n| 5 | 10 | 15 |\n\nKhi `i` vượt quá `n`, vòng lặp kết thúc.\n\n### 5.4. Phân tích độ phức tạp\n\nVòng lặp thực hiện `n` lần, mỗi lần chỉ có một phép cộng.\n\nVì vậy:\n\n- **Độ phức tạp thời gian:** `O(n)`.\n- **Độ phức tạp bộ nhớ phụ:** `O(1)`.\n\nChương trình không cần tạo mảng hoặc lưu toàn bộ các số từ `1` đến `n`.\n\n**Mở rộng:** Bài toán còn có thể giải bằng công thức:\n\n\\[\nS = \\frac{n(n+1)}{2}\n\\]\n\nCông thức này cho phép tính tổng với `O(1)` thời gian. Tuy nhiên, cần chú ý đến khả năng tràn số khi thực hiện phép nhân. Việc chọn kiểu dữ liệu và kiểm tra phạm vi đầu vào vẫn cần thiết.\n\n---\n\n## 6. Những lỗi thường gặp\n\n### 6.1. Vòng lặp vô hạn\n\nVí dụ:\n\n```cpp\nint i = 1;\n\nwhile (i <= 5) {\n    std::cout << i << '\\n';\n}\n```\n\nBiến `i` không bao giờ thay đổi.\n\nVì thế, điều kiện `i <= 5` luôn đúng và chương trình liên tục in `1`.\n\nCách sửa:\n\n```cpp\nint i = 1;\n\nwhile (i <= 5) {\n    std::cout << i << '\\n';\n    ++i;\n}\n```\n\nLưu ý rằng vòng lặp vô hạn không phải lúc nào cũng là lỗi. Một số chương trình server hoặc vòng lặp xử lý sự kiện cố tình chạy liên tục, nhưng phải có cơ chế dừng phù hợp.\n\n### 6.2. Sai điều kiện biên\n\nXét vòng lặp:\n\n```cpp\nfor (int i = 0; i <= 5; ++i) {\n    std::cout << i << ' ';\n}\n```\n\nVòng lặp này chạy **6 lần**, từ `0` đến `5`.\n\nNếu muốn chạy đúng 5 lần, cần viết:\n\n```cpp\nfor (int i = 0; i < 5; ++i) {\n    std::cout << i << ' ';\n}\n```\n\nLỗi này thường được gọi là *off-by-one error*.\n\nKhi duyệt mảng có `n` phần tử với chỉ số bắt đầu từ `0`, chỉ số hợp lệ thông thường là `0` đến `n - 1`.\n\n### 6.3. Quên dấu ngoặc nhọn\n\nVí dụ:\n\n```cpp\nif (score >= 5)\n    std::cout << \"Dat\\n\";\n    std::cout << \"Chuc mung!\\n\";\n```\n\nChỉ câu lệnh đầu tiên thuộc `if`.\n\nCâu lệnh in `Chuc mung!` luôn thực hiện, bất kể điều kiện đúng hay sai.\n\nNên sử dụng `{}` ngay cả khi chỉ có một câu lệnh:\n\n```cpp\nif (score >= 5) {\n    std::cout << \"Dat\\n\";\n    std::cout << \"Chuc mung!\\n\";\n}\n```\n\nCách viết này rõ ràng và an toàn hơn khi mở rộng chương trình.\n\n### 6.4. Không kiểm tra cin\n\nNếu dữ liệu đầu vào không khớp với kiểu cần đọc, `std::cin` có thể chuyển sang trạng thái lỗi.\n\nKhi đó, các lần đọc tiếp theo cũng có thể thất bại cho đến khi trạng thái lỗi được xử lý.\n\nVới chương trình đơn giản, có thể thông báo và kết thúc.\n\nVới chương trình yêu cầu người dùng nhập lại, cần xóa trạng thái lỗi bằng `std::cin.clear()` và loại bỏ dữ liệu không hợp lệ bằng `std::cin.ignore()` trước khi đọc tiếp.\n\n### 6.5. Sử dụng sai switch\n\nHai lỗi phổ biến:\n\n- Thiếu `break`, khiến chương trình chạy xuyên sang `case` tiếp theo.\n- Dùng `switch` để kiểm tra điều kiện dạng khoảng giá trị vốn phù hợp hơn với `if-else`.\n\nĐừng cố sử dụng `switch` cho mọi vấn đề chỉ vì mã trông ngắn hơn.\n\n---\n\n## 7. Bài tập tự luyện\n\nHãy tự giải trước khi tham khảo lời giải hoặc sử dụng công cụ hỗ trợ.\n\n### Bài 1. Kiểm tra số chẵn, lẻ\n\n**Yêu cầu:** Nhập số nguyên `n` và xác định số đó là chẵn hay lẻ.\n\nVí dụ:\n\n```text\nInput:\n7\n\nOutput:\nSo le\n```\n\n**Gợi ý:** Sử dụng toán tử `%` và câu lệnh `if-else`.\n\n### Bài 2. Tìm số lớn nhất\n\n**Yêu cầu:** Nhập ba số nguyên `a`, `b`, `c`. In giá trị lớn nhất.\n\nVí dụ:\n\n```text\nInput:\n5 12 8\n\nOutput:\n12\n```\n\n**Gợi ý:** Sử dụng `if-else` và phép so sánh. Cần xử lý cả trường hợp các số bằng nhau.\n\n### Bài 3. Tính tổng các số chẵn\n\n**Yêu cầu:** Nhập số nguyên dương `n`, tính tổng các số chẵn từ `1` đến `n`.\n\nVí dụ:\n\n```text\nInput:\n10\n\nOutput:\n30\n```\n\nVì:\n\n\\[\n2 + 4 + 6 + 8 + 10 = 30\n\\]\n\n**Gợi ý:** Kết hợp vòng lặp `for` với điều kiện `i % 2 == 0`.\n\n### Bài 4. Bảng cửu chương\n\n**Yêu cầu:** Nhập số nguyên `n` từ `1` đến `9`, in bảng nhân của số đó từ `1` đến `10`.\n\nVí dụ:\n\n```text\nInput:\n3\n\nOutput:\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n...\n3 x 10 = 30\n```\n\n**Gợi ý:** Sử dụng vòng lặp `for`.\n\n### Bài 5. Đếm chữ số\n\n**Yêu cầu:** Nhập số nguyên không âm `n`, xác định số chữ số thập phân của số đó.\n\nVí dụ:\n\n```text\nInput:\n12345\n\nOutput:\n5\n```\n\n**Gợi ý:** Mỗi lần chia nguyên cho `10`, ta loại bỏ một chữ số cuối.\n\nChú ý trường hợp đặc biệt `n = 0`, vì số `0` có một chữ số.\n\n---\n\n## 8. Tổng kết kiến thức\n\n| Thành phần | Vai trò |\n|---|---|\n| `std::cin` | Nhận dữ liệu |\n| `std::cout` | Xuất dữ liệu |\n| `std::cerr` | Thông báo lỗi |\n| `std::getline()` | Đọc một dòng |\n| `if` | Thực hiện khi điều kiện đúng |\n| `else if` | Kiểm tra điều kiện tiếp theo |\n| `else` | Xử lý trường hợp còn lại |\n| `switch` | Lựa chọn theo giá trị rời rạc |\n| `for` | Lặp với biến đếm hoặc bước lặp rõ ràng |\n| `while` | Lặp khi điều kiện còn đúng |\n| `do-while` | Thực hiện ít nhất một lần rồi kiểm tra |\n| `break` | Thoát khỏi vòng lặp hoặc switch |\n| `continue` | Bỏ qua phần còn lại của lần lặp hiện tại |\n\nSau bài học này, bạn cần có khả năng tự viết một chương trình thực hiện ba công việc cơ bản: **nhận dữ liệu, xử lý bằng điều kiện hoặc vòng lặp, và xuất kết quả**.\n\nQuan trọng hơn, hãy hình thành thói quen kiểm tra đầu vào, xác định rõ điều kiện dừng và thử nghiệm các trường hợp biên trước khi coi chương trình đã hoàn thành.\n\n## Đọc tiếp\n\n- [Toán tử trong C++](/cpp/bat-dau/toan-tu): Tìm hiểu biểu thức, toán tử logic và các phép so sánh.\n- [Hàm và phạm vi biến](/cpp/bat-dau/ham-pham-vi): Tổ chức chương trình thành những phần nhỏ, dễ tái sử dụng.\n- [Giải quyết bài toán bằng thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan): Học cách phân tích yêu cầu, thiết kế thuật toán và đánh giá độ phức tạp.",
+    "body": "# Nhập xuất, câu lệnh điều kiện và vòng lặp trong C++\n\nMột chương trình không chỉ thực hiện các phép tính. Nó còn cần tiếp nhận dữ liệu, đưa ra quyết định và thực hiện những công việc lặp lại.\n\nTrong C++, ba nhóm kiến thức này đóng vai trò nền tảng:\n\n- **Nhập xuất (Input/Output):** Nhận dữ liệu đầu vào và hiển thị kết quả.\n- **Câu lệnh điều kiện (Conditional Statements):** Quyết định chương trình sẽ thực hiện công việc nào.\n- **Vòng lặp (Loops):** Thực hiện một công việc nhiều lần mà không cần viết lại cùng một đoạn mã.\n\nĐây cũng là những kiến thức được sử dụng thường xuyên khi giải bài tập lập trình, xây dựng thuật toán và phát triển phần mềm.\n\n## 1. Nhập và xuất dữ liệu\n\n### 1.1. Thư viện iostream\n\nĐể nhập xuất dữ liệu thông qua thiết bị đầu cuối (terminal), C++ cung cấp thư viện `<iostream>`.\n\nBa đối tượng thường gặp:\n\n| Đối tượng | Chức năng |\n|---|---|\n| `std::cin` | Đọc dữ liệu từ đầu vào chuẩn |\n| `std::cout` | Ghi dữ liệu ra đầu ra chuẩn |\n| `std::cerr` | Ghi thông báo lỗi ra luồng lỗi chuẩn |\n\nVí dụ đầu tiên:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cout << \"Nhap tuoi cua ban: \";\n    std::cin >> age;\n\n    std::cout << \"Ban \" << age << \" tuoi.\\n\";\n\n    return 0;\n}\n```\n\nKết quả khi nhập `16`:\n\n```text\nNhap tuoi cua ban: 16\nBan 16 tuoi.\n```\n\n**Giải thích:**\n\n- `#include <iostream>`: Khai báo sử dụng thư viện nhập xuất.\n- `int age{}`: Tạo biến số nguyên `age`, khởi tạo giá trị bằng `0`.\n- `std::cout <<`: Gửi dữ liệu ra màn hình.\n- `std::cin >>`: Đọc dữ liệu vào biến.\n- `'\\n'`: Xuống dòng.\n- `return 0`: Kết thúc chương trình và thông báo thực thi thành công.\n\nCần phân biệt hai toán tử:\n\n- `<<`: Toán tử chèn dữ liệu vào luồng xuất.\n- `>>`: Toán tử trích xuất dữ liệu từ luồng nhập.\n\n### 1.2. Nhập nhiều giá trị\n\nCó thể đọc nhiều biến trong một câu lệnh:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{};\n    int b{};\n\n    std::cin >> a >> b;\n\n    std::cout << \"Tong: \" << a + b << '\\n';\n\n    return 0;\n}\n```\n\nDữ liệu đầu vào:\n\n```text\n5 8\n```\n\nKết quả:\n\n```text\nTong: 13\n```\n\nNgười dùng cũng có thể nhập:\n\n```text\n5\n8\n```\n\nKết quả vẫn giống nhau.\n\n**Vì sao?**\n\nVới các kiểu dữ liệu số, `std::cin >>` tự động bỏ qua khoảng trắng, tab và ký tự xuống dòng ở đầu dữ liệu cần đọc.\n\nĐiều này đặc biệt hữu ích trong các bài toán lập trình thi đấu, khi dữ liệu được cung cấp qua nhiều dòng.\n\n### 1.3. Đọc một dòng văn bản với getline\n\n`std::cin >>` chỉ đọc một từ đối với kiểu `std::string`, vì quá trình đọc dừng tại khoảng trắng.\n\nVí dụ, nếu nhập `Nguyen Van A`, câu lệnh:\n\n```cpp\nstd::cin >> name;\n```\n\nchỉ lấy được `Nguyen`.\n\nĐể đọc toàn bộ dòng, sử dụng `std::getline()`:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n\n    std::cout << \"Nhap ho ten: \";\n    std::getline(std::cin, name);\n\n    std::cout << \"Xin chao, \" << name << \"!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNhap ho ten: Nguyen Van A\nXin chao, Nguyen Van A!\n```\n\n**Lưu ý quan trọng:** Nếu sử dụng `std::getline()` ngay sau `std::cin >>`, ký tự xuống dòng còn lại trong bộ đệm có thể khiến `getline()` đọc một dòng rỗng.\n\nCó thể loại bỏ phần còn lại của dòng trước khi đọc:\n\n```cpp\n#include <iostream>\n#include <limits>\n#include <string>\n\nint main() {\n    int age{};\n    std::string name;\n\n    if (!(std::cin >> age)) {\n        return 1;\n    }\n\n    std::cin.ignore(\n        std::numeric_limits<std::streamsize>::max(),\n        '\\n'\n    );\n\n    std::getline(std::cin, name);\n\n    std::cout << name << \": \" << age << '\\n';\n}\n```\n\n### 1.4. Kiểm tra dữ liệu đầu vào\n\nKhông phải người dùng lúc nào cũng nhập đúng.\n\nGiả sử chương trình yêu cầu một số nguyên nhưng nhận được chữ cái, quá trình đọc có thể thất bại.\n\nVì vậy, thay vì mặc định dữ liệu luôn hợp lệ, hãy kiểm tra kết quả:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cout << \"Nhap tuoi: \";\n\n    if (!(std::cin >> age)) {\n        std::cerr << \"Loi: Tuoi phai la so nguyen.\\n\";\n        return 1;\n    }\n\n    if (age < 0 || age > 150) {\n        std::cerr << \"Loi: Tuoi khong hop le.\\n\";\n        return 1;\n    }\n\n    std::cout << \"Tuoi hop le: \" << age << '\\n';\n\n    return 0;\n}\n```\n\nỞ đây có hai loại kiểm tra khác nhau:\n\n1. **Kiểm tra cú pháp dữ liệu:** Đầu vào có đọc được thành số nguyên hay không?\n2. **Kiểm tra tính hợp lệ:** Số nguyên đó có nằm trong phạm vi cho phép không?\n\nChẳng hạn:\n\n| Dữ liệu nhập | Kết quả |\n|---|---|\n| `16` | Hợp lệ |\n| `-5` | Không hợp lệ |\n| `200` | Không hợp lệ |\n| `abc` | Đọc thất bại |\n\nLưu ý rằng `std::cin >> age` có thể đọc thành công phần số của một chuỗi như `16abc` và để lại `abc` trong luồng nhập. Nếu cần xác thực toàn bộ dòng, phải xử lý thêm phần dữ liệu còn lại.\n\nĐây là một nguyên tắc quan trọng: **Đọc được dữ liệu không đồng nghĩa với dữ liệu hợp lệ.**\n\n---\n\n## 2. Câu lệnh điều kiện\n\nTrong thực tế, chương trình thường cần đưa ra quyết định.\n\nVí dụ:\n\n- Nếu điểm lớn hơn hoặc bằng 5, học sinh đạt yêu cầu.\n- Nếu mật khẩu không chính xác, từ chối đăng nhập.\n- Nếu số chia bằng 0, không thực hiện phép chia.\n- Nếu người dùng không có quyền, từ chối thao tác.\n\nC++ cung cấp các câu lệnh điều kiện để xử lý những tình huống này.\n\n### 2.1. Câu lệnh if\n\nCú pháp:\n\n```cpp\nif (condition) {\n    // Thuc hien khi dieu kien dung\n}\n```\n\nPhần thân chỉ được thực hiện khi biểu thức điều kiện có giá trị `true`.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cin >> age;\n\n    if (age >= 18) {\n        std::cout << \"Ban da du 18 tuoi.\\n\";\n    }\n\n    return 0;\n}\n```\n\nNếu nhập `20`, thông báo được hiển thị.\n\nNếu nhập `15`, chương trình bỏ qua khối `if`.\n\n### 2.2. Câu lệnh if-else\n\nKhi cần xử lý cả hai trường hợp đúng và sai, sử dụng `if-else`.\n\nCú pháp:\n\n```cpp\nif (condition) {\n    // Khi dieu kien dung\n} else {\n    // Khi dieu kien sai\n}\n```\n\nVí dụ kiểm tra số chẵn, lẻ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        return 1;\n    }\n\n    if (n % 2 == 0) {\n        std::cout << \"So chan\\n\";\n    } else {\n        std::cout << \"So le\\n\";\n    }\n\n    return 0;\n}\n```\n\nToán tử `%` trả về phần dư của phép chia nguyên.\n\n- Nếu `n % 2 == 0`, số đó là số chẵn.\n- Ngược lại, số đó là số lẻ.\n\n**Phân biệt `=` và `==`:**\n\n| Toán tử | Ý nghĩa |\n|---|---|\n| `=` | Gán giá trị |\n| `==` | So sánh bằng nhau |\n| `!=` | So sánh khác nhau |\n| `>` | Lớn hơn |\n| `<` | Nhỏ hơn |\n| `>=` | Lớn hơn hoặc bằng |\n| `<=` | Nhỏ hơn hoặc bằng |\n\nMột lỗi phổ biến là viết `if (a = 5)` thay vì `if (a == 5)`.\n\nBiểu thức đầu tiên thực hiện phép gán, sau đó chuyển giá trị được gán thành `bool` để kiểm tra. Với giá trị `5`, điều kiện luôn đúng.\n\n### 2.3. Câu lệnh else if if-else\n\nKhi chương trình có nhiều trường hợp, sử dụng chuỗi `else if`.\n\nVí dụ xếp loại điểm:\n\n```cpp\n#include <iostream>\n\nint main() {\n    double score{};\n\n    std::cout << \"Nhap diem: \";\n\n    if (!(std::cin >> score)) {\n        std::cerr << \"Diem khong hop le.\\n\";\n        return 1;\n    }\n\n    if (score < 0 || score > 10) {\n        std::cerr << \"Diem phai nam trong [0, 10].\\n\";\n        return 1;\n    }\n\n    if (score >= 8) {\n        std::cout << \"Gioi\\n\";\n    } else if (score >= 6.5) {\n        std::cout << \"Kha\\n\";\n    } else if (score >= 5) {\n        std::cout << \"Trung binh\\n\";\n    } else {\n        std::cout << \"Chua dat\\n\";\n    }\n\n    return 0;\n}\n```\n\nVí dụ nhập:\n\n```text\n7.5\n```\n\nKết quả:\n\n```text\nKha\n```\n\n**Cách chương trình hoạt động:**\n\n1. Kiểm tra `score >= 8`, kết quả sai.\n2. Kiểm tra `score >= 6.5`, kết quả đúng.\n3. Thực hiện nhánh in `Kha`.\n4. Bỏ qua những nhánh còn lại.\n\nĐiều quan trọng là **thứ tự kiểm tra ảnh hưởng trực tiếp đến kết quả**.\n\nNếu kiểm tra `score >= 5` trước `score >= 8`, điểm `9` có thể bị xếp vào nhóm trung bình.\n\n### 2.4. Câu lệnh switch\n\n`switch` phù hợp khi cần so sánh một biểu thức với nhiều giá trị rời rạc.\n\nVí dụ xây dựng menu:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int choice{};\n\n    std::cout << \"1. Bat dau\\n\";\n    std::cout << \"2. Cai dat\\n\";\n    std::cout << \"3. Thoat\\n\";\n\n    if (!(std::cin >> choice)) {\n        return 1;\n    }\n\n    switch (choice) {\n        case 1:\n            std::cout << \"Bat dau chuong trinh\\n\";\n            break;\n\n        case 2:\n            std::cout << \"Mo cai dat\\n\";\n            break;\n\n        case 3:\n            std::cout << \"Tam biet!\\n\";\n            break;\n\n        default:\n            std::cout << \"Lua chon khong hop le\\n\";\n            break;\n    }\n\n    return 0;\n}\n```\n\nCác thành phần chính:\n\n- `switch`: Nhận biểu thức cần kiểm tra.\n- `case`: Định nghĩa một giá trị có thể xảy ra.\n- `break`: Thoát khỏi câu lệnh `switch`.\n- `default`: Xử lý khi không có `case` nào phù hợp.\n\nNếu thiếu `break`, chương trình có thể tiếp tục chạy vào nhánh tiếp theo. Hành vi này được gọi là *fallthrough*.\n\nTrong C++17, có thể dùng `[[fallthrough]];` để thể hiện rõ trường hợp cố ý chạy xuyên nhánh.\n\n**Khi nào chọn if-else, khi nào chọn switch?**\n\n| Tình huống | Nên sử dụng |\n|---|---|\n| So sánh khoảng giá trị | `if-else` |\n| Kết hợp nhiều điều kiện logic | `if-else` |\n| Kiểm tra các giá trị nguyên cụ thể | `switch` |\n| Xử lý các giá trị enum | `switch` |\n\n`switch` không hỗ trợ trực tiếp so sánh khoảng như `score >= 8`, cũng không hỗ trợ `std::string` làm biểu thức lựa chọn trong C++17.\n\n---\n\n## 3. Vòng lặp trong C++\n\nGiả sử cần in các số từ 1 đến 100.\n\nViết 100 câu lệnh `std::cout` là cách làm dài dòng, khó bảo trì và rất dễ sai.\n\nVòng lặp giải quyết vấn đề bằng cách thực hiện một khối lệnh nhiều lần.\n\nC++ có ba dạng vòng lặp cơ bản:\n\n- `for`\n- `while`\n- `do-while`\n\n### 3.1. Vòng lặp for\n\n`for` thường được sử dụng khi có biến đếm hoặc khi biết trước số lần cần lặp.\n\nCú pháp:\n\n```cpp\nfor (initialization; condition; update) {\n    // Cong viec can lap\n}\n```\n\nTrong đó:\n\n- `initialization`: Khởi tạo biến đếm.\n- `condition`: Điều kiện tiếp tục vòng lặp.\n- `update`: Cập nhật biến đếm sau mỗi lần lặp.\n\nVí dụ in các số từ 1 đến 5:\n\n```cpp\n#include <iostream>\n\nint main() {\n    for (int i = 1; i <= 5; ++i) {\n        std::cout << i << ' ';\n    }\n\n    std::cout << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1 2 3 4 5\n```\n\n**Phân tích từng lần lặp:**\n\n| Lần lặp | Giá trị i | Điều kiện i <= 5 | Hành động |\n|---|---|---|---|\n| 1 | 1 | Đúng | In 1 |\n| 2 | 2 | Đúng | In 2 |\n| 3 | 3 | Đúng | In 3 |\n| 4 | 4 | Đúng | In 4 |\n| 5 | 5 | Đúng | In 5 |\n| 6 | 6 | Sai | Kết thúc |\n\nCâu lệnh `++i` tăng biến `i` lên một đơn vị.\n\nTrong ví dụ này, `i++` cũng cho kết quả tương đương.\n\n**Ví dụ: In số chẵn từ 2 đến 10**\n\n```cpp\nfor (int i = 2; i <= 10; i += 2) {\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n2 4 6 8 10\n```\n\nKhông bắt buộc mỗi vòng lặp chỉ tăng một đơn vị. Biến đếm có thể tăng hoặc giảm theo bước phù hợp.\n\n### 3.2. Vòng lặp while\n\n`while` phù hợp khi số lần lặp phụ thuộc vào một điều kiện và chưa xác định trước.\n\nCú pháp:\n\n```cpp\nwhile (condition) {\n    // Cong viec can lap\n}\n```\n\nĐiều kiện được kiểm tra **trước mỗi lần thực hiện thân vòng lặp**.\n\nVí dụ đếm ngược:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int count{5};\n\n    while (count > 0) {\n        std::cout << count << ' ';\n        --count;\n    }\n\n    std::cout << \"Bat dau!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n5 4 3 2 1 Bat dau!\n```\n\nChương trình thực hiện:\n\n1. Kiểm tra `count > 0`.\n2. In giá trị hiện tại.\n3. Giảm `count` đi một.\n4. Quay lại kiểm tra điều kiện.\n5. Thoát khi `count` bằng `0`.\n\nNếu điều kiện sai ngay từ đầu, thân vòng lặp sẽ không được thực hiện lần nào.\n\n### 3.3. Vòng lặp do-while\n\nKhác với `while`, vòng lặp `do-while` kiểm tra điều kiện **sau khi thực hiện thân vòng lặp**.\n\nVì vậy, thân vòng lặp luôn được thực hiện ít nhất một lần.\n\nCú pháp:\n\n```cpp\ndo {\n    // Cong viec can lap\n} while (condition);\n```\n\nVí dụ yêu cầu người dùng nhập `0` để thoát:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int choice{};\n\n    do {\n        std::cout << \"Nhap 0 de thoat: \";\n\n        if (!(std::cin >> choice)) {\n            std::cerr << \"Du lieu khong hop le.\\n\";\n            return 1;\n        }\n    } while (choice != 0);\n\n    std::cout << \"Da thoat chuong trinh.\\n\";\n\n    return 0;\n}\n```\n\nVí dụ quá trình chạy:\n\n```text\nNhap 0 de thoat: 5\nNhap 0 de thoat: 2\nNhap 0 de thoat: 0\nDa thoat chuong trinh.\n```\n\nỞ đây vòng lặp tiếp tục cho đến khi người dùng nhập `0`.\n\n**Lưu ý:** Khác với `while` và `for`, cú pháp `do-while` bắt buộc có dấu `;` sau điều kiện.\n\n### 3.4. So sánh ba loại vòng lặp\n\n| Tiêu chí | for | while | do-while |\n|---|---|---|---|\n| Kiểm tra điều kiện | Trước thân | Trước thân | Sau thân |\n| Có thể chạy 0 lần | Có | Có | Không |\n| Phù hợp với biến đếm | Rất tốt | Có thể | Có thể |\n| Phù hợp với nhập liệu lặp lại | Có thể | Tốt | Rất tốt |\n| Thường sử dụng | Duyệt, đếm | Lặp theo điều kiện | Menu, yêu cầu nhập lại |\n\nKhông có vòng lặp nào tốt nhất cho mọi trường hợp. Hãy chọn kiểu giúp người đọc hiểu rõ ý định của chương trình.\n\n---\n\n## 4. Điều khiển vòng lặp với break và continue\n\nNgoài điều kiện lặp, C++ cung cấp hai câu lệnh để thay đổi luồng thực thi.\n\n### 4.1. break: Thoát khỏi vòng lặp\n\n`break` lập tức kết thúc vòng lặp gần nhất bao quanh nó.\n\nVí dụ:\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i == 5) {\n        break;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 2 3 4\n```\n\nKhi `i` bằng `5`, vòng lặp kết thúc, không tiếp tục đến `10`.\n\n### 4.2. continue: Bỏ qua lần lặp hiện tại\n\n`continue` bỏ qua phần còn lại của thân vòng lặp hiện tại và chuyển sang bước lặp tiếp theo.\n\nVí dụ chỉ in số lẻ:\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i % 2 == 0) {\n        continue;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 3 5 7 9\n```\n\nKhác biệt cần nhớ:\n\n- `break`: Kết thúc toàn bộ vòng lặp hiện tại.\n- `continue`: Chỉ bỏ qua phần còn lại của lần lặp hiện tại.\n\nVới vòng lặp lồng nhau, `break` chỉ thoát khỏi vòng lặp gần nhất, không tự động thoát khỏi tất cả các vòng.\n\n---\n\n## 5. Bài toán thực hành: Tính tổng từ 1 đến n\n\nHãy vận dụng kiến thức vừa học vào một bài toán hoàn chỉnh.\n\n**Đề bài**\n\nNhập số nguyên dương `n`. Tính tổng:\n\n\\[\nS = 1 + 2 + 3 + \\cdots + n\n\\]\n\nVí dụ:\n\n**Input**\n\n```text\n5\n```\n\n**Output**\n\n```text\n15\n```\n\nVì:\n\n\\[\n1 + 2 + 3 + 4 + 5 = 15\n\\]\n\n### 5.1. Phân tích thuật toán\n\nCác bước giải quyết:\n\n1. Đọc số nguyên `n`.\n2. Kiểm tra `n` có hợp lệ không.\n3. Khởi tạo biến `sum = 0`.\n4. Dùng vòng lặp chạy từ `1` đến `n`.\n5. Cộng giá trị hiện tại vào `sum`.\n6. In kết quả.\n\n### 5.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    if (n <= 0 || n > 1'000'000) {\n        std::cerr << \"n phai nam trong [1, 1000000].\\n\";\n        return 1;\n    }\n\n    long long sum{};\n\n    for (int i = 1; i <= n; ++i) {\n        sum += i;\n    }\n\n    std::cout << sum << '\\n';\n\n    return 0;\n}\n```\n\n### 5.3. Phân tích chương trình\n\n**Biến n**\n\nLưu số nguyên đầu vào. Chương trình giới hạn `n` trong đoạn `[1, 1000000]` để xác định rõ phạm vi được hỗ trợ.\n\n**Biến sum**\n\nĐược khai báo dưới kiểu `long long`, có khả năng chứa các giá trị nguyên lớn hơn kiểu `int` thông thường.\n\n**Vòng lặp for**\n\nThực hiện phép cộng lần lượt:\n\n| i | sum trước phép cộng | sum sau phép cộng |\n|---|---|---|\n| 1 | 0 | 1 |\n| 2 | 1 | 3 |\n| 3 | 3 | 6 |\n| 4 | 6 | 10 |\n| 5 | 10 | 15 |\n\nKhi `i` vượt quá `n`, vòng lặp kết thúc.\n\n### 5.4. Phân tích độ phức tạp\n\nVòng lặp thực hiện `n` lần, mỗi lần chỉ có một phép cộng.\n\nVì vậy:\n\n- **Độ phức tạp thời gian:** `O(n)`.\n- **Độ phức tạp bộ nhớ phụ:** `O(1)`.\n\nChương trình không cần tạo mảng hoặc lưu toàn bộ các số từ `1` đến `n`.\n\n**Mở rộng:** Bài toán còn có thể giải bằng công thức:\n\n\\[\nS = \\frac{n(n+1)}{2}\n\\]\n\nCông thức này cho phép tính tổng với `O(1)` thời gian. Tuy nhiên, cần chú ý đến khả năng tràn số khi thực hiện phép nhân. Việc chọn kiểu dữ liệu và kiểm tra phạm vi đầu vào vẫn cần thiết.\n\n---\n\n## 6. Những lỗi thường gặp\n\n### 6.1. Vòng lặp vô hạn\n\nVí dụ:\n\n```cpp\nint i = 1;\n\nwhile (i <= 5) {\n    std::cout << i << '\\n';\n}\n```\n\nBiến `i` không bao giờ thay đổi.\n\nVì thế, điều kiện `i <= 5` luôn đúng và chương trình liên tục in `1`.\n\nCách sửa:\n\n```cpp\nint i = 1;\n\nwhile (i <= 5) {\n    std::cout << i << '\\n';\n    ++i;\n}\n```\n\nLưu ý rằng vòng lặp vô hạn không phải lúc nào cũng là lỗi. Một số chương trình server hoặc vòng lặp xử lý sự kiện cố tình chạy liên tục, nhưng phải có cơ chế dừng phù hợp.\n\n### 6.2. Sai điều kiện biên\n\nXét vòng lặp:\n\n```cpp\nfor (int i = 0; i <= 5; ++i) {\n    std::cout << i << ' ';\n}\n```\n\nVòng lặp này chạy **6 lần**, từ `0` đến `5`.\n\nNếu muốn chạy đúng 5 lần, cần viết:\n\n```cpp\nfor (int i = 0; i < 5; ++i) {\n    std::cout << i << ' ';\n}\n```\n\nLỗi này thường được gọi là *off-by-one error*.\n\nKhi duyệt mảng có `n` phần tử với chỉ số bắt đầu từ `0`, chỉ số hợp lệ thông thường là `0` đến `n - 1`.\n\n### 6.3. Quên dấu ngoặc nhọn\n\nVí dụ:\n\n```cpp\nif (score >= 5)\n    std::cout << \"Dat\\n\";\n    std::cout << \"Chuc mung!\\n\";\n```\n\nChỉ câu lệnh đầu tiên thuộc `if`.\n\nCâu lệnh in `Chuc mung!` luôn thực hiện, bất kể điều kiện đúng hay sai.\n\nNên sử dụng `{}` ngay cả khi chỉ có một câu lệnh:\n\n```cpp\nif (score >= 5) {\n    std::cout << \"Dat\\n\";\n    std::cout << \"Chuc mung!\\n\";\n}\n```\n\nCách viết này rõ ràng và an toàn hơn khi mở rộng chương trình.\n\n### 6.4. Không kiểm tra cin\n\nNếu dữ liệu đầu vào không khớp với kiểu cần đọc, `std::cin` có thể chuyển sang trạng thái lỗi.\n\nKhi đó, các lần đọc tiếp theo cũng có thể thất bại cho đến khi trạng thái lỗi được xử lý.\n\nVới chương trình đơn giản, có thể thông báo và kết thúc.\n\nVới chương trình yêu cầu người dùng nhập lại, cần xóa trạng thái lỗi bằng `std::cin.clear()` và loại bỏ dữ liệu không hợp lệ bằng `std::cin.ignore()` trước khi đọc tiếp.\n\n### 6.5. Sử dụng sai switch\n\nHai lỗi phổ biến:\n\n- Thiếu `break`, khiến chương trình chạy xuyên sang `case` tiếp theo.\n- Dùng `switch` để kiểm tra điều kiện dạng khoảng giá trị vốn phù hợp hơn với `if-else`.\n\nĐừng cố sử dụng `switch` cho mọi vấn đề chỉ vì mã trông ngắn hơn.\n\n---\n\n## 7. Bài tập tự luyện\n\nHãy tự giải trước khi tham khảo lời giải hoặc sử dụng công cụ hỗ trợ.\n\n### Bài 1. Kiểm tra số chẵn, lẻ\n\n**Yêu cầu:** Nhập số nguyên `n` và xác định số đó là chẵn hay lẻ.\n\nVí dụ:\n\n```text\nInput:\n7\n\nOutput:\nSo le\n```\n\n**Gợi ý:** Sử dụng toán tử `%` và câu lệnh `if-else`.\n\n### Bài 2. Tìm số lớn nhất\n\n**Yêu cầu:** Nhập ba số nguyên `a`, `b`, `c`. In giá trị lớn nhất.\n\nVí dụ:\n\n```text\nInput:\n5 12 8\n\nOutput:\n12\n```\n\n**Gợi ý:** Sử dụng `if-else` và phép so sánh. Cần xử lý cả trường hợp các số bằng nhau.\n\n### Bài 3. Tính tổng các số chẵn\n\n**Yêu cầu:** Nhập số nguyên dương `n`, tính tổng các số chẵn từ `1` đến `n`.\n\nVí dụ:\n\n```text\nInput:\n10\n\nOutput:\n30\n```\n\nVì:\n\n\\[\n2 + 4 + 6 + 8 + 10 = 30\n\\]\n\n**Gợi ý:** Kết hợp vòng lặp `for` với điều kiện `i % 2 == 0`.\n\n### Bài 4. Bảng cửu chương\n\n**Yêu cầu:** Nhập số nguyên `n` từ `1` đến `9`, in bảng nhân của số đó từ `1` đến `10`.\n\nVí dụ:\n\n```text\nInput:\n3\n\nOutput:\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n...\n3 x 10 = 30\n```\n\n**Gợi ý:** Sử dụng vòng lặp `for`.\n\n### Bài 5. Đếm chữ số\n\n**Yêu cầu:** Nhập số nguyên không âm `n`, xác định số chữ số thập phân của số đó.\n\nVí dụ:\n\n```text\nInput:\n12345\n\nOutput:\n5\n```\n\n**Gợi ý:** Mỗi lần chia nguyên cho `10`, ta loại bỏ một chữ số cuối.\n\nChú ý trường hợp đặc biệt `n = 0`, vì số `0` có một chữ số.\n\n---\n\n## 8. Tổng kết kiến thức\n\n| Thành phần | Vai trò |\n|---|---|\n| `std::cin` | Nhận dữ liệu |\n| `std::cout` | Xuất dữ liệu |\n| `std::cerr` | Thông báo lỗi |\n| `std::getline()` | Đọc một dòng |\n| `if` | Thực hiện khi điều kiện đúng |\n| `else if` | Kiểm tra điều kiện tiếp theo |\n| `else` | Xử lý trường hợp còn lại |\n| `switch` | Lựa chọn theo giá trị rời rạc |\n| `for` | Lặp với biến đếm hoặc bước lặp rõ ràng |\n| `while` | Lặp khi điều kiện còn đúng |\n| `do-while` | Thực hiện ít nhất một lần rồi kiểm tra |\n| `break` | Thoát khỏi vòng lặp hoặc switch |\n| `continue` | Bỏ qua phần còn lại của lần lặp hiện tại |\n\nSau bài học này, bạn cần có khả năng tự viết một chương trình thực hiện ba công việc cơ bản: **nhận dữ liệu, xử lý bằng điều kiện hoặc vòng lặp, và xuất kết quả**.\n\nQuan trọng hơn, hãy hình thành thói quen kiểm tra đầu vào, xác định rõ điều kiện dừng và thử nghiệm các trường hợp biên trước khi coi chương trình đã hoàn thành.\n\n## Đọc tiếp\n\n- [Toán tử trong C++](/cpp/bat-dau/toan-tu): Tìm hiểu biểu thức, toán tử logic và các phép so sánh.\n- [Hàm và phạm vi biến](/cpp/bat-dau/ham-pham-vi): Tổ chức chương trình thành những phần nhỏ, dễ tái sử dụng.\n- [Giải quyết bài toán bằng thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan): Học cách phân tích yêu cầu, thiết kế thuật toán và đánh giá độ phức tạp.",
     "sourcePath": "content/cpp/getting-started/nhap-xuat-dieu-kien-vong-lap.md",
     "headings": [
       {
@@ -4812,8 +5039,8 @@ export const articles = [
         "id": "22-cau-lenh-if-else"
       },
       {
-        "title": "2.3. Câu lệnh if-else if-else",
-        "id": "23-cau-lenh-if-else-if-else"
+        "title": "2.3. Câu lệnh else if if-else",
+        "id": "23-cau-lenh-else-if-if-else"
       },
       {
         "title": "2.4. Câu lệnh switch",
@@ -7301,22 +7528,26 @@ export const articles = [
     ]
   },
   {
-    "title": "C++ syntax cheatsheet",
-    "description": "Tra nhanh cú pháp khai báo, điều khiển, hàm, class, STL và lệnh biên dịch C++17.",
+    "title": "C++17 Syntax Cheatsheet",
+    "description": "Bảng tra cứu nhanh cú pháp C++17, từ biến, toán tử, điều kiện, vòng lặp, hàm, class đến STL, quản lý bộ nhớ và lệnh biên dịch.",
     "slug": "/cpp/tra-cuu/cu-phap",
     "category": "reference",
     "categoryLabel": "Tra cứu và xử lý lỗi",
     "order": 25000,
     "difficulty": "beginner",
-    "badge": [
-      "Cốt lõi"
-    ],
     "keywords": [
       "C++ syntax",
+      "C++17",
       "cheatsheet",
       "declaration",
       "control flow",
-      "compile command"
+      "functions",
+      "classes",
+      "STL",
+      "compiler",
+      "g++",
+      "clang++",
+      "MSVC"
     ],
     "updated": "2026-10-20",
     "collection": "cpp",
@@ -7329,28 +7560,364 @@ export const articles = [
     ],
     "featured": false,
     "priority": 25000,
-    "body": "Dùng trang này để nhớ nhanh hình thức cú pháp. Đọc bài liên kết để hiểu semantics, lifetime và trường hợp biên.\n\n## Cấu trúc chương trình\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << \"Hello\\n\";\n    return 0;\n}\n```\n\n## Cú pháp hay dùng\n\n```text\nKhai báo:           int count{0};\nHằng:               const int limit{100};\nĐiều kiện:          if (condition) { ... } else { ... }\nSwitch:             switch (value) { case 1: ...; break; default: ...; }\nFor:                for (int i = 0; i < n; ++i) { ... }\nWhile:              while (condition) { ... }\nRange-for:          for (const auto& item : items) { ... }\nHàm:                Result function(Argument argument) { return result; }\nReference:          void update(int& value);\nPointer nullable:   int* value{nullptr};\nClass member:       object.method();\nNamespace:          std::vector<int>\nLambda:             [](int value) { return value > 0; }\n```\n\n`...` là ký hiệu minh họa, không phải code có thể biên dịch. Kiểu trả về `void` nghĩa là không trả giá trị.\n\n## Lệnh compiler\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\nclang++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nMSVC: `cl /std:c++17 /EHsc /W4 main.cpp`. C++17 là baseline của bộ tài liệu.\n\n## Lỗi nhanh\n\n- Thiếu `;` sau statement hoặc class definition.\n- Thiếu header trực tiếp, ví dụ `<vector>` khi dùng `std::vector`.\n- Dùng `=` khi cần `==`.\n- Dùng biến/iterator trước khi khởi tạo hoặc sau khi hết lifetime.\n\n## Kiểm tra nhanh\n\nĐọc một dòng cú pháp ở trên và tìm bài chi tiết trước khi dựa vào ví dụ trong API production.\n\n## Đọc tiếp\n\nTra [kiểu dữ liệu](/cpp/tra-cuu/kieu-du-lieu), [container](/cpp/tra-cuu/stl-containers) hoặc [lỗi compiler/runtime](/cpp/tra-cuu/debugging-errors).",
+    "body": "# C++17 Syntax Cheatsheet\n\nTrang này tổng hợp các cú pháp C++17 thường dùng trong học tập, giải thuật và phát triển phần mềm.\n\nMục tiêu là giúp bạn **tra nhanh cú pháp khi đang lập trình**, không cần tìm lại toàn bộ bài hướng dẫn.\n\nNội dung bao gồm:\n\n- Cấu trúc chương trình và khai báo dữ liệu.\n- Toán tử, điều kiện và vòng lặp.\n- Hàm, tham chiếu, con trỏ và lambda.\n- `struct`, `class`, `enum` và namespace.\n- Các container và thuật toán STL.\n- Nhập xuất, xử lý chuỗi và ngoại lệ.\n- Lệnh biên dịch và các lỗi thường gặp.\n\n**Phiên bản áp dụng:** C++17 (`-std=c++17`).\n\nCác đoạn mã ngắn trong bài là ví dụ cú pháp, thường cần đặt trong hàm và bổ sung header tương ứng. Những đoạn được ghi là chương trình hoàn chỉnh có thể biên dịch độc lập.\n\n---\n\n## 1. Cấu trúc chương trình C++\n\nMột chương trình C++ cơ bản:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << \"Hello, World!\\n\";\n    return 0;\n}\n```\n\n| Thành phần | Chức năng |\n|---|---|\n| `#include` | Khai báo sử dụng header |\n| `int main()` | Điểm bắt đầu thực thi chương trình |\n| `{}` | Định nghĩa một khối lệnh |\n| `;` | Kết thúc đa số câu lệnh |\n| `std::cout` | Xuất dữ liệu |\n| `return 0` | Kết thúc chương trình thành công |\n\nTrong C++17, có thể bỏ qua `return 0;` ở cuối hàm `main`. Chương trình vẫn mặc định trả về `0` nếu luồng thực thi đi đến cuối hàm.\n\n### Header thường dùng\n\n| Header | Công dụng |\n|---|---|\n| `<iostream>` | Nhập xuất chuẩn |\n| `<string>` | Chuỗi `std::string` |\n| `<vector>` | Mảng động |\n| `<array>` | Mảng cố định |\n| `<algorithm>` | Sắp xếp, tìm kiếm, đếm |\n| `<numeric>` | Các thuật toán tính toán |\n| `<cmath>` | Hàm toán học |\n| `<limits>` | Giới hạn kiểu dữ liệu |\n| `<map>` | Map có thứ tự |\n| `<unordered_map>` | Hash map |\n| `<set>` | Tập hợp có thứ tự |\n| `<memory>` | Smart pointer |\n| `<optional>` | Giá trị có thể không tồn tại |\n| `<stdexcept>` | Các loại ngoại lệ |\n| `<utility>` | `std::pair`, `std::move` |\n| `<fstream>` | Đọc ghi tệp |\n\n**Quy tắc:** Include trực tiếp header định nghĩa thành phần bạn sử dụng, thay vì phụ thuộc vào header khác vô tình include hộ.\n\n---\n\n## 2. Khai báo biến và kiểu dữ liệu\n\n### 2.1. Khai báo biến\n\n```cpp\nint age{16};\ndouble height{1.75};\nchar grade{'A'};\nbool active{true};\nstd::string name{\"Nam\"};\n```\n\n### 2.2. Các kiểu dữ liệu thông dụng\n\n| Kiểu | Mục đích | Ví dụ |\n|---|---|---|\n| `int` | Số nguyên | `100` |\n| `long long` | Số nguyên phạm vi rộng | `10000000000LL` |\n| `float` | Số thực | `3.14f` |\n| `double` | Số thực độ chính xác cao hơn | `3.14159` |\n| `char` | Ký tự | `'A'` |\n| `bool` | Giá trị logic | `true` |\n| `std::string` | Chuỗi ký tự | `\"Hello\"` |\n| `std::size_t` | Kích thước và chỉ số | `0` |\n\nKích thước và phạm vi thực tế của một số kiểu phụ thuộc vào nền tảng và cách triển khai compiler.\n\n### 2.3. const và constexpr\n\n```cpp\nconst int limit{100};\n\nconstexpr double pi{3.141592653589793};\n```\n\n- `const`: Không cho phép thay đổi giá trị thông qua biến sau khi khởi tạo.\n- `constexpr`: Có thể sử dụng giá trị trong các ngữ cảnh yêu cầu biểu thức hằng tại thời điểm biên dịch, khi đáp ứng các quy tắc của ngôn ngữ.\n\n### 2.4. Tự suy luận kiểu với auto\n\n```cpp\nauto count = 10;\nauto price = 19.99;\nauto valid = true;\n```\n\nCompiler suy luận kiểu từ biểu thức khởi tạo.\n\n`auto` không có nghĩa biến mang kiểu dữ liệu động. Sau khi kiểu được suy luận, biến vẫn có kiểu xác định.\n\n### 2.5. Chuyển đổi kiểu dữ liệu\n\n```cpp\ndouble value{7.8};\n\nint number = static_cast<int>(value);\n```\n\nKết quả `number` là `7`, vì phần thập phân bị loại bỏ khi chuyển từ số thực hữu hạn sang kiểu nguyên, với điều kiện giá trị nằm trong phạm vi biểu diễn.\n\nNên sử dụng `static_cast` khi cần chuyển kiểu tường minh thông thường.\n\n---\n\n## 3. Toán tử và biểu thức\n\n### 3.1. Toán tử số học\n\n| Toán tử | Ý nghĩa |\n|---|---|\n| `+` | Cộng |\n| `-` | Trừ |\n| `*` | Nhân |\n| `/` | Chia |\n| `%` | Chia lấy dư |\n\n```cpp\nint a{17};\nint b{5};\n\nint sum = a + b;\nint difference = a - b;\nint product = a * b;\nint quotient = a / b;\nint remainder = a % b;\n```\n\nKết quả tương ứng:\n\n```text\n22\n12\n85\n3\n2\n```\n\nKhi cả hai toán hạng là số nguyên, phép chia `/` thực hiện chia nguyên.\n\nMuốn tính thương dạng số thực:\n\n```cpp\ndouble result = static_cast<double>(a) / b;\n```\n\n### 3.2. Toán tử so sánh\n\n```cpp\na == b\na != b\na > b\na < b\na >= b\na <= b\n```\n\nCác biểu thức trên trả về giá trị `bool`.\n\n### 3.3. Toán tử logic\n\n```cpp\na && b\na || b\n!a\n```\n\n| Toán tử | Ý nghĩa |\n|---|---|\n| `&&` | AND |\n| `\\|\\|` | OR |\n| `!` | NOT |\n\nVí dụ kiểm tra phạm vi:\n\n```cpp\nbool valid = (age >= 18) && (age <= 60);\n```\n\n`&&` và `||` thực hiện đánh giá ngắn mạch (*short-circuit*).\n\n### 3.4. Toán tử gán\n\n```cpp\nvalue = 10;\nvalue += 5;\nvalue -= 2;\nvalue *= 3;\nvalue /= 2;\nvalue %= 4;\n```\n\n### 3.5. Tăng và giảm\n\n```cpp\n++i;\ni++;\n--i;\ni--;\n```\n\n| Biểu thức | Ý nghĩa |\n|---|---|\n| `++i` | Tăng trước, lấy giá trị mới |\n| `i++` | Lấy giá trị cũ, sau đó tăng |\n| `--i` | Giảm trước, lấy giá trị mới |\n| `i--` | Lấy giá trị cũ, sau đó giảm |\n\n### 3.6. Toán tử ba ngôi\n\n```cpp\nint maximum = (a > b) ? a : b;\n```\n\nCú pháp:\n\n```text\ncondition ? valueIfTrue : valueIfFalse\n```\n\n### 3.7. Ưu tiên toán tử\n\nMột số nhóm ưu tiên thường gặp, từ cao đến thấp:\n\n1. Phép nhân, chia và chia lấy dư.\n2. Phép cộng và trừ.\n3. So sánh quan hệ: `<`, `<=`, `>`, `>=`.\n4. So sánh bằng và khác: `==`, `!=`.\n5. Logic AND: `&&`.\n6. Logic OR: `||`.\n7. Gán: `=`, `+=`, `-=` và các dạng khác.\n\nĐây là danh sách rút gọn, không phải bảng ưu tiên đầy đủ. Toán tử một ngôi, bitwise, điều kiện và các toán tử khác có mức ưu tiên riêng.\n\n**Nên dùng dấu ngoặc để thể hiện ý định:**\n\n```cpp\nbool allowed = (age >= 18) && (isAdmin || hasTicket);\n```\n\nThứ tự ưu tiên quyết định cách nhóm biểu thức, không đảm bảo thứ tự thực hiện mọi toán hạng.\n\n---\n\n## 4. Câu lệnh điều kiện\n\n### 4.1. if\n\n```cpp\nif (score >= 5) {\n    std::cout << \"Dat\\n\";\n}\n```\n\n### 4.2. if-else\n\n```cpp\nif (score >= 5) {\n    std::cout << \"Dat\\n\";\n} else {\n    std::cout << \"Chua dat\\n\";\n}\n```\n\n### 4.3. if-else if-else\n\n```cpp\nif (score >= 8) {\n    std::cout << \"Gioi\\n\";\n} else if (score >= 6.5) {\n    std::cout << \"Kha\\n\";\n} else if (score >= 5) {\n    std::cout << \"Trung binh\\n\";\n} else {\n    std::cout << \"Chua dat\\n\";\n}\n```\n\nGiả định `score` đã được kiểm tra và nằm trong phạm vi điểm hợp lệ.\n\n### 4.4. switch-case\n\n```cpp\nswitch (choice) {\n    case 1:\n        std::cout << \"Start\\n\";\n        break;\n\n    case 2:\n        std::cout << \"Settings\\n\";\n        break;\n\n    case 3:\n        std::cout << \"Exit\\n\";\n        break;\n\n    default:\n        std::cout << \"Invalid choice\\n\";\n        break;\n}\n```\n\n`switch` hỗ trợ các biểu thức kiểu nguyên, enum và những kiểu có thể chuyển đổi phù hợp thành kiểu nguyên hoặc enum theo quy tắc C++.\n\nMỗi nhánh `case` thường sử dụng `break` để tránh tiếp tục chạy sang nhánh kế tiếp.\n\n### 4.5. if với initializer (C++17)\n\n```cpp\nif (int result = calculate(); result > 0) {\n    std::cout << result << '\\n';\n}\n```\n\nBiến được khai báo trong initializer có phạm vi giới hạn trong cấu trúc `if`, bao gồm các nhánh liên quan.\n\nĐây là cú pháp C++17, đặc biệt hữu ích khi làm việc với iterator, kết quả tìm kiếm và các đối tượng tạm.\n\n---\n\n## 5. Vòng lặp\n\n### 5.1. for\n\n```cpp\nfor (int i = 0; i < 5; ++i) {\n    std::cout << i << '\\n';\n}\n```\n\nKết quả:\n\n```text\n0\n1\n2\n3\n4\n```\n\nCú pháp:\n\n```text\nfor (initialization; condition; update)\n```\n\n### 5.2. while\n\n```cpp\nint count{5};\n\nwhile (count > 0) {\n    std::cout << count << '\\n';\n    --count;\n}\n```\n\nKiểm tra điều kiện trước mỗi lần lặp.\n\n### 5.3. do-while\n\n```cpp\nint number{};\n\ndo {\n    std::cin >> number;\n} while (std::cin && number != 0);\n```\n\nThân vòng lặp chạy ít nhất một lần. Ví dụ trên cũng dừng nếu quá trình đọc thất bại.\n\n### 5.4. Range-based for\n\n```cpp\nstd::vector<int> numbers{10, 20, 30};\n\nfor (int number : numbers) {\n    std::cout << number << '\\n';\n}\n```\n\nĐể tránh sao chép những phần tử lớn:\n\n```cpp\nfor (const auto& item : items) {\n    process(item);\n}\n```\n\nĐể thay đổi phần tử trực tiếp:\n\n```cpp\nfor (auto& item : items) {\n    update(item);\n}\n```\n\n### 5.5. break và continue\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i == 8) {\n        break;\n    }\n\n    if (i % 2 == 0) {\n        continue;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 3 5 7\n```\n\n- `break`: Kết thúc vòng lặp gần nhất.\n- `continue`: Bỏ qua phần còn lại của lần lặp hiện tại.\n\n---\n\n## 6. Hàm (Functions)\n\n### 6.1. Khai báo và định nghĩa hàm\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nSử dụng:\n\n```cpp\nint result = add(5, 3);\n```\n\nKết quả `result` bằng `8`.\n\n### 6.2. Hàm không trả về giá trị\n\n```cpp\nvoid printMessage() {\n    std::cout << \"Hello\\n\";\n}\n```\n\n### 6.3. Function declaration\n\nCó thể khai báo hàm trước và định nghĩa sau:\n\n```cpp\nint add(int a, int b);\n\nint main() {\n    return add(2, 3);\n}\n\nint add(int a, int b) {\n    return a + b;\n}\n```\n\n### 6.4. Tham số mặc định\n\n```cpp\nint multiply(int a, int b = 2) {\n    return a * b;\n}\n```\n\nSử dụng:\n\n```cpp\nmultiply(5);\nmultiply(5, 3);\n```\n\nKết quả tương ứng là `10` và `15`.\n\n### 6.5. Truyền tham số\n\n**Truyền bằng giá trị (pass by value):**\n\n```cpp\nvoid update(int value) {\n    value = 100;\n}\n```\n\nThay đổi `value` không làm thay đổi biến gốc của người gọi.\n\n**Truyền bằng tham chiếu (pass by reference):**\n\n```cpp\nvoid update(int& value) {\n    value = 100;\n}\n```\n\nCó thể thay đổi trực tiếp đối tượng được truyền vào.\n\n**Truyền bằng tham chiếu const:**\n\n```cpp\nvoid print(const std::string& text) {\n    std::cout << text << '\\n';\n}\n```\n\nKhông sao chép chuỗi và không cho phép hàm thay đổi đối tượng thông qua tham chiếu này.\n\n### 6.6. Function overloading\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n\ndouble add(double a, double b) {\n    return a + b;\n}\n```\n\nC++ cho phép nhiều hàm cùng tên nếu danh sách tham số phù hợp để phân biệt.\n\nKhông thể overload hàm chỉ bằng cách thay đổi kiểu trả về.\n\n---\n\n## 7. Tham chiếu và con trỏ\n\n### 7.1. Reference\n\n```cpp\nint value{10};\n\nint& ref = value;\n\nref = 20;\n```\n\nSau khi thực hiện, `value` bằng `20`.\n\nMột tham chiếu thông thường phải được khởi tạo khi khai báo.\n\n### 7.2. Pointer\n\n```cpp\nint value{10};\n\nint* ptr = &value;\n```\n\n| Ký hiệu | Ý nghĩa |\n|---|---|\n| `&value` | Lấy địa chỉ của biến |\n| `int* ptr` | Khai báo con trỏ đến int |\n| `*ptr` | Truy cập đối tượng được trỏ đến |\n| `nullptr` | Giá trị con trỏ null |\n\nVí dụ:\n\n```cpp\nint value{10};\nint* ptr = &value;\n\n*ptr = 20;\n```\n\nSau đó `value` bằng `20`.\n\n### 7.3. Nullable pointer\n\n```cpp\nint* ptr{nullptr};\n\nif (ptr != nullptr) {\n    std::cout << *ptr << '\\n';\n}\n```\n\nKhông được giải tham chiếu một con trỏ null.\n\n### 7.4. Smart pointer\n\nC++17 hỗ trợ quản lý tài nguyên thông qua RAII và smart pointer.\n\n```cpp\n#include <memory>\n\nauto value = std::make_unique<int>(42);\n```\n\nCác loại thường dùng:\n\n| Loại | Ý nghĩa |\n|---|---|\n| `std::unique_ptr<T>` | Quyền sở hữu độc quyền |\n| `std::shared_ptr<T>` | Quyền sở hữu chia sẻ |\n| `std::weak_ptr<T>` | Quan sát đối tượng do shared_ptr quản lý mà không tăng quyền sở hữu |\n\nƯu tiên `std::unique_ptr` khi thực sự cần sở hữu động. Với những đối tượng không cần cấp phát động hoặc quản lý vòng đời riêng, sử dụng biến thông thường sẽ đơn giản hơn.\n\n---\n\n## 8. struct, class và enum\n\n### 8.1. struct\n\n```cpp\nstruct Player {\n    std::string name;\n    int score{0};\n};\n```\n\nTạo đối tượng:\n\n```cpp\nPlayer player{\"Nam\", 100};\n\nstd::cout << player.name << '\\n';\nstd::cout << player.score << '\\n';\n```\n\nMặc định, các thành viên của `struct` có quyền truy cập `public`.\n\n### 8.2. class\n\n```cpp\nclass Counter {\npublic:\n    void increment() {\n        ++count;\n    }\n\n    int get() const {\n        return count;\n    }\n\nprivate:\n    int count{0};\n};\n```\n\nSử dụng:\n\n```cpp\nCounter counter;\n\ncounter.increment();\n\nstd::cout << counter.get() << '\\n';\n```\n\nCác thành viên của `class` mặc định có quyền truy cập `private`.\n\n| Access specifier | Ý nghĩa |\n|---|---|\n| `public` | Có thể truy cập theo giao diện công khai |\n| `private` | Chỉ truy cập từ các thành viên và friend được phép |\n| `protected` | Truy cập từ thành viên, friend được phép và một số ngữ cảnh lớp dẫn xuất |\n\nHàm thành viên đánh dấu `const`:\n\n```cpp\nint get() const;\n```\n\nkhông được phép thay đổi trạng thái không `mutable` của đối tượng thông qua `this` trong cách sử dụng thông thường.\n\n### 8.3. Constructor\n\n```cpp\nclass User {\npublic:\n    explicit User(int id) : id{id} {}\n\n    int getId() const {\n        return id;\n    }\n\nprivate:\n    int id{};\n};\n```\n\nSử dụng:\n\n```cpp\nUser user{123};\n```\n\n`explicit` hạn chế các phép chuyển đổi ngầm không mong muốn thông qua constructor.\n\n### 8.4. enum class\n\n```cpp\nenum class Status {\n    Idle,\n    Running,\n    Stopped\n};\n```\n\nSử dụng:\n\n```cpp\nStatus status{Status::Running};\n\nif (status == Status::Running) {\n    std::cout << \"Running\\n\";\n}\n```\n\nƯu tiên `enum class` khi muốn tránh xung đột tên và các chuyển đổi ngầm không cần thiết.\n\n### 8.5. Namespace\n\n```cpp\nnamespace App {\n    constexpr int version{1};\n\n    void start() {\n        std::cout << \"Starting\\n\";\n    }\n}\n```\n\nTruy cập:\n\n```cpp\nApp::start();\n\nstd::cout << App::version << '\\n';\n```\n\nNamespace giúp tổ chức mã và tránh xung đột tên giữa những thành phần khác nhau.\n\n---\n\n## 9. Lambda expression\n\nLambda cho phép tạo một đối tượng hàm trực tiếp tại vị trí sử dụng.\n\nCú pháp tổng quát:\n\n```text\n[capture](parameters) -> return_type { body }\n```\n\nVí dụ:\n\n```cpp\nauto square = [](int x) {\n    return x * x;\n};\n\nint result = square(5);\n```\n\nKết quả `25`.\n\n### 9.1. Capture\n\n```cpp\nint multiplier{3};\n\nauto calculate = [multiplier](int x) {\n    return x * multiplier;\n};\n```\n\nCác capture phổ biến:\n\n| Capture | Ý nghĩa |\n|---|---|\n| `[]` | Không capture biến bên ngoài |\n| `[x]` | Capture x bằng giá trị |\n| `[&x]` | Capture x bằng tham chiếu |\n| `[=]` | Mặc định capture các biến được dùng bằng giá trị |\n| `[&]` | Mặc định capture các biến được dùng bằng tham chiếu |\n\nCẩn thận khi lambda capture bằng tham chiếu nhưng tồn tại lâu hơn đối tượng được tham chiếu.\n\n### 9.2. Lambda với std::sort\n\n```cpp\nstd::vector<int> numbers{5, 2, 9, 1};\n\nstd::sort(\n    numbers.begin(),\n    numbers.end(),\n    [](int a, int b) {\n        return a > b;\n    }\n);\n```\n\nKết quả:\n\n```text\n9 5 2 1\n```\n\n---\n\n## 10. Container trong STL\n\nStandard Template Library cung cấp những cấu trúc dữ liệu và thuật toán thường dùng.\n\n### 10.1. std::array\n\nHeader: `<array>`\n\n```cpp\nstd::array<int, 3> numbers{10, 20, 30};\n```\n\nTruy cập:\n\n```cpp\nnumbers[0];\nnumbers.at(1);\nnumbers.size();\n```\n\n`std::array` có kích thước cố định.\n\n### 10.2. std::vector\n\nHeader: `<vector>`\n\n```cpp\nstd::vector<int> numbers{1, 2, 3};\n```\n\nThao tác:\n\n```cpp\nnumbers.push_back(4);\nnumbers.pop_back();\n\nnumbers.size();\nnumbers.empty();\n\nnumbers.front();\nnumbers.back();\n\nnumbers.clear();\n```\n\nTruy cập phần tử:\n\n```cpp\nnumbers[0];\nnumbers.at(0);\n```\n\nKhác biệt:\n\n- `operator[]`: Không kiểm tra chỉ số ở thời điểm chạy.\n- `.at()`: Kiểm tra phạm vi và ném `std::out_of_range` khi chỉ số không hợp lệ.\n\nKhông gọi `.front()`, `.back()` hoặc `.pop_back()` khi vector rỗng.\n\n### 10.3. std::map\n\nHeader: `<map>`\n\n```cpp\nstd::map<std::string, int> scores;\n\nscores[\"Alice\"] = 10;\nscores[\"Bob\"] = 20;\n```\n\nTìm kiếm:\n\n```cpp\nauto it = scores.find(\"Alice\");\n\nif (it != scores.end()) {\n    std::cout << it->second << '\\n';\n}\n```\n\nTrong C++17, `std::map` chưa hỗ trợ hàm thành viên `.contains()`.\n\n### 10.4. std::unordered_map\n\nHeader: `<unordered_map>`\n\n```cpp\nstd::unordered_map<std::string, int> scores;\n```\n\nThường cung cấp hiệu năng tìm kiếm trung bình gần `O(1)` nhờ hash table.\n\nKhác với `std::map`, container này không duy trì thứ tự sắp xếp theo khóa.\n\n### 10.5. std::set\n\nHeader: `<set>`\n\n```cpp\nstd::set<int> values{3, 1, 2, 2};\n```\n\nCác phần tử trùng lặp bị loại bỏ.\n\nKhi duyệt theo thứ tự mặc định:\n\n```text\n1 2 3\n```\n\n### 10.6. std::pair\n\nHeader: `<utility>`\n\n```cpp\nstd::pair<int, std::string> item{1, \"Book\"};\n```\n\nTruy cập:\n\n```cpp\nitem.first;\nitem.second;\n```\n\n### 10.7. std::optional (C++17)\n\nHeader: `<optional>`\n\n```cpp\nstd::optional<int> result{42};\n\nif (result.has_value()) {\n    std::cout << *result << '\\n';\n}\n```\n\nGiá trị rỗng:\n\n```cpp\nstd::optional<int> result = std::nullopt;\n```\n\n`std::optional` phù hợp khi một phép tính có thể không trả về giá trị hợp lệ mà không cần sử dụng một giá trị đặc biệt để biểu thị trạng thái không tồn tại.\n\n---\n\n## 11. Thuật toán STL\n\nHeader thường dùng: `<algorithm>` và `<numeric>`.\n\nGiả sử:\n\n```cpp\nstd::vector<int> values{5, 1, 4, 2, 3};\n```\n\n### 11.1. Sắp xếp\n\nTăng dần:\n\n```cpp\nstd::sort(values.begin(), values.end());\n```\n\nGiảm dần:\n\n```cpp\nstd::sort(\n    values.begin(),\n    values.end(),\n    std::greater<int>{}\n);\n```\n\nSử dụng comparator `std::greater<int>` cần include `<functional>`.\n\n### 11.2. Tìm kiếm\n\n```cpp\nauto it = std::find(\n    values.begin(),\n    values.end(),\n    4\n);\n\nif (it != values.end()) {\n    std::cout << \"Found\\n\";\n}\n```\n\n### 11.3. Đếm\n\n```cpp\nauto count = std::count(\n    values.begin(),\n    values.end(),\n    2\n);\n```\n\n### 11.4. Tính tổng\n\n```cpp\nlong long sum = std::accumulate(\n    values.begin(),\n    values.end(),\n    0LL\n);\n```\n\nGiá trị khởi tạo `0LL` giúp phép cộng sử dụng kiểu `long long` trong ví dụ này.\n\n### 11.5. Giá trị nhỏ nhất và lớn nhất\n\n```cpp\nauto minIt = std::min_element(\n    values.begin(),\n    values.end()\n);\n\nauto maxIt = std::max_element(\n    values.begin(),\n    values.end()\n);\n```\n\nHai hàm trả về iterator. Cần kiểm tra iterator khác `.end()` trước khi giải tham chiếu.\n\n### 11.6. Kiểm tra điều kiện\n\n```cpp\nbool allPositive = std::all_of(\n    values.begin(),\n    values.end(),\n    [](int x) {\n        return x > 0;\n    }\n);\n```\n\nCác thuật toán liên quan:\n\n| Hàm | Công dụng |\n|---|---|\n| `std::all_of` | Tất cả phần tử thỏa điều kiện |\n| `std::any_of` | Ít nhất một phần tử thỏa điều kiện |\n| `std::none_of` | Không phần tử nào thỏa điều kiện |\n| `std::count_if` | Đếm phần tử thỏa điều kiện |\n| `std::find_if` | Tìm phần tử đầu tiên thỏa điều kiện |\n| `std::reverse` | Đảo ngược thứ tự |\n| `std::sort` | Sắp xếp |\n| `std::unique` | Gom các phần tử bằng nhau liên tiếp |\n\nLưu ý `std::unique` không tự làm giảm kích thước container. Với `std::vector`, thường cần kết hợp `.erase()` để loại bỏ phần tử ở cuối sau khi gom trùng.\n\n---\n\n## 12. Nhập xuất dữ liệu\n\n### 12.1. cin và cout\n\n```cpp\nint a{};\nint b{};\n\nstd::cin >> a >> b;\n\nstd::cout << a + b << '\\n';\n```\n\nKiểm tra lỗi:\n\n```cpp\nif (!(std::cin >> a >> b)) {\n    std::cerr << \"Invalid input\\n\";\n    return 1;\n}\n```\n\n### 12.2. getline\n\n```cpp\nstd::string name;\n\nstd::getline(std::cin, name);\n```\n\nĐọc toàn bộ dòng, bao gồm khoảng trắng.\n\n### 12.3. Kết hợp cin và getline\n\nSau khi sử dụng `>>`, có thể cần loại bỏ phần còn lại của dòng:\n\n```cpp\n#include <limits>\n\nstd::cin.ignore(\n    std::numeric_limits<std::streamsize>::max(),\n    '\\n'\n);\n```\n\nSau đó mới gọi `std::getline()`.\n\n### 12.4. Định dạng số thực\n\nHeader: `<iomanip>`\n\n```cpp\ndouble pi{3.141592653589793};\n\nstd::cout << std::fixed\n          << std::setprecision(2)\n          << pi << '\\n';\n```\n\nKết quả:\n\n```text\n3.14\n```\n\n### 12.5. Nhập xuất nhanh\n\n```cpp\nstd::ios::sync_with_stdio(false);\nstd::cin.tie(nullptr);\n```\n\nThường dùng trong chương trình xử lý lượng input lớn.\n\nNếu tắt đồng bộ giữa C++ streams và C stdio, cần tránh trộn nhập xuất C và C++ một cách tùy tiện.\n\nNgoài ra, `'\\n'` chỉ xuống dòng, còn `std::endl` vừa xuống dòng vừa flush luồng xuất.\n\n---\n\n## 13. Xử lý chuỗi\n\nHeader: `<string>`.\n\n### 13.1. Khai báo\n\n```cpp\nstd::string text{\"Hello\"};\n```\n\n### 13.2. Các thao tác thường dùng\n\n```cpp\ntext.size();\ntext.empty();\n\ntext += \" World\";\n\ntext.substr(0, 5);\n\ntext.find(\"World\");\n\ntext.clear();\n```\n\n### 13.3. Tìm chuỗi con\n\n```cpp\nstd::string text{\"Hello World\"};\n\nif (text.find(\"World\") != std::string::npos) {\n    std::cout << \"Found\\n\";\n}\n```\n\n### 13.4. Chuyển đổi chuỗi và số\n\n```cpp\nint value = std::stoi(\"123\");\n\nstd::string text = std::to_string(123);\n```\n\n`std::stoi` có thể ném ngoại lệ khi không chuyển đổi được hoặc giá trị nằm ngoài phạm vi biểu diễn.\n\nMặc định, `std::stoi` cũng có thể chấp nhận một phần đầu chuỗi hợp lệ. Nếu cần xác thực toàn bộ chuỗi, hãy kiểm tra vị trí kết thúc chuyển đổi.\n\n---\n\n## 14. Exception handling\n\nC++ cung cấp cơ chế ngoại lệ để thông báo và xử lý một số tình huống lỗi.\n\n### 14.1. try-catch\n\n```cpp\n#include <iostream>\n#include <stdexcept>\n\nint main() {\n    try {\n        throw std::runtime_error(\"Operation failed\");\n    } catch (const std::exception& error) {\n        std::cerr << error.what() << '\\n';\n        return 1;\n    }\n}\n```\n\n### 14.2. Các exception thường gặp\n\n| Exception | Ý nghĩa |\n|---|---|\n| `std::runtime_error` | Lỗi khi thực thi |\n| `std::invalid_argument` | Đối số không hợp lệ |\n| `std::out_of_range` | Giá trị hoặc chỉ số ngoài phạm vi |\n| `std::length_error` | Yêu cầu kích thước không hợp lệ |\n| `std::bad_alloc` | Cấp phát bộ nhớ thất bại |\n\nKhông phải mọi lỗi trong C++ đều sinh ra exception.\n\nVí dụ, giải tham chiếu con trỏ không hợp lệ hoặc truy cập mảng vượt phạm vi bằng `operator[]` có thể gây hành vi không xác định thay vì ném ngoại lệ.\n\n---\n\n## 15. Lệnh biên dịch C++17\n\n### 15.1. GCC (g++)\n\nBiên dịch:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nChạy trên Linux/macOS:\n\n```sh\n./app\n```\n\nTrên Windows PowerShell, với tệp đầu ra `app.exe`:\n\n```powershell\n.\\app.exe\n```\n\n### 15.2. Clang\n\n```sh\nclang++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\n### 15.3. MSVC (Visual C++)\n\nTrong Developer Command Prompt của Visual Studio:\n\n```bat\ncl /std:c++17 /EHsc /W4 main.cpp /Fe:app.exe\n```\n\nChạy:\n\n```bat\napp.exe\n```\n\n### 15.4. Các compiler flags thông dụng\n\n| Flag | GCC/Clang | Chức năng |\n|---|---|---|\n| C++17 | `-std=c++17` | Chọn phiên bản chuẩn |\n| Warning | `-Wall` | Bật nhiều cảnh báo |\n| Extra warning | `-Wextra` | Bổ sung cảnh báo |\n| Pedantic | `-Wpedantic` | Cảnh báo một số phần mở rộng ngoài chuẩn |\n| Debug symbol | `-g` | Thêm thông tin debug |\n| Optimization | `-O2` | Bật tối ưu hóa |\n| AddressSanitizer | `-fsanitize=address` | Phát hiện nhiều lỗi bộ nhớ |\n| UBSan | `-fsanitize=undefined` | Phát hiện nhiều hành vi không xác định |\n\nTùy compiler và nền tảng, mức độ hỗ trợ sanitizer có thể khác nhau.\n\n### 15.5. Build để debug\n\nGCC/Clang:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic -g -O0 main.cpp -o app\n```\n\nVới sanitizer trên môi trường hỗ trợ:\n\n```sh\ng++ -std=c++17 -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer main.cpp -o app\n```\n\nKhông nên mặc định rằng một chương trình chạy thành công nghĩa là không có lỗi bộ nhớ hoặc hành vi không xác định.\n\n---\n\n## 16. Lỗi thường gặp và cách xử lý\n\n| Lỗi | Nguyên nhân phổ biến | Hướng xử lý |\n|---|---|---|\n| `expected ';'` | Thiếu dấu chấm phẩy | Kiểm tra statement và khai báo |\n| `not declared in this scope` | Tên chưa được khai báo hoặc sai phạm vi | Kiểm tra tên, namespace và scope |\n| `no matching function` | Không có overload phù hợp | Kiểm tra tham số và kiểu dữ liệu |\n| `undefined reference` | Thiếu định nghĩa khi liên kết | Kiểm tra file nguồn và linker |\n| `unresolved external symbol` | Linker không tìm thấy symbol | Kiểm tra thư viện và định nghĩa |\n| `out_of_range` | Truy cập ngoài phạm vi được kiểm tra | Kiểm tra chỉ số và kích thước |\n| `bad_alloc` | Cấp phát thất bại | Kiểm tra nhu cầu bộ nhớ |\n| `segmentation fault` | Truy cập bộ nhớ không hợp lệ trong một số môi trường | Kiểm tra pointer, lifetime, phạm vi |\n| `multiple definition` | Có nhiều định nghĩa không hợp lệ | Kiểm tra source, header và ODR |\n\n### 16.1. Các lỗi logic cần chú ý\n\n**Nhầm gán với so sánh:**\n\n```cpp\nif (a == b) {\n}\n```\n\n**Chia nguyên ngoài ý muốn:**\n\n```cpp\ndouble average = static_cast<double>(sum) / count;\n```\n\nChỉ thực hiện phép chia khi `count != 0`.\n\n**Duyệt vector vượt phạm vi:**\n\n```cpp\nfor (std::size_t i = 0; i < values.size(); ++i) {\n    std::cout << values[i] << '\\n';\n}\n```\n\n**Sử dụng iterator sau khi container thay đổi:**\n\nMột số thao tác như thêm hoặc xóa phần tử có thể làm mất hiệu lực iterator, reference hoặc pointer đang trỏ vào container.\n\nCần kiểm tra quy tắc iterator invalidation riêng của từng container.\n\n**Sử dụng đối tượng sau lifetime:**\n\nKhông trả về tham chiếu hoặc con trỏ đến biến cục bộ đã hết vòng đời.\n\nVí dụ sai:\n\n```cpp\nconst int& getValue() {\n    int value{10};\n    return value;\n}\n```\n\nCách đúng trong trường hợp này:\n\n```cpp\nint getValue() {\n    return 10;\n}\n```\n\n---\n\n## 17. Ví dụ hoàn chỉnh\n\nChương trình sau kết hợp các kiến thức thường gặp:\n\n- Đọc dữ liệu.\n- Kiểm tra đầu vào.\n- Sử dụng `std::vector`.\n- Dùng vòng lặp.\n- Sắp xếp dữ liệu.\n- Tính tổng bằng thuật toán STL.\n\n**Bài toán:** Nhập `n` số nguyên, sắp xếp tăng dần và tính tổng.\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <numeric>\n#include <vector>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        std::cerr << \"Invalid input\\n\";\n        return 1;\n    }\n\n    if (n < 0 || n > 100000) {\n        std::cerr << \"Invalid size\\n\";\n        return 1;\n    }\n\n    std::vector<int> values;\n    values.reserve(static_cast<std::size_t>(n));\n\n    for (int i = 0; i < n; ++i) {\n        int value{};\n\n        if (!(std::cin >> value)) {\n            std::cerr << \"Invalid input\\n\";\n            return 1;\n        }\n\n        values.push_back(value);\n    }\n\n    std::sort(values.begin(), values.end());\n\n    const long long sum = std::accumulate(\n        values.begin(),\n        values.end(),\n        0LL\n    );\n\n    for (int value : values) {\n        std::cout << value << ' ';\n    }\n\n    std::cout << '\\n';\n    std::cout << \"Sum: \" << sum << '\\n';\n\n    return 0;\n}\n```\n\nInput:\n\n```text\n5\n8 2 5 1 4\n```\n\nOutput:\n\n```text\n1 2 4 5 8\nSum: 20\n```\n\n**Độ phức tạp:**\n\n- Đọc dữ liệu: `O(n)`.\n- Sắp xếp: `O(n log n)`.\n- Tính tổng: `O(n)`.\n- Tổng thời gian: `O(n log n)`.\n- Bộ nhớ chứa dữ liệu: `O(n)`.\n\nVí dụ giới hạn số phần tử ở `100000`. Giá trị của từng phần tử được đọc dưới kiểu `int`, và kết quả cộng dồn dưới kiểu `long long`.\n\n---\n\n## 18. Quick Reference: Tổng hợp cú pháp\n\n| Công việc | Cú pháp |\n|---|---|\n| Khai báo biến | `int x{0};` |\n| Hằng số | `const int x{10};` |\n| Hằng compile-time | `constexpr int x{10};` |\n| Suy luận kiểu | `auto x = 10;` |\n| Điều kiện | `if (condition) {}` |\n| Điều kiện nhiều nhánh | `if (...) {} else if (...) {} else {}` |\n| Switch | `switch (value) { case 1: break; default: break; }` |\n| Vòng lặp for | `for (int i = 0; i < n; ++i) {}` |\n| Vòng lặp while | `while (condition) {}` |\n| Vòng lặp do-while | `do {} while (condition);` |\n| Range-for | `for (const auto& x : items) {}` |\n| Hàm | `int add(int a, int b) { return a + b; }` |\n| Reference | `int& ref = value;` |\n| Pointer | `int* ptr = &value;` |\n| Null pointer | `int* ptr{nullptr};` |\n| Lambda | `[](int x) { return x * 2; }` |\n| Khai báo struct | `struct Item { int id{}; };` |\n| Khai báo class | `class Item { public: int id{}; };` |\n| Enum | `enum class State { Idle, Running };` |\n| Vector | `std::vector<int> values;` |\n| Map | `std::map<int, int> values;` |\n| Set | `std::set<int> values;` |\n| Optional | `std::optional<int> result;` |\n| Thêm vào vector | `values.push_back(10);` |\n| Truy cập có kiểm tra | `values.at(0);` |\n| Sắp xếp | `std::sort(v.begin(), v.end());` |\n| Tìm kiếm | `std::find(v.begin(), v.end(), x);` |\n| Tính tổng | `std::accumulate(v.begin(), v.end(), 0LL);` |\n| In dữ liệu | `std::cout << x << '\\n';` |\n| Nhập dữ liệu | `std::cin >> x;` |\n| Đọc dòng | `std::getline(std::cin, text);` |\n| Chuyển kiểu | `static_cast<double>(x)` |\n| Kích thước vector | `v.size()` |\n| Kiểm tra rỗng | `v.empty()` |\n\nCác dòng trong bảng là mẫu cú pháp. Những tên như `condition`, `items`, `v` và `value` đại diện cho biến hoặc biểu thức cần được khai báo phù hợp.\n\n---\n\n## 19. Checklist trước khi biên dịch\n\nTrước khi kết luận chương trình đã hoàn thành, hãy kiểm tra:\n\n- [ ] Đã include đầy đủ các header cần thiết.\n- [ ] Các biến được khởi tạo phù hợp trước khi sử dụng.\n- [ ] Dữ liệu đầu vào được kiểm tra khi cần.\n- [ ] Không chia hoặc lấy dư cho `0`.\n- [ ] Không truy cập mảng, vector ngoài phạm vi.\n- [ ] Không giải tham chiếu con trỏ không hợp lệ.\n- [ ] Không sử dụng reference hoặc iterator đã mất hiệu lực.\n- [ ] Không để phép tính số nguyên có dấu bị tràn.\n- [ ] Vòng lặp có điều kiện dừng phù hợp.\n- [ ] Các hàm trả về giá trị đúng kiểu và đúng lifetime.\n- [ ] Đã thử các trường hợp biên.\n- [ ] Biên dịch với cảnh báo phù hợp và xử lý các cảnh báo quan trọng.\n\nMột chương trình biên dịch thành công chưa chắc đúng về mặt logic hoặc an toàn khi chạy.\n\n## Đọc tiếp\n\n- [Chương trình C++ đầu tiên](/cpp/bat-dau/chuong-trinh-dau-tien): Tìm hiểu cấu trúc chương trình, compiler và cách thực thi.\n- [Kiểu dữ liệu trong C++](/cpp/tra-cuu/kieu-du-lieu): Tra cứu kiểu dữ liệu, kích thước, giới hạn và chuyển đổi kiểu.\n- [STL Containers](/cpp/tra-cuu/stl-containers): So sánh các container, iterator và cách lựa chọn cấu trúc dữ liệu.\n- [Debugging và xử lý lỗi](/cpp/tra-cuu/debugging-errors): Chẩn đoán lỗi biên dịch, liên kết, runtime và undefined behavior.\n\n---\n\n**Ghi nhớ:** Cheatsheet giúp tra cứu cú pháp, nhưng không thay thế việc hiểu quy tắc ngôn ngữ, vòng đời đối tượng, quản lý bộ nhớ và độ phức tạp thuật toán.\n\nKhi phát triển phần mềm thực tế, ưu tiên mã rõ ràng, hành vi xác định và khả năng bảo trì thay vì chỉ viết cú pháp ngắn nhất.",
     "sourcePath": "content/cpp/reference/cu-phap.md",
     "headings": [
       {
-        "title": "Cấu trúc chương trình",
-        "id": "cau-truc-chuong-trinh"
+        "title": "1. Cấu trúc chương trình C++",
+        "id": "1-cau-truc-chuong-trinh-c"
       },
       {
-        "title": "Cú pháp hay dùng",
-        "id": "cu-phap-hay-dung"
+        "title": "Header thường dùng",
+        "id": "header-thuong-dung"
       },
       {
-        "title": "Lệnh compiler",
-        "id": "lenh-compiler"
+        "title": "2. Khai báo biến và kiểu dữ liệu",
+        "id": "2-khai-bao-bien-va-kieu-du-lieu"
       },
       {
-        "title": "Lỗi nhanh",
-        "id": "loi-nhanh"
+        "title": "2.1. Khai báo biến",
+        "id": "21-khai-bao-bien"
       },
       {
-        "title": "Kiểm tra nhanh",
-        "id": "kiem-tra-nhanh"
+        "title": "2.2. Các kiểu dữ liệu thông dụng",
+        "id": "22-cac-kieu-du-lieu-thong-dung"
+      },
+      {
+        "title": "2.3. const và constexpr",
+        "id": "23-const-va-constexpr"
+      },
+      {
+        "title": "2.4. Tự suy luận kiểu với auto",
+        "id": "24-tu-suy-luan-kieu-voi-auto"
+      },
+      {
+        "title": "2.5. Chuyển đổi kiểu dữ liệu",
+        "id": "25-chuyen-oi-kieu-du-lieu"
+      },
+      {
+        "title": "3. Toán tử và biểu thức",
+        "id": "3-toan-tu-va-bieu-thuc"
+      },
+      {
+        "title": "3.1. Toán tử số học",
+        "id": "31-toan-tu-so-hoc"
+      },
+      {
+        "title": "3.2. Toán tử so sánh",
+        "id": "32-toan-tu-so-sanh"
+      },
+      {
+        "title": "3.3. Toán tử logic",
+        "id": "33-toan-tu-logic"
+      },
+      {
+        "title": "3.4. Toán tử gán",
+        "id": "34-toan-tu-gan"
+      },
+      {
+        "title": "3.5. Tăng và giảm",
+        "id": "35-tang-va-giam"
+      },
+      {
+        "title": "3.6. Toán tử ba ngôi",
+        "id": "36-toan-tu-ba-ngoi"
+      },
+      {
+        "title": "3.7. Ưu tiên toán tử",
+        "id": "37-uu-tien-toan-tu"
+      },
+      {
+        "title": "4. Câu lệnh điều kiện",
+        "id": "4-cau-lenh-ieu-kien"
+      },
+      {
+        "title": "4.1. if",
+        "id": "41-if"
+      },
+      {
+        "title": "4.2. if-else",
+        "id": "42-if-else"
+      },
+      {
+        "title": "4.3. if-else if-else",
+        "id": "43-if-else-if-else"
+      },
+      {
+        "title": "4.4. switch-case",
+        "id": "44-switch-case"
+      },
+      {
+        "title": "4.5. if với initializer (C++17)",
+        "id": "45-if-voi-initializer-c17"
+      },
+      {
+        "title": "5. Vòng lặp",
+        "id": "5-vong-lap"
+      },
+      {
+        "title": "5.1. for",
+        "id": "51-for"
+      },
+      {
+        "title": "5.2. while",
+        "id": "52-while"
+      },
+      {
+        "title": "5.3. do-while",
+        "id": "53-do-while"
+      },
+      {
+        "title": "5.4. Range-based for",
+        "id": "54-range-based-for"
+      },
+      {
+        "title": "5.5. break và continue",
+        "id": "55-break-va-continue"
+      },
+      {
+        "title": "6. Hàm (Functions)",
+        "id": "6-ham-functions"
+      },
+      {
+        "title": "6.1. Khai báo và định nghĩa hàm",
+        "id": "61-khai-bao-va-inh-nghia-ham"
+      },
+      {
+        "title": "6.2. Hàm không trả về giá trị",
+        "id": "62-ham-khong-tra-ve-gia-tri"
+      },
+      {
+        "title": "6.3. Function declaration",
+        "id": "63-function-declaration"
+      },
+      {
+        "title": "6.4. Tham số mặc định",
+        "id": "64-tham-so-mac-inh"
+      },
+      {
+        "title": "6.5. Truyền tham số",
+        "id": "65-truyen-tham-so"
+      },
+      {
+        "title": "6.6. Function overloading",
+        "id": "66-function-overloading"
+      },
+      {
+        "title": "7. Tham chiếu và con trỏ",
+        "id": "7-tham-chieu-va-con-tro"
+      },
+      {
+        "title": "7.1. Reference",
+        "id": "71-reference"
+      },
+      {
+        "title": "7.2. Pointer",
+        "id": "72-pointer"
+      },
+      {
+        "title": "7.3. Nullable pointer",
+        "id": "73-nullable-pointer"
+      },
+      {
+        "title": "7.4. Smart pointer",
+        "id": "74-smart-pointer"
+      },
+      {
+        "title": "8. struct, class và enum",
+        "id": "8-struct-class-va-enum"
+      },
+      {
+        "title": "8.1. struct",
+        "id": "81-struct"
+      },
+      {
+        "title": "8.2. class",
+        "id": "82-class"
+      },
+      {
+        "title": "8.3. Constructor",
+        "id": "83-constructor"
+      },
+      {
+        "title": "8.4. enum class",
+        "id": "84-enum-class"
+      },
+      {
+        "title": "8.5. Namespace",
+        "id": "85-namespace"
+      },
+      {
+        "title": "9. Lambda expression",
+        "id": "9-lambda-expression"
+      },
+      {
+        "title": "9.1. Capture",
+        "id": "91-capture"
+      },
+      {
+        "title": "9.2. Lambda với std::sort",
+        "id": "92-lambda-voi-stdsort"
+      },
+      {
+        "title": "10. Container trong STL",
+        "id": "10-container-trong-stl"
+      },
+      {
+        "title": "10.1. std::array",
+        "id": "101-stdarray"
+      },
+      {
+        "title": "10.2. std::vector",
+        "id": "102-stdvector"
+      },
+      {
+        "title": "10.3. std::map",
+        "id": "103-stdmap"
+      },
+      {
+        "title": "10.4. std::unordered_map",
+        "id": "104-stdunorderedmap"
+      },
+      {
+        "title": "10.5. std::set",
+        "id": "105-stdset"
+      },
+      {
+        "title": "10.6. std::pair",
+        "id": "106-stdpair"
+      },
+      {
+        "title": "10.7. std::optional (C++17)",
+        "id": "107-stdoptional-c17"
+      },
+      {
+        "title": "11. Thuật toán STL",
+        "id": "11-thuat-toan-stl"
+      },
+      {
+        "title": "11.1. Sắp xếp",
+        "id": "111-sap-xep"
+      },
+      {
+        "title": "11.2. Tìm kiếm",
+        "id": "112-tim-kiem"
+      },
+      {
+        "title": "11.3. Đếm",
+        "id": "113-em"
+      },
+      {
+        "title": "11.4. Tính tổng",
+        "id": "114-tinh-tong"
+      },
+      {
+        "title": "11.5. Giá trị nhỏ nhất và lớn nhất",
+        "id": "115-gia-tri-nho-nhat-va-lon-nhat"
+      },
+      {
+        "title": "11.6. Kiểm tra điều kiện",
+        "id": "116-kiem-tra-ieu-kien"
+      },
+      {
+        "title": "12. Nhập xuất dữ liệu",
+        "id": "12-nhap-xuat-du-lieu"
+      },
+      {
+        "title": "12.1. cin và cout",
+        "id": "121-cin-va-cout"
+      },
+      {
+        "title": "12.2. getline",
+        "id": "122-getline"
+      },
+      {
+        "title": "12.3. Kết hợp cin và getline",
+        "id": "123-ket-hop-cin-va-getline"
+      },
+      {
+        "title": "12.4. Định dạng số thực",
+        "id": "124-inh-dang-so-thuc"
+      },
+      {
+        "title": "12.5. Nhập xuất nhanh",
+        "id": "125-nhap-xuat-nhanh"
+      },
+      {
+        "title": "13. Xử lý chuỗi",
+        "id": "13-xu-ly-chuoi"
+      },
+      {
+        "title": "13.1. Khai báo",
+        "id": "131-khai-bao"
+      },
+      {
+        "title": "13.2. Các thao tác thường dùng",
+        "id": "132-cac-thao-tac-thuong-dung"
+      },
+      {
+        "title": "13.3. Tìm chuỗi con",
+        "id": "133-tim-chuoi-con"
+      },
+      {
+        "title": "13.4. Chuyển đổi chuỗi và số",
+        "id": "134-chuyen-oi-chuoi-va-so"
+      },
+      {
+        "title": "14. Exception handling",
+        "id": "14-exception-handling"
+      },
+      {
+        "title": "14.1. try-catch",
+        "id": "141-try-catch"
+      },
+      {
+        "title": "14.2. Các exception thường gặp",
+        "id": "142-cac-exception-thuong-gap"
+      },
+      {
+        "title": "15. Lệnh biên dịch C++17",
+        "id": "15-lenh-bien-dich-c17"
+      },
+      {
+        "title": "15.1. GCC (g++)",
+        "id": "151-gcc-g"
+      },
+      {
+        "title": "15.2. Clang",
+        "id": "152-clang"
+      },
+      {
+        "title": "15.3. MSVC (Visual C++)",
+        "id": "153-msvc-visual-c"
+      },
+      {
+        "title": "15.4. Các compiler flags thông dụng",
+        "id": "154-cac-compiler-flags-thong-dung"
+      },
+      {
+        "title": "15.5. Build để debug",
+        "id": "155-build-e-debug"
+      },
+      {
+        "title": "16. Lỗi thường gặp và cách xử lý",
+        "id": "16-loi-thuong-gap-va-cach-xu-ly"
+      },
+      {
+        "title": "16.1. Các lỗi logic cần chú ý",
+        "id": "161-cac-loi-logic-can-chu-y"
+      },
+      {
+        "title": "17. Ví dụ hoàn chỉnh",
+        "id": "17-vi-du-hoan-chinh"
+      },
+      {
+        "title": "18. Quick Reference: Tổng hợp cú pháp",
+        "id": "18-quick-reference-tong-hop-cu-phap"
+      },
+      {
+        "title": "19. Checklist trước khi biên dịch",
+        "id": "19-checklist-truoc-khi-bien-dich"
       },
       {
         "title": "Đọc tiếp",
