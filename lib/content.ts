@@ -1,6 +1,6 @@
-import { articles, articleBySlug } from "./content.generated";
+import { articleBadges, articles, articleBySlug } from "./content.generated";
 
-export { articles, articleBySlug };
+export { articleBadges, articles, articleBySlug };
 export type { Article } from "./content.generated";
 import type { Article } from "./content.generated";
 

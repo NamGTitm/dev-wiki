@@ -6,6 +6,7 @@ category: fundamentals
 categoryLabel: C++ căn bản
 order: 20000
 difficulty: beginner
+badges: [Quan trọng]
 keywords: [lộ trình C++, học C++, beginner, competitive programming, software engineering]
 updated: 2026-10-20
 collection: cpp

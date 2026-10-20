@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronRight, Copy, Layers3, Menu, Moon, Search, Sun, X } from "lucide-react";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { articles, collections, getCollectionGroups, getFeaturedArticles, type Article, type Collection } from "@/lib/content";
+import { articleBadges, articles, collections, getCollectionGroups, getFeaturedArticles, type Article, type Collection } from "@/lib/content";
 import { getGithubEditUrl } from "@/lib/github";
 
 function useTheme() {
@@ -56,7 +56,7 @@ function Sidebar({ activeCollectionSlug, mobile = false, onClose }: { activeColl
   const activeCollection = collections.find((collection) => collection.slug === activeCollectionSlug);
   const groups = activeCollection ? getCollectionGroups(activeCollection) : [];
 
-  return <aside className={mobile ? "h-full w-[min(86vw,340px)] overflow-y-auto bg-[var(--surface)] p-5" : "hidden w-[260px] shrink-0 border-r border-[var(--border)] bg-[var(--sidebar)] px-4 py-7 lg:block"}>
+  return <aside className={mobile ? "h-full w-[min(86vw,340px)] overflow-y-auto overscroll-y-contain bg-[var(--surface)] p-5" : "hidden h-full min-h-0 w-[260px] shrink-0 overflow-y-auto overscroll-y-contain border-r border-[var(--border)] bg-[var(--sidebar)] px-4 py-7 lg:block"}>
     {mobile && <div className="mb-6 flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--muted)]">DevHubs Wiki</span><button onClick={onClose} aria-label="Đóng điều hướng"><X className="size-5" /></button></div>}
     <nav aria-label="Điều hướng tài liệu" className="space-y-6">
       <div role="group" aria-label="Chọn ngôn ngữ">
@@ -135,7 +135,23 @@ function GithubEditLink({ sourcePath }: { sourcePath?: string }) {
 function Breadcrumb({ article }: { article: Article }) { return <div className="mb-7 flex flex-wrap items-center justify-between gap-4"><div className="flex min-w-0 flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]"><Link href="/" className="hover:text-[var(--teal)]">DevHubs Wiki</Link><ChevronRight className="size-3" /><Link href={`/${article.collection}`} className="hover:text-[var(--teal)]">{article.collectionLabel}</Link><ChevronRight className="size-3" /><span>{article.categoryLabel}</span><ChevronRight className="size-3" /><span className="text-[var(--teal)]">{article.title}</span></div><GithubEditLink sourcePath={article.sourcePath} /></div>; }
 function TableOfContents({ article }: { article: Article }) { return <aside className="hidden w-[190px] shrink-0 xl:block"><div className="sticky top-28 border-l border-[var(--border)] pl-5"><p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Trong bài này</p><nav className="space-y-2">{article.headings.map((heading) => <a key={heading.id} href={`#${heading.id}`} className="block text-[13px] leading-5 text-[var(--muted)] hover:text-[var(--teal)]">{heading.title}</a>)}</nav></div></aside>; }
 
-function ArticlePage({ article }: { article: Article }) { const index = articles.findIndex((item) => item.slug === article.slug); const previous = articles[index - 1]; const next = articles[index + 1]; const related = (article.related ?? []).map((slug) => articles.find((item) => item.slug === slug)).filter(Boolean) as Article[]; return <main id="main-content" className="mx-auto flex w-full max-w-[1080px] gap-12 px-5 py-10 sm:px-8 lg:py-14"><article className="min-w-0 max-w-[780px] flex-1"><Breadcrumb article={article} /><div className="mb-10"><div className="mb-4 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]"><span className="rounded bg-[var(--accent-soft)] px-2 py-1 text-[var(--accent)]">{article.difficulty}</span><span>·</span><span>Cập nhật {article.updated}</span></div><h1 className="max-w-3xl text-4xl font-bold tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">{article.title}</h1><p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{article.description}</p></div><Markdown body={article.body} /><div className="mt-14 border-t border-[var(--border)] pt-8"><p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Đọc tiếp</p><div className="grid gap-3 sm:grid-cols-2">{related.map((item) => <Link key={item.slug} href={item.slug} className="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 transition hover:-translate-y-0.5 hover:border-[var(--teal)]"><span className="text-xs font-semibold text-[var(--teal)]">{item.categoryLabel}</span><p className="mt-1 font-semibold group-hover:text-[var(--teal)]">{item.title}</p></Link>)}</div></div><div className="mt-10 grid gap-3 border-t border-[var(--border)] pt-5 sm:grid-cols-2">{previous ? <Link href={previous.slug} className="group rounded-xl border border-[var(--border)] p-4"><span className="flex items-center gap-2 text-xs text-[var(--muted)]"><ArrowLeft className="size-3" /> Bài trước</span><p className="mt-2 font-semibold group-hover:text-[var(--teal)]">{previous.title}</p></Link> : <div />}{next && <Link href={next.slug} className="group rounded-xl border border-[var(--border)] p-4 text-right"><span className="flex items-center justify-end gap-2 text-xs text-[var(--muted)]">Bài tiếp theo <ArrowRight className="size-3" /></span><p className="mt-2 font-semibold group-hover:text-[var(--teal)]">{next.title}</p></Link>}</div></article><TableOfContents article={article} /></main>; }
+function ArticleMetadata({ article }: { article: Article }) {
+  const badges = [
+    ...(articleBadges.get(article.slug) ?? []),
+    ...(article.difficulty === "advanced" ? ["Nội dung bậc cao"] : []),
+    ...(article.category === "reference" ? ["Tra cứu nhanh"] : []),
+  ].filter((badge, index, all) => all.indexOf(badge) === index);
+
+  return <div className="mb-4 flex flex-wrap items-center gap-2 text-xs font-semibold text-[var(--muted)]">
+    <span className="rounded bg-[var(--accent-soft)] px-2 py-1 uppercase tracking-[0.12em] text-[var(--accent)]">{article.difficulty}</span>
+    {badges.map((badge) => <span key={badge} className={`rounded-full border px-2.5 py-1 normal-case tracking-normal ${badge === "Quan trọng" ? "border-[var(--accent)]/30 bg-[var(--accent-soft)] text-[var(--accent)]" : "border-[var(--border)] bg-[var(--surface)] text-[var(--muted)]"}`}>
+      {badge}
+    </span>)}
+    <span className="font-normal">· Cập nhật {article.updated}</span>
+  </div>;
+}
+
+function ArticlePage({ article }: { article: Article }) { const index = articles.findIndex((item) => item.slug === article.slug); const previous = articles[index - 1]; const next = articles[index + 1]; const related = (article.related ?? []).map((slug) => articles.find((item) => item.slug === slug)).filter(Boolean) as Article[]; return <main id="main-content" className="mx-auto flex w-full max-w-[1080px] gap-12 px-5 py-10 sm:px-8 lg:py-14"><article className="min-w-0 max-w-[780px] flex-1"><Breadcrumb article={article} /><div className="mb-10"><ArticleMetadata article={article} /><h1 className="max-w-3xl text-4xl font-bold tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">{article.title}</h1><p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{article.description}</p></div><Markdown body={article.body} /><div className="mt-14 border-t border-[var(--border)] pt-8"><p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Đọc tiếp</p><div className="grid gap-3 sm:grid-cols-2">{related.map((item) => <Link key={item.slug} href={item.slug} className="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 transition hover:-translate-y-0.5 hover:border-[var(--teal)]"><span className="text-xs font-semibold text-[var(--teal)]">{item.categoryLabel}</span><p className="mt-1 font-semibold group-hover:text-[var(--teal)]">{item.title}</p></Link>)}</div></div><div className="mt-10 grid gap-3 border-t border-[var(--border)] pt-5 sm:grid-cols-2">{previous ? <Link href={previous.slug} className="group rounded-xl border border-[var(--border)] p-4"><span className="flex items-center gap-2 text-xs text-[var(--muted)]"><ArrowLeft className="size-3" /> Bài trước</span><p className="mt-2 font-semibold group-hover:text-[var(--teal)]">{previous.title}</p></Link> : <div />}{next && <Link href={next.slug} className="group rounded-xl border border-[var(--border)] p-4 text-right"><span className="flex items-center justify-end gap-2 text-xs text-[var(--muted)]">Bài tiếp theo <ArrowRight className="size-3" /></span><p className="mt-2 font-semibold group-hover:text-[var(--teal)]">{next.title}</p></Link>}</div></article><TableOfContents article={article} /></main>; }
 
 function scoreArticle(article: Article, query: string) { const q = query.trim().toLowerCase(); if (!q) return 0; return q.split(/\s+/).reduce((score, token) => score + (article.title.toLowerCase().includes(token) ? 100 : 0) + (article.description.toLowerCase().includes(token) ? 45 : 0) + (article.keywords.join(" ").toLowerCase().includes(token) ? 35 : 0) + (article.collectionLabel.toLowerCase().includes(token) ? 30 : 0) + (article.headings.some((heading) => heading.title.toLowerCase().includes(token)) ? 25 : 0) + (article.body.toLowerCase().includes(token) ? 5 : 0), 0); }
 
@@ -154,5 +170,17 @@ export function WikiShell({ article, collection }: { article?: Article; collecti
   const [mobileOpen, setMobileOpen] = useState(false);
   const activeCollectionSlug = article?.collection ?? collection?.slug;
   useEffect(() => { const onKey = (event: KeyboardEvent) => { if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setSearchOpen(true); } }; window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey); }, []);
-  return <><a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-[var(--teal)] focus:px-3 focus:py-2 focus:text-white">Bỏ qua đến nội dung</a><Header onSearch={() => setSearchOpen(true)} onMenu={() => setMobileOpen(true)} /><div className="flex min-h-[calc(100vh-68px)]"><Sidebar activeCollectionSlug={activeCollectionSlug} /><MobileNav activeCollectionSlug={activeCollectionSlug} open={mobileOpen} onClose={() => setMobileOpen(false)} />{article ? <div className="min-w-0 flex-1"><ArticlePage article={article} /></div> : collection ? <div className="min-w-0 flex-1"><CollectionPage collection={collection} /></div> : <div className="min-w-0 flex-1"><HomePage /></div>}</div><footer className="border-t border-[var(--border)] px-5 py-8 text-center text-xs text-[var(--muted)]"><span className="font-semibold text-[var(--foreground)]">DevHubs Wiki</span> · Kiến thức kỹ thuật cho developer, được tổ chức từ metadata.</footer><SearchPalette open={searchOpen} onOpenChange={setSearchOpen} /></>;
+  return <div className="flex h-dvh flex-col overflow-hidden">
+    <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-[var(--teal)] focus:px-3 focus:py-2 focus:text-white">Bỏ qua đến nội dung</a>
+    <Header onSearch={() => setSearchOpen(true)} onMenu={() => setMobileOpen(true)} />
+    <div className="flex min-h-0 flex-1 overflow-hidden">
+      <Sidebar activeCollectionSlug={activeCollectionSlug} />
+      <div className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-contain">
+        {article ? <ArticlePage article={article} /> : collection ? <CollectionPage collection={collection} /> : <HomePage />}
+        <footer className="border-t border-[var(--border)] px-5 py-8 text-center text-xs text-[var(--muted)]"><span className="font-semibold text-[var(--foreground)]">DevHubs Wiki</span> · Kiến thức kỹ thuật cho developer, được tổ chức từ metadata.</footer>
+      </div>
+    </div>
+    <MobileNav activeCollectionSlug={activeCollectionSlug} open={mobileOpen} onClose={() => setMobileOpen(false)} />
+    <SearchPalette open={searchOpen} onOpenChange={setSearchOpen} />
+  </div>;
 }
