@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.next",
+    "\\.next\\types",
+    "\\.vinext",
+    "\\.vinext\\dev",
+    "\\components",
+    "\\components\\ui"
+  ],
+  "SelectedNode": "\\.vinext",
+  "PreviewInSolutionExplorer": false
+}

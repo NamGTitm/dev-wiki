@@ -4,7 +4,7 @@ description: Mô hình hóa trạng thái rõ ràng hơn string rời rạc, đ�
 slug: /standard-library/enum
 category: standard-library
 categoryLabel: Standard library
-order: 1340
+order: 1341
 difficulty: intermediate
 keywords: [enum, Enum, IntEnum, StrEnum, status, state machine]
 updated: 2026-09-18

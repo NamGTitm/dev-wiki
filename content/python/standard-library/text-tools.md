@@ -4,7 +4,7 @@ description: Các module nhỏ nhưng hữu ích cho introspection, sao chép, f
 slug: /standard-library/text-tools
 category: standard-library
 categoryLabel: Standard library
-order: 1380
+order: 1381
 difficulty: intermediate
 keywords: [inspect, copy, deepcopy, pprint, textwrap, string, operator, heapq, bisect]
 updated: 2026-09-18

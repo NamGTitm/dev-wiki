@@ -4,7 +4,7 @@ description: Dùng SQLite từ Python với parameterized query, transaction, co
 slug: /standard-library/sqlite3
 category: standard-library
 categoryLabel: Standard library
-order: 1370
+order: 1371
 difficulty: intermediate
 keywords: [sqlite3, database, SQL, transaction, commit, rollback, SQL injection]
 updated: 2026-09-18

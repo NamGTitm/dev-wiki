@@ -4,7 +4,7 @@ description: Chạy process con, capture output, timeout, exit code và tránh s
 slug: /standard-library/subprocess
 category: standard-library
 categoryLabel: Standard library
-order: 1360
+order: 1361
 difficulty: intermediate
 keywords: [subprocess, run, Popen, shell, stdout, stderr, timeout]
 updated: 2026-09-18

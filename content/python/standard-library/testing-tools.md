@@ -4,7 +4,7 @@ description: Hai công cụ testing có sẵn trong Python và cách đặt chú
 slug: /standard-library/testing-tools
 category: standard-library
 categoryLabel: Standard library
-order: 1390
+order: 1391
 difficulty: intermediate
 keywords: [unittest, doctest, TestCase, mock, test runner]
 updated: 2026-09-18

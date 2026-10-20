@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://wiki.namgt.dev/</loc></url>
+  <url><loc>https://wiki.namgt.dev/python</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp</loc></url>
   <url><loc>https://wiki.namgt.dev/bat-dau/python-la-gi</loc></url>
   <url><loc>https://wiki.namgt.dev/bat-dau/cai-dat-python</loc></url>
   <url><loc>https://wiki.namgt.dev/bat-dau/hello-world</loc></url>
@@ -108,4 +111,81 @@
   <url><loc>https://wiki.namgt.dev/internals/memory-management</loc></url>
   <url><loc>https://wiki.namgt.dev/internals/gil</loc></url>
   <url><loc>https://wiki.namgt.dev/internals/execution-model</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/bat-dau/javascript-la-gi</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/bat-dau/javascript-chay-o-dau</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/bat-dau/browser-va-nodejs</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/bat-dau/cai-nodejs</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/bat-dau/chay-javascript</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/bat-dau/console-devtools</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/syntax-co-ban</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/bien</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/kieu-du-lieu</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/toan-tu</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/dieu-kien</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/switch</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/vong-lap-for</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/vong-lap-while</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/function</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/array</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/object</loc></url>
+  <url><loc>https://wiki.namgt.dev/javascript/co-ban/string</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/lo-trinh-hoc</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/cpp-la-gi</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/cai-dat-moi-truong</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/chuong-trinh-dau-tien</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/bien-kieu-du-lieu</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/toan-tu</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/ham-pham-vi</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/mang-string</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/bat-dau/references-pointers</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/trung-cap/vector-struct-enum</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/trung-cap/overloading-default-arguments</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/trung-cap/de-quy-call-stack</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/trung-cap/stack-heap-lifetime</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/trung-cap/classes-constructors</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/trung-cap/inheritance-polymorphism</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/trung-cap/templates-namespaces</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/trung-cap/file-io-errors</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/stl-la-gi</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/sequence-containers</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/associative-containers</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/unordered-containers</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/container-adapters</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/iterators-invalidation</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/stl-algorithms</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/lambda-auto-range</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/move-semantics</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/raii-smart-pointers</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/stl/cpp17-20-23</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/do-phuc-tap</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/giai-quyet-bai-toan</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/tim-kiem-sap-xep</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/prefix-sum-difference-array</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/two-pointers-sliding-window</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/de-quy-quay-lui</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/greedy</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/quy-hoach-dong</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/number-theory</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/binary-search-answer</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/do-thi</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/cay</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/thuat-toan/bit-manipulation</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/clean-code</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/header-source-modules</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/cmake</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/debugging</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/unit-testing</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/exceptions</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/ub-memory-safety</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/concurrency</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/profiling-performance</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/ky-thuat/security-cross-platform</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/tra-cuu/cu-phap</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/tra-cuu/kieu-du-lieu</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/tra-cuu/stl-containers</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/tra-cuu/stl-algorithms</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/tra-cuu/debugging-errors</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/tra-cuu/memory-errors</loc></url>
+  <url><loc>https://wiki.namgt.dev/cpp/tra-cuu/best-practices</loc></url>
 </urlset>

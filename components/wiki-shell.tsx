@@ -51,19 +51,72 @@ function Header({ onSearch, onMenu }: { onSearch: () => void; onMenu: () => void
   );
 }
 
-function Sidebar({ mobile = false, onClose }: { mobile?: boolean; onClose?: () => void }) {
+function Sidebar({ activeCollectionSlug, mobile = false, onClose }: { activeCollectionSlug?: string; mobile?: boolean; onClose?: () => void }) {
   const pathname = usePathname();
-  const navigation = collections.map((collection) => ({ collection, groups: getCollectionGroups(collection) }));
-  return <aside className={mobile ? "h-full w-[min(86vw,340px)] overflow-y-auto bg-[var(--surface)] p-5" : "hidden w-[260px] shrink-0 border-r border-[var(--border)] bg-[var(--sidebar)] px-4 py-7 lg:block"}>{mobile && <div className="mb-6 flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--muted)]">DevHubs Wiki</span><button onClick={onClose} aria-label="Đóng điều hướng"><X className="size-5" /></button></div>}<nav aria-label="Các collection và chủ đề trong DevHubs Wiki" className="space-y-7">{navigation.map(({ collection, groups }) => <div key={collection.slug}><Link href={`/${collection.slug}`} onClick={onClose} className="mb-3 flex items-center gap-2 px-2 text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--teal)]"><BookOpen className="size-4 text-[var(--teal)]" /> {collection.label}</Link><div className="space-y-5">{groups.map((group, index) => <div key={`${collection.slug}-${group.key}`}><div className="mb-1.5 flex items-center gap-2 px-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--muted)]"><span className="font-mono text-[var(--accent)]">{String(index + 1).padStart(2, "0")}</span>{group.label}</div><div className="space-y-0.5">{group.items.map((article) => <Link key={article.slug} onClick={onClose} href={article.slug} className={`group flex items-start gap-2 rounded-md px-2 py-1.5 text-[13px] leading-5 transition ${pathname === article.slug ? "bg-[var(--surface)] font-semibold text-[var(--teal)] shadow-sm" : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]"}`}><span className={`mt-2 size-1.5 shrink-0 rounded-full ${pathname === article.slug ? "bg-[var(--accent)]" : "bg-[var(--border)] group-hover:bg-[var(--teal)]"}`} />{article.title}</Link>)}</div></div>)}</div></div>)}{navigation.length === 0 && <p className="px-2 text-sm text-[var(--muted)]">Chưa có collection nào.</p>}</nav></aside>;
+  const activeCollection = collections.find((collection) => collection.slug === activeCollectionSlug);
+  const groups = activeCollection ? getCollectionGroups(activeCollection) : [];
+
+  return <aside className={mobile ? "h-full w-[min(86vw,340px)] overflow-y-auto bg-[var(--surface)] p-5" : "hidden w-[260px] shrink-0 border-r border-[var(--border)] bg-[var(--sidebar)] px-4 py-7 lg:block"}>
+    {mobile && <div className="mb-6 flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--muted)]">DevHubs Wiki</span><button onClick={onClose} aria-label="Đóng điều hướng"><X className="size-5" /></button></div>}
+    <nav aria-label="Điều hướng tài liệu" className="space-y-6">
+      <div role="group" aria-label="Chọn ngôn ngữ">
+        <p className="mb-2 px-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--muted)]">Ngôn ngữ</p>
+        <div className="flex flex-wrap gap-1.5">
+          {collections.map((collection) => {
+            const isActive = collection.slug === activeCollection?.slug;
+            return <Link key={collection.slug} href={`/${collection.slug}`} onClick={onClose} aria-current={isActive ? "true" : undefined} className={`rounded-md px-2 py-1.5 text-xs font-semibold transition ${isActive ? "bg-[var(--accent-soft)] text-[var(--accent)]" : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]"}`}>
+              {collection.label}
+            </Link>;
+          })}
+        </div>
+      </div>
+      {activeCollection ? <section aria-label={`Chủ đề ${activeCollection.label}`}>
+        <Link href={`/${activeCollection.slug}`} onClick={onClose} className="mb-3 flex items-center gap-2 px-2 text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--teal)]"><BookOpen className="size-4 text-[var(--teal)]" /> {activeCollection.label}</Link>
+        <div className="space-y-5">{groups.map((group, index) => <div key={`${activeCollection.slug}-${group.key}`}>
+          <div className="mb-1.5 flex items-center gap-2 px-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--muted)]"><span className="font-mono text-[var(--accent)]">{String(index + 1).padStart(2, "0")}</span>{group.label}</div>
+          <div className="space-y-0.5">{group.items.map((article) => <Link key={article.slug} onClick={onClose} href={article.slug} aria-current={pathname === article.slug ? "page" : undefined} className={`group flex items-start gap-2 rounded-md px-2 py-1.5 text-[13px] leading-5 transition ${pathname === article.slug ? "bg-[var(--surface)] font-semibold text-[var(--teal)] shadow-sm" : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]"}`}><span className={`mt-2 size-1.5 shrink-0 rounded-full ${pathname === article.slug ? "bg-[var(--accent)]" : "bg-[var(--border)] group-hover:bg-[var(--teal)]"}`} />{article.title}</Link>)}</div>
+        </div>)}</div>
+      </section> : <p className="px-2 text-sm text-[var(--muted)]">Chọn một ngôn ngữ để xem các chủ đề.</p>}
+    </nav>
+  </aside>;
 }
 
-function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) { if (!open) return null; return <div className="fixed inset-0 z-50 lg:hidden"><button className="absolute inset-0 bg-slate-950/40" onClick={onClose} aria-label="Đóng điều hướng" /><div className="relative h-full"><Sidebar mobile onClose={onClose} /></div></div>; }
+function MobileNav({ activeCollectionSlug, open, onClose }: { activeCollectionSlug?: string; open: boolean; onClose: () => void }) { if (!open) return null; return <div className="fixed inset-0 z-50 lg:hidden"><button className="absolute inset-0 bg-slate-950/40" onClick={onClose} aria-label="Đóng điều hướng" /><div className="relative h-full"><Sidebar activeCollectionSlug={activeCollectionSlug} mobile onClose={onClose} /></div></div>; }
 
 function SearchResults({ router, onClose }: { router: ReturnType<typeof useRouter>; onClose: () => void }) { return <>{articles.map((article) => <CommandItem key={article.slug} value={`${article.title} ${article.description} ${article.keywords.join(" ")} ${article.collectionLabel}`} onSelect={() => { router.push(article.slug); onClose(); }}><div className="min-w-0"><p className="truncate font-medium">{article.title}</p><p className="truncate text-xs text-[var(--muted)]">{article.collectionLabel} · {article.categoryLabel} · {article.description}</p></div></CommandItem>)}</>; }
 
 function SearchPalette({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) { const router = useRouter(); return <CommandDialog open={open} onOpenChange={onOpenChange} title="Tìm kiếm DevHubs Wiki" description="Tìm bài viết trong toàn bộ wiki theo tiêu đề, từ khóa hoặc nội dung"><CommandInput placeholder="Ví dụ: Python, Git, HTTP, SQL, async..." /><CommandList><CommandEmpty>Không tìm thấy bài viết phù hợp.</CommandEmpty><CommandGroup heading="Bài viết trong Wiki"><SearchResults router={router} onClose={() => onOpenChange(false)} /></CommandGroup></CommandList></CommandDialog>; }
 
-function CodeBlock({ language, code }: { language: string; code: string }) { const [copied, setCopied] = useState(false); return <div className="my-7 overflow-hidden rounded-xl border border-white/10 bg-[var(--code)] shadow-[0_12px_30px_rgba(16,42,67,0.12)]"><div className="flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-white/55"><span className="font-mono uppercase tracking-[0.12em]">{language}</span><button onClick={() => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1400); }} className="inline-flex items-center gap-1.5 rounded px-2 py-1 hover:bg-white/10 hover:text-white">{copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}{copied ? "Đã copy" : "Copy"}</button></div><pre className="overflow-x-auto p-5 text-[13px] leading-6 text-[var(--code-text)]"><code>{code}</code></pre></div>; }
+const cppKeywords = new Set("alignas alignof asm auto break case catch class co_await co_return co_yield concept const consteval constexpr constinit continue decltype default delete do else explicit export extern false for friend goto if inline namespace new noexcept nullptr operator private protected public register requires return sizeof static static_assert static_cast struct switch template this thread_local throw true try typedef typeid typename union using virtual volatile while".split(" "));
+const cppTypes = new Set("bool char char8_t char16_t char32_t double float int long short signed unsigned void wchar_t".split(" "));
+
+function highlightCpp(code: string): ReactNode[] {
+  const tokenPattern = /(?:u8|u|U|L)?R"([A-Za-z0-9_]*)\([\s\S]*?\)\1"|(?:u8|u|U|L)?"(?:\\.|[^"\\])*"|(?:u|U|L)?'(?:\\.|[^'\\])*'|\/\/[^\r\n]*|\/\*[\s\S]*?\*\/|#\s*[A-Za-z_][A-Za-z_0-9]*|[A-Za-z_][A-Za-z_0-9]*|\b\d[\w'.]*\b/g;
+  const nodes: ReactNode[] = [];
+  let offset = 0;
+
+  for (const match of code.matchAll(tokenPattern)) {
+    const token = match[0];
+    const start = match.index ?? 0;
+    if (start > offset) nodes.push(code.slice(offset, start));
+
+    let kind: string | undefined;
+    if (token.startsWith("//") || token.startsWith("/*")) kind = "comment";
+    else if (/^(?:u8|u|U|L)?(?:R)?["']/.test(token)) kind = "string";
+    else if (token.startsWith("#")) kind = "preprocessor";
+    else if (cppKeywords.has(token)) kind = "keyword";
+    else if (cppTypes.has(token)) kind = "type";
+    else if (/^\d/.test(token)) kind = "number";
+
+    nodes.push(kind ? <span key={start} className={`cpp-token-${kind}`}>{token}</span> : token);
+    offset = start + token.length;
+  }
+
+  if (offset < code.length) nodes.push(code.slice(offset));
+  return nodes;
+}
+
+function CodeBlock({ language, code }: { language: string; code: string }) { const [copied, setCopied] = useState(false); const highlighted = language.toLowerCase() === "cpp" ? highlightCpp(code) : code; return <div className="my-7 overflow-hidden rounded-xl border border-white/10 bg-[var(--code)] shadow-[0_12px_30px_rgba(16,42,67,0.12)]"><div className="flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-white/55"><span className="font-mono uppercase tracking-[0.12em]">{language}</span><button onClick={() => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1400); }} className="inline-flex items-center gap-1.5 rounded px-2 py-1 hover:bg-white/10 hover:text-white">{copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}{copied ? "Đã copy" : "Copy"}</button></div><pre className="overflow-x-auto p-5 text-[13px] leading-6 text-[var(--code-text)]"><code>{highlighted}</code></pre></div>; }
 
 function Markdown({ body }: { body: string }) {
   const lines = body.split("\n"); const nodes: ReactNode[] = []; let index = 0;
@@ -99,6 +152,7 @@ function HomePage() {
 export function WikiShell({ article, collection }: { article?: Article; collection?: Collection }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const activeCollectionSlug = article?.collection ?? collection?.slug;
   useEffect(() => { const onKey = (event: KeyboardEvent) => { if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setSearchOpen(true); } }; window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey); }, []);
-  return <><a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-[var(--teal)] focus:px-3 focus:py-2 focus:text-white">Bỏ qua đến nội dung</a><Header onSearch={() => setSearchOpen(true)} onMenu={() => setMobileOpen(true)} /><div className="flex min-h-[calc(100vh-68px)]"><Sidebar /><MobileNav open={mobileOpen} onClose={() => setMobileOpen(false)} />{article ? <div className="min-w-0 flex-1"><ArticlePage article={article} /></div> : collection ? <div className="min-w-0 flex-1"><CollectionPage collection={collection} /></div> : <div className="min-w-0 flex-1"><HomePage /></div>}</div><footer className="border-t border-[var(--border)] px-5 py-8 text-center text-xs text-[var(--muted)]"><span className="font-semibold text-[var(--foreground)]">DevHubs Wiki</span> · Kiến thức kỹ thuật cho developer, được tổ chức từ metadata.</footer><SearchPalette open={searchOpen} onOpenChange={setSearchOpen} /></>;
+  return <><a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-[var(--teal)] focus:px-3 focus:py-2 focus:text-white">Bỏ qua đến nội dung</a><Header onSearch={() => setSearchOpen(true)} onMenu={() => setMobileOpen(true)} /><div className="flex min-h-[calc(100vh-68px)]"><Sidebar activeCollectionSlug={activeCollectionSlug} /><MobileNav activeCollectionSlug={activeCollectionSlug} open={mobileOpen} onClose={() => setMobileOpen(false)} />{article ? <div className="min-w-0 flex-1"><ArticlePage article={article} /></div> : collection ? <div className="min-w-0 flex-1"><CollectionPage collection={collection} /></div> : <div className="min-w-0 flex-1"><HomePage /></div>}</div><footer className="border-t border-[var(--border)] px-5 py-8 text-center text-xs text-[var(--muted)]"><span className="font-semibold text-[var(--foreground)]">DevHubs Wiki</span> · Kiến thức kỹ thuật cho developer, được tổ chức từ metadata.</footer><SearchPalette open={searchOpen} onOpenChange={setSearchOpen} /></>;
 }

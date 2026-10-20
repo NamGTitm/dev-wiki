@@ -4,7 +4,7 @@ description: Pattern, match, search, group, named group, quantifier và các b�
 slug: /standard-library/re
 category: standard-library
 categoryLabel: Standard library
-order: 1330
+order: 1331
 difficulty: intermediate
 keywords: [regex, regular expression, re, match, search, groups, lookahead]
 updated: 2026-09-18

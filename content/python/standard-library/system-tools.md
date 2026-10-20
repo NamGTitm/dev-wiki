@@ -4,7 +4,7 @@ description: Nhóm công cụ chuẩn cho môi trường chạy, file hệ thố
 slug: /standard-library/system-tools
 category: standard-library
 categoryLabel: Standard library
-order: 1350
+order: 1351
 difficulty: intermediate
 keywords: [os, sys, shutil, tempfile, importlib, environment, subprocess, filesystem]
 updated: 2026-09-18

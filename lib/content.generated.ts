@@ -2765,7 +2765,7 @@ export const articles = [
     "slug": "/standard-library/re",
     "category": "standard-library",
     "categoryLabel": "Standard library",
-    "order": 1330,
+    "order": 1331,
     "difficulty": "intermediate",
     "keywords": [
       "regex",
@@ -2786,7 +2786,7 @@ export const articles = [
     "collectionLabel": "Python",
     "collectionDescription": null,
     "featured": false,
-    "priority": 1330,
+    "priority": 1331,
     "body": "Regex mô tả pattern text. `re.search` tìm ở bất kỳ vị trí nào, `re.match` bắt đầu từ đầu string, `re.fullmatch` yêu cầu toàn bộ string khớp; `finditer` cho iterator các Match object.\n\n```python\nimport re\n\npattern = re.compile(r\"(?P<user>[a-z0-9._-]+)@(?P<host>[a-z0-9.-]+)\")\nmatch = pattern.fullmatch(\"nam@example.com\")\nif match:\n    print(match.group(\"user\"), match.group(\"host\"))\n```\n\nDùng raw string cho pattern để backslash không bị Python string parser xử lý trước. Quantifier greedy có thể backtrack nhiều; với input lớn hoặc không tin cậy, pattern phức tạp có thể gây chậm. Regex không phải parser cho mọi ngôn ngữ lồng nhau.",
     "sourcePath": "content/python/standard-library/re.md",
     "headings": []
@@ -2830,7 +2830,7 @@ export const articles = [
     "slug": "/standard-library/enum",
     "category": "standard-library",
     "categoryLabel": "Standard library",
-    "order": 1340,
+    "order": 1341,
     "difficulty": "intermediate",
     "keywords": [
       "enum",
@@ -2850,7 +2850,7 @@ export const articles = [
     "collectionLabel": "Python",
     "collectionDescription": null,
     "featured": false,
-    "priority": 1340,
+    "priority": 1341,
     "body": "`Enum` biểu diễn một tập giá trị có tên:\n\n```python\nfrom enum import StrEnum, auto\n\nclass State(StrEnum):\n    queued = auto()\n    running = auto()\n    done = auto()\n\nif current is State.running:\n    print(\"đang xử lý\")\n```\n\nSo sánh identity với member (`current is State.running`) thường dễ đọc. `member.name` là tên member và `member.value` là giá trị; đừng mặc định rằng value sẽ serialize đúng hợp đồng API. `StrEnum` hữu ích khi giá trị cần hoạt động như string; `IntEnum` chỉ nên dùng khi tương thích số nguyên là yêu cầu thật sự, vì phép tính số có thể làm mất ngữ nghĩa enum.\n\nEnum hợp với trạng thái, quyền hạn, protocol version và lựa chọn hữu hạn. Nếu tập giá trị đến từ database hoặc user có thể mở rộng tùy ý, dùng string/record có validation sẽ linh hoạt hơn. Khi đổi tên member, cân nhắc tương thích dữ liệu đã lưu và migration.",
     "sourcePath": "content/python/standard-library/enum.md",
     "headings": []
@@ -2892,7 +2892,7 @@ export const articles = [
     "slug": "/standard-library/system-tools",
     "category": "standard-library",
     "categoryLabel": "Standard library",
-    "order": 1350,
+    "order": 1351,
     "difficulty": "intermediate",
     "keywords": [
       "os",
@@ -2914,7 +2914,7 @@ export const articles = [
     "collectionLabel": "Python",
     "collectionDescription": null,
     "featured": false,
-    "priority": 1350,
+    "priority": 1351,
     "body": "`pathlib` nên là API chính cho path; `os` vẫn quan trọng khi đọc environment (`os.environ`), quyền/process hiện tại và các primitive hệ điều hành. `sys.argv`, `sys.path`, `sys.stderr` mô tả interpreter đang chạy; tránh sửa `sys.path` tùy tiện vì nó che giấu lỗi đóng gói.\n\n`shutil.copytree`, `move`, `rmtree` giúp thao tác cây thư mục. Các hàm xóa là destructive: kiểm tra path đã resolve và giới hạn trong thư mục được phép trước khi gọi. Với dữ liệu tạm, `tempfile.TemporaryDirectory` tự dọn dẹp tốt hơn tự ghép tên file trong `/tmp`.\n\n```python\nimport os\nimport tempfile\nfrom pathlib import Path\n\nwith tempfile.TemporaryDirectory() as name:\n    output = Path(name) / \"result.txt\"\n    output.write_text(os.environ.get(\"APP_MESSAGE\", \"ok\"), encoding=\"utf-8\")\n```\n\n`importlib.import_module(\"package.plugin\")` hữu ích cho plugin system, nhưng tên module đến từ cấu hình phải được allowlist và load lỗi cần được báo rõ. Import động không thay thế thiết kế dependency rõ ràng.",
     "sourcePath": "content/python/standard-library/system-tools.md",
     "headings": []
@@ -2958,7 +2958,7 @@ export const articles = [
     "slug": "/standard-library/subprocess",
     "category": "standard-library",
     "categoryLabel": "Standard library",
-    "order": 1360,
+    "order": 1361,
     "difficulty": "intermediate",
     "keywords": [
       "subprocess",
@@ -2979,7 +2979,7 @@ export const articles = [
     "collectionLabel": "Python",
     "collectionDescription": null,
     "featured": false,
-    "priority": 1360,
+    "priority": 1361,
     "body": "`subprocess.run` là API cấp cao cho command hoàn thành:\n\n```python\nfrom subprocess import run\n\nresult = run([\"python\", \"--version\"], capture_output=True, text=True, check=True, timeout=5)\nprint(result.stdout or result.stderr)\n```\n\nTruyền argv dạng list, không bật `shell=True` nếu không cần. `check=True` biến exit code khác 0 thành `CalledProcessError`; `timeout` tránh process treo vô hạn. Với stream dài hoặc process sống lâu, dùng `Popen` và thiết kế backpressure thay vì gọi `communicate` không giới hạn.",
     "sourcePath": "content/python/standard-library/subprocess.md",
     "headings": []
@@ -3023,7 +3023,7 @@ export const articles = [
     "slug": "/standard-library/sqlite3",
     "category": "standard-library",
     "categoryLabel": "Standard library",
-    "order": 1370,
+    "order": 1371,
     "difficulty": "intermediate",
     "keywords": [
       "sqlite3",
@@ -3044,7 +3044,7 @@ export const articles = [
     "collectionLabel": "Python",
     "collectionDescription": null,
     "featured": false,
-    "priority": 1370,
+    "priority": 1371,
     "body": "SQLite là database serverless phù hợp cho local app, tool và dữ liệu nhỏ-vừa. Luôn dùng parameterized query:\n\n```python\nimport sqlite3\n\nwith sqlite3.connect(\"app.db\") as connection:\n    connection.execute(\"CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)\")\n    connection.execute(\"INSERT INTO users (name) VALUES (?)\", (\"An\",))\n```\n\nKhông f-string user input vào SQL; đó là SQL injection. Context manager commit khi block thành công và rollback khi exception. Với workload concurrent hoặc production nhiều writer, hiểu transaction isolation, locking và giới hạn SQLite trước khi coi nó là database server tổng quát.",
     "sourcePath": "content/python/standard-library/sqlite3.md",
     "headings": []
@@ -3087,7 +3087,7 @@ export const articles = [
     "slug": "/standard-library/text-tools",
     "category": "standard-library",
     "categoryLabel": "Standard library",
-    "order": 1380,
+    "order": 1381,
     "difficulty": "intermediate",
     "keywords": [
       "inspect",
@@ -3110,7 +3110,7 @@ export const articles = [
     "collectionLabel": "Python",
     "collectionDescription": null,
     "featured": false,
-    "priority": 1380,
+    "priority": 1381,
     "body": "`inspect.signature` và `getmembers` hữu ích cho framework, plugin và tooling; code ứng dụng thông thường nên ưu tiên API tường minh. `copy.copy` sao chép nông còn `copy.deepcopy` đi qua object graph, có thể đắt hoặc không phù hợp với object chứa resource.\n\n`pprint` giúp đọc cấu trúc lồng nhau khi debug. `textwrap` xử lý wrap/dedent; `string.Template` là lựa chọn đơn giản cho template không cần full engine. `operator.itemgetter`/`attrgetter` làm key function ngắn gọn cho `sorted` và `groupby`.\n\n`heapq` phù hợp priority queue tối thiểu; `bisect` tìm/chèn trong list đã sắp xếp nhưng không biến nó thành cấu trúc concurrent hay thay thế database index. Mọi helper nhỏ vẫn cần nêu invariant: list có được sort chưa, object có mutable không, và ai sở hữu dữ liệu.",
     "sourcePath": "content/python/standard-library/text-tools.md",
     "headings": []
@@ -3152,7 +3152,7 @@ export const articles = [
     "slug": "/standard-library/testing-tools",
     "category": "standard-library",
     "categoryLabel": "Standard library",
-    "order": 1390,
+    "order": 1391,
     "difficulty": "intermediate",
     "keywords": [
       "unittest",
@@ -3171,7 +3171,7 @@ export const articles = [
     "collectionLabel": "Python",
     "collectionDescription": null,
     "featured": false,
-    "priority": 1390,
+    "priority": 1391,
     "body": "`unittest` cung cấp `TestCase`, assertions, fixtures và `unittest.mock`; chạy bằng `python -m unittest`. Nó phù hợp khi muốn không phụ thuộc framework ngoài hoặc cần tương thích hệ sinh thái unittest.\n\n`doctest` chạy các ví dụ prompt trong docstring, hữu ích cho ví dụ nhỏ và tài liệu API. Nó không thay thế test edge case, integration test hay property test: output phải ổn định, và doctest dễ trở nên giòn nếu format hiển thị thay đổi.\n\nTách test khỏi implementation detail. Mock boundary như network/client clock, không mock mọi hàm nội bộ; nếu test phải biết quá nhiều call order thì có thể contract đang quá chặt. Dù dùng runner nào, test vẫn cần deterministic, isolation và failure message có ích.",
     "sourcePath": "content/python/standard-library/testing-tools.md",
     "headings": []
@@ -3797,6 +3797,3763 @@ export const articles = [
     "body": "CPython parse source, tạo code object chứa bytecode và metadata, rồi thực thi trong interpreter. Frame giữ execution state như local namespace, instruction position và reference tới code object.\n\n```python\nimport dis\n\ndef total(a, b):\n    return a + b\n\ndis.dis(total)\n```\n\n`.pyc` trong `__pycache__` là cache bytecode cho import; không phải source portable độc lập và không nên commit. Opcode, frame layout và cache strategy là implementation details có thể thay đổi theo version. Dùng `dis`, `inspect` và official docs để học, nhưng đừng dùng opcode cụ thể làm API contract của ứng dụng.",
     "sourcePath": "content/python/internals/execution-model.md",
     "headings": []
+  },
+  {
+    "title": "JavaScript là gì?",
+    "description": "Phân biệt JavaScript, ECMAScript, engine và API của môi trường chạy.",
+    "slug": "/javascript/bat-dau/javascript-la-gi",
+    "category": "getting-started",
+    "categoryLabel": "Bắt đầu",
+    "order": 10000,
+    "difficulty": "beginner",
+    "keywords": [
+      "javascript",
+      "ECMAScript",
+      "JavaScript engine",
+      "ngôn ngữ lập trình"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "collectionDescription": "Nền tảng JavaScript thực tế, từ runtime đến những cấu trúc thường dùng.",
+    "related": [
+      "/javascript/bat-dau/javascript-chay-o-dau",
+      "/javascript/bat-dau/browser-va-nodejs"
+    ],
+    "featured": false,
+    "priority": 10000,
+    "body": "JavaScript là ngôn ngữ lập trình được chuẩn hóa để chạy trong nhiều môi trường. Nó không đồng nghĩa với trình duyệt: cùng một ngôn ngữ có thể chạy trong browser, Node.js và các runtime khác.\n\n## Bốn khái niệm cần tách biệt\n\n- **JavaScript** là tên ngôn ngữ mà developer thường dùng.\n- **ECMAScript** là đặc tả chuẩn hóa các cú pháp và hành vi cốt lõi của ngôn ngữ.\n- **JavaScript engine** đọc và thực thi mã, ví dụ V8 hoặc SpiderMonkey.\n- **API môi trường** cung cấp chức năng bên ngoài ngôn ngữ: browser có DOM, còn Node.js có API đọc file và làm việc với hệ điều hành.\n\n```js\nconst message = \"Xin chào\";\nconsole.log(message);\n```\n\n`const` thuộc ngôn ngữ; `console` được runtime cung cấp. API cụ thể có thể khác giữa browser và Node.js.\n\n## Điểm cần nhớ\n\nKhi code không chạy, hãy xác định lỗi nằm ở cú pháp JavaScript hay một API chỉ có trong runtime khác.",
+    "sourcePath": "content/javascript/getting-started/javascript-la-gi.md",
+    "headings": [
+      {
+        "title": "Bốn khái niệm cần tách biệt",
+        "id": "bon-khai-niem-can-tach-biet"
+      },
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "JavaScript chạy ở đâu?",
+    "description": "Chọn runtime phù hợp và nhận biết API nào chỉ tồn tại trong môi trường đó.",
+    "slug": "/javascript/bat-dau/javascript-chay-o-dau",
+    "category": "getting-started",
+    "categoryLabel": "Bắt đầu",
+    "order": 10010,
+    "difficulty": "beginner",
+    "keywords": [
+      "runtime JavaScript",
+      "browser",
+      "Node.js",
+      "engine"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/bat-dau/javascript-la-gi",
+      "/javascript/bat-dau/browser-va-nodejs"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10010,
+    "body": "JavaScript chạy bên trong một **runtime**. Runtime chọn engine để thực thi ngôn ngữ và bổ sung API để chương trình tương tác với môi trường.\n\n```text\nBrowser: JavaScript engine + DOM + fetch + Web APIs\nNode.js: JavaScript engine + file system + process + network APIs\n```\n\nMột số API như `JSON.parse` dùng được ở cả hai nơi. `document.querySelector` cần DOM của browser; `node:fs` thuộc Node.js.\n\n## Điểm cần nhớ\n\nEngine thực thi JavaScript, còn runtime quyết định thêm những API nào có sẵn. Đừng giả định một API tồn tại ở mọi môi trường.",
+    "sourcePath": "content/javascript/getting-started/javascript-chay-o-dau.md",
+    "headings": [
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "Browser và Node.js",
+    "description": "So sánh hai runtime JavaScript phổ biến và cách chạy cùng một đoạn mã.",
+    "slug": "/javascript/bat-dau/browser-va-nodejs",
+    "category": "getting-started",
+    "categoryLabel": "Bắt đầu",
+    "order": 10020,
+    "difficulty": "beginner",
+    "keywords": [
+      "browser JavaScript",
+      "Node.js",
+      "DOM",
+      "runtime"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/bat-dau/javascript-chay-o-dau",
+      "/javascript/bat-dau/chay-javascript"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10020,
+    "body": "Browser chạy JavaScript trong trang web và cung cấp DOM, sự kiện giao diện cùng Web APIs. Node.js chạy JavaScript ngoài browser, thường dùng cho script, công cụ dòng lệnh và server.\n\n```js\n// Browser\ndocument.title = \"Trang của tôi\";\n\n// Node.js\nconsole.log(process.version);\n```\n\n`document` không được Node.js cung cấp mặc định; `process` không phải API web tiêu chuẩn. Cả hai runtime đều có engine JavaScript và `console`.\n\n## Điểm cần nhớ\n\nChọn browser cho mã tương tác trang web; chọn Node.js khi cần chạy file JavaScript hoặc công cụ ngoài browser.",
+    "sourcePath": "content/javascript/getting-started/browser-va-nodejs.md",
+    "headings": [
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "Cài Node.js",
+    "description": "Cài Node.js, xác nhận phiên bản và chạy thử chương trình mà không phụ thuộc hệ điều hành.",
+    "slug": "/javascript/bat-dau/cai-nodejs",
+    "category": "getting-started",
+    "categoryLabel": "Bắt đầu",
+    "order": 10030,
+    "difficulty": "beginner",
+    "keywords": [
+      "cài Node.js",
+      "node --version",
+      "npm",
+      "JavaScript"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/bat-dau/chay-javascript",
+      "/javascript/bat-dau/browser-va-nodejs"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10030,
+    "body": "Cài bản Node.js LTS từ trang chính thức hoặc trình quản lý phiên bản phù hợp với hệ điều hành. Bản LTS thường phù hợp cho project cần môi trường ổn định.\n\nMở terminal mới và kiểm tra:\n\n```sh\nnode --version\nnpm --version\n```\n\n`node` chạy runtime; `npm` quản lý package và script đi kèm Node.js. Nếu terminal không nhận lệnh sau khi cài, mở terminal mới hoặc kiểm tra `PATH`.\n\n## Điểm cần nhớ\n\nProject có thể ghim phiên bản Node.js riêng. Kiểm tra `package.json`, `.nvmrc` hoặc cấu hình CI trước khi đổi phiên bản.",
+    "sourcePath": "content/javascript/getting-started/cai-nodejs.md",
+    "headings": [
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "Chạy JavaScript",
+    "description": "Chạy file JavaScript bằng Node.js hoặc thử nhanh trong console của browser.",
+    "slug": "/javascript/bat-dau/chay-javascript",
+    "category": "getting-started",
+    "categoryLabel": "Bắt đầu",
+    "order": 10040,
+    "difficulty": "beginner",
+    "keywords": [
+      "chạy JavaScript",
+      "node file",
+      "script JavaScript",
+      "runtime"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/bat-dau/cai-nodejs",
+      "/javascript/bat-dau/console-devtools"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10040,
+    "body": "Tạo file `hello.js`, rồi chạy từ thư mục chứa file:\n\n```js\nconst name = \"NamGT\";\nconsole.log(`Xin chào, ${name}!`);\n```\n\n```sh\nnode hello.js\n```\n\nĐể thử một biểu thức nhanh, mở Developer Tools của browser và nhập mã trong Console. Console chạy trong ngữ cảnh của trang đang mở.\n\n## Lỗi thường gặp\n\n- `Cannot find module`: đường dẫn file hoặc thư mục hiện tại không đúng.\n- `node is not recognized`: Node.js chưa có trong `PATH` hoặc terminal chưa tải cấu hình mới.",
+    "sourcePath": "content/javascript/getting-started/chay-javascript.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "Console và DevTools",
+    "description": "Dùng console và Developer Tools để quan sát giá trị, lỗi và hành vi trang web.",
+    "slug": "/javascript/bat-dau/console-devtools",
+    "category": "getting-started",
+    "categoryLabel": "Bắt đầu",
+    "order": 10050,
+    "difficulty": "beginner",
+    "keywords": [
+      "console.log",
+      "DevTools",
+      "debug JavaScript",
+      "debugger"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/bat-dau/chay-javascript",
+      "/javascript/co-ban/syntax-co-ban"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10050,
+    "body": "`console` giúp quan sát dữ liệu trong lúc chạy; DevTools của browser còn cho phép xem lỗi, đặt breakpoint và kiểm tra network.\n\n```js\nconst user = { name: \"NamGT\", active: true };\nconsole.log(user);\nconsole.table([user]);\n```\n\nMở DevTools bằng menu của browser hoặc phím tắt của hệ điều hành, rồi chọn tab **Console**. Dùng breakpoint trong **Sources** để dừng chương trình và xem giá trị tại từng bước.\n\n## Điểm cần nhớ\n\nLog có thể lộ dữ liệu nhạy cảm và thường không nên để lại trong code production. Xóa log tạm sau khi debug.",
+    "sourcePath": "content/javascript/getting-started/console-devtools.md",
+    "headings": [
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "Syntax cơ bản",
+    "description": "Nắm câu lệnh, biểu thức, dấu ngoặc, comment và quy tắc đặt tên trong JavaScript.",
+    "slug": "/javascript/co-ban/syntax-co-ban",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10100,
+    "difficulty": "beginner",
+    "keywords": [
+      "syntax JavaScript",
+      "câu lệnh",
+      "biểu thức",
+      "camelCase"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/bien",
+      "/javascript/co-ban/kieu-du-lieu"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10100,
+    "body": "JavaScript phân biệt chữ hoa và chữ thường. Một biểu thức tạo ra giá trị; câu lệnh thực hiện hành động. Dấu chấm phẩy thường được dùng để kết thúc câu lệnh, dù automatic semicolon insertion đôi khi chèn nó theo quy tắc riêng.\n\n```js\nconst total = 3 + 4;\nif (total > 5) {\n  console.log(total);\n}\n```\n\nKhối lệnh dùng `{}`. Comment một dòng bắt đầu bằng `//`; comment nhiều dòng nằm giữa `/*` và `*/`. Tên biến thường dùng `camelCase` và không thể là từ khóa như `const`.\n\n## Lỗi thường gặp\n\n`name` và `Name` là hai định danh khác nhau. Thiếu ngoặc hoặc đặt sai phạm vi của `{}` cũng thường gây lỗi parse khó đọc.",
+    "sourcePath": "content/javascript/fundamentals/syntax-co-ban.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "Biến: const, let và var",
+    "description": "So sánh scope, gán lại, khai báo lại và hoisting của const, let, var.",
+    "slug": "/javascript/co-ban/bien",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10110,
+    "difficulty": "beginner",
+    "keywords": [
+      "biến JavaScript",
+      "const",
+      "let",
+      "var",
+      "scope",
+      "hoisting"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/kieu-du-lieu",
+      "/javascript/co-ban/function"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10110,
+    "body": "`const`, `let` và `var` đều khai báo binding, nhưng khác nhau về phạm vi và khả năng khai báo lại. `const` không cho gán binding sang giá trị khác; nó không làm object hoặc array trở thành bất biến.\n\n```js\nconst settings = { theme: \"light\" };\nsettings.theme = \"dark\";\n\nlet count = 0;\ncount += 1;\n```\n\n- `const`: block scope, không gán lại binding và không khai báo lại trong cùng scope.\n- `let`: block scope, có thể gán lại nhưng không thể khai báo lại trong cùng scope.\n- `var`: function scope (hoặc global), có thể gán lại và khai báo lại trong cùng scope.\n\n`let` và `const` được hoist nhưng nằm trong temporal dead zone cho tới dòng khai báo, nên truy cập sớm sẽ lỗi `ReferenceError`. `var` được hoist và khởi tạo thành `undefined`, dễ che giấu lỗi thứ tự thực thi. Khai báo `var` lặp lại trong cùng scope được phép.\n\n## Điểm cần nhớ\n\nƯu tiên `const` khi không cần gán lại; dùng `let` khi binding cần thay đổi. Tránh `var` trong code mới vì function scope và khai báo lặp làm phạm vi khó đoán.",
+    "sourcePath": "content/javascript/fundamentals/bien-const-let-var.md",
+    "headings": [
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "Kiểu dữ liệu",
+    "description": "Nhận diện primitive, object, null, undefined và cách kiểm tra kiểu trong JavaScript.",
+    "slug": "/javascript/co-ban/kieu-du-lieu",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10120,
+    "difficulty": "beginner",
+    "keywords": [
+      "kiểu dữ liệu JavaScript",
+      "primitive",
+      "object",
+      "typeof",
+      "null",
+      "undefined"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/bien",
+      "/javascript/co-ban/array",
+      "/javascript/co-ban/object"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10120,
+    "body": "JavaScript có các primitive như `string`, `number`, `bigint`, `boolean`, `undefined`, `symbol` và `null`; các giá trị còn lại thuộc nhóm object. Array và function cũng là object theo mô hình ngôn ngữ, dù có cú pháp và hành vi chuyên biệt.\n\n```js\ntypeof \"wiki\";       // \"string\"\ntypeof 42;           // \"number\"\ntypeof undefined;    // \"undefined\"\ntypeof null;         // \"object\" (lỗi lịch sử)\nArray.isArray([]);   // true\n```\n\n`typeof null` trả về `\"object\"` vì tương thích lịch sử; dùng `value === null` để kiểm tra null. `typeof` cũng trả về `\"function\"` với callable function.\n\n## Điểm cần nhớ\n\nKiểu của biến không cố định. Giá trị có kiểu; một binding có thể được gán sang giá trị thuộc kiểu khác nếu dùng `let`.",
+    "sourcePath": "content/javascript/fundamentals/kieu-du-lieu.md",
+    "headings": [
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "Toán tử",
+    "description": "Dùng toán tử số học, so sánh, logic, nullish và gán với các semantics dễ đoán.",
+    "slug": "/javascript/co-ban/toan-tu",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10130,
+    "difficulty": "beginner",
+    "keywords": [
+      "toán tử JavaScript",
+      "strict equality",
+      "toán tử logic",
+      "nullish coalescing"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/dieu-kien",
+      "/javascript/co-ban/kieu-du-lieu"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10130,
+    "body": "Toán tử kết hợp giá trị để tạo kết quả. JavaScript có toán tử số học như `+`, `-`, `*`, `/`; so sánh như `===`, `<`; và logic như `&&`, `||`, `!`.\n\n```js\nconst total = 12 + 3;\nconst isReady = total >= 15 && total < 20;\nconst label = input ?? \"Mặc định\";\n```\n\nƯu tiên `===` và `!==` để tránh ép kiểu ngầm. `||` chọn vế phải khi vế trái falsy; `??` chỉ chọn vế phải khi vế trái là `null` hoặc `undefined`.\n\n## Lỗi thường gặp\n\n`+` vừa cộng số vừa nối chuỗi: `\"2\" + 3` cho ra `\"23\"`. Chuyển đổi kiểu rõ ràng khi dữ liệu đến từ form hoặc API.",
+    "sourcePath": "content/javascript/fundamentals/toan-tu.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "if / else",
+    "description": "Rẽ nhánh bằng điều kiện boolean và tránh lỗi truthy, falsy thường gặp.",
+    "slug": "/javascript/co-ban/dieu-kien",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10140,
+    "difficulty": "beginner",
+    "keywords": [
+      "if else JavaScript",
+      "điều kiện",
+      "truthy falsy",
+      "boolean"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/toan-tu",
+      "/javascript/co-ban/switch",
+      "/javascript/co-ban/vong-lap-for"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10140,
+    "body": "`if` chạy một khối khi điều kiện được chuyển thành `true`; `else if` kiểm tra trường hợp tiếp theo và `else` xử lý phần còn lại.\n\n```js\nif (score >= 90) {\n  result = \"A\";\n} else if (score >= 70) {\n  result = \"B\";\n} else {\n  result = \"C\";\n}\n```\n\nĐiều kiện không bắt buộc phải là boolean: `0`, `\"\"`, `null`, `undefined` và `NaN` là falsy; object và array rỗng vẫn truthy.\n\n## Lỗi thường gặp\n\nNếu cần phân biệt rõ `0` với giá trị chưa nhập, kiểm tra `value == null` hoặc `value === 0` thay vì `if (value)`.",
+    "sourcePath": "content/javascript/fundamentals/if-else.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "switch",
+    "description": "Chọn nhánh theo giá trị bằng switch và tránh fall-through ngoài ý muốn.",
+    "slug": "/javascript/co-ban/switch",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10150,
+    "difficulty": "beginner",
+    "keywords": [
+      "switch JavaScript",
+      "case",
+      "default",
+      "fall-through"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/dieu-kien",
+      "/javascript/co-ban/toan-tu"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10150,
+    "body": "`switch` phù hợp khi cần so sánh một biểu thức với nhiều giá trị cụ thể. Các `case` dùng so sánh nghiêm ngặt; `default` chạy khi không khớp nhánh nào.\n\n```js\nswitch (status) {\n  case \"ready\":\n    message = \"Có thể tiếp tục\";\n    break;\n  case \"pending\":\n    message = \"Đang xử lý\";\n    break;\n  default:\n    message = \"Không xác định\";\n}\n```\n\nKhông có `break` thì việc thực thi rơi tiếp xuống case sau (fall-through). Có thể cố ý gom nhiều case chung một nhánh, nhưng cần thể hiện rõ ý định.\n\n## Điểm cần nhớ\n\nDùng `if / else` cho điều kiện dạng khoảng hoặc biểu thức phức tạp; dùng `switch` cho nhiều giá trị phân biệt của cùng một biểu thức.",
+    "sourcePath": "content/javascript/fundamentals/switch.md",
+    "headings": [
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "Vòng lặp for",
+    "description": "Lặp với for khi cần kiểm soát bộ đếm hoặc số vòng lặp rõ ràng.",
+    "slug": "/javascript/co-ban/vong-lap-for",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10160,
+    "difficulty": "beginner",
+    "keywords": [
+      "for JavaScript",
+      "vòng lặp",
+      "break",
+      "continue"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/vong-lap-while",
+      "/javascript/co-ban/array"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10160,
+    "body": "`for` gom phần khởi tạo, điều kiện tiếp tục và cập nhật bộ đếm vào một chỗ.\n\n```js\nfor (let index = 0; index < items.length; index += 1) {\n  console.log(items[index]);\n}\n```\n\nĐiều kiện được kiểm tra trước mỗi vòng. `break` thoát vòng lặp; `continue` bỏ phần còn lại của lượt hiện tại. Khi chỉ cần lấy từng giá trị, `for...of` thường dễ đọc hơn.\n\n## Lỗi thường gặp\n\nSai điều kiện như `index <= items.length` sẽ truy cập ngoài phạm vi. Kiểm tra điểm bắt đầu và điều kiện dừng khi debug vòng lặp.",
+    "sourcePath": "content/javascript/fundamentals/for.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "Vòng lặp while",
+    "description": "Lặp khi điều kiện còn đúng và bảo đảm trạng thái có thể tiến đến điểm dừng.",
+    "slug": "/javascript/co-ban/vong-lap-while",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10170,
+    "difficulty": "beginner",
+    "keywords": [
+      "while JavaScript",
+      "vòng lặp",
+      "điều kiện dừng",
+      "do while"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/vong-lap-for",
+      "/javascript/co-ban/dieu-kien"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10170,
+    "body": "`while` kiểm tra điều kiện trước mỗi lượt và chạy khối lệnh khi điều kiện đúng.\n\n```js\nlet attempts = 0;\nwhile (attempts < 3) {\n  attempts += 1;\n}\n```\n\n`do...while` chạy thân vòng lặp ít nhất một lần rồi mới kiểm tra điều kiện.\n\n## Lỗi thường gặp\n\nNếu trạng thái trong điều kiện không thay đổi, vòng lặp có thể chạy mãi. Hãy xác định rõ biến nào tiến đến điểm dừng và điều gì xảy ra khi dữ liệu đầu vào rỗng.",
+    "sourcePath": "content/javascript/fundamentals/while.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "Function",
+    "description": "Khai báo function, truyền tham số, trả kết quả và hiểu scope cơ bản.",
+    "slug": "/javascript/co-ban/function",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10180,
+    "difficulty": "beginner",
+    "keywords": [
+      "function JavaScript",
+      "tham số",
+      "return",
+      "arrow function",
+      "scope"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/bien",
+      "/javascript/co-ban/array",
+      "/javascript/co-ban/object"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10180,
+    "body": "Function đóng gói hành vi để có thể gọi lại. `return` kết thúc lời gọi và gửi giá trị về nơi gọi; nếu bỏ qua, kết quả là `undefined`.\n\n```js\nfunction add(left, right) {\n  return left + right;\n}\n\nconst double = (value) => value * 2;\n```\n\nFunction declaration được hoist trong phạm vi khai báo. Function expression gán vào `const` chỉ dùng được sau dòng khởi tạo. Arrow function không tự có `this` riêng; dùng khi phù hợp với ngữ cảnh thay vì thay mọi function.\n\n## Lỗi thường gặp\n\nGọi function không đồng nghĩa với trả kết quả: `console.log(value)` chỉ in ra, không thay thế `return value`.",
+    "sourcePath": "content/javascript/fundamentals/function.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "Array",
+    "description": "Tạo và duyệt array, dùng các phương thức phổ biến và nhận biết thao tác thay đổi dữ liệu.",
+    "slug": "/javascript/co-ban/array",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10190,
+    "difficulty": "beginner",
+    "keywords": [
+      "array JavaScript",
+      "mảng",
+      "map",
+      "filter",
+      "find",
+      "mutation"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/object",
+      "/javascript/co-ban/function"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10190,
+    "body": "Array là cấu trúc có thứ tự với chỉ số bắt đầu từ `0`. Trong JavaScript, array là một dạng object chuyên biệt, không phải kiểu nguyên thủy tách rời khỏi object.\n\n```js\nconst prices = [10, 20, 30];\nconst discounted = prices.map((price) => price * 0.9);\nconst available = prices.filter((price) => price >= 20);\n```\n\n`map` tạo array mới từ mỗi phần tử; `filter` giữ các phần tử thỏa điều kiện; `find` trả về phần tử đầu tiên phù hợp hoặc `undefined`. `push` và `sort` thay đổi array gốc.\n\n## Điểm cần nhớ\n\n`const items = []` vẫn cho phép `items.push(...)`: binding không đổi dù object bị sửa. `Array.isArray(value)` là cách đáng tin cậy để kiểm tra array.",
+    "sourcePath": "content/javascript/fundamentals/array.md",
+    "headings": [
+      {
+        "title": "Điểm cần nhớ",
+        "id": "iem-can-nho"
+      }
+    ]
+  },
+  {
+    "title": "Object",
+    "description": "Dùng object để nhóm thuộc tính, đọc dữ liệu an toàn và tạo bản sao nông khi cập nhật.",
+    "slug": "/javascript/co-ban/object",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10200,
+    "difficulty": "beginner",
+    "keywords": [
+      "object JavaScript",
+      "thuộc tính",
+      "destructuring",
+      "spread",
+      "object"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/array",
+      "/javascript/co-ban/string"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10200,
+    "body": "Object lưu dữ liệu theo cặp key-value. Key thường là string hoặc symbol; cú pháp literal dùng `{}`.\n\n```js\nconst user = { name: \"NamGT\", active: true };\nconst { name } = user;\nconst updatedUser = { ...user, active: false };\n```\n\nĐọc thuộc tính tùy chọn bằng `user.email`; dùng `user.email ?? \"Chưa có\"` để xử lý thiếu dữ liệu. Spread tạo bản sao **nông**: object lồng bên trong vẫn dùng chung tham chiếu.\n\n## Lỗi thường gặp\n\n`\"name\" in user` cũng kiểm tra thuộc tính kế thừa. Với kiểm tra thuộc tính riêng, dùng `Object.hasOwn(user, \"name\")`.",
+    "sourcePath": "content/javascript/fundamentals/object.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "String",
+    "description": "Tạo chuỗi, nội suy giá trị và xử lý các thao tác chuỗi thường gặp.",
+    "slug": "/javascript/co-ban/string",
+    "category": "fundamentals",
+    "categoryLabel": "Cơ bản",
+    "order": 10210,
+    "difficulty": "beginner",
+    "keywords": [
+      "string JavaScript",
+      "template literal",
+      "chuỗi",
+      "includes",
+      "trim"
+    ],
+    "updated": "2026-10-03",
+    "collection": "javascript",
+    "collectionLabel": "JavaScript",
+    "related": [
+      "/javascript/co-ban/kieu-du-lieu",
+      "/javascript/co-ban/array"
+    ],
+    "collectionDescription": null,
+    "featured": false,
+    "priority": 10210,
+    "body": "String biểu diễn văn bản và là immutable: thao tác chuỗi tạo giá trị mới thay vì sửa chuỗi cũ.\n\n```js\nconst name = \"NamGT\";\nconst greeting = `Xin chào, ${name}!`;\nconst normalized = \"  DevHubs  \".trim().toLowerCase();\n```\n\nTemplate literal dùng dấu backtick để nội suy biểu thức. Phương thức hữu ích gồm `includes`, `slice`, `replace` và `trim`.\n\n## Lỗi thường gặp\n\n`length` đếm đơn vị UTF-16, không phải lúc nào cũng bằng số ký tự người dùng nhìn thấy; emoji có thể chiếm nhiều đơn vị. Dùng `Intl.Segmenter` khi cần xử lý theo grapheme trong ngôn ngữ tự nhiên.",
+    "sourcePath": "content/javascript/fundamentals/string.md",
+    "headings": [
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      }
+    ]
+  },
+  {
+    "title": "Lộ trình học C++",
+    "description": "Chọn lộ trình C++ cho người mới, luyện thuật toán hoặc phát triển phần mềm.",
+    "slug": "/cpp/bat-dau/lo-trinh-hoc",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20000,
+    "difficulty": "beginner",
+    "keywords": [
+      "lộ trình C++",
+      "học C++",
+      "beginner",
+      "competitive programming",
+      "software engineering"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/cpp-la-gi",
+      "/cpp/bat-dau/chuong-trinh-dau-tien"
+    ],
+    "featured": false,
+    "priority": 20000,
+    "body": "Chọn một lộ trình theo mục tiêu hiện tại. Cả ba dùng chung bài gốc nên bạn có thể chuyển hướng mà không phải học lại nội dung.\n\n## Beginner Path\n\nPhù hợp nếu bạn mới học lập trình hoặc cần nền tảng chắc trước khi giải bài toán.\n\n- [C++ là gì và các phiên bản](/cpp/bat-dau/cpp-la-gi): hiểu compiler, thư viện chuẩn và C++17.\n- [Cài môi trường C++](/cpp/bat-dau/cai-dat-moi-truong), rồi viết [chương trình đầu tiên](/cpp/bat-dau/chuong-trinh-dau-tien).\n- Học [biến, kiểu dữ liệu và biểu thức](/cpp/bat-dau/bien-kieu-du-lieu), sau đó [nhập xuất, điều kiện và vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap).\n- Thực hành [hàm](/cpp/bat-dau/ham-pham-vi), [mảng và chuỗi](/cpp/bat-dau/mang-string), rồi chuyển sang [`std::vector`](/cpp/trung-cap/vector-struct-enum).\n- Bắt đầu thuật toán với [độ phức tạp](/cpp/thuat-toan/do-phuc-tap) và [tìm kiếm, sắp xếp](/cpp/thuat-toan/tim-kiem-sap-xep).\n\n## Competitive Programming Path\n\nPhù hợp với học sinh luyện HSG, người giải bài trên OJ và cần chọn thuật toán theo giới hạn.\n\n- Ôn [nền tảng C++](/cpp/bat-dau/lo-trinh-hoc), nhất là hàm, vòng lặp và [mảng, chuỗi](/cpp/bat-dau/mang-string).\n- Nắm [STL](/cpp/stl/stl-la-gi), [containers](/cpp/stl/sequence-containers) và [algorithms](/cpp/stl/stl-algorithms).\n- Học [Big O](/cpp/thuat-toan/do-phuc-tap), [đọc đề và thiết kế thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan), rồi [tìm kiếm và sắp xếp](/cpp/thuat-toan/tim-kiem-sap-xep).\n- Tiếp tục với [đệ quy và quay lui](/cpp/thuat-toan/de-quy-quay-lui), [đồ thị](/cpp/thuat-toan/do-thi), rồi [quy hoạch động](/cpp/thuat-toan/quy-hoach-dong).\n- Dùng [cheatsheet](/cpp/tra-cuu/cu-phap) để tra nhanh; luôn tự kiểm tra giới hạn và trường hợp biên.\n\n## Software Engineering Path\n\nPhù hợp khi bạn muốn viết ứng dụng, thư viện hoặc công cụ C++ có thể bảo trì.\n\n- Học [references và pointers](/cpp/bat-dau/references-pointers) trước khi tìm hiểu [vòng đời bộ nhớ](/cpp/trung-cap/stack-heap-lifetime).\n- Học [class và đóng gói](/cpp/trung-cap/classes-constructors), rồi xem [kế thừa và đa hình](/cpp/trung-cap/inheritance-polymorphism).\n- Chuyển sang [C++ hiện đại và STL](/cpp/stl/cpp17-20-23), [RAII và smart pointers](/cpp/stl/raii-smart-pointers).\n- Tổ chức mã với [header, translation unit và module](/cpp/ky-thuat/header-source-modules), rồi build bằng [CMake](/cpp/ky-thuat/cmake).\n- Kết thúc với [unit testing](/cpp/ky-thuat/unit-testing), [debugging](/cpp/ky-thuat/debugging) và [an toàn bộ nhớ](/cpp/ky-thuat/ub-memory-safety).\n\n## Cách học\n\nSau mỗi bài, sửa ví dụ bằng một input khác, dự đoán output trước khi chạy rồi mới kiểm tra. Khi lỗi, đọc thông báo compiler và thu nhỏ ví dụ để tìm nguyên nhân.\n\n## Tự kiểm tra\n\nChọn một lộ trình, ghi lại ba bài tiếp theo và giải ít nhất một bài tập ở mỗi bài. Chuyển sang chủ đề mới khi bạn có thể giải thích code của mình và nêu được trường hợp biên.\n\n## Đọc tiếp\n\nBắt đầu với [C++ là gì](/cpp/bat-dau/cpp-la-gi) hoặc mở collection C++ trong sidebar để xem toàn bộ bài.",
+    "sourcePath": "content/cpp/getting-started/lo-trinh-hoc.md",
+    "headings": [
+      {
+        "title": "Beginner Path",
+        "id": "beginner-path"
+      },
+      {
+        "title": "Competitive Programming Path",
+        "id": "competitive-programming-path"
+      },
+      {
+        "title": "Software Engineering Path",
+        "id": "software-engineering-path"
+      },
+      {
+        "title": "Cách học",
+        "id": "cach-hoc"
+      },
+      {
+        "title": "Tự kiểm tra",
+        "id": "tu-kiem-tra"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "C++ là gì và các phiên bản",
+    "description": "Tìm hiểu C++, compiler, thư viện chuẩn và cách chọn chuẩn ngôn ngữ cho dự án.",
+    "slug": "/cpp/bat-dau/cpp-la-gi",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20010,
+    "difficulty": "beginner",
+    "keywords": [
+      "C++",
+      "C++17",
+      "C++20",
+      "C++23",
+      "compiler",
+      "standard library"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/cai-dat-moi-truong",
+      "/cpp/bat-dau/lo-trinh-hoc",
+      "/cpp/stl/cpp17-20-23"
+    ],
+    "featured": false,
+    "priority": 20010,
+    "body": "C++ là ngôn ngữ lập trình biên dịch, đa mục đích, cho phép viết ứng dụng cấp cao nhưng vẫn kiểm soát được tài nguyên và hiệu năng. Bài này giúp bạn hiểu các thành phần của một chương trình và chọn một chuẩn ngôn ngữ làm nền.\n\n## C++ được dùng khi nào?\n\nC++ thường xuất hiện trong game engine, trình duyệt, công cụ đồ họa, hệ thống nhúng, thư viện hiệu năng cao, ứng dụng desktop và phần mềm hệ thống. Với script ngắn hoặc ứng dụng web thông thường, ngôn ngữ khác có thể đơn giản hơn; hãy chọn theo yêu cầu của sản phẩm và đội ngũ.\n\n## Compiler và thư viện chuẩn\n\n- **Compiler** dịch mã nguồn thành chương trình cho nền tảng mục tiêu. Ví dụ: GCC, Clang và MSVC.\n- **Thư viện chuẩn** cung cấp `std::string`, `std::vector`, thuật toán, luồng nhập xuất và nhiều công cụ khác.\n- **C++ standard** xác định cú pháp và hành vi chuẩn. Compiler và thư viện có thể triển khai các phần khác nhau của một chuẩn.\n\n```text\nsource.cpp -> compiler + standard library -> executable\n```\n\n## Những mốc thường gặp\n\n- **C++98/03**: nền tảng chuẩn hóa ban đầu.\n- **C++11**: `auto`, lambda, move semantics, smart pointers và nhiều thay đổi lớn.\n- **C++14**: hoàn thiện một số tính năng C++11.\n- **C++17**: structured bindings, `std::optional`, `std::variant`, filesystem và nhiều cải tiến STL.\n- **C++20**: concepts, ranges, coroutines, modules và format; mức hỗ trợ thư viện không đồng đều.\n- **C++23**: bản chuẩn công bố sau C++20, có nhiều bổ sung nhỏ; mức hỗ trợ phụ thuộc phiên bản compiler và thư viện.\n\n## Chuẩn dùng trong bộ tài liệu\n\nVí dụ cơ bản dùng **C++17** để tương thích rộng và có STL hiện đại. Bài dùng C++20 hoặc C++23 sẽ ghi rõ. Hãy đặt chuẩn tường minh thay vì dựa vào mặc định compiler:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nVới MSVC, chọn `/std:c++17`. Chuẩn ngôn ngữ không đảm bảo mọi thư viện đã triển khai đủ tính năng; kiểm tra bảng hỗ trợ của compiler trước khi dùng API mới.\n\n## Lỗi thường gặp\n\n- **Nhầm C++ với compiler**: C++ là ngôn ngữ và chuẩn; GCC, Clang, MSVC là các implementation.\n- **Dựa vào extension riêng**: chương trình có thể chỉ build trên một compiler. Chọn chuẩn tường minh và tránh API không chuẩn nếu chưa có lý do.\n- **Nghĩ rằng C++23 đồng nghĩa hỗ trợ đầy đủ**: compiler có thể chấp nhận cờ `-std=c++23` nhưng một số tính năng thư viện vẫn chưa sẵn sàng.\n\n## Tự luyện\n\nGiải thích vai trò của source code, compiler và thư viện chuẩn. Sau đó tìm compiler đang cài và ghi lại chuẩn cao nhất mà compiler lẫn thư viện hỗ trợ cho tính năng bạn cần.\n\n## Đọc tiếp\n\nXem [cách cài compiler trên từng hệ điều hành](/cpp/bat-dau/cai-dat-moi-truong), rồi đọc [cách viết chương trình đầu tiên](/cpp/bat-dau/chuong-trinh-dau-tien).",
+    "sourcePath": "content/cpp/getting-started/cpp-la-gi.md",
+    "headings": [
+      {
+        "title": "C++ được dùng khi nào?",
+        "id": "c-uoc-dung-khi-nao"
+      },
+      {
+        "title": "Compiler và thư viện chuẩn",
+        "id": "compiler-va-thu-vien-chuan"
+      },
+      {
+        "title": "Những mốc thường gặp",
+        "id": "nhung-moc-thuong-gap"
+      },
+      {
+        "title": "Chuẩn dùng trong bộ tài liệu",
+        "id": "chuan-dung-trong-bo-tai-lieu"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Cài môi trường C++",
+    "description": "Cài compiler C++ trên Windows, Linux và macOS, rồi kiểm tra công cụ đang dùng.",
+    "slug": "/cpp/bat-dau/cai-dat-moi-truong",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20020,
+    "difficulty": "beginner",
+    "keywords": [
+      "cài C++",
+      "Windows",
+      "Linux",
+      "macOS",
+      "GCC",
+      "Clang",
+      "MSVC"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/cpp-la-gi",
+      "/cpp/bat-dau/chuong-trinh-dau-tien",
+      "/cpp/ky-thuat/cmake"
+    ],
+    "featured": false,
+    "priority": 20020,
+    "body": "Compiler dịch source C++ thành chương trình có thể chạy. Cài compiler và build tools phù hợp hệ điều hành; IDE là lựa chọn thêm, không thay thế compiler.\n\n## Windows\n\nCách phổ biến là cài Visual Studio hoặc Build Tools, chọn workload **Desktop development with C++** để có MSVC, Windows SDK và công cụ build. Mở Developer PowerShell/Command Prompt để `cl.exe` cùng biến môi trường được thiết lập.\n\n```powershell\ncl /std:c++17 /EHsc /W4 main.cpp\n```\n\nCó thể dùng GCC hoặc LLVM/Clang qua một môi trường cài đặt phù hợp, nhưng hãy kiểm tra rõ compiler đang chạy và thư viện standard library đi kèm.\n\n## Linux\n\nCài gói compiler C++ từ package manager của bản phân phối, thường là GCC (`g++`) hoặc Clang (`clang++`). Ví dụ trên Debian/Ubuntu:\n\n```sh\nsudo apt update\nsudo apt install build-essential\n```\n\nKiểm tra:\n\n```sh\ng++ --version\n```\n\nTên gói có thể khác trên Fedora, Arch hoặc distro khác; dùng tài liệu chính thức của distro.\n\n## macOS\n\nCài Command Line Tools của Apple:\n\n```sh\nxcode-select --install\nclang++ --version\n```\n\n`clang++` thường dùng libc++ trên macOS. Cài Xcode đầy đủ nếu workflow cần IDE, SDK hoặc công cụ Apple bổ sung.\n\n## Kiểm tra và build thử\n\nTạo `main.cpp`, sau đó chọn đúng lệnh theo compiler:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n./app\n```\n\nTrên Windows PowerShell, chạy file tạo ra bằng `./app.exe`; nếu dùng MSVC, lệnh build mặc định thường tạo `main.exe`.\n\n## Lỗi thường gặp\n\n- **`command not found` hoặc `cl is not recognized`**: compiler chưa cài hoặc terminal chưa nạp `PATH`/Developer Environment.\n- **IDE build được nhưng terminal không được**: IDE có thể dùng compiler khác; kiểm tra đường dẫn và phiên bản compiler.\n- **Compiler không nhận `-std=c++17`**: đó có thể là cờ của GCC/Clang; MSVC dùng `/std:c++17`.\n\n## Tự luyện\n\nTạo file in một dòng, build từ terminal không phụ thuộc nút Run của IDE, rồi ghi lại phiên bản compiler và lệnh đã dùng.\n\n## Đọc tiếp\n\nViết [chương trình đầu tiên](/cpp/bat-dau/chuong-trinh-dau-tien) và tìm hiểu [quá trình biên dịch](/cpp/bat-dau/bien-kieu-du-lieu).",
+    "sourcePath": "content/cpp/getting-started/cai-dat-moi-truong.md",
+    "headings": [
+      {
+        "title": "Windows",
+        "id": "windows"
+      },
+      {
+        "title": "Linux",
+        "id": "linux"
+      },
+      {
+        "title": "macOS",
+        "id": "macos"
+      },
+      {
+        "title": "Kiểm tra và build thử",
+        "id": "kiem-tra-va-build-thu"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Chương trình C++ đầu tiên",
+    "description": "Viết, biên dịch và chạy chương trình C++17 tối giản từ terminal.",
+    "slug": "/cpp/bat-dau/chuong-trinh-dau-tien",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20030,
+    "difficulty": "beginner",
+    "keywords": [
+      "Hello World C++",
+      "main",
+      "include",
+      "biên dịch",
+      "chạy C++"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/cai-dat-moi-truong",
+      "/cpp/bat-dau/bien-kieu-du-lieu",
+      "/cpp/bat-dau/ham-pham-vi"
+    ],
+    "featured": false,
+    "priority": 20030,
+    "body": "Chương trình đầu tiên giúp bạn kiểm tra compiler và hiểu cấu trúc tối thiểu của một file C++. Bạn cần biết cách tạo file văn bản và chạy lệnh trong terminal.\n\n## Ví dụ\n\nLưu thành `main.cpp`:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << \"Xin chao, C++!\\n\";\n    return 0;\n}\n```\n\nBiên dịch và chạy:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o hello\n./hello\n```\n\nKết quả:\n\n```text\nXin chao, C++!\n```\n\n## Các thành phần\n\n- `#include <iostream>` đưa khai báo của luồng nhập xuất chuẩn vào translation unit.\n- `int main()` là điểm bắt đầu của chương trình hosted C++.\n- `std::cout` ghi dữ liệu ra output; `\\n` xuống dòng.\n- `return 0` báo kết thúc thành công. Trong `main`, có thể bỏ `return 0` mà ý nghĩa vẫn là trả về 0.\n- `std::` chỉ rõ tên thuộc namespace chuẩn, tránh cần `using namespace std;`.\n\nCompiler có hai bước khái quát: dịch source và liên kết các object/library thành executable. Với một file, compiler thường gộp các bước trong cùng một lệnh.\n\n## Lỗi thường gặp\n\n- **Thiếu `;`**: compiler thường báo lỗi ở dòng kế tiếp; kiểm tra cả dòng trước vị trí báo lỗi.\n- **Không tìm thấy `iostream` hoặc `g++`**: kiểm tra compiler và toolchain, không sửa source để lách lỗi môi trường.\n- **Sai thư mục**: lệnh không tìm thấy `main.cpp`; chạy `pwd` hoặc `cd` đến nơi chứa file.\n\n## Tự luyện\n\nSửa chương trình để in tên bạn trên hai dòng. Sau đó dùng `std::cout` để in `2 + 3` và dự đoán kết quả trước khi build.\n\n## Đọc tiếp\n\nHọc [biến, kiểu dữ liệu và biên dịch](/cpp/bat-dau/bien-kieu-du-lieu), rồi thực hành [nhập xuất](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap).",
+    "sourcePath": "content/cpp/getting-started/chuong-trinh-dau-tien.md",
+    "headings": [
+      {
+        "title": "Ví dụ",
+        "id": "vi-du"
+      },
+      {
+        "title": "Các thành phần",
+        "id": "cac-thanh-phan"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Biến, kiểu dữ liệu và quá trình biên dịch",
+    "description": "Khai báo biến, chọn kiểu an toàn và hiểu header, translation unit, compile, link.",
+    "slug": "/cpp/bat-dau/bien-kieu-du-lieu",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20040,
+    "difficulty": "beginner",
+    "keywords": [
+      "biến C++",
+      "const",
+      "kiểu dữ liệu",
+      "integer overflow",
+      "translation unit",
+      "linker"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/chuong-trinh-dau-tien",
+      "/cpp/bat-dau/toan-tu",
+      "/cpp/ky-thuat/header-source-modules",
+      "/cpp/tra-cuu/kieu-du-lieu"
+    ],
+    "featured": false,
+    "priority": 20040,
+    "body": "Biến đặt tên cho một object có kiểu và thời gian sống. Chọn kiểu đúng giúp compiler bắt lỗi và giúp code diễn đạt miền giá trị.\n\n## Khai báo và khởi tạo\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    int age{16};\n    const double pi{3.14159};\n    std::string name{\"An\"};\n    auto score{95};\n    std::cout << age << ' ' << pi << ' ' << name << ' ' << score << '\\n';\n}\n```\n\nƯu tiên khởi tạo ngay khi khai báo. Dấu `{}` giúp phát hiện nhiều phép chuyển đổi thu hẹp không an toàn. `const` cấm sửa object qua tên đó; `auto` suy ra kiểu từ biểu thức khởi tạo nhưng biến vẫn có kiểu tĩnh.\n\n## Một số kiểu cơ bản\n\n- `bool`: `true` hoặc `false`.\n- `char`: đơn vị ký tự hẹp; mã hóa ký tự phụ thuộc encoding. Không mặc định một `char` chứa mọi ký tự Unicode.\n- `int`, `long`, `long long`: số nguyên có dấu với độ rộng phụ thuộc implementation trong một số trường hợp.\n- `float`, `double`: số dấu phẩy động gần đúng, không phù hợp để lưu tiền chính xác.\n- `std::string`: chuỗi ký tự tiện dụng trong C++.\n- `std::size_t`: kiểu không dấu thường dùng cho kích thước và chỉ số container.\n\nNếu cần độ rộng bit cố định, dùng `std::int32_t` hoặc `std::uint64_t` từ `<cstdint>` khi implementation có kiểu tương ứng.\n\n## Source đến executable\n\nMỗi file `.cpp` được xử lý thành một **translation unit** sau khi tiền xử lý `#include`. Compiler tạo object file; linker kết hợp object files và libraries. Header thường chứa khai báo, còn định nghĩa được đặt trong `.cpp`; vi phạm quy tắc định nghĩa có thể gây lỗi linker. Chi tiết nằm ở [header và translation units](/cpp/ky-thuat/header-source-modules).\n\n## Lỗi thường gặp\n\n- **Dùng biến chưa khởi tạo**: giá trị không hợp lệ hoặc hành vi không xác định; khởi tạo biến trước khi đọc.\n- **Tràn số nguyên có dấu**: nếu phép tính vượt miền biểu diễn, hành vi là undefined behavior; chọn kiểu đủ lớn và kiểm tra trước phép tính.\n- **So sánh số thực bằng `==`**: sai số biểu diễn có thể làm kết quả bất ngờ; so sánh theo tolerance khi bài toán cho phép.\n\n## Tự luyện\n\nKhai báo số lượng sản phẩm, giá và tổng tiền. Chọn kiểu cho từng biến; nếu tổng có thể lớn, giải thích vì sao `int` có thể chưa đủ.\n\n## Đọc tiếp\n\nHọc [toán tử và biểu thức](/cpp/bat-dau/toan-tu), sau đó xem [bảng kiểu dữ liệu và giới hạn](/cpp/tra-cuu/kieu-du-lieu).",
+    "sourcePath": "content/cpp/getting-started/bien-kieu-du-lieu.md",
+    "headings": [
+      {
+        "title": "Khai báo và khởi tạo",
+        "id": "khai-bao-va-khoi-tao"
+      },
+      {
+        "title": "Một số kiểu cơ bản",
+        "id": "mot-so-kieu-co-ban"
+      },
+      {
+        "title": "Source đến executable",
+        "id": "source-en-executable"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Toán tử và biểu thức",
+    "description": "Dùng toán tử số học, so sánh, logic, gán và hiểu thứ tự đánh giá trong C++.",
+    "slug": "/cpp/bat-dau/toan-tu",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20050,
+    "difficulty": "beginner",
+    "keywords": [
+      "toán tử C++",
+      "arithmetic",
+      "comparison",
+      "logical",
+      "precedence",
+      "modulo"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/bien-kieu-du-lieu",
+      "/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap",
+      "/cpp/tra-cuu/cu-phap"
+    ],
+    "featured": false,
+    "priority": 20050,
+    "body": "Biểu thức kết hợp giá trị và toán tử để tạo ra một giá trị mới. Hiểu kiểu toán hạng và thứ tự đánh giá giúp tránh lỗi khó nhìn thấy.\n\n## Các nhóm thường dùng\n\n- Số học: `+`, `-`, `*`, `/`, `%` với số nguyên.\n- So sánh: `==`, `!=`, `<`, `<=`, `>`, `>=` trả về `bool`.\n- Logic: `&&`, `||`, `!`; `&&` và `||` short-circuit, nghĩa là vế phải có thể không được tính.\n- Gán: `=`, `+=`, `-=`, `*=`, `/=`.\n- Tăng giảm: `++i`, `i++`, `--i`, `i--`.\n\n```cpp\n#include <iostream>\n\nint main() {\n    const int total{17};\n    const int people{5};\n    const int quotient{total / people};\n    const int remainder{total % people};\n    const bool valid{people > 0 && total >= people};\n    std::cout << quotient << ' ' << remainder << ' ' << valid << '\\n';\n}\n```\n\nKhi cả hai toán hạng là số nguyên, `/` bỏ phần lẻ theo hướng về 0. Dùng `17.0 / 5` nếu cần kết quả dấu phẩy động.\n\n## Ưu tiên và ngoặc\n\n`*` có ưu tiên cao hơn `+`, còn toán tử so sánh thường được đánh giá trước `&&`. Đừng bắt người đọc phải nhớ cả bảng ưu tiên cho biểu thức phức tạp:\n\n```cpp\n#include <iostream>\n\nint main() {\n    const int age{20};\n    const bool has_ticket{true};\n    const bool is_guest{false};\n    const bool can_enter{(age >= 18) && (has_ticket || is_guest)};\n    std::cout << can_enter << '\\n';\n}\n```\n\nThứ tự ưu tiên không đồng nghĩa với thứ tự đánh giá mọi toán hạng. Tránh biểu thức thay đổi cùng một biến nhiều lần như `i++ + i++`; kết quả có thể không xác định hoặc không được thứ tự hóa như mong muốn.\n\n## Lỗi thường gặp\n\n- Viết `=` thay vì `==` khi so sánh.\n- Chia nguyên nhưng mong nhận số thực.\n- Chia cho 0 hoặc để số nguyên có dấu tràn miền.\n- Ghép nhiều phép tăng giảm vào một biểu thức.\n\n## Tự luyện\n\nViết biểu thức kiểm tra một số nằm trong đoạn đóng `[low, high]`. Gợi ý: dùng hai so sánh và `&&`.\n\n## Đọc tiếp\n\nÁp dụng biểu thức vào [nhập xuất, điều kiện và vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap).",
+    "sourcePath": "content/cpp/getting-started/toan-tu.md",
+    "headings": [
+      {
+        "title": "Các nhóm thường dùng",
+        "id": "cac-nhom-thuong-dung"
+      },
+      {
+        "title": "Ưu tiên và ngoặc",
+        "id": "uu-tien-va-ngoac"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Nhập xuất, điều kiện và vòng lặp",
+    "description": "Đọc dữ liệu bằng cin, in bằng cout, rẽ nhánh và lặp chương trình an toàn.",
+    "slug": "/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20060,
+    "difficulty": "beginner",
+    "keywords": [
+      "cin",
+      "cout",
+      "if",
+      "else",
+      "switch",
+      "for",
+      "while",
+      "do while"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/toan-tu",
+      "/cpp/bat-dau/ham-pham-vi",
+      "/cpp/thuat-toan/giai-quyet-bai-toan"
+    ],
+    "featured": false,
+    "priority": 20060,
+    "body": "Nhập xuất kết nối chương trình với người dùng hoặc hệ thống chấm bài. Điều kiện chọn nhánh; vòng lặp lặp lại một khối lệnh. Cần biết biến và biểu thức trước khi học.\n\n## Nhập xuất chuẩn\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n    if (!(std::cin >> age)) {\n        std::cerr << \"Du lieu khong hop le\\n\";\n        return 1;\n    }\n    std::cout << \"Tuoi: \" << age << '\\n';\n}\n```\n\n`std::cin >>` đọc token và có thể thất bại khi input sai. `std::cout` là output thông thường; `std::cerr` dành cho lỗi. Bài trên không đọc được khoảng trắng bên trong chuỗi; dùng `std::getline` cho cả dòng.\n\n## Rẽ nhánh\n\n```cpp\n#include <iostream>\n\nint main() {\n    const int score{85};\nif (score >= 90) {\n    std::cout << \"A\\n\";\n} else if (score >= 80) {\n    std::cout << \"B\\n\";\n} else {\n    std::cout << \"Can on tap\\n\";\n}\n}\n```\n\n`switch` phù hợp với một biểu thức nguyên hoặc enum có nhiều giá trị rời rạc. Mỗi `case` thường cần `break` để tránh chạy xuyên sang nhánh tiếp theo.\n\n## Vòng lặp\n\n```cpp\n#include <iostream>\n\nint main() {\n    for (int i = 0; i < 3; ++i) std::cout << i << ' ';\n    int remaining{3};\n    while (remaining > 0) --remaining;\n    do {\n        std::cout << remaining;\n    } while (remaining > 1);\n    std::cout << '\\n';\n}\n```\n\n`for` tiện khi có bộ đếm; `while` khi số lần chưa biết; `do-while` khi thân phải chạy ít nhất một lần.\n\n## Lỗi thường gặp\n\n- Điều kiện vòng lặp không đổi và tạo vòng lặp vô hạn.\n- Dùng `i <= n` khi phần tử cuối hợp lệ lại ở `n - 1`.\n- Bỏ qua trạng thái lỗi của `cin` rồi dùng giá trị không đọc được.\n- Quên `break` trong `switch`.\n\n## Tự luyện\n\nĐọc `n`, sau đó tính tổng từ 1 đến `n`. Trường hợp biên cần quyết định: `n <= 0`; nếu `n` lớn, chọn kiểu chứa tổng đủ rộng.\n\n## Đọc tiếp\n\nĐóng gói logic vào [hàm và phạm vi biến](/cpp/bat-dau/ham-pham-vi); dùng các kỹ thuật này trong [bài toán thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan).",
+    "sourcePath": "content/cpp/getting-started/nhap-xuat-dieu-kien-vong-lap.md",
+    "headings": [
+      {
+        "title": "Nhập xuất chuẩn",
+        "id": "nhap-xuat-chuan"
+      },
+      {
+        "title": "Rẽ nhánh",
+        "id": "re-nhanh"
+      },
+      {
+        "title": "Vòng lặp",
+        "id": "vong-lap"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Hàm, tham số và phạm vi biến",
+    "description": "Chia chương trình thành hàm, truyền dữ liệu, trả kết quả và hiểu scope cơ bản.",
+    "slug": "/cpp/bat-dau/ham-pham-vi",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20070,
+    "difficulty": "beginner",
+    "keywords": [
+      "function C++",
+      "tham số",
+      "return",
+      "scope",
+      "local variable",
+      "lifetime"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap",
+      "/cpp/bat-dau/references-pointers",
+      "/cpp/trung-cap/overloading-default-arguments"
+    ],
+    "featured": false,
+    "priority": 20070,
+    "body": "Hàm đặt tên cho một thao tác để tái sử dụng và kiểm tra riêng. Tách logic thành hàm giúp `main` dễ đọc và giảm lặp code.\n\n## Cú pháp\n\n```cpp\n#include <iostream>\n\nint add(int left, int right) {\n    return left + right;\n}\n\nint main() {\n    const int result{add(2, 3)};\n    std::cout << result << '\\n';\n}\n```\n\n`int` trước tên hàm là kiểu trả về; `left`, `right` là tham số. `return` trả kết quả và kết thúc lời gọi. Hàm `void` không trả giá trị. Trong C++ cần khai báo hàm trước khi được gọi, thường bằng prototype trong header hoặc đặt định nghĩa phía trên caller.\n\n## Truyền theo giá trị và tham chiếu\n\nTham số giá trị tạo bản sao; sửa bản sao không sửa biến bên ngoài. Dùng `const T&` cho object lớn chỉ đọc để tránh sao chép và ngăn sửa qua tham số:\n\n```cpp\n#include <iostream>\n#include <string>\n\nbool is_named(const std::string& name) {\n    return !name.empty();\n}\n\nint main() {\n    const std::string name{\"An\"};\n    std::cout << is_named(name) << '\\n';\n}\n```\n\nTham chiếu phải gắn với object hợp lệ. Bài [references và pointers](/cpp/bat-dau/references-pointers) giải thích thêm về lifetime.\n\n## Scope và lifetime\n\nBiến khai báo trong `{}` chỉ truy cập được trong block đó. Biến local tự động bị hủy khi rời scope. Không trả về reference hoặc pointer tới biến local vì object đã hết lifetime.\n\n## Lỗi thường gặp\n\n- In kết quả trong hàm thay vì `return` khiến caller không nhận được giá trị.\n- Gọi hàm với sai số lượng hoặc kiểu tham số.\n- Cùng tên hàm nhưng khác kiểu trả về không tạo overload hợp lệ.\n- Trả reference tới local gây dangling reference.\n\n## Tự luyện\n\nViết `int square(int value)` và hàm `bool is_even(int value)`. Kiểm tra với số âm, 0 và số dương; dự đoán kết quả của `is_even(-4)`.\n\n## Đọc tiếp\n\nHọc [function overloading và default arguments](/cpp/trung-cap/overloading-default-arguments) và xem [đệ quy, call stack](/cpp/trung-cap/de-quy-call-stack).",
+    "sourcePath": "content/cpp/getting-started/ham-pham-vi.md",
+    "headings": [
+      {
+        "title": "Cú pháp",
+        "id": "cu-phap"
+      },
+      {
+        "title": "Truyền theo giá trị và tham chiếu",
+        "id": "truyen-theo-gia-tri-va-tham-chieu"
+      },
+      {
+        "title": "Scope và lifetime",
+        "id": "scope-va-lifetime"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Mảng và chuỗi trong C++",
+    "description": "Duyệt mảng một chiều, biểu diễn bảng hai chiều và thao tác chuỗi bằng std::string.",
+    "slug": "/cpp/bat-dau/mang-string",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20080,
+    "difficulty": "beginner",
+    "keywords": [
+      "array C++",
+      "mảng hai chiều",
+      "std::string",
+      "char array",
+      "index"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/ham-pham-vi",
+      "/cpp/bat-dau/references-pointers",
+      "/cpp/trung-cap/vector-struct-enum",
+      "/cpp/thuat-toan/prefix-sum-difference-array"
+    ],
+    "featured": false,
+    "priority": 20080,
+    "body": "Mảng lưu nhiều phần tử cùng kiểu theo thứ tự. `std::string` lưu chuỗi ký tự và cung cấp thao tác tiện hơn mảng `char`. `std::array` có kích thước cố định tại compile time; với kích thước linh hoạt, dùng [`std::vector`](/cpp/trung-cap/vector-struct-enum).\n\n## Mảng một chiều\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 4> scores{7, 9, 8, 10};\n    int total{};\n    for (int score : scores) total += score;\n    std::cout << total << '\\n';\n}\n```\n\nChỉ số bắt đầu từ 0 nên phần tử cuối có chỉ số `size() - 1`. Truy cập `scores.at(i)` kiểm tra biên và ném exception nếu sai; `scores[i]` không kiểm tra.\n\n## Mảng hai chiều\n\n```cpp\n#include <iostream>\n\nint main() {\nint grid[2][3]{{1, 2, 3}, {4, 5, 6}};\n    std::cout << grid[1][2] << '\\n';\n}\n```\n\n`grid[row][column]`; cả hai chỉ số đều phải trong giới hạn. Với bảng kích thước lúc chạy hoặc container lồng nhau, cân nhắc `std::vector`.\n\n## `std::string`\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    const std::string first{\"Dev\"};\n    const std::string second{\"Hubs\"};\n    std::string full{first + second};\n    full += \" Wiki\";\n    std::cout << full << '\\n';\n}\n```\n\n`std::string` là chuỗi byte theo encoding được chương trình sử dụng; `size()` đếm `char`, không nhất thiết là số ký tự người dùng nhìn thấy khi UTF-8 có ký tự nhiều byte. Đọc cả dòng bằng `std::getline(std::cin, text)`.\n\n## Mảng `char` và lỗi thường gặp\n\nChuỗi C kiểu `char[]` cần phần tử kết thúc `\\0`. Nếu không có byte kết thúc hoặc vùng chứa quá nhỏ, API C có thể đọc/ghi vượt biên. Code mới nên dùng `std::string` trừ khi giao tiếp API yêu cầu buffer byte cụ thể.\n\n- Không truy cập chỉ số âm hoặc bằng `size()`.\n- Không dùng `sizeof(array)` như độ dài sau khi mảng đã chuyển thành pointer trong tham số hàm.\n- Không dùng `strlen` trực tiếp cho dữ liệu nhị phân có byte 0 ở giữa.\n\n## Tự luyện\n\nTính phần tử lớn nhất và tổng đường chéo chính của ma trận vuông. Với mảng rỗng hoặc kích thước 0, quyết định rõ hành vi thay vì đọc phần tử đầu.\n\n## Đọc tiếp\n\nTìm hiểu [references và pointers](/cpp/bat-dau/references-pointers) và xem [sequence containers](/cpp/stl/sequence-containers).",
+    "sourcePath": "content/cpp/getting-started/mang-string.md",
+    "headings": [
+      {
+        "title": "Mảng một chiều",
+        "id": "mang-mot-chieu"
+      },
+      {
+        "title": "Mảng hai chiều",
+        "id": "mang-hai-chieu"
+      },
+      {
+        "title": "`std::string`",
+        "id": "stdstring"
+      },
+      {
+        "title": "Mảng `char` và lỗi thường gặp",
+        "id": "mang-char-va-loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "References và pointers cơ bản",
+    "description": "Phân biệt truyền giá trị, reference và pointer, đồng thời tránh truy cập object hết vòng đời.",
+    "slug": "/cpp/bat-dau/references-pointers",
+    "category": "fundamentals",
+    "categoryLabel": "C++ căn bản",
+    "order": 20090,
+    "difficulty": "beginner",
+    "keywords": [
+      "reference C++",
+      "pointer",
+      "address",
+      "nullptr",
+      "dereference",
+      "dangling"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/ham-pham-vi",
+      "/cpp/bat-dau/mang-string",
+      "/cpp/trung-cap/stack-heap-lifetime",
+      "/cpp/stl/raii-smart-pointers"
+    ],
+    "featured": false,
+    "priority": 20090,
+    "body": "Reference và pointer cho phép truy cập một object thông qua tên hoặc địa chỉ thay vì tạo bản sao. Dùng chúng khi cần truyền object lớn, biểu diễn optional link hoặc làm việc với API; phải đảm bảo object còn sống.\n\n## Reference\n\n```cpp\n#include <iostream>\n\nvoid add_bonus(int& score) {\n    score += 5;\n}\n\nvoid print_score(const int& score) {\n    std::cout << score << '\\n';\n}\n\nint main() {\n    int score{10};\n    add_bonus(score);\n    print_score(score);\n}\n```\n\n`T&` là lvalue reference; `const T&` cho phép đọc mà không sao chép. Reference phải được khởi tạo khi khai báo và không thể đổi sang trỏ object khác. Không có null reference hợp lệ.\n\n## Pointer\n\n```cpp\n#include <iostream>\n\nint main() {\nint score{10};\nint* pointer{&score};\n*pointer = 12;\n\nint* optional_score{nullptr};\nif (optional_score != nullptr) {\n    std::cout << *optional_score;\n}\n    std::cout << ' ' << score << '\\n';\n}\n```\n\n`&score` lấy địa chỉ, `*pointer` dereference. Pointer có thể là `nullptr` hoặc trỏ sai/hết hạn; chỉ dereference khi chắc chắn nó trỏ tới object còn sống.\n\n## Chọn cách truyền\n\n- Kiểu nhỏ như `int`, `bool`: truyền theo giá trị thường đơn giản nhất.\n- Object lớn, chỉ đọc: `const T&`.\n- Object phải sửa: `T&`.\n- Có thể không có object hoặc API dùng sentinel: `T*`, kiểm tra null.\n- Ownership động: ưu tiên smart pointer ở [RAII](/cpp/stl/raii-smart-pointers), không tự quản lý `new`/`delete` nếu không cần.\n\n## Lỗi thường gặp\n\n- Trả pointer/reference tới biến local đã bị hủy.\n- Dereference `nullptr`.\n- Dùng pointer sau khi vùng chứa `std::vector` reallocate; địa chỉ cũ có thể mất hiệu lực.\n- Sửa object qua pointer/reference khi hợp đồng hàm chỉ nên đọc; dùng `const`.\n\n## Tự luyện\n\nViết hàm đổi chỗ hai số bằng `int&`. Viết thêm hàm nhận `const std::string&` và trả về độ dài chuỗi, không tạo bản sao.\n\n## Đọc tiếp\n\nTìm hiểu [stack, heap và lifetime](/cpp/trung-cap/stack-heap-lifetime), rồi học [smart pointers](/cpp/stl/raii-smart-pointers).",
+    "sourcePath": "content/cpp/getting-started/references-pointers.md",
+    "headings": [
+      {
+        "title": "Reference",
+        "id": "reference"
+      },
+      {
+        "title": "Pointer",
+        "id": "pointer"
+      },
+      {
+        "title": "Chọn cách truyền",
+        "id": "chon-cach-truyen"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "std::vector, struct và enum",
+    "description": "Lưu danh sách có kích thước thay đổi và mô hình hóa dữ liệu bằng struct, enum class.",
+    "slug": "/cpp/trung-cap/vector-struct-enum",
+    "category": "intermediate",
+    "categoryLabel": "C++ trung cấp",
+    "order": 21000,
+    "difficulty": "beginner",
+    "keywords": [
+      "std::vector",
+      "dynamic array",
+      "struct",
+      "enum class",
+      "vector push_back"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/mang-string",
+      "/cpp/stl/sequence-containers",
+      "/cpp/stl/associative-containers"
+    ],
+    "featured": false,
+    "priority": 21000,
+    "body": "`std::vector<T>` là dãy phần tử cùng kiểu, lưu liên tiếp trong bộ nhớ và có thể tăng kích thước. Dùng nó thay mảng cố định khi số phần tử chỉ biết lúc chạy; cần include `<vector>`.\n\n## Tạo và dùng vector\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> scores{8, 9, 7};\n    scores.push_back(10);\n    int total{};\n    for (int score : scores) total += score;\n    std::cout << total << '\\n';\n}\n```\n\n`size()` trả số phần tử; `empty()` kiểm tra rỗng; `push_back()` thêm phần tử; `at(i)` kiểm tra chỉ số và `operator[]` không kiểm tra. `reserve(n)` cấp trước capacity nhưng không thay đổi `size()`.\n\n## Dữ liệu tự định nghĩa\n\n```cpp\n#include <iostream>\n\nenum class Status { waiting, active, done };\n\nstruct Task {\n    int id{};\n    Status status{Status::waiting};\n};\n\nint main() {\n    const Task task{1, Status::active};\n    std::cout << task.id << '\\n';\n}\n```\n\n`struct` gom dữ liệu có liên hệ. Thành viên `struct` mặc định public; `class` mặc định private. `enum class` tạo tập trạng thái có tên và không tự chuyển thành số nguyên, giúp tránh nhập nhằng.\n\n## Chọn cấu trúc\n\n`std::vector` phù hợp đa số danh sách vì truy cập theo chỉ số O(1) và cache locality tốt. Nếu kích thước cố định tại compile time, dùng `std::array`. Nếu cần map/set hoặc hàng đợi, xem [các container STL](/cpp/stl/sequence-containers).\n\n## Lỗi thường gặp\n\n- Truy cập `v[0]` khi vector rỗng.\n- Nhầm `capacity()` với `size()`.\n- Giữ pointer/reference/iterator đến phần tử sau khi thêm làm vector reallocate; xem [iterator invalidation](/cpp/stl/iterators-invalidation).\n- Dùng enum không có tên rõ hoặc `enum` không scoped khiến tên rò ra scope ngoài.\n\n## Tự luyện\n\nTạo `struct Product` gồm tên và giá, lưu nhiều sản phẩm trong vector, rồi tính tổng giá. Quyết định cách xử lý vector rỗng và giá trị âm không hợp lệ.\n\n## Đọc tiếp\n\nXem [sequence containers](/cpp/stl/sequence-containers), rồi học [class và encapsulation](/cpp/trung-cap/classes-constructors).",
+    "sourcePath": "content/cpp/intermediate/vector-struct-enum.md",
+    "headings": [
+      {
+        "title": "Tạo và dùng vector",
+        "id": "tao-va-dung-vector"
+      },
+      {
+        "title": "Dữ liệu tự định nghĩa",
+        "id": "du-lieu-tu-inh-nghia"
+      },
+      {
+        "title": "Chọn cấu trúc",
+        "id": "chon-cau-truc"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Function overloading và default arguments",
+    "description": "Tạo các hàm cùng tên với chữ ký khác nhau và khai báo giá trị tham số mặc định.",
+    "slug": "/cpp/trung-cap/overloading-default-arguments",
+    "category": "intermediate",
+    "categoryLabel": "C++ trung cấp",
+    "order": 21010,
+    "difficulty": "intermediate",
+    "keywords": [
+      "function overloading",
+      "default argument",
+      "overload resolution",
+      "function signature"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/ham-pham-vi",
+      "/cpp/trung-cap/templates-namespaces",
+      "/cpp/trung-cap/de-quy-call-stack"
+    ],
+    "featured": false,
+    "priority": 21010,
+    "body": "Overloading cho phép dùng một tên hàm cho nhiều thao tác liên quan; compiler chọn hàm dựa trên số lượng và kiểu đối số. Default argument đặt giá trị dùng khi caller bỏ qua tham số cuối.\n\n## Overloading\n\n```cpp\n#include <cstddef>\n#include <iostream>\n#include <string>\n\nint length_of(int value) { return value; }\nstd::size_t length_of(const std::string& value) { return value.size(); }\n\nint main() {\n    const int number{length_of(7)};\n    const std::size_t letters{length_of(std::string{\"C++\"})};\n    std::cout << number << ' ' << letters << '\\n';\n}\n```\n\nChữ ký overload được phân biệt bằng danh sách tham số; chỉ khác kiểu trả về là không đủ. Overload có thể gây mơ hồ nếu nhiều phép chuyển đổi đều hợp lệ, nên tránh các tập overload khó đoán.\n\n## Default argument\n\n```cpp\n#include <iostream>\n#include <string>\n\nstd::string greet(const std::string& name, const std::string& prefix = \"Xin chao\") {\n    return prefix + \", \" + name;\n}\n\nint main() {\n    std::cout << greet(\"An\") << '\\n';\n}\n```\n\nTham số mặc định thường đặt ở khai báo mà caller nhìn thấy, chẳng hạn header; chỉ khai báo một lần cho cùng scope. Tham số có default phải đứng sau các tham số bắt buộc.\n\n## Lỗi thường gặp\n\n- Khai báo overload chỉ khác kiểu trả về.\n- Viết default argument lặp lại cả trong header lẫn định nghĩa.\n- Dùng nhiều default khiến một lời gọi khớp nhiều overload.\n- Cho rằng overload được chọn theo kiểu trả về dự định của caller.\n\n## Tự luyện\n\nViết `area` cho hình vuông và hình chữ nhật sao cho lời gọi không mơ hồ. Thêm default tên đơn vị vào hàm format; đặt default ở đúng một declaration.\n\n## Đọc tiếp\n\nTìm hiểu [templates và namespace](/cpp/trung-cap/templates-namespaces) và [đệ quy, call stack](/cpp/trung-cap/de-quy-call-stack).",
+    "sourcePath": "content/cpp/intermediate/overloading-default-arguments.md",
+    "headings": [
+      {
+        "title": "Overloading",
+        "id": "overloading"
+      },
+      {
+        "title": "Default argument",
+        "id": "default-argument"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Đệ quy và call stack",
+    "description": "Hiểu lời gọi đệ quy, điều kiện dừng, trạng thái lời gọi và giới hạn độ sâu.",
+    "slug": "/cpp/trung-cap/de-quy-call-stack",
+    "category": "intermediate",
+    "categoryLabel": "C++ trung cấp",
+    "order": 21020,
+    "difficulty": "intermediate",
+    "keywords": [
+      "đệ quy C++",
+      "recursion",
+      "call stack",
+      "base case",
+      "stack overflow"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/ham-pham-vi",
+      "/cpp/thuat-toan/de-quy-quay-lui",
+      "/cpp/thuat-toan/quy-hoach-dong"
+    ],
+    "featured": false,
+    "priority": 21020,
+    "body": "Đệ quy là cách một hàm giải bài toán bằng cách gọi lại chính nó trên dữ liệu nhỏ hơn. Dùng khi bài toán có cấu trúc tự đồng dạng, như cây hoặc quay lui; lặp thường dễ kiểm soát hơn với phép tính tuyến tính đơn giản.\n\n## Hai phần bắt buộc\n\n- **Base case**: trả kết quả trực tiếp và dừng.\n- **Recursive case**: biến đổi input để tiến gần base case.\n\n```cpp\n#include <iostream>\n\nlong long factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}\n\nint main() {\n    int n{};\n    if (!(std::cin >> n) || n < 0 || n > 20) return 1;\n    std::cout << factorial(n) << '\\n';\n}\n```\n\nMỗi lần gọi giữ tham số và trạng thái riêng trên call stack. Với đoạn code trên, thời gian O(n), stack O(n). Giới hạn `n <= 20` giúp kết quả không vượt `long long`; độ sâu đệ quy còn bị giới hạn bởi stack runtime.\n\n## Lỗi thường gặp\n\n- Thiếu base case hoặc input không tiến tới base case gây đệ quy vô hạn.\n- Độ sâu quá lớn gây stack overflow; cân nhắc vòng lặp hoặc cấu trúc dữ liệu tường minh.\n- Tính lại cùng bài toán con nhiều lần như Fibonacci đệ quy thuần; dùng memoization/DP.\n- Phân tích chỉ thời gian mà quên bộ nhớ stack.\n\n## Tự luyện\n\nViết hàm đệ quy tính tổng chữ số của số nguyên không âm. Base case là số nhỏ hơn 10; recursive case bỏ chữ số cuối. Sau đó thử input 0 và số có một chữ số.\n\n## Đọc tiếp\n\nỨng dụng đệ quy vào [backtracking](/cpp/thuat-toan/de-quy-quay-lui) và [quy hoạch động](/cpp/thuat-toan/quy-hoach-dong).",
+    "sourcePath": "content/cpp/intermediate/de-quy-call-stack.md",
+    "headings": [
+      {
+        "title": "Hai phần bắt buộc",
+        "id": "hai-phan-bat-buoc"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Stack, heap và object lifetime",
+    "description": "Phân biệt vùng lưu trữ tự động và động, hiểu lifetime, ownership và dangling reference.",
+    "slug": "/cpp/trung-cap/stack-heap-lifetime",
+    "category": "intermediate",
+    "categoryLabel": "C++ trung cấp",
+    "order": 21030,
+    "difficulty": "intermediate",
+    "keywords": [
+      "stack",
+      "heap",
+      "lifetime",
+      "ownership",
+      "dangling pointer",
+      "RAII"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/references-pointers",
+      "/cpp/stl/raii-smart-pointers",
+      "/cpp/ky-thuat/ub-memory-safety"
+    ],
+    "featured": false,
+    "priority": 21030,
+    "body": "Object có lifetime từ khi bắt đầu được tạo đến khi bị hủy. Hiểu lifetime quan trọng hơn việc ghi nhớ một sơ đồ stack/heap: truy cập object sau khi lifetime kết thúc là lỗi nghiêm trọng.\n\n## Lưu trữ tự động và động\n\nLocal variable thông thường có automatic storage duration và tự hủy khi rời scope. Dynamic allocation như `new` tạo object cần ownership rõ ràng; trong code hiện đại, để smart pointer quản lý:\n\n```cpp\n#include <memory>\n#include <string>\n\nstd::string make_message() {\n    return \"hello\"; // Trả về theo giá trị an toàn.\n}\n\nint main() {\n    auto text{make_message()};\n    auto count{std::make_unique<int>(3)};\n}\n```\n\nCompiler có thể tối ưu phép trả về object; không cần trả pointer tới biến local để “tránh copy”. `std::vector` và `std::string` tự quản lý bộ nhớ nội bộ.\n\n## Heap không đồng nghĩa an toàn\n\nDynamic object vẫn cần biết ai sở hữu, ai được mượn và lúc nào bị hủy. Đừng `delete` pointer không sở hữu; đừng dùng pointer sau khi object bị hủy hoặc container reallocate. Xem [RAII và smart pointers](/cpp/stl/raii-smart-pointers).\n\n## Lỗi thường gặp\n\n- Trả địa chỉ của local variable.\n- Lưu reference tới phần tử rồi thêm vào vector, khiến vector reallocate.\n- Dùng `new` nhưng quên `delete`, tạo leak; `delete` hai lần gây lỗi nghiêm trọng.\n- Dùng `std::move` như thao tác giải phóng bộ nhớ. Nó chỉ cho phép chuyển trạng thái khi type hỗ trợ.\n\n## Tự luyện\n\nViết hàm tạo `std::vector<int>` và trả vector theo giá trị. Vì sao cách này an toàn và thường hiệu quả hơn trả pointer trỏ tới mảng local?\n\n## Đọc tiếp\n\nHọc [class và destructor](/cpp/trung-cap/classes-constructors) và cách [RAII quản lý resource](/cpp/stl/raii-smart-pointers).",
+    "sourcePath": "content/cpp/intermediate/stack-heap-lifetime.md",
+    "headings": [
+      {
+        "title": "Lưu trữ tự động và động",
+        "id": "luu-tru-tu-ong-va-ong"
+      },
+      {
+        "title": "Heap không đồng nghĩa an toàn",
+        "id": "heap-khong-ong-nghia-an-toan"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Class, constructors và encapsulation",
+    "description": "Thiết kế class giữ invariant, khởi tạo object hợp lệ và đóng gói trạng thái.",
+    "slug": "/cpp/trung-cap/classes-constructors",
+    "category": "intermediate",
+    "categoryLabel": "C++ trung cấp",
+    "order": 21040,
+    "difficulty": "intermediate",
+    "keywords": [
+      "class C++",
+      "constructor",
+      "destructor",
+      "encapsulation",
+      "invariant",
+      "access control"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/trung-cap/vector-struct-enum",
+      "/cpp/trung-cap/inheritance-polymorphism",
+      "/cpp/stl/raii-smart-pointers"
+    ],
+    "featured": false,
+    "priority": 21040,
+    "body": "Class gom dữ liệu và thao tác có liên quan. Encapsulation giữ trạng thái bên trong một invariant để caller không thể vô tình tạo object sai.\n\n## Constructor và access control\n\n```cpp\n#include <stdexcept>\n\nclass Counter {\npublic:\n    explicit Counter(int initial = 0) : value_{initial} {\n        if (initial < 0) throw std::invalid_argument(\"initial must be non-negative\");\n    }\n\n    void increment() { ++value_; }\n    int value() const { return value_; }\n\nprivate:\n    int value_{};\n};\n\nint main() {\n    Counter counter{2};\n    counter.increment();\n    return counter.value() == 3 ? 0 : 1;\n}\n```\n\nConstructor khởi tạo object; member initializer list đặt thành viên trực tiếp và chạy theo thứ tự khai báo thành viên. `private` bảo vệ trạng thái; `public` là API. Hàm `const` hứa không sửa trạng thái quan sát được. `explicit` ngăn implicit conversion ngoài ý muốn.\n\n## Destructor và resource\n\nDestructor chạy khi object kết thúc lifetime. Nếu class giữ file handle, lock hoặc resource khác, dùng RAII để giải phóng đúng một lần. Thành viên STL và smart pointer thường đã tự quản lý resource; đừng tự viết destructor nếu không sở hữu resource đặc biệt. Xem [Rule of Zero](/cpp/stl/raii-smart-pointers).\n\n## Lỗi thường gặp\n\n- Để mọi thành viên public rồi invariant bị phá từ bên ngoài.\n- Không khởi tạo thành viên hoặc khởi tạo sai thứ tự tưởng tượng.\n- Tự viết destructor nhưng quên định nghĩa/cấm copy đúng cách, dẫn đến double-free.\n- Constructor để object ở trạng thái nửa hợp lệ sau lỗi.\n\n## Tự luyện\n\nThiết kế class `Temperature` chỉ cho nhận giá trị trong miền hợp lệ của bài toán. Giữ dữ liệu private và cung cấp thao tác đổi đơn vị; xác định cách báo input sai.\n\n## Đọc tiếp\n\nTìm hiểu [kế thừa và đa hình](/cpp/trung-cap/inheritance-polymorphism), rồi xem [RAII](/cpp/stl/raii-smart-pointers).",
+    "sourcePath": "content/cpp/intermediate/classes-constructors.md",
+    "headings": [
+      {
+        "title": "Constructor và access control",
+        "id": "constructor-va-access-control"
+      },
+      {
+        "title": "Destructor và resource",
+        "id": "destructor-va-resource"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Inheritance và polymorphism",
+    "description": "Dùng kế thừa khi có quan hệ is-a và gọi hành vi ảo an toàn qua base class.",
+    "slug": "/cpp/trung-cap/inheritance-polymorphism",
+    "category": "intermediate",
+    "categoryLabel": "C++ trung cấp",
+    "order": 21050,
+    "difficulty": "intermediate",
+    "keywords": [
+      "inheritance C++",
+      "polymorphism",
+      "virtual",
+      "override",
+      "virtual destructor"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/trung-cap/classes-constructors",
+      "/cpp/trung-cap/templates-namespaces",
+      "/cpp/stl/raii-smart-pointers"
+    ],
+    "featured": false,
+    "priority": 21050,
+    "body": "Kế thừa tạo quan hệ giữa lớp dẫn xuất và lớp cơ sở. Đa hình runtime cho phép gọi implementation phù hợp với kiểu thực tế qua interface chung. Dùng khi subtype thật sự thỏa hợp đồng base; composition thường linh hoạt hơn cho “has-a”.\n\n## Hàm ảo\n\n```cpp\n#include <iostream>\n#include <memory>\n#include <vector>\n\nclass Shape {\npublic:\n    virtual ~Shape() = default;\n    virtual double area() const = 0;\n};\n\nclass Square final : public Shape {\npublic:\n    explicit Square(double side) : side_{side} {}\n    double area() const override { return side_ * side_; }\nprivate:\n    double side_;\n};\n\nint main() {\n    std::vector<std::unique_ptr<Shape>> shapes;\n    shapes.push_back(std::make_unique<Square>(3.0));\n    std::cout << shapes.front()->area() << '\\n';\n}\n```\n\n`virtual` cho phép dispatch động; `= 0` tạo hàm thuần ảo và class abstract; `override` yêu cầu compiler xác nhận override đúng. Base polymorphic cần virtual destructor để hủy object derived qua pointer base.\n\n## Nguyên tắc thiết kế\n\nBase class định nghĩa hợp đồng dùng được bởi mọi subtype. Không gọi virtual function trong constructor/destructor để mong dispatch như object derived đã hoàn chỉnh. Tránh lạm dụng kế thừa chỉ để tái sử dụng vài dòng code.\n\n## Lỗi thường gặp\n\n- Quên `virtual` destructor rồi `delete` derived qua base pointer.\n- Dùng `override` sai chữ ký, hoặc overload vô ý thay vì override.\n- Slicing: copy object derived vào biến base theo giá trị làm mất phần derived.\n- Base destructor non-public nhưng thiết kế lại cho phép hủy qua base.\n\n## Tự luyện\n\nTạo interface `Notifier` với hàm `send`, rồi hai implementation email và console. Viết caller chỉ phụ thuộc interface; cân nhắc lỗi gửi và ownership.\n\n## Đọc tiếp\n\nSo sánh đa hình runtime với [templates](/cpp/trung-cap/templates-namespaces) và quản lý ownership bằng [smart pointers](/cpp/stl/raii-smart-pointers).",
+    "sourcePath": "content/cpp/intermediate/inheritance-polymorphism.md",
+    "headings": [
+      {
+        "title": "Hàm ảo",
+        "id": "ham-ao"
+      },
+      {
+        "title": "Nguyên tắc thiết kế",
+        "id": "nguyen-tac-thiet-ke"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Templates và namespace",
+    "description": "Viết hàm generic, tránh trùng tên và tổ chức khai báo trong header C++.",
+    "slug": "/cpp/trung-cap/templates-namespaces",
+    "category": "intermediate",
+    "categoryLabel": "C++ trung cấp",
+    "order": 21060,
+    "difficulty": "intermediate",
+    "keywords": [
+      "C++ templates",
+      "function template",
+      "namespace",
+      "generic programming",
+      "header"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/trung-cap/overloading-default-arguments",
+      "/cpp/trung-cap/inheritance-polymorphism",
+      "/cpp/ky-thuat/header-source-modules"
+    ],
+    "featured": false,
+    "priority": 21060,
+    "body": "Template cho phép viết code làm việc với nhiều kiểu, miễn kiểu đó đáp ứng các thao tác mà code yêu cầu. Namespace nhóm tên để giảm xung đột giữa thư viện và module.\n\n## Function template\n\n```cpp\n#include <iostream>\n\nnamespace math_tools {\ntemplate <typename T>\nT add(T left, T right) {\n    return left + right;\n}\n}\n\nint main() {\n    std::cout << math_tools::add(2, 3) << '\\n';\n    std::cout << math_tools::add(1.5, 2.5) << '\\n';\n}\n```\n\nCompiler suy ra `T` từ đối số. Hai đối số ở đây cần cùng kiểu; `add(2, 1.5)` không suy ra một `T` duy nhất nếu không chỉ rõ hoặc thiết kế overload phù hợp. C++20 concepts có thể diễn tả yêu cầu kiểu tường minh.\n\n## Namespace và tổ chức mã\n\n`math_tools::add` chỉ rõ hàm thuộc namespace. Trong header công khai, giữ tên đủ rõ và tránh `using namespace std;` ở global scope vì nó có thể gây đụng tên cho mọi file include header đó.\n\nTemplate thường cần định nghĩa nhìn thấy tại nơi instantiate, vì vậy thường đặt định nghĩa trong header. Với hàm không template, header có thể khai báo còn `.cpp` cung cấp định nghĩa. Xem [translation units](/cpp/ky-thuat/header-source-modules).\n\n## Lỗi thường gặp\n\n- Khai báo template trong `.cpp` rồi không cung cấp định nghĩa cho caller khác translation unit.\n- Dùng `using namespace` trong public header.\n- Template yêu cầu nhiều operation ngầm mà không ghi rõ trong thiết kế.\n- Cho rằng template luôn nhanh hơn hoặc dễ debug hơn đa hình runtime.\n\n## Tự luyện\n\nViết template `maximum` cho hai giá trị cùng kiểu có thể so sánh. Thử `int`, `std::string` và kiểu không có `operator<` để quan sát yêu cầu của template.\n\n## Đọc tiếp\n\nXem [STL dựa trên templates](/cpp/stl/stl-la-gi) và [cách chia header/source](/cpp/ky-thuat/header-source-modules).",
+    "sourcePath": "content/cpp/intermediate/templates-namespaces.md",
+    "headings": [
+      {
+        "title": "Function template",
+        "id": "function-template"
+      },
+      {
+        "title": "Namespace và tổ chức mã",
+        "id": "namespace-va-to-chuc-ma"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "File I/O và xử lý lỗi",
+    "description": "Đọc ghi file văn bản bằng streams, phát hiện lỗi mở file và xử lý dữ liệu đầu vào.",
+    "slug": "/cpp/trung-cap/file-io-errors",
+    "category": "intermediate",
+    "categoryLabel": "C++ trung cấp",
+    "order": 21070,
+    "difficulty": "intermediate",
+    "keywords": [
+      "fstream",
+      "ifstream",
+      "ofstream",
+      "file I/O",
+      "exception",
+      "error handling"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap",
+      "/cpp/ky-thuat/exceptions",
+      "/cpp/ky-thuat/security-cross-platform"
+    ],
+    "featured": false,
+    "priority": 21070,
+    "body": "File stream đọc hoặc ghi dữ liệu qua file. Luôn kiểm tra trạng thái mở và trạng thái đọc/ghi; đường dẫn có thể sai, file có thể thiếu quyền hoặc nội dung có thể không hợp lệ.\n\n## Ghi rồi đọc file\n\n```cpp\n#include <fstream>\n#include <iostream>\n#include <string>\n\nint main() {\n    const std::string path{\"result.txt\"};\n    {\n        std::ofstream output{path};\n        if (!output) return 1;\n        output << \"C++17\\n\";\n        if (!output) return 1;\n    }\n\n    std::ifstream input{path};\n    if (!input) return 1;\n    std::string line;\n    if (!std::getline(input, line)) return 1;\n    std::cout << line << '\\n';\n}\n```\n\n`std::ofstream` mặc định tạo mới hoặc truncate file; đừng dùng khi cần giữ nội dung cũ. Truyền `std::ios::app` để nối thêm. `std::ifstream` đọc, `std::fstream` hỗ trợ cả hai.\n\n## Báo lỗi phù hợp\n\nVới ứng dụng, trả lỗi có ngữ cảnh hoặc ném exception theo hợp đồng API. Không chỉ trả `false` chung nếu caller cần biết file nào thất bại. Tránh in thông tin bí mật trong thông báo. Bài [exceptions](/cpp/ky-thuat/exceptions) phân tích cách chọn cơ chế báo lỗi.\n\n## Lỗi thường gặp\n\n- Ghi đè file do quên mode `app`.\n- Cố đọc file nhưng không kiểm tra `is_open()`/trạng thái stream.\n- Dùng `while (!input.eof())`; nên đọc theo kết quả của thao tác, ví dụ `while (input >> value)`.\n- Tin rằng tên file đến từ user là an toàn; kiểm tra quyền, thư mục gốc và path traversal.\n\n## Tự luyện\n\nĐọc danh sách số nguyên từ file, tính tổng và báo rõ nếu token không phải số. Kiểm tra file rỗng, file không tồn tại và dữ liệu lỗi ở giữa.\n\n## Đọc tiếp\n\nHọc [exceptions và error handling](/cpp/ky-thuat/exceptions) cùng [security khi xử lý file](/cpp/ky-thuat/security-cross-platform).",
+    "sourcePath": "content/cpp/intermediate/file-io-errors.md",
+    "headings": [
+      {
+        "title": "Ghi rồi đọc file",
+        "id": "ghi-roi-oc-file"
+      },
+      {
+        "title": "Báo lỗi phù hợp",
+        "id": "bao-loi-phu-hop"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Standard Template Library là gì?",
+    "description": "Hiểu vai trò của containers, iterators, algorithms và function objects trong STL.",
+    "slug": "/cpp/stl/stl-la-gi",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22000,
+    "difficulty": "intermediate",
+    "keywords": [
+      "STL",
+      "standard library",
+      "container",
+      "iterator",
+      "algorithm",
+      "function object"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/sequence-containers",
+      "/cpp/stl/stl-algorithms",
+      "/cpp/stl/iterators-invalidation"
+    ],
+    "featured": false,
+    "priority": 22000,
+    "body": "STL là tên gọi phổ biến cho phần thư viện chuẩn xoay quanh containers, iterators, algorithms và function objects. Dùng nó để tận dụng code đã chuẩn hóa, được kiểm tra rộng rãi và thường hiệu quả hơn cấu trúc tự viết.\n\n## Bốn mảnh ghép\n\n- **Container** giữ dữ liệu: `std::vector`, `std::map`, `std::unordered_set`.\n- **Iterator** chỉ vị trí trong dãy để nối container với thuật toán.\n- **Algorithm** thao tác trên khoảng iterator: `std::sort`, `std::find`, `std::count`.\n- **Callable** như lambda hoặc function object cung cấp quy tắc so sánh/lọc.\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{4, 1, 3, 1};\n    std::sort(values.begin(), values.end());\n    const auto ones{std::count(values.begin(), values.end(), 1)};\n    std::cout << ones << '\\n';\n}\n```\n\nThuật toán nhận range `[first, last)`: gồm `first`, không gồm `last`. Quy ước này giúp range rỗng biểu diễn bằng hai iterator bằng nhau.\n\n## Chọn theo thao tác\n\nHỏi trước: có cần truy cập theo chỉ số, cần giữ thứ tự, cần tra cứu theo key, hay cần lấy phần tử ưu tiên? Câu trả lời quyết định container phù hợp. Bắt đầu với [`vector`](/cpp/stl/sequence-containers) nếu chưa có lý do cụ thể chọn cấu trúc khác.\n\n## Lỗi thường gặp\n\n- Dùng container không phù hợp khiến thao tác thường gặp chậm.\n- Truyền sai range hoặc dùng iterator đã mất hiệu lực.\n- Giả định thứ tự của `unordered_map` ổn định.\n- Tự viết thuật toán đã có trong `<algorithm>` nhưng bỏ sót trường hợp biên.\n\n## Tự luyện\n\nTạo vector số, sắp xếp, tìm số lần xuất hiện của một giá trị và tìm vị trí đầu tiên có giá trị không nhỏ hơn `x` bằng `lower_bound`.\n\n## Đọc tiếp\n\nSo sánh [sequence containers](/cpp/stl/sequence-containers), [associative containers](/cpp/stl/associative-containers) và [STL algorithms](/cpp/stl/stl-algorithms).",
+    "sourcePath": "content/cpp/modern/stl-la-gi.md",
+    "headings": [
+      {
+        "title": "Bốn mảnh ghép",
+        "id": "bon-manh-ghep"
+      },
+      {
+        "title": "Chọn theo thao tác",
+        "id": "chon-theo-thao-tac"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Sequence containers",
+    "description": "Chọn vector, array, deque hoặc list theo nhu cầu lưu trữ và thao tác.",
+    "slug": "/cpp/stl/sequence-containers",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22010,
+    "difficulty": "intermediate",
+    "keywords": [
+      "vector",
+      "array",
+      "deque",
+      "list",
+      "sequence container",
+      "complexity"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/stl-la-gi",
+      "/cpp/stl/iterators-invalidation",
+      "/cpp/trung-cap/vector-struct-enum"
+    ],
+    "featured": false,
+    "priority": 22010,
+    "body": "Sequence container giữ phần tử theo thứ tự. Hầu hết chương trình nên bắt đầu với `std::vector`; chọn container khác khi đặc tính thao tác thực sự cần.\n\n## Các lựa chọn\n\n- `std::vector<T>`: dãy liên tục, truy cập chỉ số O(1), thêm cuối amortized O(1). Tốt cho đa số danh sách.\n- `std::array<T, N>`: dãy liên tục kích thước cố định tại compile time; có thể nằm bên trong object chứa nó.\n- `std::deque<T>`: thêm/bớt ở hai đầu hiệu quả, truy cập chỉ số O(1), nhưng không lưu liên tục như vector.\n- `std::list<T>`: danh sách liên kết hai chiều; chèn/xóa O(1) khi đã có iterator đúng vị trí, nhưng tìm vị trí O(n), truy cập chỉ số không có và locality kém.\n\n```cpp\n#include <array>\n#include <deque>\n#include <iostream>\n#include <list>\n#include <vector>\n\nint main() {\n    std::array<int, 3> fixed{1, 2, 3};\n    std::vector<int> dynamic{fixed.begin(), fixed.end()};\n    std::deque<int> ends{0, 1, 2};\n    ends.push_front(-1);\n    std::list<int> linked{1, 2, 3};\n    linked.push_back(4);\n    std::cout << dynamic.size() + ends.size() + linked.size() << '\\n';\n}\n```\n\n## Chọn container\n\nDùng `vector` nếu cần duyệt nhanh hoặc truy cập ngẫu nhiên. Dùng `deque` nếu thường xuyên thêm ở hai đầu. Chọn `list` khi cần giữ iterator tới phần tử ổn định qua chèn/xóa và có sẵn vị trí iterator; nếu không, chi phí cấp phát và cache miss thường làm nó kém hơn vector.\n\n## Lỗi thường gặp\n\n- Dùng `list` với hy vọng mọi thao tác đều O(1); tìm kiếm vẫn O(n).\n- Coi `reserve()` là tăng số phần tử; nó chỉ tăng capacity.\n- Giữ iterator/vector reference sau thao tác có thể reallocate; xem [invalidation](/cpp/stl/iterators-invalidation).\n\n## Tự luyện\n\nChọn container cho bộ đệm cần đẩy/xóa hai đầu và cho bảng 12 tháng cố định. Nêu thao tác chi phối và lý do chọn.\n\n## Đọc tiếp\n\nTra cứu [associative containers](/cpp/stl/associative-containers) và [container adapters](/cpp/stl/container-adapters).",
+    "sourcePath": "content/cpp/modern/sequence-containers.md",
+    "headings": [
+      {
+        "title": "Các lựa chọn",
+        "id": "cac-lua-chon"
+      },
+      {
+        "title": "Chọn container",
+        "id": "chon-container"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Associative containers",
+    "description": "Lưu key có thứ tự bằng set, map, multiset và multimap.",
+    "slug": "/cpp/stl/associative-containers",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22020,
+    "difficulty": "intermediate",
+    "keywords": [
+      "set",
+      "map",
+      "multiset",
+      "multimap",
+      "ordered container",
+      "logarithmic lookup"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/unordered-containers",
+      "/cpp/stl/stl-algorithms",
+      "/cpp/stl/container-adapters"
+    ],
+    "featured": false,
+    "priority": 22020,
+    "body": "Associative containers lưu key theo thứ tự so sánh. Chúng phù hợp khi cần duyệt có thứ tự, tìm min/max hoặc truy vấn khoảng.\n\n## Chọn container\n\n- `std::set<Key>`: key duy nhất.\n- `std::multiset<Key>`: cho phép key trùng.\n- `std::map<Key, Value>`: ánh xạ key duy nhất sang value.\n- `std::multimap<Key, Value>`: một key có thể xuất hiện nhiều lần.\n\nThao tác tìm, thêm, xóa thường O(log n) với cấu trúc cân bằng. Iterator duyệt theo thứ tự comparator, mặc định tăng dần.\n\n```cpp\n#include <iostream>\n#include <map>\n#include <set>\n#include <string>\n\nint main() {\n    std::set<int> unique_values{4, 1, 4};\n    std::map<std::string, int> scores{{\"An\", 8}, {\"Binh\", 9}};\n    if (const auto found = scores.find(\"An\"); found != scores.end()) {\n        std::cout << found->second << '\\n';\n    }\n    std::cout << unique_values.size() << '\\n';\n}\n```\n\n`map[key]` chèn key mặc định nếu chưa tồn tại. Dùng `find` hoặc `contains` từ C++20 khi chỉ muốn tra cứu; điều này tránh vô tình tạo entry.\n\n## Range query\n\n`lower_bound(key)` tìm iterator đầu tiên không nhỏ hơn key; `upper_bound(key)` tìm đầu tiên lớn hơn key. Trên `multiset`, hai hàm này xác định range của key lặp.\n\n## Lỗi thường gặp\n\n- Dùng `operator[]` trong nhánh chỉ đọc rồi âm thầm chèn key.\n- Thay comparator khiến hai key bị xem là tương đương trong khi logic chương trình coi chúng khác nhau.\n- Mong giữ thứ tự insert; map/set sắp xếp theo comparator.\n\n## Tự luyện\n\nĐếm số lần xuất hiện mỗi từ bằng `std::map<std::string, int>`. Sau đó in kết quả theo alphabet và so sánh với yêu cầu nếu không cần thứ tự.\n\n## Đọc tiếp\n\nNếu không cần thứ tự, xem [unordered containers](/cpp/stl/unordered-containers). Để chọn hàng đợi ưu tiên, xem [adapters](/cpp/stl/container-adapters).",
+    "sourcePath": "content/cpp/modern/associative-containers.md",
+    "headings": [
+      {
+        "title": "Chọn container",
+        "id": "chon-container"
+      },
+      {
+        "title": "Range query",
+        "id": "range-query"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Unordered containers",
+    "description": "Dùng unordered_map và unordered_set cho tra cứu theo hash khi không cần thứ tự.",
+    "slug": "/cpp/stl/unordered-containers",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22030,
+    "difficulty": "intermediate",
+    "keywords": [
+      "unordered_map",
+      "unordered_set",
+      "hash table",
+      "hash",
+      "average complexity"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/associative-containers",
+      "/cpp/stl/stl-algorithms",
+      "/cpp/thuat-toan/do-phuc-tap"
+    ],
+    "featured": false,
+    "priority": 22030,
+    "body": "`std::unordered_map` và `std::unordered_set` dùng hash table để tra cứu key mà không duy trì thứ tự. Chúng hữu ích cho membership test, đếm tần suất và cache khi không cần duyệt theo key đã sắp xếp.\n\n## Ví dụ đếm tần suất\n\n```cpp\n#include <iostream>\n#include <string>\n#include <unordered_map>\n#include <vector>\n\nint main() {\n    const std::vector<std::string> words{\"cpp\", \"stl\", \"cpp\"};\n    std::unordered_map<std::string, int> frequency;\n    for (const auto& word : words) ++frequency[word];\n    std::cout << frequency.at(\"cpp\") << '\\n';\n}\n```\n\nTra cứu/thêm/xóa trung bình thường O(1), nhưng worst case có thể O(n). Hash quality, collisions, load factor và rehash ảnh hưởng hiệu năng. Thứ tự iterator không được đảm bảo và có thể đổi sau rehash.\n\n## Custom key\n\nKey tự định nghĩa cần hash nhất quán với equality: nếu hai key bằng nhau thì hash phải giống nhau. Sai điều kiện này làm container không tìm key theo mong đợi. Đừng dùng hash như chứng minh hai giá trị bằng nhau.\n\n## Lỗi thường gặp\n\n- Dựa vào thứ tự in của unordered container trong output yêu cầu cố định.\n- Giữ iterator qua thao tác có thể rehash.\n- Tin rằng hash table luôn O(1) hoặc không có rủi ro hash collision.\n- Cài `operator==` và hash với tiêu chí khác nhau.\n\n## Tự luyện\n\nKiểm tra xem danh sách số có phần tử trùng không bằng `unordered_set`. Phân tích trường hợp danh sách rỗng và độ phức tạp trung bình/worst case.\n\n## Đọc tiếp\n\nSo sánh với [map và set có thứ tự](/cpp/stl/associative-containers) và học [độ phức tạp](/cpp/thuat-toan/do-phuc-tap).",
+    "sourcePath": "content/cpp/modern/unordered-containers.md",
+    "headings": [
+      {
+        "title": "Ví dụ đếm tần suất",
+        "id": "vi-du-em-tan-suat"
+      },
+      {
+        "title": "Custom key",
+        "id": "custom-key"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Container adapters",
+    "description": "Dùng stack, queue và priority_queue qua API hạn chế theo chính sách truy cập.",
+    "slug": "/cpp/stl/container-adapters",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22040,
+    "difficulty": "intermediate",
+    "keywords": [
+      "stack",
+      "queue",
+      "priority_queue",
+      "container adapter",
+      "heap"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/sequence-containers",
+      "/cpp/stl/stl-algorithms",
+      "/cpp/thuat-toan/do-thi"
+    ],
+    "featured": false,
+    "priority": 22040,
+    "body": "Container adapter cung cấp một API nhỏ trên container bên dưới. Chọn nó khi quy tắc truy cập quan trọng hơn việc thao tác tùy ý lên mọi phần tử.\n\n## Ba adapter\n\n- `std::stack<T>`: LIFO; `top`, `push`, `pop`.\n- `std::queue<T>`: FIFO; `front`, `back`, `push`, `pop`.\n- `std::priority_queue<T>`: lấy phần tử ưu tiên nhất bằng `top`; mặc định là max-heap.\n\n```cpp\n#include <functional>\n#include <iostream>\n#include <queue>\n#include <stack>\n#include <vector>\n\nint main() {\n    std::stack<int> history;\n    history.push(1);\n    history.push(2);\n\n    std::queue<int> jobs;\n    jobs.push(10);\n    jobs.push(20);\n\n    std::priority_queue<int, std::vector<int>, std::greater<int>> smallest_first;\n    smallest_first.push(8);\n    smallest_first.push(3);\n    std::cout << history.top() << ' ' << jobs.front() << ' ' << smallest_first.top() << '\\n';\n}\n```\n\n`pop()` chỉ xóa phần tử, không trả về nó; đọc `top()`/`front()` trước khi pop và kiểm tra `empty()` trước khi truy cập. Priority queue với comparator `std::greater` đưa giá trị nhỏ nhất lên đầu.\n\n## Độ phức tạp\n\nStack/queue thao tác hai đầu thường O(1). Priority queue `top()` O(1), `push()`/`pop()` O(log n). Không thể duyệt priority queue theo thứ tự ưu tiên bằng iterator; nếu cần toàn bộ thứ tự, pop lần lượt hoặc sort một bản sao.\n\n## Lỗi thường gặp\n\n- Gọi `top`, `front` hoặc `pop` trên adapter rỗng.\n- Mong `pop()` trả phần tử đã xóa.\n- Nhầm comparator min-heap/max-heap.\n\n## Tự luyện\n\nMô phỏng hàng đợi phục vụ theo thứ tự đến bằng `queue`, rồi đổi sang `priority_queue` để phục vụ điểm ưu tiên cao nhất. Chọn tie-break rõ ràng.\n\n## Đọc tiếp\n\nXem cách sử dụng adapter trong [BFS và đồ thị](/cpp/thuat-toan/do-thi) và [STL algorithms](/cpp/stl/stl-algorithms).",
+    "sourcePath": "content/cpp/modern/container-adapters.md",
+    "headings": [
+      {
+        "title": "Ba adapter",
+        "id": "ba-adapter"
+      },
+      {
+        "title": "Độ phức tạp",
+        "id": "o-phuc-tap"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Iterators và iterator invalidation",
+    "description": "Duyệt container bằng iterator và nhận biết khi thao tác làm iterator hoặc reference mất hiệu lực.",
+    "slug": "/cpp/stl/iterators-invalidation",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22050,
+    "difficulty": "intermediate",
+    "keywords": [
+      "iterator",
+      "iterator invalidation",
+      "vector reallocation",
+      "erase",
+      "rehash"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/sequence-containers",
+      "/cpp/stl/stl-algorithms",
+      "/cpp/ky-thuat/ub-memory-safety"
+    ],
+    "featured": false,
+    "priority": 22050,
+    "body": "Iterator là đối tượng giống con trỏ dùng để đi qua phần tử container. Nhiều thuật toán STL nhận cặp iterator `[first, last)`. Mỗi container quy định thao tác nào làm iterator, pointer hoặc reference mất hiệu lực.\n\n## Ví dụ duyệt và xóa an toàn\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{1, 2, 3, 4};\n    for (auto it = values.begin(); it != values.end();) {\n        if (*it % 2 == 0) it = values.erase(it);\n        else ++it;\n    }\n    for (int value : values) std::cout << value << ' ';\n}\n```\n\n`erase` trả iterator tới phần tử kế tiếp. Tăng iterator cũ sau khi xóa có thể là lỗi.\n\n## Quy tắc cần nhớ\n\n```text\nvector: reallocation làm mất mọi iterator/pointer/reference; erase làm mất từ vị trí xóa trở đi.\ndeque: chèn/xóa có quy tắc phức tạp; kiểm tra đúng thao tác và vị trí.\nlist: iterator tới phần tử khác vẫn hợp lệ khi chèn; xóa chỉ làm mất iterator tới phần tử bị xóa.\nmap/set: iterator tới phần tử khác vẫn hợp lệ khi insert; erase làm mất iterator bị xóa.\nunordered_map/set: rehash làm mất iterator; reference/pointer tới phần tử thường vẫn giữ, nhưng không dựa vào iterator cũ.\n```\n\nĐây là tóm tắt, không thay thế quy tắc của từng overload/thao tác. Khi sửa container trong vòng lặp, đọc giá trị trả về của `erase` và không dùng iterator cũ.\n\n## Lỗi thường gặp\n\n- Giữ `auto& item = v[0]`, rồi thêm phần tử khiến vector reallocate.\n- Dùng range-based for và đồng thời xóa phần tử khỏi container.\n- Dùng iterator tới element đã xóa.\n- Cho rằng `reserve()` bảo vệ iterator cho mọi số lần thêm; chỉ tránh reallocation đến khi capacity bị vượt.\n\n## Tự luyện\n\nXóa mọi số chẵn khỏi vector theo ví dụ. Sau đó giải thích iterator nào còn hợp lệ nếu chèn một phần tử vào giữa vector và vào giữa list.\n\n## Đọc tiếp\n\nXem [sequence containers](/cpp/stl/sequence-containers) và [an toàn bộ nhớ](/cpp/ky-thuat/ub-memory-safety).",
+    "sourcePath": "content/cpp/modern/iterators-invalidation.md",
+    "headings": [
+      {
+        "title": "Ví dụ duyệt và xóa an toàn",
+        "id": "vi-du-duyet-va-xoa-an-toan"
+      },
+      {
+        "title": "Quy tắc cần nhớ",
+        "id": "quy-tac-can-nho"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "STL algorithms",
+    "description": "Dùng sort, find, count, lower_bound và các thuật toán chuẩn trên range iterator.",
+    "slug": "/cpp/stl/stl-algorithms",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22060,
+    "difficulty": "intermediate",
+    "keywords": [
+      "std::sort",
+      "std::find",
+      "std::count",
+      "lower_bound",
+      "algorithm",
+      "comparator"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/stl-la-gi",
+      "/cpp/stl/lambda-auto-range",
+      "/cpp/thuat-toan/tim-kiem-sap-xep"
+    ],
+    "featured": false,
+    "priority": 22060,
+    "body": "`<algorithm>` cung cấp thao tác trên range iterator. Các hàm này thường ngắn, dễ kiểm tra hơn vòng lặp tự viết và biểu đạt đúng ý định.\n\n## Ví dụ\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{7, 2, 5, 2, 9};\n    std::sort(values.begin(), values.end());\n    const auto count{std::count(values.begin(), values.end(), 2)};\n    const auto found{std::lower_bound(values.begin(), values.end(), 5)};\n    std::cout << count << ' ' << (found - values.begin()) << '\\n';\n}\n```\n\n## Thuật toán phổ biến\n\n- `std::sort(first, last)`: sắp xếp; O(n log n) so sánh, không ổn định.\n- `std::stable_sort`: giữ thứ tự tương đối của phần tử tương đương; thường cần thêm bộ nhớ.\n- `std::find`/`std::find_if`: tìm phần tử đầu thỏa điều kiện; O(n).\n- `std::count`/`std::count_if`: đếm; O(n).\n- `std::lower_bound`: binary search, yêu cầu range đã sắp xếp theo comparator tương thích; O(log n) bước với random-access iterator.\n- `std::min_element`/`std::max_element`: tìm min/max; O(n).\n\nComparator cho `sort` cần strict weak ordering. Đừng viết `a <= b`; dùng `a < b` hoặc comparator tương đương đúng tính chất.\n\n## Lỗi thường gặp\n\n- Gọi `lower_bound` trên dãy chưa sắp xếp.\n- Quên `#include <algorithm>`.\n- Dùng `std::sort` khi cần giữ thứ tự các phần tử bằng nhau.\n- Dùng `begin()` và `end()` không cùng container.\n\n## Tự luyện\n\nSắp xếp danh sách cặp `(điểm, tên)` theo điểm giảm dần, rồi tên tăng dần khi bằng điểm. Viết comparator xác định thứ tự nhất quán.\n\n## Đọc tiếp\n\nHọc [lambda và auto](/cpp/stl/lambda-auto-range), rồi xem [tìm kiếm và sắp xếp](/cpp/thuat-toan/tim-kiem-sap-xep).",
+    "sourcePath": "content/cpp/modern/stl-algorithms.md",
+    "headings": [
+      {
+        "title": "Ví dụ",
+        "id": "vi-du"
+      },
+      {
+        "title": "Thuật toán phổ biến",
+        "id": "thuat-toan-pho-bien"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Lambda, auto và range-based for",
+    "description": "Viết callable ngắn, suy luận kiểu cục bộ và duyệt phần tử theo range.",
+    "slug": "/cpp/stl/lambda-auto-range",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22070,
+    "difficulty": "intermediate",
+    "keywords": [
+      "lambda C++",
+      "capture",
+      "auto",
+      "structured bindings",
+      "range-based for"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/stl-algorithms",
+      "/cpp/stl/cpp17-20-23",
+      "/cpp/stl/move-semantics"
+    ],
+    "featured": false,
+    "priority": 22070,
+    "body": "Lambda là callable có thể viết tại chỗ, thường dùng làm predicate hoặc comparator. `auto` suy ra kiểu từ initializer; range-based `for` duyệt phần tử mà không viết iterator tường minh.\n\n## Lambda và capture\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n    const int threshold{5};\n    std::vector<int> values{2, 7, 4, 9};\n    const auto count{std::count_if(values.begin(), values.end(),\n        [threshold](int value) { return value >= threshold; })};\n    std::cout << count << '\\n';\n}\n```\n\n`[threshold]` capture by value. `[&threshold]` capture by reference; lambda không được dùng sau khi object tham chiếu đã hết lifetime. `[=]`/`[&]` capture ngầm nhiều biến có thể che giấu dependency, nên ghi capture tường minh trong code quan trọng.\n\n## `auto` và structured bindings\n\n```cpp\n#include <map>\n\nint main() {\n    std::map<int, int> counts{{1, 3}, {2, 5}};\n    for (const auto& [key, value] : counts) {\n        (void)key;\n        (void)value;\n    }\n}\n```\n\nStructured bindings cần C++17. Dùng `const auto&` để tránh copy khi chỉ đọc object lớn. Dùng `auto` khi kiểu dài hoặc suy luận giúp code rõ; đừng dùng để che giấu kiểu quan trọng của API.\n\n## Lỗi thường gặp\n\n- Capture reference rồi giữ lambda lâu hơn object gốc.\n- Dùng `[&]` trong asynchronous callback có lifetime dài.\n- Copy phần tử lớn vô tình trong vòng lặp `for (auto item : values)`.\n- Sửa container trong lúc range-based for duyệt nó.\n\n## Tự luyện\n\nViết lambda lọc số dương và comparator sắp xếp string theo độ dài rồi alphabet. Xác định biến nào được capture và theo cách nào.\n\n## Đọc tiếp\n\nXem [STL algorithms](/cpp/stl/stl-algorithms), [move semantics](/cpp/stl/move-semantics) và [các mốc chuẩn C++](/cpp/stl/cpp17-20-23).",
+    "sourcePath": "content/cpp/modern/lambda-auto-range.md",
+    "headings": [
+      {
+        "title": "Lambda và capture",
+        "id": "lambda-va-capture"
+      },
+      {
+        "title": "`auto` và structured bindings",
+        "id": "auto-va-structured-bindings"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Move semantics và rvalue references",
+    "description": "Hiểu lvalue, rvalue, std::move và cách type chuyển resource mà không copy không cần thiết.",
+    "slug": "/cpp/stl/move-semantics",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22080,
+    "difficulty": "advanced",
+    "keywords": [
+      "move semantics",
+      "rvalue reference",
+      "std::move",
+      "moved-from",
+      "perfect forwarding"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/lambda-auto-range",
+      "/cpp/stl/raii-smart-pointers",
+      "/cpp/trung-cap/stack-heap-lifetime"
+    ],
+    "featured": false,
+    "priority": 22080,
+    "body": "Move semantics cho phép type chuyển quyền sở hữu resource từ object sắp hết giá trị thay vì sao chép resource đó. Nó hữu ích trong container và API nhận object lớn; compiler cũng tự tối ưu nhiều trường hợp.\n\n## Lvalue, rvalue và `std::move`\n\nLvalue là biểu thức có identity ổn định để tham chiếu; rvalue thường là giá trị tạm. `T&&` là rvalue reference trong ngữ cảnh thường. `std::move(x)` không tự chuyển dữ liệu: nó cast `x` sang rvalue để overload move constructor/assignment được chọn.\n\n```cpp\n#include <iostream>\n#include <string>\n#include <utility>\n\nint main() {\n    std::string source{\"large text\"};\n    std::string destination{std::move(source)};\n    std::cout << destination.size() << '\\n';\n}\n```\n\nSau khi move, `source` vẫn hợp lệ nhưng trạng thái thường không xác định theo hợp đồng type; chỉ hủy nó hoặc gán giá trị mới, trừ khi API ghi rõ có thể làm gì tiếp.\n\n## Quy tắc dùng\n\n- Không gọi `std::move` lên object sau đó còn cần giá trị cũ.\n- Trả local object theo giá trị; NRVO thường loại bỏ copy. Thêm `std::move` vào `return local;` có thể cản trở NRVO.\n- Move constructor của type tùy chỉnh cần giữ object đích hợp lệ và xử lý nguồn đúng.\n- Perfect forwarding dùng forwarding reference và `std::forward`; chỉ dùng khi API generic thực sự cần bảo toàn value category.\n\n## Lỗi thường gặp\n\n- Nghĩ `std::move` là thao tác giải phóng hoặc đảm bảo không copy.\n- Dùng moved-from string/vector như còn nguyên nội dung.\n- Move từ `const T`; overload move thường cần `T&&` không-const nên có thể rơi về copy.\n- Tạo move constructor riêng mà quên nghĩ về copy/move assignment và destructor.\n\n## Tự luyện\n\nTruyền `std::string` vào hàm nhận theo `const&`, theo giá trị và theo `&&`. Viết hợp đồng rõ cho từng hàm; chọn cách đơn giản nhất trước khi tối ưu.\n\n## Đọc tiếp\n\nXem [RAII và smart pointers](/cpp/stl/raii-smart-pointers) để hiểu ownership resource.",
+    "sourcePath": "content/cpp/modern/move-semantics.md",
+    "headings": [
+      {
+        "title": "Lvalue, rvalue và `std::move`",
+        "id": "lvalue-rvalue-va-stdmove"
+      },
+      {
+        "title": "Quy tắc dùng",
+        "id": "quy-tac-dung"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "RAII và smart pointers",
+    "description": "Gắn lifetime của tài nguyên với object, dùng unique_ptr, shared_ptr và weak_ptr đúng ownership.",
+    "slug": "/cpp/stl/raii-smart-pointers",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22090,
+    "difficulty": "advanced",
+    "keywords": [
+      "RAII",
+      "unique_ptr",
+      "shared_ptr",
+      "weak_ptr",
+      "Rule of Zero",
+      "ownership"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/move-semantics",
+      "/cpp/trung-cap/stack-heap-lifetime",
+      "/cpp/ky-thuat/ub-memory-safety"
+    ],
+    "featured": false,
+    "priority": 22090,
+    "body": "RAII (Resource Acquisition Is Initialization) gắn việc sở hữu resource với lifetime của object: constructor nhận resource, destructor giải phóng. Dùng RAII cho bộ nhớ, file, lock và handle để cleanup cả khi có exception.\n\n## Chọn smart pointer\n\n```cpp\n#include <iostream>\n#include <memory>\n\nstruct Session {\n    explicit Session(int id) : id{id} {}\n    int id;\n};\n\nint main() {\n    auto owned{std::make_unique<Session>(7)};\n    std::weak_ptr<Session> observer;\n    {\n        auto shared{std::make_shared<Session>(8)};\n        observer = shared;\n        std::cout << shared->id << '\\n';\n    }\n    std::cout << std::boolalpha << observer.expired() << '\\n';\n}\n```\n\n- `std::unique_ptr<T>`: một owner; chuyển ownership bằng move. Đây là lựa chọn mặc định cho dynamic ownership.\n- `std::shared_ptr<T>`: nhiều owner dùng reference count; có chi phí và cần lý do chia sẻ ownership.\n- `std::weak_ptr<T>`: quan sát object được shared-owned mà không tăng strong count; `lock()` tạo shared pointer tạm nếu object còn sống.\n\nObject không có owner động thường nên là biến local hoặc thành viên trực tiếp. Container như `std::vector<T>` cũng tự quản lý bộ nhớ.\n\n## Rule of Zero\n\nThiết kế class dùng thành viên RAII để compiler sinh copy/move/destructor đúng; tránh tự quản lý resource bằng raw `new`/`delete`. Raw pointer thường nên là non-owning observer, với lifetime được tài liệu hóa.\n\n## Lỗi thường gặp\n\n- Hai `unique_ptr` cùng sở hữu một raw pointer.\n- Tạo `shared_ptr` mới từ `.get()` rồi giải phóng cùng object hai lần.\n- Vòng ownership giữa các `shared_ptr` giữ nhau sống mãi; dùng `weak_ptr` để phá chu kỳ.\n- Dùng `shared_ptr` chỉ để “an toàn hơn” dù ownership thực tế đơn nhất.\n\n## Tự luyện\n\nThiết kế cây object: node cha sở hữu con bằng `unique_ptr`; node con cần biết cha thì lưu observer pointer/reference có lifetime rõ. Xác định ai hủy từng node.\n\n## Đọc tiếp\n\nĐọc [move semantics](/cpp/stl/move-semantics), [vòng đời object](/cpp/trung-cap/stack-heap-lifetime) và [an toàn bộ nhớ](/cpp/ky-thuat/ub-memory-safety).",
+    "sourcePath": "content/cpp/modern/raii-smart-pointers.md",
+    "headings": [
+      {
+        "title": "Chọn smart pointer",
+        "id": "chon-smart-pointer"
+      },
+      {
+        "title": "Rule of Zero",
+        "id": "rule-of-zero"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "C++17, C++20 và C++23",
+    "description": "So sánh các tính năng hiện đại thường gặp và kiểm tra hỗ trợ compiler, thư viện.",
+    "slug": "/cpp/stl/cpp17-20-23",
+    "category": "modern",
+    "categoryLabel": "STL và C++ hiện đại",
+    "order": 22100,
+    "difficulty": "advanced",
+    "keywords": [
+      "C++17",
+      "C++20",
+      "C++23",
+      "language mode",
+      "standard library support",
+      "concepts",
+      "ranges"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/lambda-auto-range",
+      "/cpp/stl/raii-smart-pointers",
+      "/cpp/ky-thuat/cmake"
+    ],
+    "featured": false,
+    "priority": 22100,
+    "body": "C++17 là baseline của bộ tài liệu. Chọn chuẩn mới hơn khi dự án kiểm soát được compiler, standard library và nền tảng build cần hỗ trợ.\n\n## Các tính năng tiêu biểu\n\n- **C++17**: structured bindings, `if constexpr`, `std::optional`, `std::variant`, `std::filesystem`, inline variables.\n- **C++20**: concepts, ranges, coroutines, modules, `std::span`, `std::jthread`, toán tử `<=>`.\n- **C++23**: `std::expected`, `std::print` và nhiều bổ sung ngôn ngữ/thư viện khác.\n\nDanh sách này không có nghĩa mọi feature đều sẵn có trên mọi compiler. Tính năng có thể được hỗ trợ một phần; một mode như `-std=c++23` không đảm bảo thư viện đã triển khai đầy đủ.\n\n## Chọn mode\n\n```sh\ng++ -std=c++17 main.cpp -o app\nclang++ -std=c++20 main.cpp -o app\n```\n\nMSVC dùng `/std:c++17` hoặc mode tương ứng. Trong CMake, khai báo yêu cầu theo target; xem [CMake](/cpp/ky-thuat/cmake). Đọc bảng hỗ trợ chính thức của [GCC](https://gcc.gnu.org/projects/cxx-status.html), [Clang](https://clang.llvm.org/cxx_status) hoặc [MSVC](https://learn.microsoft.com/en-us/cpp/overview/visual-cpp-language-conformance?view=msvc-170) và kiểm tra riêng language feature lẫn standard library.\n\n## Hướng dẫn chọn chuẩn\n\n- Chọn chuẩn thấp nhất đáp ứng nhu cầu và chính sách hỗ trợ sản phẩm.\n- Thư viện công khai cần ghi rõ chuẩn tối thiểu và compiler đã kiểm tra.\n- Tránh đặt `latest` trong build tái lập; compiler mới có thể đổi ý nghĩa flag này.\n- Kiểm tra feature theo feature-test macro khi cần hỗ trợ nhiều toolchain.\n\n## Lỗi thường gặp\n\n- Bật C++23 nhưng compile lỗi vì thư viện chuẩn cũ.\n- Dùng extension GNU và cho rằng đó là C++ portable.\n- Nâng chuẩn dự án mà không kiểm tra CI, toolchain của người dùng và dependency.\n\n## Tự luyện\n\nChọn một tính năng C++20 hoặc C++23 bạn muốn dùng. Kiểm tra ngôn ngữ, thư viện, phiên bản compiler, platform CI và fallback nếu thiếu.\n\n## Đọc tiếp\n\nXem [lambda và structured bindings](/cpp/stl/lambda-auto-range), [CMake](/cpp/ky-thuat/cmake) và [lộ trình học](/cpp/bat-dau/lo-trinh-hoc).",
+    "sourcePath": "content/cpp/modern/cpp17-20-23.md",
+    "headings": [
+      {
+        "title": "Các tính năng tiêu biểu",
+        "id": "cac-tinh-nang-tieu-bieu"
+      },
+      {
+        "title": "Chọn mode",
+        "id": "chon-mode"
+      },
+      {
+        "title": "Hướng dẫn chọn chuẩn",
+        "id": "huong-dan-chon-chuan"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Phân tích độ phức tạp Big O",
+    "description": "Ước lượng thời gian và bộ nhớ theo kích thước input để chọn thuật toán phù hợp.",
+    "slug": "/cpp/thuat-toan/do-phuc-tap",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23000,
+    "difficulty": "beginner",
+    "keywords": [
+      "Big O",
+      "time complexity",
+      "space complexity",
+      "input constraints",
+      "algorithm analysis"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/giai-quyet-bai-toan",
+      "/cpp/thuat-toan/tim-kiem-sap-xep",
+      "/cpp/tra-cuu/stl-containers"
+    ],
+    "featured": false,
+    "priority": 23000,
+    "body": "Big O mô tả tốc độ tăng của tài nguyên khi input lớn dần, thường tập trung vào trường hợp xấu nhất. Dùng nó để so sánh hướng giải và đối chiếu giới hạn bài toán; đây không phải số giây chạy thực tế.\n\n## Các mức thường gặp\n\n```text\nO(1)       thao tác cố định\nO(log n)   mỗi bước giảm input theo tỉ lệ, ví dụ binary search\nO(n)       duyệt một lần\nO(n log n) sort so sánh thông thường\nO(n^2)     hai vòng lặp phụ thuộc n\nO(2^n)     duyệt mọi tập con\nO(n!)      duyệt mọi hoán vị\n```\n\n```cpp\n#include <iostream>\n#include <vector>\n\nlong long sum(const std::vector<int>& values) {\n    long long result{};\n    for (int value : values) result += value;\n    return result;\n}\n\nint main() {\n    const std::vector<int> values{1, 2, 3};\n    std::cout << sum(values) << '\\n';\n}\n```\n\nThời gian O(n), bộ nhớ phụ O(1), không tính vùng chứa input. Nếu hàm tạo thêm vector n phần tử thì bộ nhớ phụ O(n).\n\n## Quy tắc phân tích\n\n- Bỏ hằng số và số hạng thấp hơn: `3n + 10` là O(n).\n- Hai vòng lặp lồng nhau qua n phần tử thường O(n²); vòng lồng qua hai kích thước khác nhau là O(nm).\n- Hai đoạn chạy nối tiếp cộng độ phức tạp; lấy mức tăng nhanh nhất.\n- Đệ quy phải tính số lời gọi và chi phí mỗi lời gọi.\n- Phân biệt worst-case, average-case và amortized khi cấu trúc cần.\n\n## Ràng buộc input\n\nĐọc `n`, giới hạn thời gian, bộ nhớ và miền giá trị trước khi chọn thuật toán. O(n²) với n = 100 có thể hợp lý; với n = 200000 thì thường không. Hằng số, cache và compiler vẫn ảnh hưởng thời gian thực.\n\n## Lỗi thường gặp\n\n- Chỉ phân tích số vòng lặp mà bỏ chi phí thao tác bên trong.\n- Gọi truy cập `vector[i]` O(n); với vector nó là O(1), còn `list` không hỗ trợ truy cập chỉ số hiệu quả.\n- Bỏ qua bộ nhớ đệ quy, container phụ hoặc bản sao input.\n- Dùng Big O để khẳng định chương trình chắc chắn đủ nhanh.\n\n## Tự luyện\n\nPhân tích một vòng lặp đơn, hai vòng lặp lồng nhau và sort rồi duyệt. Ghi riêng thời gian lẫn bộ nhớ phụ, nêu biến nào là kích thước input.\n\n## Đọc tiếp\n\nÁp dụng khi [đọc đề và thiết kế thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan), rồi xem [tìm kiếm và sắp xếp](/cpp/thuat-toan/tim-kiem-sap-xep).",
+    "sourcePath": "content/cpp/algorithms/big-o.md",
+    "headings": [
+      {
+        "title": "Các mức thường gặp",
+        "id": "cac-muc-thuong-gap"
+      },
+      {
+        "title": "Quy tắc phân tích",
+        "id": "quy-tac-phan-tich"
+      },
+      {
+        "title": "Ràng buộc input",
+        "id": "rang-buoc-input"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Đọc đề và thiết kế thuật toán",
+    "description": "Chuyển đề bài thành mô hình, invariant, thuật toán và kiểm thử trường hợp biên.",
+    "slug": "/cpp/thuat-toan/giai-quyet-bai-toan",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23010,
+    "difficulty": "beginner",
+    "keywords": [
+      "đọc đề",
+      "thiết kế thuật toán",
+      "invariant",
+      "edge case",
+      "competitive programming"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/do-phuc-tap",
+      "/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap",
+      "/cpp/thuat-toan/tim-kiem-sap-xep"
+    ],
+    "featured": false,
+    "priority": 23010,
+    "body": "Giải thuật hiệu quả bắt đầu từ việc hiểu đúng input, output và giới hạn. Bài này đưa ra quy trình ngắn để tránh cắm đầu code trước khi biết điều kiện nào phải đúng.\n\n## Quy trình\n\n- Viết lại yêu cầu bằng lời của bạn; xác định input, output và thứ tự dữ liệu.\n- Ghi constraint: n lớn nhất, miền số, số test, giới hạn thời gian/bộ nhớ.\n- Thử ví dụ nhỏ bằng tay; tìm trường hợp rỗng, một phần tử, trùng lặp, cực trị.\n- Chọn cấu trúc dữ liệu và thuật toán; dự đoán độ phức tạp trước khi code.\n- Nêu invariant hoặc lý do từng bước giữ tính đúng.\n- Viết code đơn giản, kiểm tra input đọc thành công và giới hạn chỉ số.\n- Chạy ví dụ, test biên và test ngẫu nhiên nhỏ bằng đối chiếu lời giải brute force nếu phù hợp.\n\n## Ví dụ suy luận\n\nMuốn kiểm tra hai phần tử có tổng bằng `target`: duyệt mọi cặp O(n²), hoặc lưu các giá trị đã thấy trong set để tìm phần bù trung bình O(n). Cách thứ hai đánh đổi thêm O(n) bộ nhớ; phải quyết định có cho phép dùng cùng một phần tử hai lần không.\n\n## Kiểu số và input\n\nChọn kiểu dựa trên miền giá trị và phép tính trung gian, không chỉ giá trị cuối. Tổng nhiều `int` có thể vượt `int`; dùng `long long` khi phù hợp và kiểm tra giới hạn. `std::cin` có thể thất bại khi input sai; đừng tiếp tục xử lý biến chưa đọc.\n\n## Lỗi thường gặp\n\n- Hiểu nhầm “ít nhất”, “nhiều nhất”, inclusive range hoặc đơn vị.\n- Code chỉ đúng sample, bỏ trường hợp biên.\n- Chọn O(n²) dù constraint yêu cầu gần O(n log n).\n- Dùng một kiểu dữ liệu nhỏ cho phép nhân/tổng trung gian.\n\n## Tự luyện\n\nVới bài tìm max trong dãy, liệt kê hành vi khi n = 0 và n = 1 trước khi code. Nếu đề đảm bảo n ≥ 1, nêu rõ giả định đó trong lời giải.\n\n## Đọc tiếp\n\nÔn [Big O](/cpp/thuat-toan/do-phuc-tap) rồi chọn kỹ thuật như [prefix sum](/cpp/thuat-toan/prefix-sum-difference-array) hoặc [two pointers](/cpp/thuat-toan/two-pointers-sliding-window).",
+    "sourcePath": "content/cpp/algorithms/giai-quyet-bai-toan.md",
+    "headings": [
+      {
+        "title": "Quy trình",
+        "id": "quy-trinh"
+      },
+      {
+        "title": "Ví dụ suy luận",
+        "id": "vi-du-suy-luan"
+      },
+      {
+        "title": "Kiểu số và input",
+        "id": "kieu-so-va-input"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Searching và sorting",
+    "description": "So sánh linear search, binary search và các cách sắp xếp thường dùng trong C++.",
+    "slug": "/cpp/thuat-toan/tim-kiem-sap-xep",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23020,
+    "difficulty": "beginner",
+    "keywords": [
+      "linear search",
+      "binary search",
+      "sorting",
+      "std::sort",
+      "std::lower_bound"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/stl-algorithms",
+      "/cpp/thuat-toan/binary-search-answer",
+      "/cpp/thuat-toan/do-phuc-tap"
+    ],
+    "featured": false,
+    "priority": 23020,
+    "body": "Searching tìm phần tử đáp ứng điều kiện; sorting sắp dữ liệu theo thứ tự để hỗ trợ truy vấn hoặc output. Hãy chọn cách dựa trên số truy vấn và trạng thái ban đầu của dữ liệu.\n\n## Linear search\n\n`std::find` duyệt tuần tự, O(n) thời gian, O(1) bộ nhớ phụ. Dùng tốt cho dãy nhỏ hoặc một lần tìm kiếm.\n\n## Binary search\n\nBinary search giảm nửa khoảng tìm mỗi bước nên O(log n), nhưng range phải được sắp xếp hoặc có predicate đơn điệu. `std::lower_bound` trả iterator đầu tiên có giá trị không nhỏ hơn key. Nếu dãy chưa sort và chỉ tìm một lần, sort trước có thể không đáng.\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{8, 2, 5, 2, 9};\n    std::sort(values.begin(), values.end());\n    const auto found{std::lower_bound(values.begin(), values.end(), 5)};\n    std::cout << (found != values.end() && *found == 5) << '\\n';\n}\n```\n\n## Sorting\n\n`std::sort` thường dùng introsort với O(n log n) so sánh ở worst case trong standard library hiện đại; hợp đồng chuẩn đặt giới hạn O(n log n). Nó không ổn định. Dùng `std::stable_sort` nếu thứ tự tương đối các phần tử tương đương là yêu cầu.\n\n## Lỗi thường gặp\n\n- Binary search trên dãy chưa sort hoặc comparator không khớp thứ tự sort.\n- Không kiểm tra iterator bằng `end()` trước khi dereference.\n- Comparator không tạo strict weak ordering.\n- Sắp xếp rồi quên chi phí O(n log n) khi chỉ có một truy vấn nhỏ.\n\n## Tự luyện\n\nTìm vị trí xuất hiện đầu tiên và cuối cùng của `x` trong dãy đã sort bằng hai lần `lower_bound`/`upper_bound`. Thử khi `x` không tồn tại và khi dãy rỗng.\n\n## Đọc tiếp\n\nXem [STL algorithms](/cpp/stl/stl-algorithms) và áp dụng binary search lên kết quả trong [binary search on answer](/cpp/thuat-toan/binary-search-answer).",
+    "sourcePath": "content/cpp/algorithms/tim-kiem-sap-xep.md",
+    "headings": [
+      {
+        "title": "Linear search",
+        "id": "linear-search"
+      },
+      {
+        "title": "Binary search",
+        "id": "binary-search"
+      },
+      {
+        "title": "Sorting",
+        "id": "sorting"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Prefix Sum và Difference Array",
+    "description": "Trả lời truy vấn tổng đoạn và cập nhật nhiều range bằng mảng phụ tích lũy.",
+    "slug": "/cpp/thuat-toan/prefix-sum-difference-array",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23030,
+    "difficulty": "intermediate",
+    "keywords": [
+      "prefix sum",
+      "cumulative sum",
+      "difference array",
+      "range sum",
+      "range update"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/two-pointers-sliding-window",
+      "/cpp/thuat-toan/do-phuc-tap",
+      "/cpp/bat-dau/mang-string"
+    ],
+    "featured": false,
+    "priority": 23030,
+    "body": "Prefix sum biến nhiều truy vấn tổng đoạn thành phép trừ hai prefix. Difference array gom cập nhật trên nhiều đoạn để cuối cùng dựng lại từng phần tử.\n\n## Prefix sum\n\nVới `prefix[0] = 0`, đặt `prefix[i + 1] = prefix[i] + values[i]`. Tổng đoạn inclusive `[left, right]` là `prefix[right + 1] - prefix[left]`.\n\n```cpp\n#include <cstddef>\n#include <iostream>\n#include <vector>\n\nint main() {\n    const std::vector<int> values{3, 1, 4, 2};\n    std::vector<long long> prefix(values.size() + 1);\n    for (std::size_t i = 0; i < values.size(); ++i) {\n        prefix[i + 1] = prefix[i] + values[i];\n    }\n    const std::size_t left{1};\n    const std::size_t right{3};\n    std::cout << prefix[right + 1] - prefix[left] << '\\n';\n}\n```\n\nTiền xử lý O(n), mỗi truy vấn O(1), bộ nhớ O(n). Chỉ số trong ví dụ thỏa `left <= right < n`. Chọn kiểu đủ rộng cho prefix sum.\n\n## Difference array\n\nMuốn cộng `delta` vào inclusive `[left, right]`, cộng `delta` tại `diff[left]` và trừ tại `diff[right + 1]` nếu vị trí đó nằm trong buffer. Prefix-sum của `diff` tạo mảng sau mọi cập nhật. M cập nhật và N phần tử: O(M + N).\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    constexpr std::size_t size{5};\n    std::vector<long long> difference(size + 1);\n    const std::size_t left{1};\n    const std::size_t right{3};\n    const long long delta{4};\n    difference[left] += delta;\n    difference[right + 1] -= delta;\n\n    long long current{};\n    for (std::size_t i = 0; i < size; ++i) {\n        current += difference[i];\n        std::cout << current << ' ';\n    }\n    std::cout << '\\n';\n}\n```\n\n## Lỗi thường gặp\n\n- Lệch một chỉ số giữa inclusive range và half-open range.\n- Quên prefix sentinel ở vị trí 0.\n- Dùng `int` khiến tổng tràn.\n- Dùng difference array khi cần truy vấn xen kẽ cập nhật động; khi đó cần cấu trúc khác như Fenwick tree.\n\n## Tự luyện\n\nTrả lời nhiều truy vấn `[l, r]` và sau đó cộng giá trị vào nhiều đoạn. Thử đoạn một phần tử, cả mảng và đoạn cuối chạm `n - 1`.\n\n## Đọc tiếp\n\nXem [two pointers và sliding window](/cpp/thuat-toan/two-pointers-sliding-window), cùng [độ phức tạp](/cpp/thuat-toan/do-phuc-tap).",
+    "sourcePath": "content/cpp/algorithms/prefix-sum-difference-array.md",
+    "headings": [
+      {
+        "title": "Prefix sum",
+        "id": "prefix-sum"
+      },
+      {
+        "title": "Difference array",
+        "id": "difference-array"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Two Pointers và Sliding Window",
+    "description": "Dùng hai chỉ số để xử lý dãy có invariant, cửa sổ và truy vấn tuyến tính.",
+    "slug": "/cpp/thuat-toan/two-pointers-sliding-window",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23040,
+    "difficulty": "intermediate",
+    "keywords": [
+      "two pointers",
+      "sliding window",
+      "subarray",
+      "invariant",
+      "positive numbers"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/prefix-sum-difference-array",
+      "/cpp/thuat-toan/tim-kiem-sap-xep",
+      "/cpp/thuat-toan/do-phuc-tap"
+    ],
+    "featured": false,
+    "priority": 23040,
+    "body": "Two pointers duy trì hai chỉ số thay vì thử mọi cặp. Sliding window là trường hợp hai đầu tạo cửa sổ liên tục. Kỹ thuật thường giảm O(n²) xuống O(n), nhưng chỉ đúng khi invariant cho phép di chuyển con trỏ có hướng.\n\n## Cửa sổ với số dương\n\nVí dụ tìm đoạn liên tiếp ngắn nhất có tổng ít nhất `target`, khi mọi phần tử **dương**:\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n    const std::vector<int> values{2, 3, 1, 2, 4, 3};\n    const long long target{7};\n    std::size_t best{values.size() + 1};\n    std::size_t left{};\n    long long sum{};\n\n    for (std::size_t right = 0; right < values.size(); ++right) {\n        sum += values[right];\n        while (sum >= target) {\n            best = std::min(best, right - left + 1);\n            sum -= values[left++];\n        }\n    }\n    std::cout << (best == values.size() + 1 ? 0 : best) << '\\n';\n}\n```\n\nMỗi pointer chỉ tăng, nên thời gian O(n), bộ nhớ phụ O(1). Output 0 nghĩa là không tìm thấy đoạn. Tính đúng dựa vào mọi số dương: khi bỏ trái, tổng chỉ giảm; với số âm invariant này không còn đúng.\n\n## Two pointers trên dãy đã sort\n\nĐể tìm cặp có tổng `target`, đặt một pointer đầu và một pointer cuối của dãy sort. Nếu tổng nhỏ thì tăng pointer trái; nếu lớn thì giảm pointer phải. Thời gian O(n) sau khi sort, bộ nhớ tùy cách sort và cách lưu dữ liệu.\n\n## Lỗi thường gặp\n\n- Dùng sliding window tổng đơn điệu trên dãy có số âm.\n- Không chứng minh vì sao bỏ phần tử trái không làm mất đáp án tối ưu.\n- Vòng `while` không tiến pointer, gây lặp vô hạn.\n- Dùng unsigned index rồi trừ khi `left > right`.\n\n## Tự luyện\n\nĐếm số đoạn có tổng không quá K khi mọi phần tử dương. Giải thích vì sao khi thêm `values[right]`, mọi suffix của cửa sổ hợp lệ đều tạo một đoạn hợp lệ.\n\n## Đọc tiếp\n\nXem [prefix sum](/cpp/thuat-toan/prefix-sum-difference-array) và [binary search](/cpp/thuat-toan/tim-kiem-sap-xep).",
+    "sourcePath": "content/cpp/algorithms/two-pointers-sliding-window.md",
+    "headings": [
+      {
+        "title": "Cửa sổ với số dương",
+        "id": "cua-so-voi-so-duong"
+      },
+      {
+        "title": "Two pointers trên dãy đã sort",
+        "id": "two-pointers-tren-day-a-sort"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Recursion và Backtracking",
+    "description": "Khám phá không gian trạng thái bằng đệ quy, lựa chọn, kiểm tra và hoàn tác.",
+    "slug": "/cpp/thuat-toan/de-quy-quay-lui",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23050,
+    "difficulty": "intermediate",
+    "keywords": [
+      "backtracking",
+      "recursion",
+      "pruning",
+      "state space",
+      "permutation",
+      "combination"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/trung-cap/de-quy-call-stack",
+      "/cpp/thuat-toan/quy-hoach-dong",
+      "/cpp/thuat-toan/do-phuc-tap"
+    ],
+    "featured": false,
+    "priority": 23050,
+    "body": "Backtracking thử các lựa chọn để xây lời giải; nếu trạng thái hiện tại vi phạm điều kiện hoặc không thể dẫn tới đáp án, thuật toán dừng nhánh đó. Dùng cho tổ hợp, hoán vị, Sudoku và bài tìm cấu hình khi n đủ nhỏ.\n\n## Mẫu chọn – gọi – hoàn tác\n\n```cpp\n#include <iostream>\n#include <vector>\n\nvoid generate(int n, int next, std::vector<int>& chosen) {\n    if (static_cast<int>(chosen.size()) == n) {\n        for (int value : chosen) std::cout << value << ' ';\n        std::cout << '\\n';\n        return;\n    }\n\n    for (int value = next; value <= 4; ++value) {\n        chosen.push_back(value);\n        generate(n, value + 1, chosen);\n        chosen.pop_back();\n    }\n}\n\nint main() {\n    std::vector<int> chosen;\n    generate(2, 1, chosen);\n}\n```\n\nVí dụ sinh tổ hợp 2 số trong `{1,2,3,4}`. Số trạng thái phụ thuộc bài toán; sinh mọi tổ hợp k phần tử có C(n,k) lá, còn hoán vị có thể tới n! lá. Bộ nhớ stack và `chosen` thường O(độ sâu).\n\n## Pruning\n\nPrune khi đã chứng minh nhánh không thể tạo nghiệm. Điều kiện cắt sai có thể bỏ mất đáp án. Có thể sắp lựa chọn để phát hiện sớm hoặc dùng bound, nhưng độ phức tạp worst-case vẫn có thể tăng theo hàm mũ.\n\n## Lỗi thường gặp\n\n- Quên hoàn tác trạng thái trước lựa chọn kế tiếp.\n- Base case không bao phủ mọi trạng thái hợp lệ.\n- Không kiểm tra giới hạn n; đệ quy sâu hoặc số nghiệm lớn gây quá thời gian/bộ nhớ.\n- In nghiệm ngay cả khi bài cần đếm hoặc chỉ cần một nghiệm.\n\n## Tự luyện\n\nSinh mọi chuỗi bit độ dài n không có hai bit 1 liên tiếp. Nêu trạng thái tối thiểu cần lưu và điều kiện prune.\n\n## Đọc tiếp\n\nKhi trạng thái lặp lại, chuyển sang [Dynamic Programming](/cpp/thuat-toan/quy-hoach-dong); trước đó hãy phân tích [độ phức tạp](/cpp/thuat-toan/do-phuc-tap).",
+    "sourcePath": "content/cpp/algorithms/de-quy-quay-lui.md",
+    "headings": [
+      {
+        "title": "Mẫu chọn – gọi – hoàn tác",
+        "id": "mau-chon-goi-hoan-tac"
+      },
+      {
+        "title": "Pruning",
+        "id": "pruning"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Greedy Algorithms",
+    "description": "Chọn bước tốt nhất hiện tại khi có chứng minh rằng lựa chọn cục bộ dẫn tới tối ưu toàn cục.",
+    "slug": "/cpp/thuat-toan/greedy",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23060,
+    "difficulty": "intermediate",
+    "keywords": [
+      "greedy algorithm",
+      "interval scheduling",
+      "exchange argument",
+      "local optimum"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/quy-hoach-dong",
+      "/cpp/thuat-toan/tim-kiem-sap-xep",
+      "/cpp/thuat-toan/giai-quyet-bai-toan"
+    ],
+    "featured": false,
+    "priority": 23060,
+    "body": "Greedy chọn một phương án cục bộ theo quy tắc, rồi tiếp tục với phần còn lại. Cách này nhanh và gọn khi có chứng minh phù hợp; trực giác “chọn tốt nhất trước” không đủ để bảo đảm tối ưu.\n\n## Ví dụ: chọn nhiều khoảng không giao nhau\n\nVới mỗi interval `[start, end)`, sắp theo `end` tăng dần rồi lấy interval tương thích đầu tiên. Lý do: khoảng kết thúc sớm nhất để lại nhiều thời gian nhất cho phần còn lại.\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <limits>\n#include <utility>\n#include <vector>\n\nint main() {\n    std::vector<std::pair<int, int>> intervals{{1, 3}, {2, 5}, {4, 6}, {6, 8}};\n    std::sort(intervals.begin(), intervals.end(), [](const auto& left, const auto& right) {\n        return left.second < right.second;\n    });\n\n    int selected{};\n    int last_end{std::numeric_limits<int>::lowest()};\n    for (const auto& [start, end] : intervals) {\n        if (start >= last_end) {\n            ++selected;\n            last_end = end;\n        }\n    }\n    std::cout << selected << '\\n';\n}\n```\n\nSắp xếp O(n log n), duyệt O(n), bộ nhớ phụ O(log n) tùy implementation của `sort`. Dùng half-open interval nên hai khoảng kề nhau được chọn cùng lúc.\n\n## Chứng minh\n\nExchange argument: lấy nghiệm tối ưu bất kỳ. Nếu lựa chọn đầu tiên của nó không phải interval kết thúc sớm nhất, thay interval đầu đó bằng interval kết thúc sớm nhất; phần còn lại vẫn khả thi và nghiệm không giảm số khoảng. Lặp lập luận cho phần sau.\n\n## Lỗi thường gặp\n\n- Nhầm quy tắc theo start, end hoặc độ dài; mỗi bài cần chứng minh riêng.\n- Bỏ qua tie-break hoặc quy ước interval đóng/mở.\n- Dùng greedy cho coin change tổng quát mà không chứng minh; có bộ mệnh giá greedy không tối ưu.\n\n## Tự luyện\n\nThử chiến lược sắp interval theo start trên ví dụ có một khoảng dài chồng lên hai khoảng ngắn. Vì sao chiến lược ấy thất bại?\n\n## Đọc tiếp\n\nSo sánh với [quy hoạch động](/cpp/thuat-toan/quy-hoach-dong), nơi giữ nhiều trạng thái để so sánh lựa chọn.",
+    "sourcePath": "content/cpp/algorithms/greedy.md",
+    "headings": [
+      {
+        "title": "Ví dụ: chọn nhiều khoảng không giao nhau",
+        "id": "vi-du-chon-nhieu-khoang-khong-giao-nhau"
+      },
+      {
+        "title": "Chứng minh",
+        "id": "chung-minh"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Dynamic Programming",
+    "description": "Định nghĩa trạng thái, chuyển trạng thái và thứ tự tính để tránh giải lặp bài toán con.",
+    "slug": "/cpp/thuat-toan/quy-hoach-dong",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23070,
+    "difficulty": "intermediate",
+    "keywords": [
+      "dynamic programming",
+      "DP",
+      "state",
+      "transition",
+      "memoization",
+      "tabulation"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/de-quy-quay-lui",
+      "/cpp/thuat-toan/greedy",
+      "/cpp/thuat-toan/do-phuc-tap"
+    ],
+    "featured": false,
+    "priority": 23070,
+    "body": "Dynamic Programming lưu lời giải bài toán con để không tính lại. Thường áp dụng khi có cấu trúc bài toán con chồng lặp và lời giải tối ưu có thể dựng từ lời giải nhỏ hơn.\n\n## Thiết kế DP\n\n- **State**: thông tin tối thiểu xác định bài toán con.\n- **Transition**: cách tính state từ state trước.\n- **Base case**: giá trị của trạng thái nhỏ nhất.\n- **Order**: thứ tự đảm bảo dependency đã tính.\n- **Answer**: state nào trả lời bài toán gốc.\n\n## Ví dụ: số cách leo bậc\n\nMỗi lượt đi 1 hoặc 2 bậc. `ways[n] = ways[n-1] + ways[n-2]`; quy ước `ways[0] = 1`.\n\n```cpp\n#include <cstddef>\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n{};\n    if (!(std::cin >> n) || n < 0) return 1;\n    std::vector<long long> ways(static_cast<std::size_t>(n) + 1);\n    ways[0] = 1;\n    if (n >= 1) ways[1] = 1;\n    for (int step = 2; step <= n; ++step) {\n        ways[step] = ways[step - 1] + ways[step - 2];\n    }\n    std::cout << ways[n] << '\\n';\n}\n```\n\nThời gian O(n), bộ nhớ O(n); có thể giảm xuống O(1) nếu chỉ cần hai trạng thái trước. Số cách tăng nhanh nên giới hạn n hoặc dùng modulo/kiểu phù hợp.\n\n## Memoization và tabulation\n\nMemoization là top-down đệ quy có cache; tabulation là bottom-up lặp. Chọn theo độ rõ của dependency, độ sâu stack và số state thực sự cần tính.\n\n## Lỗi thường gặp\n\n- Định nghĩa state thiếu thông tin dẫn đến transition sai.\n- Quên base case hoặc thứ tự tính.\n- Dùng `int` khiến số cách/tổng tràn.\n- DP O(n²) khi n quá lớn; tối ưu state chỉ sau khi đúng.\n\n## Tự luyện\n\nĐếm số cách đổi tiền với mệnh giá cho trước và mỗi đồng được dùng không giới hạn. Nêu rõ thứ tự vòng lặp khi đếm tổ hợp; thử target 0 và trường hợp không thể tạo target.\n\n## Đọc tiếp\n\nSo sánh với [greedy](/cpp/thuat-toan/greedy), [backtracking](/cpp/thuat-toan/de-quy-quay-lui) và [Big O](/cpp/thuat-toan/do-phuc-tap).",
+    "sourcePath": "content/cpp/algorithms/quy-hoach-dong.md",
+    "headings": [
+      {
+        "title": "Thiết kế DP",
+        "id": "thiet-ke-dp"
+      },
+      {
+        "title": "Ví dụ: số cách leo bậc",
+        "id": "vi-du-so-cach-leo-bac"
+      },
+      {
+        "title": "Memoization và tabulation",
+        "id": "memoization-va-tabulation"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Number Theory: GCD, LCM và số nguyên tố",
+    "description": "Tính ước chung lớn nhất, bội chung nhỏ nhất và sàng Eratosthenes.",
+    "slug": "/cpp/thuat-toan/number-theory",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23080,
+    "difficulty": "intermediate",
+    "keywords": [
+      "number theory",
+      "gcd",
+      "lcm",
+      "std::gcd",
+      "prime",
+      "sieve of Eratosthenes"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/bit-manipulation",
+      "/cpp/thuat-toan/tim-kiem-sap-xep",
+      "/cpp/tra-cuu/kieu-du-lieu"
+    ],
+    "featured": false,
+    "priority": 23080,
+    "body": "Number theory xuất hiện trong bài chia hết, phân số, số nguyên tố và tối ưu phép tính. Thư viện chuẩn C++17 có `std::gcd` và `std::lcm` trong `<numeric>`.\n\n## GCD và LCM\n\nEuclid dựa trên `gcd(a, b) = gcd(b, a % b)`, lặp đến khi `b = 0`. Thời gian O(log min(a,b)). `std::lcm(a,b)` có thể tràn nếu kết quả không biểu diễn được; cần kiểm tra giới hạn trước.\n\n```cpp\n#include <iostream>\n#include <numeric>\n\nint main() {\n    const long long a{84};\n    const long long b{30};\n    const long long divisor{std::gcd(a, b)};\n    const long long multiple{(a / divisor) * b};\n    std::cout << divisor << ' ' << multiple << '\\n';\n}\n```\n\nPhép tính `(a / gcd) * b` giảm nguy cơ tràn so với `a * b / gcd` nhưng không loại bỏ tràn; với input lớn cần kiểm tra miền. Ví dụ giả định số dương nhỏ.\n\n## Sàng Eratosthenes\n\nĐể tìm mọi số nguyên tố không vượt n, đánh dấu bội từ `p*p` khi p chưa bị đánh dấu. Thời gian O(n log log n), bộ nhớ O(n). Dùng kiểu đủ rộng cho `p*p` hoặc chỉ chạy khi `p <= n / p` để tránh overflow.\n\n## Lỗi thường gặp\n\n- Xem 0 và 1 là số nguyên tố; cả hai đều không nguyên tố.\n- Bắt đầu đánh dấu từ `2*p`, làm phép tính lặp thừa.\n- Tràn khi tính LCM hoặc `p*p`.\n- Dùng `std::gcd` với kiểu không nhất quán hoặc giả định số âm có ý nghĩa miền giống số dương.\n\n## Tự luyện\n\nĐếm số nguyên tố đến n bằng sieve. Thử n = 0, 1, 2 và một giới hạn lớn; kiểm tra kiểu chỉ số và memory budget.\n\n## Đọc tiếp\n\nXem [bit manipulation](/cpp/thuat-toan/bit-manipulation) và [giới hạn kiểu dữ liệu](/cpp/tra-cuu/kieu-du-lieu).",
+    "sourcePath": "content/cpp/algorithms/number-theory.md",
+    "headings": [
+      {
+        "title": "GCD và LCM",
+        "id": "gcd-va-lcm"
+      },
+      {
+        "title": "Sàng Eratosthenes",
+        "id": "sang-eratosthenes"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Binary Search on Answer",
+    "description": "Tối ưu giá trị bằng cách tìm ngưỡng đơn điệu và kiểm tra tính khả thi.",
+    "slug": "/cpp/thuat-toan/binary-search-answer",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23090,
+    "difficulty": "intermediate",
+    "keywords": [
+      "binary search on answer",
+      "monotonic predicate",
+      "feasible",
+      "parametric search"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/tim-kiem-sap-xep",
+      "/cpp/thuat-toan/giai-quyet-bai-toan",
+      "/cpp/thuat-toan/do-phuc-tap"
+    ],
+    "featured": false,
+    "priority": 23090,
+    "body": "Binary search on answer tối ưu một giá trị khi có predicate khả thi đơn điệu. Ví dụ: nếu giới hạn tải X cho phép chia công việc cho K người, thì giới hạn lớn hơn cũng cho phép.\n\n## Ví dụ: chia dãy liên tiếp thành tối đa K nhóm\n\nTối thiểu hóa tổng lớn nhất của nhóm, với mọi giá trị không âm. Predicate quét một lần để đếm nhóm cần thiết.\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <vector>\n\nbool feasible(const std::vector<int>& tasks, int workers, long long limit) {\n    int groups{1};\n    long long current{};\n    for (int task : tasks) {\n        if (task > limit) return false;\n        if (current + task > limit) {\n            ++groups;\n            current = task;\n        } else {\n            current += task;\n        }\n    }\n    return groups <= workers;\n}\n\nlong long minimum_limit(const std::vector<int>& tasks, int workers) {\n    if (tasks.empty()) return 0;\n    long long low{};\n    long long high{};\n    for (int task : tasks) {\n        low = std::max(low, static_cast<long long>(task));\n        high += task;\n    }\n    while (low < high) {\n        const long long middle{low + (high - low) / 2};\n        if (feasible(tasks, workers, middle)) high = middle;\n        else low = middle + 1;\n    }\n    return low;\n}\n\nint main() {\n    const std::vector<int> tasks{4, 2, 7, 3};\n    std::cout << minimum_limit(tasks, 2) << '\\n';\n}\n```\n\nĐộ phức tạp O(n log S), với S là tổng công việc; bộ nhớ phụ O(1). Code giả định `workers > 0`, task không âm và tổng vừa `long long`; production cần xác thực các giả định này.\n\n## Cách tìm biên\n\n- Tối thiểu hóa giá trị có thể: predicate thường false rồi true; tìm first true.\n- Tối đa hóa giá trị có thể: predicate thường true rồi false; tìm last true.\n- Chọn `low`, `high` bao phủ mọi đáp án; xác định rõ inclusive/half-open interval và điều kiện dừng.\n\n## Lỗi thường gặp\n\n- Predicate không đơn điệu nên binary search mất tính đúng.\n- Sai miền tìm hoặc không chứng minh đáp án nằm trong miền.\n- Tràn `middle = (low + high) / 2`; dùng `low + (high-low)/2` khi miền không âm.\n- Không kiểm tra workers hoặc input rỗng theo hợp đồng bài.\n\n## Tự luyện\n\nTìm tốc độ tối thiểu để hoàn thành các chồng vật trong deadline. Viết predicate, xác định lower/upper bound và chứng minh tính đơn điệu trước khi code.\n\n## Đọc tiếp\n\nÔn [binary search cơ bản](/cpp/thuat-toan/tim-kiem-sap-xep) và [đọc constraint](/cpp/thuat-toan/giai-quyet-bai-toan).",
+    "sourcePath": "content/cpp/algorithms/binary-search-answer.md",
+    "headings": [
+      {
+        "title": "Ví dụ: chia dãy liên tiếp thành tối đa K nhóm",
+        "id": "vi-du-chia-day-lien-tiep-thanh-toi-a-k-nhom"
+      },
+      {
+        "title": "Cách tìm biên",
+        "id": "cach-tim-bien"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Graph: BFS, DFS và đường đi ngắn nhất",
+    "description": "Biểu diễn đồ thị bằng adjacency list, duyệt thành phần và dùng Dijkstra đúng điều kiện.",
+    "slug": "/cpp/thuat-toan/do-thi",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23100,
+    "difficulty": "intermediate",
+    "keywords": [
+      "graph",
+      "BFS",
+      "DFS",
+      "Dijkstra",
+      "adjacency list",
+      "shortest path"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/stl/container-adapters",
+      "/cpp/thuat-toan/cay",
+      "/cpp/thuat-toan/quy-hoach-dong"
+    ],
+    "featured": false,
+    "priority": 23100,
+    "body": "Đồ thị biểu diễn các đỉnh và cạnh. Dùng adjacency list cho đồ thị thưa; ma trận kề phù hợp khi cần kiểm tra cạnh thường xuyên trên đồ thị nhỏ hoặc dày.\n\n## BFS và DFS\n\nBFS dùng queue để duyệt theo lớp; trên đồ thị không trọng số, khoảng cách cạnh nhỏ nhất từ nguồn là đúng. DFS đi sâu theo nhánh, dùng cho thành phần liên thông, phát hiện cấu trúc và tìm đường.\n\n```cpp\n#include <iostream>\n#include <queue>\n#include <vector>\n\nint main() {\n    const std::vector<std::vector<int>> graph{{1, 2}, {0, 3}, {0}, {1}};\n    std::vector<int> distance(graph.size(), -1);\n    std::queue<int> pending;\n    const int start{0};\n    distance[start] = 0;\n    pending.push(start);\n\n    while (!pending.empty()) {\n        const int node{pending.front()};\n        pending.pop();\n        for (int next : graph[node]) {\n            if (distance[next] != -1) continue;\n            distance[next] = distance[node] + 1;\n            pending.push(next);\n        }\n    }\n    std::cout << distance[3] << '\\n';\n}\n```\n\nBFS/DFS O(V + E) thời gian và O(V + E) cho graph adjacency list cộng O(V) trạng thái duyệt. Đồ thị có thể không liên thông; lặp từ mọi đỉnh nếu cần thăm tất cả.\n\n## Dijkstra\n\nDijkstra tìm đường đi ngắn nhất khi trọng số cạnh **không âm**. Với adjacency list và binary heap, thời gian thường O((V + E) log V), bộ nhớ O(V + E). Nếu có cạnh âm, thuật toán không áp dụng; chọn Bellman–Ford hoặc thuật toán phù hợp khác.\n\n```cpp\n#include <functional>\n#include <iostream>\n#include <limits>\n#include <queue>\n#include <utility>\n#include <vector>\n\nint main() {\n    using Edge = std::pair<int, int>;\n    std::vector<std::vector<Edge>> graph(4);\n    graph[0] = {{1, 4}, {2, 1}};\n    graph[2] = {{1, 2}, {3, 5}};\n    graph[1] = {{3, 1}};\n\n    const long long infinity{std::numeric_limits<long long>::max() / 4};\n    std::vector<long long> distance(graph.size(), infinity);\n    using State = std::pair<long long, int>;\n    std::priority_queue<State, std::vector<State>, std::greater<State>> pending;\n    distance[0] = 0;\n    pending.push({0, 0});\n\n    while (!pending.empty()) {\n        const auto [cost, node] = pending.top();\n        pending.pop();\n        if (cost != distance[node]) continue;\n        for (const auto& [next, weight] : graph[node]) {\n            const long long candidate{cost + weight};\n            if (candidate >= distance[next]) continue;\n            distance[next] = candidate;\n            pending.push({candidate, next});\n        }\n    }\n    std::cout << distance[3] << '\\n';\n}\n```\n\nVí dụ có hướng, trọng số không âm nhỏ; kết quả từ đỉnh 0 đến 3 là 4. Với dữ liệu thực, xác thực đỉnh/trọng số và tránh overflow khi cộng khoảng cách.\n\n## Lỗi thường gặp\n\n- Không đánh dấu visited/distance khiến lặp vô hạn trên chu trình.\n- Chạy BFS cho cạnh có trọng số khác nhau.\n- Chạy Dijkstra với trọng số âm.\n- Không xác thực đỉnh đầu/cuối khi input không đáng tin cậy.\n\n## Tự luyện\n\nĐếm số thành phần liên thông bằng BFS/DFS ngoài cùng. Thử graph rỗng, đỉnh cô lập, self-loop và cạnh lặp theo giả định của đề.\n\n## Đọc tiếp\n\nHọc [cây và duyệt cây](/cpp/thuat-toan/cay), cùng [queue/priority_queue](/cpp/stl/container-adapters).",
+    "sourcePath": "content/cpp/algorithms/do-thi.md",
+    "headings": [
+      {
+        "title": "BFS và DFS",
+        "id": "bfs-va-dfs"
+      },
+      {
+        "title": "Dijkstra",
+        "id": "dijkstra"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Tree và thuật toán cây cơ bản",
+    "description": "Biểu diễn cây bằng adjacency list, phân biệt root, parent, depth và duyệt cây an toàn.",
+    "slug": "/cpp/thuat-toan/cay",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23110,
+    "difficulty": "intermediate",
+    "keywords": [
+      "tree",
+      "rooted tree",
+      "parent",
+      "depth",
+      "traversal",
+      "subtree"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/do-thi",
+      "/cpp/thuat-toan/de-quy-quay-lui",
+      "/cpp/stl/sequence-containers"
+    ],
+    "featured": false,
+    "priority": 23110,
+    "body": "Tree là đồ thị liên thông không chu trình. Khi chọn một root, mỗi đỉnh khác có đúng một parent; `depth` là số cạnh từ root. Cây n đỉnh có n−1 cạnh.\n\n## Tạo thứ tự DFS lặp\n\n```cpp\n#include <cstddef>\n#include <iostream>\n#include <vector>\n\nint main() {\n    const std::vector<std::vector<int>> tree{{1, 2}, {0, 3}, {0}, {1}};\n    const int root{0};\n    std::vector<int> parent(tree.size(), -1);\n    std::vector<int> order{root};\n\n    for (std::size_t i = 0; i < order.size(); ++i) {\n        const int node{order[i]};\n        for (int child : tree[node]) {\n            if (child == parent[node]) continue;\n            parent[child] = node;\n            order.push_back(child);\n        }\n    }\n    std::cout << order.size() << '\\n';\n}\n```\n\nĐoạn code giả định input là một cây hợp lệ và root nằm trong range; trên graph tổng quát cần visited để tránh chu trình. Duyệt toàn cây O(n) thời gian, O(n) bộ nhớ. Cách iterative tránh stack overflow khi cây sâu.\n\n## Ý tưởng thuật toán\n\n- **Subtree** của node gồm node và mọi hậu duệ.\n- **Preorder** xử lý node trước con; **postorder** xử lý con trước node.\n- Duyệt theo tầng dùng BFS; cần min-depth không trọng số thì BFS tự nhiên.\n- Kích thước subtree thường gộp kết quả con trong postorder.\n\n## Lỗi thường gặp\n\n- Quên bỏ cạnh quay lại parent trong adjacency list vô hướng.\n- Giả định root cố định khi đề cho phép chọn nhiều root.\n- Dùng recursion trên cây dây dài không giới hạn.\n- Không kiểm tra input có thật sự là cây liên thông.\n\n## Tự luyện\n\nTính depth và subtree size cho mọi node. Thử cây một đỉnh, cây dạng đường thẳng và cây hình sao.\n\n## Đọc tiếp\n\nTìm hiểu [graph algorithms](/cpp/thuat-toan/do-thi) và [đệ quy](/cpp/thuat-toan/de-quy-quay-lui).",
+    "sourcePath": "content/cpp/algorithms/cay.md",
+    "headings": [
+      {
+        "title": "Tạo thứ tự DFS lặp",
+        "id": "tao-thu-tu-dfs-lap"
+      },
+      {
+        "title": "Ý tưởng thuật toán",
+        "id": "y-tuong-thuat-toan"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Bit Manipulation và tối ưu thời gian, bộ nhớ",
+    "description": "Dùng bitmask an toàn và tối ưu thuật toán trước khi tối ưu vi mô.",
+    "slug": "/cpp/thuat-toan/bit-manipulation",
+    "category": "algorithms",
+    "categoryLabel": "Thuật toán và Competitive Programming",
+    "order": 23120,
+    "difficulty": "intermediate",
+    "keywords": [
+      "bit manipulation",
+      "bitmask",
+      "shift",
+      "popcount",
+      "optimization",
+      "memory"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
+    "related": [
+      "/cpp/thuat-toan/number-theory",
+      "/cpp/thuat-toan/do-phuc-tap",
+      "/cpp/ky-thuat/profiling-performance"
+    ],
+    "featured": false,
+    "priority": 23120,
+    "body": "Bit manipulation làm việc trực tiếp với biểu diễn nhị phân, hữu ích cho flags, tập con nhỏ và protocol. Dùng kiểu unsigned để phép dịch và mask dễ phân tích; bit shift âm hoặc shift count ngoài độ rộng là lỗi.\n\n## Thao tác cơ bản\n\n```cpp\n#include <cstdint>\n#include <iostream>\n\nint main() {\n    std::uint32_t flags{};\n    const unsigned bit_index{3};\n    const std::uint32_t mask{std::uint32_t{1} << bit_index};\n    flags |= mask;\n    const bool enabled{(flags & mask) != 0};\n    flags &= ~mask;\n    std::cout << enabled << ' ' << flags << '\\n';\n}\n```\n\nVới `uint32_t`, chỉ dịch từ 0 đến 31; kiểm tra index trước nếu nó đến từ input. Shift `1 << k` có thể sai nếu literal `1` là signed và shift tới bit dấu.\n\n## Bitmask tập con\n\nMask có thể biểu diễn tập con của tối đa w phần tử với w bit. Duyệt `0 .. 2^n - 1` có O(2^n) mask; chỉ phù hợp n nhỏ. Chuyển 2^n sang kiểu đúng miền trước khi tính để tránh overflow.\n\n## Tối ưu có thứ tự\n\n- Chọn thuật toán và cấu trúc dữ liệu tốt hơn trước.\n- Đo bằng profiler trên workload đại diện.\n- Giảm allocation/copy hoặc lưu dữ liệu liên tục khi profiler chỉ ra nút thắt.\n- Tối ưu memory phải xét cả peak usage, không chỉ `sizeof` một object.\n\n## Lỗi thường gặp\n\n- Dùng bit trick khó đọc thay cho phép toán rõ.\n- Shift số âm hoặc dịch quá số bit của kiểu.\n- Dùng macro không có kiểu và gây đánh giá đối số nhiều lần.\n- Tối ưu trước khi đo, làm code phức tạp mà không cải thiện.\n\n## Tự luyện\n\nLưu trạng thái bật/tắt của 8 tùy chọn trong một byte. Viết thao tác test, set, clear và toggle; giới hạn bit index từ 0 đến 7.\n\n## Đọc tiếp\n\nÔn [Big O](/cpp/thuat-toan/do-phuc-tap), [kiểu số](/cpp/tra-cuu/kieu-du-lieu) và [profiling](/cpp/ky-thuat/profiling-performance).",
+    "sourcePath": "content/cpp/algorithms/bit-manipulation.md",
+    "headings": [
+      {
+        "title": "Thao tác cơ bản",
+        "id": "thao-tac-co-ban"
+      },
+      {
+        "title": "Bitmask tập con",
+        "id": "bitmask-tap-con"
+      },
+      {
+        "title": "Tối ưu có thứ tự",
+        "id": "toi-uu-co-thu-tu"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Clean Code trong C++",
+    "description": "Viết code có tên gọi rõ, scope nhỏ, ownership dễ hiểu và API thể hiện hợp đồng.",
+    "slug": "/cpp/ky-thuat/clean-code",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24000,
+    "difficulty": "intermediate",
+    "keywords": [
+      "clean code C++",
+      "naming",
+      "const correctness",
+      "ownership",
+      "API design"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/ky-thuat/header-source-modules",
+      "/cpp/trung-cap/classes-constructors",
+      "/cpp/tra-cuu/best-practices"
+    ],
+    "featured": false,
+    "priority": 24000,
+    "body": "Clean code làm cho ý định, hợp đồng và quyền sở hữu dữ liệu dễ đọc. Mục tiêu là giảm lỗi khi sửa và review, không phải tối ưu số dòng.\n\n## Thói quen hữu ích\n\n- Chọn tên nói rõ miền dữ liệu: `user_count`, `deadline`, `is_valid`.\n- Giữ function tập trung vào một trách nhiệm; tách nhánh phức tạp thành hàm có tên.\n- Dùng `const` khi object không cần thay đổi; dùng kiểu trả về/tham số để thể hiện mutability.\n- Ưu tiên STL, RAII và Rule of Zero; làm rõ owner và object được mượn.\n- Xác thực input ở boundary, giữ invariant ở class/domain layer.\n- Chọn kiểu và đơn vị rõ; `timeout_ms` dễ hiểu hơn `timeout` nếu đơn vị có thể nhầm.\n- Không dùng macro cho hằng số hoặc function thông thường; macro không có scope/type và có thể đánh giá đối số bất ngờ.\n\n## Ví dụ: API rõ hơn\n\n```cpp\n#include <string>\n\nbool has_name(const std::string& name) {\n    return !name.empty();\n}\n\nint main() {\n    const std::string user_name{\"An\"};\n    return has_name(user_name) ? 0 : 1;\n}\n```\n\nAPI nhận `const&` vì chỉ đọc, tên diễn đạt predicate và caller biết kết quả là bool.\n\n## Lỗi thường gặp\n\n- Hàm dài làm input validation, I/O, tính toán và persistence cùng lúc.\n- Dùng global mutable state hoặc `using namespace std;` trong header.\n- Comment lặp lại code thay vì giải thích invariant hoặc quyết định khó thấy.\n- Tối ưu vi mô làm mất rõ ràng trước khi có profile.\n\n## Tự luyện\n\nChọn một hàm dài trong project học tập, chia phần parse/validate và phần tính toán. Thử viết test cho phần tính mà không cần I/O.\n\n## Đọc tiếp\n\nTổ chức file qua [header và translation unit](/cpp/ky-thuat/header-source-modules); xem [best practices tra cứu nhanh](/cpp/tra-cuu/best-practices).",
+    "sourcePath": "content/cpp/software-engineering/clean-code.md",
+    "headings": [
+      {
+        "title": "Thói quen hữu ích",
+        "id": "thoi-quen-huu-ich"
+      },
+      {
+        "title": "Ví dụ: API rõ hơn",
+        "id": "vi-du-api-ro-hon"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Header, source và C++ modules",
+    "description": "Chia khai báo, định nghĩa và dependency giữa translation units mà không tạo include cycle.",
+    "slug": "/cpp/ky-thuat/header-source-modules",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24010,
+    "difficulty": "intermediate",
+    "keywords": [
+      "header file",
+      "source file",
+      "translation unit",
+      "include guard",
+      "C++ modules"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/trung-cap/templates-namespaces",
+      "/cpp/ky-thuat/cmake",
+      "/cpp/ky-thuat/clean-code"
+    ],
+    "featured": false,
+    "priority": 24010,
+    "body": "Chia chương trình thành header và source giúp compiler build từng translation unit và tạo public API ổn định. Mỗi `.cpp` được compile riêng; linker kết hợp object files và libraries.\n\n## Header và implementation\n\nHeader chứa declarations mà caller cần. Dùng include guard portable:\n\n```cpp\n#ifndef DEVHUBS_MATH_HPP\n#define DEVHUBS_MATH_HPP\n\nint add(int left, int right);\n\n#endif\n```\n\nĐịnh nghĩa đặt trong `.cpp`:\n\n```cpp\n#include \"math.hpp\"\n\nint add(int left, int right) {\n    return left + right;\n}\n```\n\nĐặt prototype vào `math.hpp` và hai định nghĩa ở `math.cpp`. `main.cpp` có thể gọi API đó:\n\n```cpp\n#include \"math.hpp\"\n\nint main() {\n    return add(2, 3) == 5 ? 0 : 1;\n}\n```\n\nBuild ba file cùng lúc: `g++ -std=c++17 main.cpp math.cpp -o app`.\n\n`#pragma once` được nhiều compiler hỗ trợ nhưng không thuộc core language standard. Header nên tự include các header cần cho declaration của nó và tránh kéo dependency không cần thiết. Định nghĩa non-inline cùng external linkage đặt trong header có thể gây multiple definition.\n\n## Dependency và template\n\nĐưa forward declaration vào header khi đủ, include đầy đủ nơi cần complete type. Template thường phải để definition nhìn thấy khi instantiate, thường trong header. Tránh include cycle; thiết kế dependency một chiều.\n\n## C++20 modules\n\nModules thay một phần cơ chế textual include bằng interface/implementation unit và module import. Dù thuộc C++20, workflow build, module cache và hỗ trợ toolchain vẫn khác nhau; áp dụng khi compiler/IDE/CI của dự án hỗ trợ ổn định.\n\n## Lỗi thường gặp\n\n- Header không có guard và bị include lặp.\n- Định nghĩa hàm global trong header được include nhiều translation unit.\n- Dựa vào header khác include hộ dependency.\n- Circular include phản ánh module boundaries chưa rõ.\n\n## Tự luyện\n\nChia `main` và hàm `add` thành `main.cpp`, `math.cpp`, `math.hpp`, sau đó build cả hai `.cpp` cùng lúc.\n\n## Đọc tiếp\n\nBuild nhiều translation unit bằng [CMake](/cpp/ky-thuat/cmake) và giữ dependency rõ theo [Clean Code](/cpp/ky-thuat/clean-code).",
+    "sourcePath": "content/cpp/software-engineering/header-source-modules.md",
+    "headings": [
+      {
+        "title": "Header và implementation",
+        "id": "header-va-implementation"
+      },
+      {
+        "title": "Dependency và template",
+        "id": "dependency-va-template"
+      },
+      {
+        "title": "C++20 modules",
+        "id": "c20-modules"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "CMake và build systems",
+    "description": "Khai báo executable, source và yêu cầu C++17 bằng CMake thay vì hardcode lệnh build.",
+    "slug": "/cpp/ky-thuat/cmake",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24020,
+    "difficulty": "intermediate",
+    "keywords": [
+      "CMake",
+      "build system",
+      "CMAKE_CXX_STANDARD",
+      "target",
+      "generator"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/ky-thuat/header-source-modules",
+      "/cpp/ky-thuat/unit-testing",
+      "/cpp/stl/cpp17-20-23"
+    ],
+    "featured": false,
+    "priority": 24020,
+    "body": "CMake mô tả targets và yêu cầu build, rồi sinh project cho Make, Ninja, Visual Studio, Xcode hoặc generator khác. Dùng nó khi chương trình có nhiều file, dependency, test hoặc nhiều nền tảng.\n\n## Project tối thiểu\n\n```cmake\ncmake_minimum_required(VERSION 3.20)\nproject(hello_cpp LANGUAGES CXX)\n\nadd_executable(hello main.cpp)\ntarget_compile_features(hello PRIVATE cxx_std_17)\n```\n\nBuild trong thư mục riêng:\n\n```sh\ncmake -S . -B build\ncmake --build build\n```\n\nTarget-level `cxx_std_17` thể hiện nhu cầu của executable; dependency có thể khai báo requirements riêng. Tránh đặt compiler flags riêng cho một nền tảng ở phạm vi global nếu CMake có API portable.\n\n## Targets và dependency\n\nMỗi executable/library nên là target tường minh. Gắn include directories, compile features, definitions và link libraries vào target sở hữu chúng. Khi tạo thư viện nội bộ, phân biệt dependency `PRIVATE`, `PUBLIC`, `INTERFACE` theo việc caller có cần kế thừa dependency đó không.\n\n## Lỗi thường gặp\n\n- Chạy build trực tiếp trong source tree và để file generated lẫn source.\n- Hardcode đường dẫn tuyệt đối hoặc tên compiler.\n- Dùng `file(GLOB ...)` rồi mong mọi generator tự nhận source mới.\n- Đặt chuẩn C++ chỉ trên máy developer mà không ghi vào build configuration.\n\n## Tự luyện\n\nThêm `math.cpp` và `math.hpp`, build chung thành executable. Sau đó tạo một test executable riêng và cho CTest chạy nó.\n\n## Tài liệu tiếp\n\nHướng dẫn chính thức: [CMake Tutorial](https://cmake.org/cmake/help/latest/guide/tutorial/). Xem thêm [unit testing](/cpp/ky-thuat/unit-testing) và [header/source](/cpp/ky-thuat/header-source-modules).",
+    "sourcePath": "content/cpp/software-engineering/cmake.md",
+    "headings": [
+      {
+        "title": "Project tối thiểu",
+        "id": "project-toi-thieu"
+      },
+      {
+        "title": "Targets và dependency",
+        "id": "targets-va-dependency"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Tài liệu tiếp",
+        "id": "tai-lieu-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Debugging với GDB, LLDB và Visual Studio",
+    "description": "Tái hiện lỗi, dừng tại breakpoint, đọc stack trace và kiểm tra biến theo từng bước.",
+    "slug": "/cpp/ky-thuat/debugging",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24030,
+    "difficulty": "intermediate",
+    "keywords": [
+      "GDB",
+      "LLDB",
+      "Visual Studio debugger",
+      "breakpoint",
+      "stack trace",
+      "debug symbols"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/ky-thuat/unit-testing",
+      "/cpp/ky-thuat/ub-memory-safety",
+      "/cpp/tra-cuu/debugging-errors"
+    ],
+    "featured": false,
+    "priority": 24030,
+    "body": "Debugger cho phép dừng chương trình và quan sát trạng thái tại runtime. Dùng khi log không đủ để biết nhánh nào chạy, biến thay đổi ra sao hoặc crash bắt nguồn ở đâu.\n\n## Quy trình debug\n\n- Tạo input nhỏ nhất tái hiện lỗi; ghi lại expected và actual behavior.\n- Build chế độ debug có symbols và giữ optimization thấp khi cần quan sát source.\n- Đặt breakpoint gần nơi invariant bắt đầu sai, step qua từng thao tác.\n- Xem call stack, local variables và expression; xác định nơi giá trị sai lần đầu.\n- Sửa nguyên nhân, thêm regression case nếu project có test, chạy lại.\n\n## GDB và LLDB\n\n```sh\ng++ -std=c++17 -g -O0 -Wall -Wextra main.cpp -o app\ngdb ./app\n```\n\nTrong GDB: `break main`, `run`, `next`, `step`, `print value`, `backtrace`, `continue`. LLDB có lệnh tương tự: `breakpoint set`, `run`, `next`, `step`, `frame variable`, `bt`.\n\n## Visual Studio\n\nBuild Debug, đặt breakpoint trong editor, chọn Start Debugging, rồi dùng Locals/Autos, Watch, Call Stack và Step Over/Into. Nếu breakpoint không bind, kiểm tra binary có symbols và file source có khớp build.\n\n## Lỗi thường gặp\n\n- Debug nhầm executable cũ hoặc input khác.\n- Chỉ nhìn dòng crash mà không đọc stack trace và call path.\n- Chạy với optimization rồi suy luận sai từ local variable đã bị tối ưu.\n- Gỡ triệu chứng bằng điều kiện đặc biệt thay vì tìm invariant bị phá.\n\n## Tự luyện\n\nĐặt lỗi có chủ đích: đổi index thành `size()`, tái hiện crash trong debug build, xác định dòng đầu tiên vi phạm invariant rồi sửa.\n\n## Đọc tiếp\n\nKết hợp debugger với [unit tests](/cpp/ky-thuat/unit-testing), [undefined behavior](/cpp/ky-thuat/ub-memory-safety) và [debugging checklist](/cpp/tra-cuu/debugging-errors).",
+    "sourcePath": "content/cpp/software-engineering/debugging.md",
+    "headings": [
+      {
+        "title": "Quy trình debug",
+        "id": "quy-trinh-debug"
+      },
+      {
+        "title": "GDB và LLDB",
+        "id": "gdb-va-lldb"
+      },
+      {
+        "title": "Visual Studio",
+        "id": "visual-studio"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Unit Testing",
+    "description": "Kiểm tra hành vi nhỏ, trường hợp biên và lỗi theo hợp đồng bằng test cô lập.",
+    "slug": "/cpp/ky-thuat/unit-testing",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24040,
+    "difficulty": "intermediate",
+    "keywords": [
+      "unit test C++",
+      "assert",
+      "CTest",
+      "test case",
+      "regression test"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/ky-thuat/cmake",
+      "/cpp/ky-thuat/debugging",
+      "/cpp/ky-thuat/exceptions"
+    ],
+    "featured": false,
+    "priority": 24040,
+    "body": "Unit test kiểm tra một hàm hoặc module nhỏ với input đã biết. Test tốt mô tả contract, chạy lặp lại và chỉ phụ thuộc những collaborator cần thiết.\n\n## Test tối giản bằng `assert`\n\n```cpp\n#include <cassert>\n\nint add(int left, int right) {\n    return left + right;\n}\n\nint main() {\n    assert(add(2, 3) == 5);\n    assert(add(-2, 2) == 0);\n}\n```\n\n`assert` phù hợp demo hoặc invariant trong debug. Nếu build với `NDEBUG`, assertion có thể bị loại bỏ; không dùng nó để validate input production hoặc kiểm tra cần chạy trong mọi build.\n\n## Thiết kế test\n\n- Kiểm tra success path, biên min/max, rỗng, trùng lặp và input sai theo contract.\n- Test giá trị trả về và side effect cần thiết; tránh kiểm tra chi tiết nội bộ.\n- Giữ test độc lập, deterministic và có thông báo thất bại hữu ích.\n- Tách logic thuần khỏi I/O để test không cần filesystem/network thật.\n- Thêm regression test sau khi sửa bug nếu test suite hỗ trợ.\n\nFramework như GoogleTest/Catch2 giúp fixture, parameterized test và báo lỗi tốt hơn, nhưng cần dependency và chính sách build phù hợp. CMake có thể đăng ký executable với CTest.\n\n## Lỗi thường gặp\n\n- Chỉ test sample hoặc đường thành công.\n- Mock quá sâu khiến test chỉ xác nhận implementation hiện tại.\n- Dùng `assert` làm validation security.\n- Test có phụ thuộc thứ tự, clock, network hoặc dữ liệu dùng chung.\n\n## Tự luyện\n\nViết test cho hàm chia: kiểm tra số dương, chia hết và mẫu số 0 theo contract đã chọn. Tách riêng lỗi input để test được mà không cần bắt mọi exception chung chung.\n\n## Đọc tiếp\n\nChạy test qua [CMake/CTest](/cpp/ky-thuat/cmake), sau đó dùng [debugger](/cpp/ky-thuat/debugging) để phân tích lỗi.",
+    "sourcePath": "content/cpp/software-engineering/unit-testing.md",
+    "headings": [
+      {
+        "title": "Test tối giản bằng `assert`",
+        "id": "test-toi-gian-bang-assert"
+      },
+      {
+        "title": "Thiết kế test",
+        "id": "thiet-ke-test"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Error handling và exceptions",
+    "description": "Chọn giữa exception, error value và validation tường minh theo ranh giới API.",
+    "slug": "/cpp/ky-thuat/exceptions",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24050,
+    "difficulty": "advanced",
+    "keywords": [
+      "C++ exceptions",
+      "error handling",
+      "std::exception",
+      "throw",
+      "noexcept",
+      "expected"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/trung-cap/file-io-errors",
+      "/cpp/ky-thuat/ub-memory-safety",
+      "/cpp/ky-thuat/unit-testing"
+    ],
+    "featured": false,
+    "priority": 24050,
+    "body": "Error handling là hợp đồng giữa nơi phát hiện lỗi và nơi có thể xử lý. Dùng exception cho lỗi khiến thao tác không thể hoàn thành bình thường; dùng error value/result khi caller thường xuyên cần xử lý kết quả thất bại theo luồng dữ liệu.\n\n## Ném và bắt exception\n\n```cpp\n#include <iostream>\n#include <stdexcept>\n\nint divide(int numerator, int denominator) {\n    if (denominator == 0) throw std::invalid_argument(\"denominator must not be zero\");\n    return numerator / denominator;\n}\n\nint main() {\n    try {\n        std::cout << divide(10, 2) << '\\n';\n    } catch (const std::exception& error) {\n        std::cerr << error.what() << '\\n';\n        return 1;\n    }\n}\n```\n\nBắt theo `const&` để tránh copy; bắt exception gần boundary có thể log/báo lỗi và chuyển trạng thái. RAII cleanup vẫn chạy khi stack unwinds. Đừng catch mọi thứ rồi tiếp tục trong trạng thái không hợp lệ.\n\n## Chọn cơ chế\n\n- **Exception**: constructor không thể tạo object hợp lệ, file/network operation thất bại, invariant bị vi phạm theo API.\n- **Error value**: kết quả thất bại là tình huống thường xuyên và caller cần quyết định ngay.\n- **C++23 `std::expected`**: biểu diễn value hoặc error trong type; hỗ trợ phụ thuộc standard library.\n\n`noexcept` là cam kết không thoát exception; nếu exception thoát khỏi hàm `noexcept`, chương trình gọi `std::terminate`. Chỉ đánh dấu khi contract và thao tác bên trong đáp ứng.\n\n## Lỗi thường gặp\n\n- Bắt exception quá sớm rồi bỏ mất ngữ cảnh.\n- Ném pointer hoặc kiểu không mô tả lỗi; ưu tiên exception type phù hợp.\n- Dùng exception cho mọi nhánh bình thường trong hot path mà không có lý do.\n- Báo lỗi nhưng để caller tiếp tục với object nửa hợp lệ.\n\n## Tự luyện\n\nThiết kế API đọc file: xác định trường hợp không có file là error value hay exception theo ứng dụng. Ghi rõ caller cần nhận thông tin gì để khôi phục.\n\n## Đọc tiếp\n\nXem [file I/O](/cpp/trung-cap/file-io-errors), [unit testing](/cpp/ky-thuat/unit-testing) và [RAII](/cpp/stl/raii-smart-pointers).",
+    "sourcePath": "content/cpp/software-engineering/exceptions.md",
+    "headings": [
+      {
+        "title": "Ném và bắt exception",
+        "id": "nem-va-bat-exception"
+      },
+      {
+        "title": "Chọn cơ chế",
+        "id": "chon-co-che"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Undefined Behavior và memory safety",
+    "description": "Nhận biết hành vi không xác định, lỗi lifetime, race và các công cụ phát hiện lỗi C++.",
+    "slug": "/cpp/ky-thuat/ub-memory-safety",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24060,
+    "difficulty": "advanced",
+    "keywords": [
+      "undefined behavior",
+      "memory safety",
+      "out of bounds",
+      "dangling",
+      "sanitizer",
+      "data race"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/bat-dau/references-pointers",
+      "/cpp/trung-cap/stack-heap-lifetime",
+      "/cpp/stl/iterators-invalidation",
+      "/cpp/tra-cuu/memory-errors"
+    ],
+    "featured": false,
+    "priority": 24060,
+    "body": "Undefined behavior (UB) là chương trình thực hiện thao tác mà chuẩn C++ không quy định hành vi. Compiler được phép tối ưu dựa trên giả định UB không xảy ra; chương trình có thể sai, crash hoặc chỉ lỗi khi tối ưu/bản build khác.\n\n## Lỗi cần phòng tránh\n\n- Đọc/ghi ngoài giới hạn array hoặc vector.\n- Dereference null, dangling pointer/reference hoặc iterator hết hiệu lực.\n- Tràn số nguyên có dấu, chia số nguyên cho 0, shift quá độ rộng kiểu.\n- Data race giữa threads không có đồng bộ.\n- Dùng object ngoài lifetime hoặc vi phạm alignment/type aliasing.\n\nUnsigned arithmetic wrap modulo theo chuẩn trong nhiều phép toán, nhưng vẫn có thể gây bug logic và cần kiểm tra; không dùng unsigned như cách “chữa” signed overflow.\n\n## Defensive C++\n\n- Ưu tiên `std::vector`, `std::string`, `std::array`, span/view có lifetime rõ.\n- Dùng `at()` khi cần checked access; `operator[]` chỉ dùng khi invariant đã bảo đảm.\n- Gắn ownership với RAII/smart pointer; xác thực size trước allocation/copy.\n- Dùng mutex/atomic đúng memory model; không dựa vào timing.\n- Bật warning và sanitizer trong build dev/CI khi toolchain hỗ trợ.\n\n## Sanitizer\n\nVới một số GCC/Clang trên nền tảng hỗ trợ, AddressSanitizer và UndefinedBehaviorSanitizer có thể bật bằng `-fsanitize=address,undefined -fno-omit-frame-pointer`. ThreadSanitizer dùng riêng; sanitizer có chi phí và không chứng minh chương trình không lỗi.\n\n## Lỗi thường gặp\n\n- Tin rằng compiler không tối ưu nên lỗi UB “vẫn chạy ổn”.\n- Dùng sanitizer như thay thế review, tests hoặc input validation.\n- Tắt warning thay vì sửa nguyên nhân.\n- Dựa vào debug build để kết luận release build an toàn.\n\n## Tự luyện\n\nChạy test với input rỗng, cực lớn và chỉ số sát biên. Bật sanitizer nếu compiler có, rồi giải thích vì sao việc không thấy cảnh báo không phải chứng minh không có UB.\n\n## Đọc tiếp\n\nÔn [pointer lifetime](/cpp/bat-dau/references-pointers), [iterator invalidation](/cpp/stl/iterators-invalidation) và [lỗi bộ nhớ thường gặp](/cpp/tra-cuu/memory-errors).",
+    "sourcePath": "content/cpp/software-engineering/ub-memory-safety.md",
+    "headings": [
+      {
+        "title": "Lỗi cần phòng tránh",
+        "id": "loi-can-phong-tranh"
+      },
+      {
+        "title": "Defensive C++",
+        "id": "defensive-c"
+      },
+      {
+        "title": "Sanitizer",
+        "id": "sanitizer"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Multithreading và concurrency cơ bản",
+    "description": "Chia công việc qua thread, đồng bộ dữ liệu chia sẻ và phòng data race, deadlock.",
+    "slug": "/cpp/ky-thuat/concurrency",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24070,
+    "difficulty": "advanced",
+    "keywords": [
+      "std::thread",
+      "mutex",
+      "concurrency",
+      "data race",
+      "deadlock",
+      "atomic"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/ky-thuat/ub-memory-safety",
+      "/cpp/ky-thuat/profiling-performance",
+      "/cpp/stl/cpp17-20-23"
+    ],
+    "featured": false,
+    "priority": 24070,
+    "body": "Concurrency cho phép nhiều task tiến triển chồng lấp; multithreading chạy task trên thread hệ điều hành. Dùng khi workload có thể chia độc lập hoặc cần tránh chặn luồng chính, sau khi đo thấy lợi ích.\n\n## Đồng bộ dữ liệu chia sẻ\n\n```cpp\n#include <iostream>\n#include <mutex>\n#include <thread>\n#include <vector>\n\nint main() {\n    std::mutex guard;\n    int total{};\n    std::vector<std::thread> workers;\n    for (int i = 0; i < 4; ++i) {\n        workers.emplace_back([&] {\n            std::lock_guard<std::mutex> lock{guard};\n            ++total;\n        });\n    }\n    for (auto& worker : workers) worker.join();\n    std::cout << total << '\\n';\n}\n```\n\n`lock_guard` khóa khi vào scope và mở khóa khi rời scope. Mọi truy cập đồng thời vào shared mutable data phải được đồng bộ đúng; data race là UB. C++20 có `std::jthread` hỗ trợ join tự động và stop token, nhưng không xóa nhu cầu thiết kế synchronization.\n\n## Thiết kế an toàn\n\n- Ưu tiên chia ownership/dữ liệu bất biến trước khi chia sẻ mutable state.\n- Giữ critical section ngắn, nhất quán thứ tự khóa để giảm deadlock.\n- Không detach thread nếu không có lifecycle/ownership rõ.\n- Đừng capture reference đến local vào task có thể sống lâu hơn local.\n- Atomic dành cho trạng thái đơn giản; nó không tự làm nhiều biến thành một transaction.\n\n## Lỗi thường gặp\n\n- Tăng biến chung không có mutex/atomic.\n- Quên join thread trước khi `std::thread` destructor chạy, gây `std::terminate`.\n- Hai thread lấy mutex theo thứ tự khác nhau và deadlock.\n- Giả định thread luôn nhanh hơn; scheduling và synchronization có chi phí.\n\n## Tự luyện\n\nChia một mảng lớn thành các đoạn độc lập, tính tổng từng phần rồi gộp. So sánh kết quả với bản tuần tự và đo thời gian; xác định cách xử lý số phần tử không chia hết.\n\n## Đọc tiếp\n\nTìm hiểu [undefined behavior](/cpp/ky-thuat/ub-memory-safety), [profiling](/cpp/ky-thuat/profiling-performance) và [C++20 `jthread`](/cpp/stl/cpp17-20-23).",
+    "sourcePath": "content/cpp/software-engineering/concurrency.md",
+    "headings": [
+      {
+        "title": "Đồng bộ dữ liệu chia sẻ",
+        "id": "ong-bo-du-lieu-chia-se"
+      },
+      {
+        "title": "Thiết kế an toàn",
+        "id": "thiet-ke-an-toan"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Performance profiling",
+    "description": "Đo bottleneck bằng workload đại diện và tối ưu thời gian, bộ nhớ có bằng chứng.",
+    "slug": "/cpp/ky-thuat/profiling-performance",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24080,
+    "difficulty": "advanced",
+    "keywords": [
+      "profiling C++",
+      "performance",
+      "benchmark",
+      "CPU profiler",
+      "memory profiler",
+      "optimization"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/thuat-toan/do-phuc-tap",
+      "/cpp/thuat-toan/bit-manipulation",
+      "/cpp/ky-thuat/concurrency"
+    ],
+    "featured": false,
+    "priority": 24080,
+    "body": "Profiling đo nơi chương trình dùng CPU, bộ nhớ hoặc I/O. Dùng nó để chọn optimization có tác động; benchmark nhỏ không đại diện workload thật nếu input, compiler flags hoặc môi trường khác.\n\n## Quy trình\n\n- Đặt mục tiêu: latency, throughput, peak memory hoặc thời gian build.\n- Chuẩn bị input và build tái lập; ghi compiler, chuẩn, optimization flags và máy.\n- Đo baseline nhiều lần, kiểm soát nhiễu và chọn percentile phù hợp.\n- Dùng profiler để tìm hotspot; tối ưu một điểm rồi đo lại.\n- Giữ test correctness và kiểm tra tài nguyên khác có bị đánh đổi không.\n\n## Dụng cụ\n\n- Linux: `perf`, `callgrind`, heap profilers tùy môi trường.\n- macOS: Instruments.\n- Windows: Visual Studio Performance Profiler.\n- Compiler có sanitizer/coverage/profiling flags; dùng cấu hình tương ứng toolchain.\n\n## Microbenchmark\n\nKhi đo hàm nhỏ, tránh compiler loại bỏ phép tính hoặc benchmark chính phần setup. Dùng dữ liệu đại diện, chạy đủ lâu, tránh so sánh các build có optimization khác nhau. Benchmark micro hữu ích để điều tra, chưa đủ để khẳng định toàn ứng dụng nhanh hơn.\n\n## Lỗi thường gặp\n\n- Tối ưu theo cảm giác hoặc một lần chạy.\n- Đo debug build rồi áp kết quả vào release.\n- Bỏ tính đúng hoặc memory use để tăng tốc không đáng kể.\n- Benchmark code compiler có thể constant-fold hoặc loại bỏ.\n\n## Tự luyện\n\nSo sánh tìm kiếm tuyến tính với binary search qua nhiều truy vấn trên cùng dữ liệu. Tính cả chi phí sort một lần; chọn theo số truy vấn thực tế.\n\n## Đọc tiếp\n\nBắt đầu từ [Big O](/cpp/thuat-toan/do-phuc-tap), sau đó xem [tối ưu bộ nhớ](/cpp/thuat-toan/bit-manipulation) và [concurrency](/cpp/ky-thuat/concurrency).",
+    "sourcePath": "content/cpp/software-engineering/profiling-performance.md",
+    "headings": [
+      {
+        "title": "Quy trình",
+        "id": "quy-trinh"
+      },
+      {
+        "title": "Dụng cụ",
+        "id": "dung-cu"
+      },
+      {
+        "title": "Microbenchmark",
+        "id": "microbenchmark"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Cross-platform development và security",
+    "description": "Viết C++ portable, xử lý input không tin cậy và giảm rủi ro từ memory, filesystem, process.",
+    "slug": "/cpp/ky-thuat/security-cross-platform",
+    "category": "engineering",
+    "categoryLabel": "Kỹ nghệ phần mềm C++",
+    "order": 24090,
+    "difficulty": "advanced",
+    "keywords": [
+      "cross-platform C++",
+      "portability",
+      "secure coding",
+      "input validation",
+      "filesystem",
+      "process"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Cách xây dựng, kiểm tra, debug và bảo vệ ứng dụng C++ có thể bảo trì.",
+    "related": [
+      "/cpp/trung-cap/file-io-errors",
+      "/cpp/ky-thuat/ub-memory-safety",
+      "/cpp/ky-thuat/cmake"
+    ],
+    "featured": false,
+    "priority": 24090,
+    "body": "Cross-platform code tách yêu cầu sản phẩm khỏi giả định của một OS/compiler. Security bắt đầu ở mọi boundary nhận dữ liệu từ file, network, environment hoặc user.\n\n## Portability\n\n- Dùng standard library khi đáp ứng yêu cầu; cô lập API OS-specific sau interface nhỏ.\n- Dùng CMake targets thay vì hardcode compiler, include path hoặc thư mục cài đặt.\n- Không giả định `int`, endian, path separator hoặc encoding có cùng biểu diễn trên mọi nền tảng.\n- Dùng `std::filesystem::path` cho path, nhưng kiểm tra quyền và root sau khi resolve.\n- Đặt C++ standard rõ ràng và build trên các toolchain thực sự hỗ trợ dự án.\n\n## Security boundary\n\n- Validate độ dài, range, encoding và format trước khi cấp phát hoặc dùng index.\n- Dùng `std::string`/container có kích thước thay vì buffer C không giới hạn.\n- Không nối input vào shell command hoặc SQL; dùng API tham số hóa.\n- Kiểm soát path traversal, symlink và quyền file khi đọc/ghi dữ liệu user.\n- Dùng cryptographic random từ thư viện/OS phù hợp; `rand()` không dành cho secrets.\n- Giới hạn tài nguyên để input độc hại không gây allocation hoặc recursion vô hạn.\n\n## Lỗi thường gặp\n\n- Tắt warning hoặc sanitizer để build “xanh”.\n- Tin dữ liệu file/database đã hợp lệ vì do ứng dụng tạo.\n- Dùng đường dẫn tương đối phụ thuộc working directory ngoài ý muốn.\n- Dùng shell với chuỗi chứa dữ liệu không tin cậy.\n\n## Tự luyện\n\nThiết kế hàm nhận filename từ user. Xác định thư mục gốc cho phép, xử lý path tuyệt đối/`..`/symlink và quyền ghi trước khi mở file.\n\n## Đọc tiếp\n\nÔn [file I/O](/cpp/trung-cap/file-io-errors), [memory safety](/cpp/ky-thuat/ub-memory-safety) và [CMake](/cpp/ky-thuat/cmake).",
+    "sourcePath": "content/cpp/software-engineering/security-cross-platform.md",
+    "headings": [
+      {
+        "title": "Portability",
+        "id": "portability"
+      },
+      {
+        "title": "Security boundary",
+        "id": "security-boundary"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "C++ syntax cheatsheet",
+    "description": "Tra nhanh cú pháp khai báo, điều khiển, hàm, class, STL và lệnh biên dịch C++17.",
+    "slug": "/cpp/tra-cuu/cu-phap",
+    "category": "reference",
+    "categoryLabel": "Tra cứu và xử lý lỗi",
+    "order": 25000,
+    "difficulty": "beginner",
+    "keywords": [
+      "C++ syntax",
+      "cheatsheet",
+      "declaration",
+      "control flow",
+      "compile command"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Bảng tra cú pháp, container, thuật toán, lỗi thường gặp và best practices C++.",
+    "related": [
+      "/cpp/bat-dau/chuong-trinh-dau-tien",
+      "/cpp/tra-cuu/kieu-du-lieu",
+      "/cpp/tra-cuu/stl-containers"
+    ],
+    "featured": false,
+    "priority": 25000,
+    "body": "Dùng trang này để nhớ nhanh hình thức cú pháp. Đọc bài liên kết để hiểu semantics, lifetime và trường hợp biên.\n\n## Cấu trúc chương trình\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << \"Hello\\n\";\n    return 0;\n}\n```\n\n## Cú pháp hay dùng\n\n```text\nKhai báo:           int count{0};\nHằng:               const int limit{100};\nĐiều kiện:          if (condition) { ... } else { ... }\nSwitch:             switch (value) { case 1: ...; break; default: ...; }\nFor:                for (int i = 0; i < n; ++i) { ... }\nWhile:              while (condition) { ... }\nRange-for:          for (const auto& item : items) { ... }\nHàm:                Result function(Argument argument) { return result; }\nReference:          void update(int& value);\nPointer nullable:   int* value{nullptr};\nClass member:       object.method();\nNamespace:          std::vector<int>\nLambda:             [](int value) { return value > 0; }\n```\n\n`...` là ký hiệu minh họa, không phải code có thể biên dịch. Kiểu trả về `void` nghĩa là không trả giá trị.\n\n## Lệnh compiler\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\nclang++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nMSVC: `cl /std:c++17 /EHsc /W4 main.cpp`. C++17 là baseline của bộ tài liệu.\n\n## Lỗi nhanh\n\n- Thiếu `;` sau statement hoặc class definition.\n- Thiếu header trực tiếp, ví dụ `<vector>` khi dùng `std::vector`.\n- Dùng `=` khi cần `==`.\n- Dùng biến/iterator trước khi khởi tạo hoặc sau khi hết lifetime.\n\n## Kiểm tra nhanh\n\nĐọc một dòng cú pháp ở trên và tìm bài chi tiết trước khi dựa vào ví dụ trong API production.\n\n## Đọc tiếp\n\nTra [kiểu dữ liệu](/cpp/tra-cuu/kieu-du-lieu), [container](/cpp/tra-cuu/stl-containers) hoặc [lỗi compiler/runtime](/cpp/tra-cuu/debugging-errors).",
+    "sourcePath": "content/cpp/reference/cu-phap.md",
+    "headings": [
+      {
+        "title": "Cấu trúc chương trình",
+        "id": "cau-truc-chuong-trinh"
+      },
+      {
+        "title": "Cú pháp hay dùng",
+        "id": "cu-phap-hay-dung"
+      },
+      {
+        "title": "Lệnh compiler",
+        "id": "lenh-compiler"
+      },
+      {
+        "title": "Lỗi nhanh",
+        "id": "loi-nhanh"
+      },
+      {
+        "title": "Kiểm tra nhanh",
+        "id": "kiem-tra-nhanh"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Kiểu dữ liệu và giới hạn",
+    "description": "Tra kiểu số C++, signedness, numeric_limits và các lưu ý về overflow.",
+    "slug": "/cpp/tra-cuu/kieu-du-lieu",
+    "category": "reference",
+    "categoryLabel": "Tra cứu và xử lý lỗi",
+    "order": 25010,
+    "difficulty": "beginner",
+    "keywords": [
+      "C++ data types",
+      "numeric_limits",
+      "int",
+      "long long",
+      "size_t",
+      "overflow"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Bảng tra cú pháp, container, thuật toán, lỗi thường gặp và best practices C++.",
+    "related": [
+      "/cpp/bat-dau/bien-kieu-du-lieu",
+      "/cpp/thuat-toan/number-theory",
+      "/cpp/ky-thuat/ub-memory-safety"
+    ],
+    "featured": false,
+    "priority": 25010,
+    "body": "Độ rộng chính xác của một số kiểu built-in phụ thuộc implementation. Dùng `<limits>` để hỏi compiler hiện tại thay vì ghi cứng một miền giả định.\n\n## Kiểu thường gặp\n\n```text\nbool           giá trị true/false\nchar           code unit hẹp; encoding phụ thuộc hệ thống\nshort/int      số nguyên có dấu, độ rộng implementation-dependent\nlong/long long số nguyên có dấu, giới hạn tối thiểu do standard quy định\nfloat/double   số dấu phẩy động gần đúng\nstd::size_t    số không dấu thường dùng cho kích thước\nstd::string    chuỗi byte có quản lý bộ nhớ\n```\n\n```cpp\n#include <iostream>\n#include <limits>\n\nint main() {\n    std::cout << std::numeric_limits<int>::min() << ' '\n              << std::numeric_limits<int>::max() << '\\n';\n}\n```\n\n`<cstdint>` cung cấp `std::int32_t`/`std::uint64_t` nếu implementation có kiểu đúng độ rộng. `long` không nhất thiết cùng số bit trên Windows và Unix.\n\n## Signed và unsigned\n\nSigned overflow là UB. Unsigned wrap theo modulo 2^N, có thể gây logic sai. Trộn signed/unsigned làm phép so sánh hoặc trừ bất ngờ; kiểm tra miền trước khi cast và trước khi tính.\n\n## Chọn kiểu\n\n- Dùng `int` cho giá trị đếm nhỏ khi constraint đảm bảo vừa.\n- Dùng `long long` cho tổng/tích lớn hơn miền `int`.\n- Dùng `std::size_t` cho size/index khi phù hợp API; tránh trừ khi có thể nhỏ hơn 0.\n- Dùng integer cho tiền theo đơn vị nhỏ nhất hoặc decimal type phù hợp domain, không dùng binary `double` để so sánh tiền chính xác.\n\n## Lỗi thường gặp\n\n- Cho rằng `sizeof(int) == 4` trên mọi implementation.\n- Tính `a * b` trong `int` rồi mới gán vào `long long`; phép tràn xảy ra trước assignment.\n- Ép số âm thành unsigned rồi thấy giá trị rất lớn.\n- Dùng `numeric_limits<T>::max()` làm sentinel rồi cộng thêm có thể tràn.\n\n## Kiểm tra nhanh\n\nTính giới hạn lớn nhất cho tổng/tích từ constraint trước khi viết kiểu. Tách cast trước phép tính khi thật sự cần kiểu rộng hơn.\n\n## Đọc tiếp\n\nXem [biến và kiểu](/cpp/bat-dau/bien-kieu-du-lieu), [GCD/LCM](/cpp/thuat-toan/number-theory) và [undefined behavior](/cpp/ky-thuat/ub-memory-safety).",
+    "sourcePath": "content/cpp/reference/kieu-du-lieu.md",
+    "headings": [
+      {
+        "title": "Kiểu thường gặp",
+        "id": "kieu-thuong-gap"
+      },
+      {
+        "title": "Signed và unsigned",
+        "id": "signed-va-unsigned"
+      },
+      {
+        "title": "Chọn kiểu",
+        "id": "chon-kieu"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Kiểm tra nhanh",
+        "id": "kiem-tra-nhanh"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "STL containers: bảng tra cứu",
+    "description": "So sánh sequence, ordered, unordered containers và adapters theo thao tác chính.",
+    "slug": "/cpp/tra-cuu/stl-containers",
+    "category": "reference",
+    "categoryLabel": "Tra cứu và xử lý lỗi",
+    "order": 25020,
+    "difficulty": "intermediate",
+    "keywords": [
+      "STL containers",
+      "complexity table",
+      "vector",
+      "map",
+      "unordered_map",
+      "priority_queue"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Bảng tra cú pháp, container, thuật toán, lỗi thường gặp và best practices C++.",
+    "related": [
+      "/cpp/stl/stl-la-gi",
+      "/cpp/stl/sequence-containers",
+      "/cpp/stl/associative-containers",
+      "/cpp/stl/unordered-containers"
+    ],
+    "featured": false,
+    "priority": 25020,
+    "body": "Bảng này là hướng dẫn nhanh; độ phức tạp chính xác phụ thuộc thao tác và loại iterator. Dùng container làm abstraction thay vì đoán từ tên.\n\n## Dãy theo thứ tự\n\n```text\nvector:        index O(1), append amortized O(1), insert giữa O(n)\narray:         index O(1), kích thước cố định tại compile time\ndeque:         index O(1), push hai đầu O(1), chèn giữa O(n)\nlist:          không có index O(1), chèn/xóa O(1) khi đã có iterator\n```\n\n## Key có thứ tự\n\n```text\nset:       key duy nhất, find/insert/erase O(log n)\nmultiset:  key trùng, find/insert/erase O(log n)\nmap:       key -> value, find/insert/erase O(log n)\nmultimap:  key trùng -> nhiều value, find/insert/erase O(log n)\n```\n\n## Hash và adapters\n\n```text\nunordered_set/map: average find/insert O(1), worst O(n), không giữ thứ tự\nstack:             LIFO, top/push/pop O(1)\nqueue:             FIFO, front/push/pop O(1)\npriority_queue:    top O(1), push/pop O(log n)\n```\n\n## Chọn nhanh\n\n- Dãy đa dụng: `vector`.\n- Key cần thứ tự hoặc range lookup: `map`/`set`.\n- Key lookup trung bình nhanh, không cần thứ tự: `unordered_map`/`unordered_set`.\n- FIFO/LIFO/ưu tiên: adapter tương ứng.\n- Cần iterator ổn định qua thao tác? Đọc quy tắc [invalidation](/cpp/stl/iterators-invalidation).\n\n## Lỗi thường gặp\n\nChọn `list` vì nghe insert nhanh mà quên phải tìm vị trí; hoặc dựa vào average O(1) của hash table như guarantee worst-case.\n\n## Kiểm tra nhanh\n\nGhi lại thao tác thường gặp nhất của bài toán trước khi chọn container; nếu bottleneck quan trọng, benchmark workload thật.\n\n## Đọc tiếp\n\nXem bài [sequence](/cpp/stl/sequence-containers), [associative](/cpp/stl/associative-containers), [unordered](/cpp/stl/unordered-containers) và [adapters](/cpp/stl/container-adapters).",
+    "sourcePath": "content/cpp/reference/stl-containers.md",
+    "headings": [
+      {
+        "title": "Dãy theo thứ tự",
+        "id": "day-theo-thu-tu"
+      },
+      {
+        "title": "Key có thứ tự",
+        "id": "key-co-thu-tu"
+      },
+      {
+        "title": "Hash và adapters",
+        "id": "hash-va-adapters"
+      },
+      {
+        "title": "Chọn nhanh",
+        "id": "chon-nhanh"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Kiểm tra nhanh",
+        "id": "kiem-tra-nhanh"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "STL algorithms: bảng tra cứu",
+    "description": "Tra nhóm thuật toán phổ biến, yêu cầu range và độ phức tạp thường gặp.",
+    "slug": "/cpp/tra-cuu/stl-algorithms",
+    "category": "reference",
+    "categoryLabel": "Tra cứu và xử lý lỗi",
+    "order": 25030,
+    "difficulty": "intermediate",
+    "keywords": [
+      "STL algorithm reference",
+      "sort",
+      "find",
+      "count",
+      "lower_bound",
+      "complexity"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Bảng tra cú pháp, container, thuật toán, lỗi thường gặp và best practices C++.",
+    "related": [
+      "/cpp/stl/stl-algorithms",
+      "/cpp/stl/lambda-auto-range",
+      "/cpp/thuat-toan/tim-kiem-sap-xep"
+    ],
+    "featured": false,
+    "priority": 25030,
+    "body": "Các thuật toán dưới đây nhận range `[first, last)`, thường trong `<algorithm>`. Kiểm tra precondition trước khi gọi.\n\n## Tìm và đếm\n\n```text\nfind / find_if:           O(n), iterator hoặc end\ncount / count_if:         O(n), số phần tử phù hợp\nmin_element / max_element O(n), iterator hoặc end\n```\n\n## Sắp xếp và binary search\n\n```text\nsort:          O(n log n) so sánh, không stable\nstable_sort:   O(n log n) khi đủ bộ nhớ phụ; fallback O(n log² n), giữ thứ tự tương đương\nlower_bound:   O(log n) comparison với random-access range đã sort\nupper_bound:   O(log n) comparison với random-access range đã sort\nbinary_search: kiểm tra tồn tại trong range đã sort\n```\n\nVới iterator không random-access, `lower_bound` vẫn O(log n) comparison nhưng có thể O(n) bước tăng iterator.\n\n## Mutate và dựng kết quả\n\n`transform` áp dụng callable, `remove_if` sắp xếp phần tử còn lại về đầu range nhưng **không** giảm size container, `erase`/erase-remove idiom mới xóa phần dư. `unique` loại trùng liền kề nên thường sort trước nếu cần loại mọi duplicate.\n\n## Lỗi thường gặp\n\n- Dùng binary-search algorithm trên range chưa sort.\n- Dereference kết quả bằng `end()`.\n- Quên erase phần cuối sau `remove_if` trên C++17 sequence container.\n- Comparator không strict weak ordering.\n\n## Kiểm tra nhanh\n\nĐọc precondition, loại iterator và invalidation của algorithm trước khi gọi trên container cụ thể.\n\n## Đọc tiếp\n\nHọc [algorithms chi tiết](/cpp/stl/stl-algorithms), [iterator](/cpp/stl/iterators-invalidation) và [searching/sorting](/cpp/thuat-toan/tim-kiem-sap-xep).",
+    "sourcePath": "content/cpp/reference/stl-algorithms.md",
+    "headings": [
+      {
+        "title": "Tìm và đếm",
+        "id": "tim-va-em"
+      },
+      {
+        "title": "Sắp xếp và binary search",
+        "id": "sap-xep-va-binary-search"
+      },
+      {
+        "title": "Mutate và dựng kết quả",
+        "id": "mutate-va-dung-ket-qua"
+      },
+      {
+        "title": "Lỗi thường gặp",
+        "id": "loi-thuong-gap"
+      },
+      {
+        "title": "Kiểm tra nhanh",
+        "id": "kiem-tra-nhanh"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Compiler errors và runtime errors",
+    "description": "Đọc nhóm lỗi biên dịch, lỗi liên kết, crash và sai kết quả theo đúng lớp nguyên nhân.",
+    "slug": "/cpp/tra-cuu/debugging-errors",
+    "category": "reference",
+    "categoryLabel": "Tra cứu và xử lý lỗi",
+    "order": 25040,
+    "difficulty": "beginner",
+    "keywords": [
+      "compiler error",
+      "linker error",
+      "runtime error",
+      "segmentation fault",
+      "debugging checklist"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Bảng tra cú pháp, container, thuật toán, lỗi thường gặp và best practices C++.",
+    "related": [
+      "/cpp/ky-thuat/debugging",
+      "/cpp/tra-cuu/memory-errors",
+      "/cpp/tra-cuu/best-practices"
+    ],
+    "featured": false,
+    "priority": 25040,
+    "body": "Thông báo lỗi là bằng chứng từ một giai đoạn cụ thể của build hoặc runtime. Đọc dòng đầu tiên có ý nghĩa trong log và sửa nguyên nhân gốc, không sửa ngẫu nhiên dòng cuối.\n\n## Lỗi compile\n\n```text\nexpected ';'          thiếu dấu kết thúc, có thể ở dòng trước\nnot declared          sai scope, thiếu declaration hoặc include\nno matching function  đối số không khớp overload/template\nambiguous call        nhiều overload cùng phù hợp\ncannot convert        phép chuyển kiểu không hợp lệ/thu hẹp\n```\n\n## Lỗi linker\n\n```text\nundefined reference / unresolved external: thiếu định nghĩa hoặc không link object/library\nmultiple definition: định nghĩa external đặt nhiều translation unit\n```\n\nKiểm tra source có được đưa vào target, signature khớp header và định nghĩa global không bị lặp.\n\n## Runtime hoặc sai kết quả\n\n- Segmentation fault/access violation: pointer sai, lifetime lỗi, stack overflow hoặc out-of-bounds.\n- Treo: vòng lặp vô hạn, deadlock, chờ I/O hoặc workload quá lớn.\n- Output sai: kiểm tra kiểu số, điều kiện biên, thứ tự index và invariant.\n- Chỉ lỗi release: nghi UB, race, uninitialized state hoặc phụ thuộc timing.\n\n## Cách tiếp cận\n\nTạo input nhỏ tái hiện, build đúng file/flags, đọc stack trace, đặt breakpoint, kiểm tra biến tại nơi sai đầu tiên. Tham khảo [debugging workflow](/cpp/ky-thuat/debugging).\n\n## Tự luyện\n\nTạo lỗi thiếu header, khai báo hàm nhưng thiếu định nghĩa và truy cập vector ngoài biên. Phân biệt lỗi compile, link và runtime.\n\n## Đọc tiếp\n\nXem [lỗi bộ nhớ](/cpp/tra-cuu/memory-errors) và [best practices](/cpp/tra-cuu/best-practices).",
+    "sourcePath": "content/cpp/reference/debugging-errors.md",
+    "headings": [
+      {
+        "title": "Lỗi compile",
+        "id": "loi-compile"
+      },
+      {
+        "title": "Lỗi linker",
+        "id": "loi-linker"
+      },
+      {
+        "title": "Runtime hoặc sai kết quả",
+        "id": "runtime-hoac-sai-ket-qua"
+      },
+      {
+        "title": "Cách tiếp cận",
+        "id": "cach-tiep-can"
+      },
+      {
+        "title": "Tự luyện",
+        "id": "tu-luyen"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "Undefined Behavior và lỗi bộ nhớ thường gặp",
+    "description": "Nhận diện out-of-bounds, dangling pointer, double free, leak và data race.",
+    "slug": "/cpp/tra-cuu/memory-errors",
+    "category": "reference",
+    "categoryLabel": "Tra cứu và xử lý lỗi",
+    "order": 25050,
+    "difficulty": "intermediate",
+    "keywords": [
+      "memory errors",
+      "dangling pointer",
+      "double free",
+      "memory leak",
+      "UB",
+      "out of bounds"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Bảng tra cú pháp, container, thuật toán, lỗi thường gặp và best practices C++.",
+    "related": [
+      "/cpp/ky-thuat/ub-memory-safety",
+      "/cpp/bat-dau/references-pointers",
+      "/cpp/stl/raii-smart-pointers"
+    ],
+    "featured": false,
+    "priority": 25050,
+    "body": "Lỗi bộ nhớ có thể làm hỏng dữ liệu xa nơi phát sinh. Chúng thường phụ thuộc input, compiler optimization hoặc timing nên cần invariant rõ, tests và công cụ hỗ trợ.\n\n## Triệu chứng và sửa\n\n```text\nOut of bounds       index ngoài [0, size); xác thực biên hoặc dùng at().\nDangling pointer    object đã hết lifetime; điều chỉnh ownership/lifetime.\nUse after free      dùng resource sau giải phóng; dùng RAII và bỏ alias cũ.\nDouble delete       nhiều nơi cùng nghĩ mình sở hữu; xác định một owner.\nMemory leak         allocation không được giải phóng; dùng container/unique_ptr.\nStack overflow      recursion quá sâu hoặc stack object quá lớn; dùng lặp/heap owner.\nData race           shared mutable access thiếu đồng bộ; dùng mutex/atomic đúng.\n```\n\n## Công cụ\n\nAddressSanitizer tìm một số lỗi truy cập bộ nhớ; UBSan phát hiện một số UB; ThreadSanitizer tìm một số race. Valgrind và debugger hữu ích trên nền tảng phù hợp. Không công cụ nào chứng minh toàn chương trình không có lỗi.\n\n## Phòng tránh\n\n- Dùng `std::vector`/`std::string` thay buffer raw nếu phù hợp.\n- Giữ ownership đơn nhất; smart pointer phải phản ánh ownership thật.\n- Không giữ iterator/reference qua thao tác invalidating container.\n- Test input rỗng, biên, lớn và lỗi.\n\n## Kiểm tra nhanh\n\nKhi crash, tìm nơi object được tạo, ai sở hữu, lúc nào bị hủy và mọi alias còn tồn tại. Xem [memory safety](/cpp/ky-thuat/ub-memory-safety).\n\n## Đọc tiếp\n\nHọc [pointer/reference](/cpp/bat-dau/references-pointers), [RAII](/cpp/stl/raii-smart-pointers) và [debugging](/cpp/ky-thuat/debugging).",
+    "sourcePath": "content/cpp/reference/memory-errors.md",
+    "headings": [
+      {
+        "title": "Triệu chứng và sửa",
+        "id": "trieu-chung-va-sua"
+      },
+      {
+        "title": "Công cụ",
+        "id": "cong-cu"
+      },
+      {
+        "title": "Phòng tránh",
+        "id": "phong-tranh"
+      },
+      {
+        "title": "Kiểm tra nhanh",
+        "id": "kiem-tra-nhanh"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
+  },
+  {
+    "title": "C++ best practices và FAQ",
+    "description": "Checklist chọn kiểu, container, ownership, chuẩn ngôn ngữ và cách đọc tài liệu C++.",
+    "slug": "/cpp/tra-cuu/best-practices",
+    "category": "reference",
+    "categoryLabel": "Tra cứu và xử lý lỗi",
+    "order": 25060,
+    "difficulty": "beginner",
+    "keywords": [
+      "C++ best practices",
+      "FAQ",
+      "const",
+      "ownership",
+      "bits/stdc++.h",
+      "using namespace std"
+    ],
+    "updated": "2026-10-20",
+    "collection": "cpp",
+    "collectionLabel": "C++",
+    "collectionDescription": "Bảng tra cú pháp, container, thuật toán, lỗi thường gặp và best practices C++.",
+    "related": [
+      "/cpp/bat-dau/lo-trinh-hoc",
+      "/cpp/stl/cpp17-20-23",
+      "/cpp/ky-thuat/clean-code"
+    ],
+    "featured": false,
+    "priority": 25060,
+    "body": "Trang này tóm tắt quyết định thường gặp; hãy đọc bài chi tiết khi quyết định ảnh hưởng ownership, compatibility hoặc performance.\n\n## Checklist\n\n- Dùng C++17 làm baseline hiện tại của bộ tài liệu; khai báo chuẩn trong build system.\n- Include header trực tiếp; dùng `std::` để định danh API chuẩn rõ ràng.\n- Khởi tạo object ngay; thêm `const` khi không cần sửa.\n- Ưu tiên `std::vector` cho dãy động; chọn container khác theo thao tác chính.\n- Dùng `std::string` cho chuỗi, RAII cho resource và `unique_ptr` cho ownership động đơn nhất.\n- Xác thực input, kiểm tra phép tính/chỉ số và nêu giả định.\n- Bật warning, dùng formatter/compiler hiện đại và kiểm tra trên toolchain mục tiêu.\n- Đo profile trước khi tối ưu vi mô.\n\n## FAQ\n\n**Có nên luôn viết `using namespace std;`?** Không trong header hoặc ví dụ phần mềm chung; qualified names rõ và tránh làm namespace caller ô nhiễm. Trong snippet thi đấu ngắn, lựa chọn đó là phong cách cá nhân nhưng không cần mặc định.\n\n**Có nên dùng `bits/stdc++.h`?** Đây là header tổng hợp riêng của một số GCC/libstdc++, không thuộc ISO C++; phù hợp môi trường thi đấu được kiểm soát, không portable cho phần mềm.\n\n**Có cần tự `new`/`delete`?** Thường không. Dùng value types, container và smart pointer để lifetime rõ.\n\n**Mọi `const` có làm code an toàn không?** Không, nhưng const correctness thể hiện phần nào được phép sửa; vẫn phải quản lý lifetime và aliasing.\n\n**Dùng C++23 được chưa?** Chỉ khi compiler và thư viện trên mọi target hỗ trợ feature cần dùng. Chuẩn mới không đồng nghĩa implementation đầy đủ.\n\n## Kiểm tra nhanh\n\nTrước khi review, build từ clean directory, chạy tests, xem warnings và đọc [debug checklist](/cpp/tra-cuu/debugging-errors).\n\n## Đọc tiếp\n\nChọn [lộ trình học](/cpp/bat-dau/lo-trinh-hoc), [C++17/20/23](/cpp/stl/cpp17-20-23) hoặc [Clean Code](/cpp/ky-thuat/clean-code).",
+    "sourcePath": "content/cpp/reference/best-practices.md",
+    "headings": [
+      {
+        "title": "Checklist",
+        "id": "checklist"
+      },
+      {
+        "title": "FAQ",
+        "id": "faq"
+      },
+      {
+        "title": "Kiểm tra nhanh",
+        "id": "kiem-tra-nhanh"
+      },
+      {
+        "title": "Đọc tiếp",
+        "id": "oc-tiep"
+      }
+    ]
   }
 ] as const;
 export type Article = (typeof articles)[number];
