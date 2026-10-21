@@ -494,16 +494,16 @@ C++ có ba dạng vòng lặp cơ bản:
 Cú pháp:
 
 ```cpp
-for (initialization; condition; update) {
+for (a; b; c) {
     // Cong viec can lap
 }
 ```
 
 Trong đó:
 
-- `initialization`: Khởi tạo biến đếm.
-- `condition`: Điều kiện tiếp tục vòng lặp.
-- `update`: Cập nhật biến đếm sau mỗi lần lặp.
+- `a`: Khởi tạo biến đếm.
+- `b`: Điều kiện tiếp tục vòng lặp.
+- `c`: Cập nhật biến đếm sau mỗi lần lặp.
 
 Ví dụ in các số từ 1 đến 5:
 

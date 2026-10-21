@@ -90,7 +90,7 @@ function highlightCpp(code: string): ReactNode[] {
   return nodes;
 }
 
-function CodeBlock({ language, code }: { language: string; code: string }) { const [copied, setCopied] = useState(false); const highlighted = language.toLowerCase() === "cpp" ? highlightCpp(code) : code; return <div className="my-7 overflow-hidden rounded-xl border border-white/10 bg-[var(--code)] shadow-[0_12px_30px_rgba(16,42,67,0.12)]"><div className="flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-white/55"><span className="font-mono uppercase tracking-[0.12em]">{language}</span><button onClick={() => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1400); }} className="inline-flex items-center gap-1.5 rounded px-2 py-1 hover:bg-white/10 hover:text-white">{copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}{copied ? "Đã copy" : "Copy"}</button></div><pre className="overflow-x-auto p-5 text-[13px] leading-6 text-[var(--code-text)]"><code>{highlighted}</code></pre></div>; }
+function CodeBlock({ language, code, children }: { language: string; code: string; children: ReactNode }) { const [copied, setCopied] = useState(false); return <div className="my-7 overflow-hidden rounded-xl border border-white/10 bg-[var(--code)] shadow-[0_12px_30px_rgba(16,42,67,0.12)]"><div className="flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-white/55"><span className="font-mono uppercase tracking-[0.12em]">{language}</span><button onClick={() => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1400); }} className="inline-flex items-center gap-1.5 rounded px-2 py-1 hover:bg-white/10 hover:text-white">{copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}{copied ? "Đã copy" : "Copy"}</button></div><pre className="overflow-x-auto p-5 text-[13px] leading-6 text-[var(--code-text)]"><code>{children}</code></pre></div>; }
 
 function splitMarkdownTableRow(row: string): string[] {
   let source = row.trim();
@@ -172,24 +172,60 @@ function parseMarkdownTableHeader(
   return { headers, alignments };
 }
 
-function Markdown({ body }: { body: string }) {
+type SearchTextPart = { text: string; isMatch: boolean };
+
+function splitSearchText(value: string, query: string): SearchTextPart[] {
+  if (!query) return [{ text: value, isMatch: false }];
+
+  const lowerValue = value.toLowerCase();
+  const parts: SearchTextPart[] = [];
+  let cursor = 0;
+
+  while (cursor < value.length) {
+    const matchStart = lowerValue.indexOf(query, cursor);
+    if (matchStart === -1) break;
+    if (matchStart > cursor) parts.push({ text: value.slice(cursor, matchStart), isMatch: false });
+    parts.push({ text: value.slice(matchStart, matchStart + query.length), isMatch: true });
+    cursor = matchStart + query.length;
+  }
+
+  if (cursor < value.length) parts.push({ text: value.slice(cursor), isMatch: false });
+  return parts.length > 0 ? parts : [{ text: value, isMatch: false }];
+}
+
+function Markdown({ body, searchQuery = "", activeSearchIndex = 0 }: { body: string; searchQuery?: string; activeSearchIndex?: number }) {
   const lines = body.split("\n");
   const nodes: ReactNode[] = [];
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase();
+  let searchMatchIndex = 0;
   let index = 0;
+
+  const renderSearchText = (value: string): ReactNode[] => splitSearchText(value, normalizedSearchQuery).map((part) => {
+    if (!part.isMatch) return part.text;
+
+    const matchIndex = searchMatchIndex++;
+    const isActive = matchIndex === activeSearchIndex;
+    return <mark
+      key={matchIndex}
+      data-article-search-match
+      data-article-search-index={matchIndex}
+      className={`rounded-sm px-0.5 text-zinc-950 ${isActive ? "bg-amber-400 font-semibold outline outline-2 outline-[var(--accent)]" : "bg-yellow-200 dark:bg-yellow-300"}`}
+    >{part.text}</mark>;
+  });
 
   const inline = (value: string): ReactNode[] => value
     .split(/(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\([^\)]+\))/g)
     .filter(Boolean)
     .map((part, partIndex) => {
       if (part.startsWith("`") && part.endsWith("`")) {
-        return <code key={partIndex}>{part.slice(1, -1)}</code>;
+        return <code key={partIndex}>{renderSearchText(part.slice(1, -1))}</code>;
       }
       if (part.startsWith("**") && part.endsWith("**")) {
-        return <strong key={partIndex}>{part.slice(2, -2)}</strong>;
+        return <strong key={partIndex}>{renderSearchText(part.slice(2, -2))}</strong>;
       }
       const link = part.match(/^\[([^\]]+)\]\(([^\)]+)\)$/);
-      if (link) return <Link key={partIndex} href={link[2]}>{link[1]}</Link>;
-      return part;
+      if (link) return <Link key={partIndex} href={link[2]}>{renderSearchText(link[1])}</Link>;
+      return renderSearchText(part);
     });
 
   while (index < lines.length) {
@@ -200,7 +236,15 @@ function Markdown({ body }: { body: string }) {
       index += 1;
       while (index < lines.length && !lines[index].startsWith("```")) code.push(lines[index++]);
       index += 1;
-      nodes.push(<CodeBlock key={nodes.length} language={language} code={code.join("\n")} />);
+      const codeText = code.join("\n");
+      const codeContent = normalizedSearchQuery
+        ? splitSearchText(codeText, normalizedSearchQuery).map((part, partIndex) => <span key={partIndex}>
+          {part.isMatch
+            ? renderSearchText(part.text)
+            : language.toLowerCase() === "cpp" ? highlightCpp(part.text) : part.text}
+        </span>)
+        : language.toLowerCase() === "cpp" ? highlightCpp(codeText) : codeText;
+      nodes.push(<CodeBlock key={nodes.length} language={language} code={codeText}>{codeContent}</CodeBlock>);
       continue;
     }
 
@@ -459,13 +503,85 @@ function ArticleMetadata({ article }: { article: Article }) {
   </div>;
 }
 
+function ArticleSearch({
+  query,
+  resultCount,
+  activeResultIndex,
+  onQueryChange,
+  onPrevious,
+  onNext,
+}: {
+  query: string;
+  resultCount: number;
+  activeResultIndex: number;
+  onQueryChange: (value: string) => void;
+  onPrevious: () => void;
+  onNext: () => void;
+}) {
+  const hasQuery = query.trim().length > 0;
+  const hasResults = resultCount > 0;
+
+  return <div role="search" aria-label="Tìm trong tài liệu" className="mb-8 flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2.5 py-2 shadow-sm sm:gap-2 sm:px-3">
+    <Search aria-hidden="true" className="ml-1 size-4 shrink-0 text-[var(--muted)]" />
+    <input
+      type="text"
+      value={query}
+      onChange={(event) => onQueryChange(event.target.value)}
+      onKeyDown={(event) => {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        if (event.shiftKey) onPrevious();
+        else onNext();
+      }}
+      placeholder="Tìm trong tài liệu này..."
+      aria-label="Tìm trong tài liệu này"
+      className="min-w-0 flex-1 bg-transparent px-1 py-1 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted)]"
+    />
+    {hasQuery && <span aria-live="polite" aria-atomic="true" className="shrink-0 text-xs text-[var(--muted)]">
+      {hasResults ? activeResultIndex < 0 ? `${resultCount} kết quả` : `${Math.min(activeResultIndex + 1, resultCount)} / ${resultCount}` : "0 kết quả"}
+    </span>}
+    {hasQuery && <button
+      type="button"
+      onClick={() => onQueryChange("")}
+      aria-label="Xóa nội dung tìm kiếm"
+      className="grid size-8 shrink-0 place-items-center rounded-md text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)]"
+    ><X aria-hidden="true" className="size-4" /></button>}
+    <button
+      type="button"
+      onClick={onPrevious}
+      disabled={!hasResults}
+      aria-label="Kết quả trước"
+      className="grid size-8 shrink-0 place-items-center rounded-md text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)] disabled:pointer-events-none disabled:opacity-40"
+    ><ChevronUp aria-hidden="true" className="size-4" /></button>
+    <button
+      type="button"
+      onClick={onNext}
+      disabled={!hasResults}
+      aria-label="Kết quả tiếp theo"
+      className="grid size-8 shrink-0 place-items-center rounded-md text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)] disabled:pointer-events-none disabled:opacity-40"
+    ><ChevronDown aria-hidden="true" className="size-4" /></button>
+  </div>;
+}
+
 function ArticlePage({ article }: { article: Article }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchMatchIndex, setSearchMatchIndex] = useState(-1);
+  const [searchMatchCount, setSearchMatchCount] = useState(0);
+  const articleContentRef = useRef<HTMLDivElement>(null);
   const index = articles.findIndex((item) => item.slug === article.slug);
   const previous = articles[index - 1];
   const next = articles[index + 1];
   const related = (article.related ?? [])
     .map((slug) => articles.find((item) => item.slug === slug))
     .filter(Boolean) as Article[];
+
+  useEffect(() => {
+    const matches = articleContentRef.current?.querySelectorAll<HTMLElement>("[data-article-search-match]") ?? [];
+    setSearchMatchCount(matches.length);
+    if (searchMatchIndex >= 0 && matches.length > 0) {
+      matches[Math.min(searchMatchIndex, matches.length - 1)]?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [article.body, searchMatchIndex, searchQuery]);
 
   return <main id="main-content" className="mx-auto flex w-full max-w-[1080px] gap-12 px-5 py-10 sm:px-8 lg:py-14">
     <article className="min-w-0 max-w-[780px] flex-1">
@@ -474,9 +590,23 @@ function ArticlePage({ article }: { article: Article }) {
         <ArticleMetadata article={article} />
         <h1 className="max-w-3xl text-4xl font-bold tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">{article.title}</h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{article.description}</p>
+        <ArticleSearch
+          query={searchQuery}
+          resultCount={searchMatchCount}
+          activeResultIndex={searchMatchIndex}
+          onQueryChange={(value) => {
+            setSearchQuery(value);
+            setSearchMatchIndex(-1);
+            setSearchMatchCount(0);
+          }}
+          onPrevious={() => setSearchMatchIndex((current) => searchMatchCount > 0 ? (current < 0 ? searchMatchCount - 1 : (current - 1 + searchMatchCount) % searchMatchCount) : -1)}
+          onNext={() => setSearchMatchIndex((current) => searchMatchCount > 0 ? (current + 1) % searchMatchCount : -1)}
+        />
       </div>
       <TableOfContents key={`${article.slug}-mobile`} article={article} mobile />
-      <Markdown body={article.body} />
+      <div ref={articleContentRef}>
+        <Markdown body={article.body} searchQuery={searchQuery} activeSearchIndex={searchMatchIndex} />
+      </div>
       <div className="mt-14 border-t border-[var(--border)] pt-8">
         <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Đọc tiếp</p>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -524,7 +654,7 @@ export function WikiShell({ article, collection }: { article?: Article; collecti
     <div className="flex min-h-0 flex-1 overflow-hidden">
       <Sidebar activeCollectionSlug={activeCollectionSlug} />
       <div data-wiki-scroll-container className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-contain">
-        {article ? <ArticlePage article={article} /> : collection ? <CollectionPage collection={collection} /> : <HomePage />}
+        {article ? <ArticlePage key={article.slug} article={article} /> : collection ? <CollectionPage collection={collection} /> : <HomePage />}
         <footer className="border-t border-[var(--border)] px-5 py-8 text-center text-xs text-[var(--muted)]"><span className="font-semibold text-[var(--foreground)]">DevHubs Wiki</span> · Kiến thức kỹ thuật cho developer, được tổ chức từ metadata.</footer>
       </div>
     </div>
