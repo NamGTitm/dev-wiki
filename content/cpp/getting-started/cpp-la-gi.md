@@ -1,5 +1,5 @@
 ---
-title: C++ là gì? Lịch sử, ứng dụng và các phiên bản
+title: C++ là gì? 
 description: Tìm hiểu ngôn ngữ C++, nguồn gốc, ứng dụng thực tế, compiler, thư viện chuẩn, quá trình biên dịch và sự khác biệt giữa C++11, C++14, C++17, C++20, C++23 và C++26.
 slug: /cpp/bat-dau/cpp-la-gi
 category: fundamentals
@@ -14,7 +14,7 @@ collectionDescription: Tài liệu C++17 thực hành, từ cú pháp nền tả
 related: ["/cpp/bat-dau/cai-dat-moi-truong", "/cpp/bat-dau/lo-trinh-hoc", "/cpp/stl/cpp17-20-23"]
 ---
 
-# C++ là gì? Lịch sử, ứng dụng và các phiên bản
+# C++ là gì? 
 
 C++ là một trong những ngôn ngữ lập trình có ảnh hưởng lớn trong lĩnh vực phát triển phần mềm, đặc biệt ở những hệ thống yêu cầu hiệu năng cao, khả năng kiểm soát tài nguyên và tương tác trực tiếp với phần cứng.
 

@@ -83,10 +83,31 @@ function headingId(text) {
   return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-");
 }
 
+function extractHeadings(body) {
+  const headings = [];
+  let inCodeBlock = false;
+
+  for (const line of body.split("\n")) {
+    if (line.startsWith("```")) {
+      inCodeBlock = !inCodeBlock;
+      continue;
+    }
+    if (inCodeBlock) continue;
+
+    const match = line.match(/^#{1,3}\s+(.+)$/);
+    if (!match) continue;
+
+    const title = match[1].trim().replace(/\s+#+\s*$/, "");
+    headings.push({ title, id: headingId(title) });
+  }
+
+  return headings;
+}
+
 const files = await walk(contentRoot);
 const articles = (await Promise.all(files.map(async (file) => {
   const article = parseMarkdown(await readFile(file, "utf8"), file);
-  const headings = [...article.body.matchAll(/^#{2,3}\s+(.+)$/gm)].map((match) => ({ title: match[1].trim(), id: headingId(match[1]) }));
+  const headings = extractHeadings(article.body);
   return { ...article, headings };
 }))).sort((a, b) => a.order - b.order);
 

@@ -281,9 +281,10 @@ function Markdown({ body, searchQuery = "", activeSearchIndex = 0 }: { body: str
       continue;
     }
 
-    if (line.startsWith("## ") || line.startsWith("### ")) {
-      const level = line.startsWith("### ") ? 3 : 2;
-      const text = line.slice(level + 1);
+    const heading = line.match(/^(#{1,3})\s+(.+)$/);
+    if (heading) {
+      const level = heading[1].length === 3 ? 3 : 2;
+      const text = heading[2].trim().replace(/\s+#+\s*$/, "");
       const id = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-");
       const Heading = level === 2 ? "h2" : "h3";
       nodes.push(<Heading key={nodes.length} id={id} className={level === 2 ? "mt-12 border-t border-[var(--border)] pt-8 text-2xl font-bold tracking-tight" : "mt-8 text-lg font-bold"}>{inline(text)}</Heading>);
@@ -314,7 +315,7 @@ function Markdown({ body, searchQuery = "", activeSearchIndex = 0 }: { body: str
     while (
       index < lines.length &&
       lines[index].trim() &&
-      !/^#{2,3} /.test(lines[index]) &&
+      !/^#{1,3} /.test(lines[index]) &&
       !lines[index].startsWith("```") &&
       !lines[index].startsWith("> ") &&
       !lines[index].startsWith("- ") &&

@@ -4463,8 +4463,8 @@ export const articles = [
     ]
   },
   {
-    "title": "C++ là gì và các phiên bản",
-    "description": "Tìm hiểu C++, compiler, thư viện chuẩn và cách chọn chuẩn ngôn ngữ cho dự án.",
+    "title": "C++ là gì?",
+    "description": "Tìm hiểu ngôn ngữ C++, nguồn gốc, ứng dụng thực tế, compiler, thư viện chuẩn, quá trình biên dịch và sự khác biệt giữa C++11, C++14, C++17, C++20, C++23 và C++26.",
     "slug": "/cpp/bat-dau/cpp-la-gi",
     "category": "fundamentals",
     "categoryLabel": "C++ căn bản",
@@ -4475,10 +4475,16 @@ export const articles = [
       "C++17",
       "C++20",
       "C++23",
+      "C++26",
       "compiler",
-      "standard library"
+      "standard library",
+      "GCC",
+      "Clang",
+      "MSVC",
+      "lập trình C++",
+      "Modern C++"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-21",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -4489,32 +4495,296 @@ export const articles = [
     ],
     "featured": false,
     "priority": 20010,
-    "body": "C++ là ngôn ngữ lập trình biên dịch, đa mục đích, cho phép viết ứng dụng cấp cao nhưng vẫn kiểm soát được tài nguyên và hiệu năng. Bài này giúp bạn hiểu các thành phần của một chương trình và chọn một chuẩn ngôn ngữ làm nền.\n\n## C++ được dùng khi nào?\n\nC++ thường xuất hiện trong game engine, trình duyệt, công cụ đồ họa, hệ thống nhúng, thư viện hiệu năng cao, ứng dụng desktop và phần mềm hệ thống. Với script ngắn hoặc ứng dụng web thông thường, ngôn ngữ khác có thể đơn giản hơn; hãy chọn theo yêu cầu của sản phẩm và đội ngũ.\n\n## Compiler và thư viện chuẩn\n\n- **Compiler** dịch mã nguồn thành chương trình cho nền tảng mục tiêu. Ví dụ: GCC, Clang và MSVC.\n- **Thư viện chuẩn** cung cấp `std::string`, `std::vector`, thuật toán, luồng nhập xuất và nhiều công cụ khác.\n- **C++ standard** xác định cú pháp và hành vi chuẩn. Compiler và thư viện có thể triển khai các phần khác nhau của một chuẩn.\n\n```text\nsource.cpp -> compiler + standard library -> executable\n```\n\n## Những mốc thường gặp\n\n- **C++98/03**: nền tảng chuẩn hóa ban đầu.\n- **C++11**: `auto`, lambda, move semantics, smart pointers và nhiều thay đổi lớn.\n- **C++14**: hoàn thiện một số tính năng C++11.\n- **C++17**: structured bindings, `std::optional`, `std::variant`, filesystem và nhiều cải tiến STL.\n- **C++20**: concepts, ranges, coroutines, modules và format; mức hỗ trợ thư viện không đồng đều.\n- **C++23**: bản chuẩn công bố sau C++20, có nhiều bổ sung nhỏ; mức hỗ trợ phụ thuộc phiên bản compiler và thư viện.\n\n## Chuẩn dùng trong bộ tài liệu\n\nVí dụ cơ bản dùng **C++17** để tương thích rộng và có STL hiện đại. Bài dùng C++20 hoặc C++23 sẽ ghi rõ. Hãy đặt chuẩn tường minh thay vì dựa vào mặc định compiler:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nVới MSVC, chọn `/std:c++17`. Chuẩn ngôn ngữ không đảm bảo mọi thư viện đã triển khai đủ tính năng; kiểm tra bảng hỗ trợ của compiler trước khi dùng API mới.\n\n## Lỗi thường gặp\n\n- **Nhầm C++ với compiler**: C++ là ngôn ngữ và chuẩn; GCC, Clang, MSVC là các implementation.\n- **Dựa vào extension riêng**: chương trình có thể chỉ build trên một compiler. Chọn chuẩn tường minh và tránh API không chuẩn nếu chưa có lý do.\n- **Nghĩ rằng C++23 đồng nghĩa hỗ trợ đầy đủ**: compiler có thể chấp nhận cờ `-std=c++23` nhưng một số tính năng thư viện vẫn chưa sẵn sàng.\n\n## Tự luyện\n\nGiải thích vai trò của source code, compiler và thư viện chuẩn. Sau đó tìm compiler đang cài và ghi lại chuẩn cao nhất mà compiler lẫn thư viện hỗ trợ cho tính năng bạn cần.\n\n## Đọc tiếp\n\nXem [cách cài compiler trên từng hệ điều hành](/cpp/bat-dau/cai-dat-moi-truong), rồi đọc [cách viết chương trình đầu tiên](/cpp/bat-dau/chuong-trinh-dau-tien).",
+    "body": "# C++ là gì? \n\nC++ là một trong những ngôn ngữ lập trình có ảnh hưởng lớn trong lĩnh vực phát triển phần mềm, đặc biệt ở những hệ thống yêu cầu hiệu năng cao, khả năng kiểm soát tài nguyên và tương tác trực tiếp với phần cứng.\n\nNgôn ngữ này được sử dụng trong nhiều lĩnh vực như phát triển trò chơi, phần mềm desktop, robot, hệ thống nhúng, trình duyệt web, công cụ đồ họa và các thư viện tính toán hiệu năng cao.\n\nTuy nhiên, C++ không chỉ dành cho lập trình hệ thống. Đây còn là một ngôn ngữ phù hợp để học tư duy lập trình, cấu trúc dữ liệu, thuật toán và những nguyên lý quan trọng của kỹ thuật phần mềm.\n\nBài học này sẽ giúp bạn hiểu:\n\n- C++ là gì và nguồn gốc của ngôn ngữ.\n- C++ được sử dụng để xây dựng những phần mềm nào.\n- Điểm khác biệt giữa C++ với một số ngôn ngữ phổ biến.\n- Compiler, linker và thư viện chuẩn hoạt động như thế nào.\n- Các phiên bản C++ từ C++98 đến C++26.\n- Vì sao bộ tài liệu này sử dụng C++17 làm nền tảng.\n- Cách xác định và lựa chọn phiên bản C++ cho dự án.\n\nKhông yêu cầu kiến thức lập trình trước đó.\n\n---\n\n## 1. C++ là gì?\n\n**C++ là ngôn ngữ lập trình đa mục đích (general-purpose programming language)**, hỗ trợ nhiều phong cách lập trình và cho phép lập trình viên kiểm soát khá chi tiết cách phần mềm sử dụng tài nguyên hệ thống.\n\nC++ có thể được sử dụng để viết:\n\n- Chương trình chạy trên máy tính cá nhân.\n- Ứng dụng có giao diện đồ họa.\n- Game engine và công cụ phát triển trò chơi.\n- Phần mềm điều khiển thiết bị và robot.\n- Thư viện toán học, xử lý hình ảnh và âm thanh.\n- Thành phần hệ điều hành và phần mềm hệ thống.\n- Các chương trình giải thuật và tính toán khoa học.\n\nMột chương trình C++ đơn giản:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << \"Hello, C++!\\n\";\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nHello, C++!\n```\n\nĐoạn chương trình trên yêu cầu máy tính hiển thị dòng chữ `Hello, C++!`.\n\nMặc dù chỉ có vài dòng mã, nó đã thể hiện những thành phần quan trọng của một chương trình C++:\n\n| Thành phần | Ý nghĩa |\n|---|---|\n| `#include <iostream>` | Sử dụng thư viện nhập xuất |\n| `int main()` | Hàm bắt đầu thực thi chương trình |\n| `{}` | Xác định khối lệnh |\n| `std::cout` | Xuất dữ liệu |\n| `<<` | Đưa dữ liệu vào luồng xuất |\n| `'\\n'` | Ký tự xuống dòng |\n| `return 0` | Kết thúc thành công |\n\nBạn sẽ được học chi tiết từng thành phần trong những bài tiếp theo.\n\n### 1.1. C++ có phải ngôn ngữ lập trình cấp cao?\n\nCó. C++ được xem là ngôn ngữ lập trình cấp cao vì cung cấp các khái niệm như hàm, lớp, đối tượng, template và thư viện để lập trình viên mô tả thuật toán mà không phải viết trực tiếp từng lệnh máy.\n\nĐồng thời, C++ cho phép thao tác với địa chỉ bộ nhớ, quản lý vòng đời đối tượng và làm việc với các giao diện cấp thấp.\n\nVì vậy, C++ có thể hỗ trợ cả những công việc trừu tượng ở cấp ứng dụng lẫn các tác vụ gần với phần cứng.\n\n**Điểm quan trọng:** C++ cho phép kiểm soát tài nguyên, nhưng điều đó không đồng nghĩa mọi chương trình C++ đều phải quản lý bộ nhớ thủ công.\n\nC++ hiện đại khuyến khích sử dụng container, RAII và các công cụ quản lý tài nguyên nhằm giảm lỗi và đơn giản hóa mã nguồn.\n\n### 1.2. C++ hỗ trợ những phong cách lập trình nào?\n\nC++ là ngôn ngữ đa mô hình (*multi-paradigm*).\n\nMột số phong cách phổ biến:\n\n| Phong cách | Mục đích |\n|---|---|\n| Procedural programming | Tổ chức chương trình bằng hàm và các bước xử lý |\n| Object-oriented programming | Tổ chức chương trình bằng lớp và đối tượng |\n| Generic programming | Viết mã tổng quát với template |\n| Functional-style programming | Sử dụng hàm, lambda và biến đổi dữ liệu |\n| Compile-time programming | Thực hiện những phép tính và kiểm tra trong quá trình biên dịch |\n\nNgười mới nên bắt đầu bằng biến, hàm, điều kiện, vòng lặp và thuật toán.\n\nKhông cần học ngay toàn bộ các kỹ thuật hướng đối tượng hoặc template nâng cao.\n\n---\n\n## 2. Nguồn gốc của C++\n\nC++ được phát triển bởi **Bjarne Stroustrup** tại Bell Labs.\n\nQuá trình phát triển bắt đầu từ năm 1979 với dự án có tên *C with Classes*.\n\nMục tiêu ban đầu là kết hợp khả năng lập trình hệ thống của C với những cơ chế tổ chức chương trình ở mức trừu tượng cao hơn, đặc biệt là lớp và đối tượng.\n\nTên gọi C++ xuất hiện vào năm 1983, và ngôn ngữ được giới thiệu rộng rãi trong những năm tiếp theo.\n\n### 2.1. Tại sao lại có tên C++?\n\nTrong C và C++, toán tử `++` được sử dụng để tăng một giá trị lên một đơn vị.\n\nVí dụ:\n\n```cpp\nint number{10};\n\n++number;\n```\n\nSau câu lệnh trên, `number` bằng `11`.\n\nTên gọi C++ gợi ý một bước phát triển tiếp theo từ ngôn ngữ C.\n\nTuy nhiên, C++ không đơn thuần là C được bổ sung thêm vài tính năng. Qua nhiều thập kỷ, C++ đã phát triển thành một ngôn ngữ riêng với hệ thống kiểu, thư viện và những quy tắc lập trình đặc trưng.\n\n### 2.2. C và C++ có giống nhau không?\n\nC++ chịu ảnh hưởng mạnh từ C và duy trì khả năng tương thích với nhiều cấu trúc của C.\n\nVí dụ, cả hai ngôn ngữ đều có:\n\n```cpp\nint age = 16;\n```\n\nVà:\n\n```cpp\nif (age >= 18) {\n    // Xu ly dieu kien\n}\n```\n\nTuy nhiên, C và C++ là **hai ngôn ngữ riêng biệt**, có các bộ tiêu chuẩn và quy tắc khác nhau.\n\nMột số đoạn mã hợp lệ trong C có thể không hợp lệ trong C++, và ngược lại.\n\nC++ cung cấp thêm nhiều công cụ như:\n\n- Classes và object-oriented programming.\n- Function overloading.\n- Templates.\n- References.\n- Constructors và destructors.\n- `std::string`, `std::vector` và nhiều container.\n- Smart pointers và RAII.\n- Lambda expressions.\n- Compile-time programming.\n\nKhông nên mặc định mọi đoạn mã C đều có thể biên dịch nguyên vẹn dưới dạng C++.\n\n---\n\n## 3. C++ được sử dụng ở đâu?\n\nC++ thường được lựa chọn cho những hệ thống cần hiệu năng, khả năng kiểm soát tài nguyên hoặc tích hợp với phần mềm và phần cứng hiện có.\n\n### 3.1. Phát triển trò chơi\n\n<text weight=\"medium\">Game Engine và đồ họa thời gian thực</text>\n\n<AsyncImageGroup query={[\"Unreal Engine editor game development interface screenshot\",\"3D game engine C++ graphics rendering editor viewport\"]} aspectRatio=\"5:3\" layout=\"carousel\"/>\n\nC++ được sử dụng rộng rãi trong việc phát triển game engine, hệ thống vật lý, đồ họa và những thành phần cần hiệu năng cao.\n\nMột ví dụ nổi bật là <Entity category=\"software\" value=\"Unreal Engine\" disambig=\"Công cụ phát triển game của Epic Games\"/>.\n\nC++ thường được sử dụng để triển khai những hệ thống cốt lõi, trong khi các công cụ scripting hoặc visual scripting giúp phát triển gameplay nhanh hơn.\n\n### 3.2. Ứng dụng desktop\n\n<text weight=\"medium\">Phần mềm chạy trên Windows, Linux và macOS</text>\n\n<AsyncImageGroup query={[\"Qt Creator IDE C++ desktop application interface screenshot\",\"Blender 3D modeling desktop software screenshot interface\"]} aspectRatio=\"5:3\" layout=\"carousel\"/>\n\nC++ có thể được sử dụng để xây dựng:\n\n- Phần mềm chỉnh sửa hình ảnh.\n- Công cụ thiết kế và mô phỏng 3D.\n- Phần mềm kỹ thuật.\n- Trình chỉnh sửa mã nguồn.\n- Ứng dụng xử lý âm thanh và video.\n\nNhững công nghệ thường gặp gồm Qt, Win32 API và các thư viện giao diện đa nền tảng.\n\n### 3.3. Hệ thống nhúng và robot\n\n<AsyncImageGroup query={[\"robot arm engineering electronics controller development laboratory\",\"embedded systems microcontroller development board robotics engineering\"]} aspectRatio=\"5:3\" layout=\"carousel\"/>\n\nC++ được sử dụng trong nhiều hệ thống điều khiển thiết bị và robot.\n\nVí dụ:\n\n- Xử lý dữ liệu từ cảm biến.\n- Điều khiển động cơ.\n- Lập trình bộ điều khiển.\n- Xây dựng thuật toán định vị và điều hướng.\n- Xử lý tín hiệu và dữ liệu thời gian thực.\n\nTrong lĩnh vực này, C++ có thể được sử dụng cùng những framework như ROS 2 hoặc các thư viện dành cho vi điều khiển.\n\nTuy nhiên, việc một thiết bị hỗ trợ C++ đến mức nào còn phụ thuộc vào phần cứng, toolchain và môi trường runtime.\n\n### 3.4. Phần mềm hệ thống và hạ tầng\n\nC++ cũng xuất hiện trong nhiều thành phần của:\n\n- Trình duyệt web.\n- Cơ sở dữ liệu.\n- Công cụ biên dịch.\n- Thư viện mạng.\n- Hệ thống lưu trữ.\n- Phần mềm xử lý dữ liệu hiệu năng cao.\n\nMột số dự án sử dụng C++ cho toàn bộ hệ thống, trong khi những dự án khác kết hợp C++ với Rust, C, Python hoặc ngôn ngữ khác.\n\n**Không phải mọi dự án đều nên sử dụng C++.**\n\nĐối với web frontend, automation script nhỏ hoặc ứng dụng cần phát triển rất nhanh, các ngôn ngữ khác có thể mang lại hiệu quả tốt hơn.\n\nLựa chọn ngôn ngữ nên dựa trên yêu cầu kỹ thuật thay vì chỉ dựa vào danh tiếng về hiệu năng.\n\n---\n\n## 4. So sánh C++ với một số ngôn ngữ lập trình\n\n| Tiêu chí | C++ | Python | Java | Rust |\n|---|---|---|---|---|\n| Kiểu dữ liệu | Tĩnh | Động | Tĩnh | Tĩnh |\n| Thực thi phổ biến | Mã máy native | Interpreter/VM | JVM | Mã máy native |\n| Quản lý bộ nhớ | RAII, tự động và thủ công | Runtime/GC | Garbage collector | Ownership và borrowing |\n| Kiểm soát tài nguyên | Rất cao | Thường gián tiếp | Có giới hạn hơn | Rất cao |\n| Độ phức tạp khi bắt đầu | Khá cao | Thấp | Trung bình | Khá cao |\n| Ứng dụng nổi bật | Hệ thống, game, kỹ thuật | Automation, AI, scripting | Backend, enterprise | Hệ thống, hạ tầng |\n\nBảng trên mô tả những đặc điểm thường gặp, không phải giới hạn tuyệt đối của từng ngôn ngữ.\n\nVí dụ, Python có thể sử dụng các thư viện native rất nhanh, Java có thể tận dụng JIT compilation, còn C++ không phải lúc nào cũng cho hiệu năng tốt nhất nếu chương trình được thiết kế hoặc triển khai kém.\n\n### 4.1. Khi nào nên học C++?\n\nC++ phù hợp khi bạn muốn:\n\n1. Hiểu sâu hơn về kiểu dữ liệu và bộ nhớ.\n2. Học cấu trúc dữ liệu và thuật toán.\n3. Phát triển phần mềm hiệu năng cao.\n4. Lập trình robot, đồ họa hoặc hệ thống nhúng.\n5. Xây dựng ứng dụng desktop hoặc thư viện native.\n6. Nghiên cứu kiến trúc phần mềm và tối ưu hóa tài nguyên.\n\nNếu mục tiêu chỉ là tự động hóa một công việc đơn giản, Python có thể phù hợp hơn.\n\nNếu phát triển giao diện web, JavaScript hoặc TypeScript thường là lựa chọn tự nhiên hơn.\n\n**Một kỹ sư giỏi không cần sử dụng C++ cho mọi dự án, mà cần hiểu khi nào C++ mang lại lợi thế thực tế.**\n\n---\n\n## 5. C++ có phải ngôn ngữ biên dịch không?\n\nC++ thường được gọi là ngôn ngữ lập trình biên dịch (*compiled language*).\n\nTrong các toolchain phổ biến, mã nguồn C++ được biên dịch thành mã máy để chạy trên nền tảng mục tiêu.\n\nTuy nhiên, tiêu chuẩn C++ không bắt buộc mọi implementation phải tạo ra một tệp thực thi native theo cùng một quy trình.\n\nCác trình thông dịch, môi trường tương tác hoặc cơ chế JIT cũng có thể hỗ trợ thực thi mã C++ trong những ngữ cảnh nhất định.\n\nTrong bộ tài liệu này, chúng ta tập trung vào quy trình biên dịch thông thường bằng GCC, Clang hoặc MSVC.\n\n### 5.1. Mã nguồn (Source code)\n\nMã nguồn là phần chương trình do lập trình viên viết.\n\nTệp C++ thường có phần mở rộng:\n\n```text\nmain.cpp\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{5};\n    int b{3};\n\n    std::cout << a + b << '\\n';\n\n    return 0;\n}\n```\n\nMáy tính không trực tiếp thực thi nội dung tệp `.cpp` như một chương trình native thông thường.\n\nMã nguồn cần được xử lý bởi toolchain phù hợp.\n\n### 5.2. Compiler là gì?\n\nCompiler là công cụ phân tích mã nguồn và chuyển đổi chương trình sang dạng biểu diễn đích.\n\nTrong quá trình này, compiler thực hiện nhiều công việc như:\n\n- Phân tích cú pháp.\n- Kiểm tra kiểu dữ liệu.\n- Phát hiện những lỗi ngôn ngữ có thể chẩn đoán.\n- Tối ưu hóa khi được cấu hình.\n- Sinh mã cho nền tảng đích.\n\nVí dụ:\n\n```cpp\nint age = \"Hello\";\n```\n\nĐây là một phép khởi tạo không hợp lệ trong C++.\n\nCompiler sẽ chẩn đoán lỗi thay vì tạo ra chương trình hợp lệ từ câu lệnh này.\n\n### 5.3. Các compiler C++ phổ biến\n\n| Compiler | Dự án | Môi trường thường gặp |\n|---|---|---|\n| GCC / G++ | GNU Compiler Collection | Linux, Windows, nhiều nền tảng khác |\n| Clang / Clang++ | LLVM | Linux, macOS, Windows |\n| MSVC | Microsoft Visual C++ | Windows, Visual Studio |\n\nCần lưu ý rằng GCC là bộ sưu tập compiler cho nhiều ngôn ngữ, còn `g++` là driver thường dùng để biên dịch và liên kết chương trình C++.\n\nTương tự, `clang++` là driver C++ của Clang.\n\n### 5.4. Compiler không phải IDE\n\nIDE (Integrated Development Environment) là môi trường phát triển tích hợp.\n\nMột số IDE và code editor thường gặp:\n\n- Visual Studio.\n- Visual Studio Code.\n- CLion.\n- Qt Creator.\n\nIDE hoặc editor có thể hỗ trợ viết mã, gợi ý cú pháp, chạy debugger và điều khiển hệ thống build.\n\nNhưng chúng không đồng nghĩa với compiler.\n\nVí dụ, Visual Studio Code chỉ là trình chỉnh sửa mã nguồn nếu chưa được cấu hình với một toolchain phù hợp.\n\nĐể biên dịch C++, bạn vẫn cần một compiler như GCC, Clang hoặc MSVC.\n\n---\n\n## 6. Quá trình biên dịch C++ hoạt động như thế nào?\n\nMột quy trình build C++ thông thường có thể được mô tả như sau:\n\n```text\nC++ Source Code (.cpp)\n          |\n          v\n    Preprocessing\n          |\n          v\n      Compilation\n          |\n          v\n       Assembly\n          |\n          v\n    Object File\n          |\n          v\n       Linking\n          |\n          v\n  Executable / Library\n```\n\nĐây là mô hình khái quát. Một số toolchain kết hợp hoặc triển khai các bước nội bộ theo cách khác.\n\n### 6.1. Preprocessing\n\nPreprocessor xử lý những chỉ thị bắt đầu bằng `#`.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#define MAX_COUNT 100\n```\n\nCác chỉ thị thường gặp gồm:\n\n| Chỉ thị | Công dụng |\n|---|---|\n| `#include` | Đưa nội dung header vào quá trình tiền xử lý |\n| `#define` | Định nghĩa macro |\n| `#ifdef` | Kiểm tra macro đã được định nghĩa |\n| `#ifndef` | Kiểm tra macro chưa được định nghĩa |\n| `#if` | Tiền xử lý có điều kiện |\n| `#endif` | Kết thúc khối điều kiện |\n\n### 6.2. Compilation\n\nCompiler phân tích chương trình theo quy tắc của C++ và tạo mã đích thông qua các bước triển khai phù hợp.\n\nKết quả có thể được chuyển thành object file để sử dụng ở giai đoạn tiếp theo.\n\n### 6.3. Linking\n\nMột chương trình có thể gồm nhiều tệp mã nguồn:\n\n```text\nProject/\n├── main.cpp\n├── Math.cpp\n└── Math.h\n```\n\nCác source file có thể được biên dịch thành những object file riêng.\n\nLinker giải quyết các tham chiếu giữa chúng và liên kết các thư viện cần thiết.\n\nVí dụ:\n\n```text\nmain.cpp -> main.o\nMath.cpp -> Math.o\n\nmain.o + Math.o + Libraries\n              |\n              v\n          Executable\n```\n\nNếu chương trình gọi một hàm đã được khai báo nhưng không có định nghĩa phù hợp trong các thành phần liên kết, linker có thể báo lỗi.\n\n### 6.4. Có phải mọi chương trình C++ đều tạo ra file .exe?\n\nKhông.\n\nTrên Windows, chương trình thực thi thường sử dụng phần mở rộng `.exe`.\n\nTrên Linux, tệp thực thi thường sử dụng định dạng ELF.\n\nTrên macOS, định dạng Mach-O thường được sử dụng.\n\nNgoài chương trình thực thi, C++ còn được sử dụng để tạo:\n\n- Static libraries.\n- Shared libraries.\n- Dynamic-link libraries.\n- Object files.\n- Các thành phần khác dành cho nền tảng chuyên dụng.\n\nSản phẩm build phụ thuộc vào cấu hình dự án và nền tảng đích.\n\n---\n\n## 7. Thư viện chuẩn C++ là gì?\n\nNgoài cú pháp của ngôn ngữ, C++ còn có **C++ Standard Library**, cung cấp các thành phần phổ biến để phát triển phần mềm.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n#include <algorithm>\n```\n\nMỗi header cho phép sử dụng những công cụ tương ứng.\n\n| Thành phần | Công dụng |\n|---|---|\n| `std::cout` | Xuất dữ liệu |\n| `std::cin` | Nhập dữ liệu |\n| `std::string` | Xử lý chuỗi |\n| `std::vector` | Mảng động |\n| `std::array` | Mảng kích thước cố định |\n| `std::map` | Ánh xạ khóa và giá trị có thứ tự |\n| `std::sort` | Sắp xếp |\n| `std::find` | Tìm kiếm |\n| `std::unique_ptr` | Quản lý quyền sở hữu động |\n| `std::filesystem` | Thao tác với đường dẫn và hệ thống tệp |\n\n### 7.1. Ví dụ sử dụng thư viện chuẩn\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> numbers{5, 2, 8, 1, 4};\n\n    std::sort(numbers.begin(), numbers.end());\n\n    for (int number : numbers) {\n        std::cout << number << ' ';\n    }\n\n    std::cout << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1 2 4 5 8\n```\n\nTrong chương trình này:\n\n- `std::vector` quản lý tập hợp các số nguyên.\n- `std::sort` sắp xếp dữ liệu.\n- Vòng lặp range-based `for` duyệt từng phần tử.\n\nKhông cần tự xây dựng thuật toán sắp xếp chỉ để hoàn thành thao tác thông thường này.\n\n### 7.2. Standard Library có giống STL không?\n\nKhông hoàn toàn.\n\nSTL (Standard Template Library) thường được dùng để chỉ nhóm các thành phần như:\n\n- Containers.\n- Iterators.\n- Algorithms.\n- Function objects.\n\nThư viện chuẩn C++ có phạm vi rộng hơn STL, bao gồm cả nhập xuất, xử lý chuỗi, quản lý bộ nhớ, đa luồng, thời gian và nhiều công cụ khác.\n\nVì vậy, `std::vector` và `std::sort` thường được gọi là thành phần STL, còn `std::cout` thuộc thư viện chuẩn nhưng không phải thành phần STL theo nghĩa truyền thống.\n\n### 7.3. Các implementation của Standard Library\n\nMột số implementation phổ biến:\n\n| Thư viện | Thường được sử dụng với |\n|---|---|\n| libstdc++ | GCC |\n| libc++ | Clang |\n| MSVC STL | Microsoft Visual C++ |\n\nCompiler và standard library là những thành phần liên quan nhưng có thể phát triển độc lập.\n\nClang có thể được cấu hình sử dụng những thư viện chuẩn khác nhau tùy nền tảng và toolchain.\n\nDo đó, một compiler hỗ trợ cú pháp C++23 chưa chắc thư viện chuẩn tương ứng đã triển khai đầy đủ mọi API C++23.\n\n---\n\n## 8. C++ Standard là gì?\n\nC++ Standard là bộ đặc tả quy định các yêu cầu đối với một implementation C++.\n\nNội dung bao gồm:\n\n- Cú pháp ngôn ngữ.\n- Kiểu dữ liệu và biểu thức.\n- Quy tắc về đối tượng và thời gian sống.\n- Các cơ chế lập trình.\n- Hành vi được tiêu chuẩn quy định.\n- Giao diện và yêu cầu của thư viện chuẩn.\n\nCác phiên bản C++ được phát triển và tiêu chuẩn hóa thông qua tổ chức ISO/IEC, với sự tham gia của nhóm công tác WG21.\n\n### 8.1. Vì sao C++ có nhiều phiên bản?\n\nCông nghệ phần mềm liên tục thay đổi.\n\nQua thời gian, C++ cần cải tiến để:\n\n- Bổ sung khả năng mới.\n- Cải thiện tính an toàn và độ rõ ràng.\n- Giảm mã lặp.\n- Hỗ trợ các mô hình lập trình hiện đại.\n- Nâng cao khả năng tối ưu hóa.\n- Chuẩn hóa những công cụ hữu ích.\n\nTuy nhiên, mỗi phiên bản mới cũng phải cân nhắc khả năng tương thích với lượng mã C++ đang được sử dụng trong thực tế.\n\nVì vậy, ngôn ngữ được phát triển theo những chu kỳ cập nhật tiêu chuẩn.\n\n### 8.2. Phiên bản C++ không phải phiên bản compiler\n\nVí dụ:\n\n```text\nC++17\n```\n\nlà tên phiên bản của tiêu chuẩn ngôn ngữ.\n\nTrong khi đó:\n\n```text\nGCC 15\nClang 20\nMSVC 19.x\n```\n\nlà các phiên bản hoặc dòng phiên bản công cụ triển khai.\n\nMột compiler có thể hỗ trợ nhiều chuẩn C++ khác nhau.\n\nĐừng nhầm `GCC 17` với `C++17`. Chúng thuộc hai hệ thống đánh số hoàn toàn khác nhau.\n\n---\n\n## 9. Lịch sử các phiên bản C++\n\nC++ đã trải qua nhiều lần thay đổi quan trọng.\n\n| Phiên bản | Năm gắn với chuẩn | Điểm nổi bật |\n|---|---|---|\n| C++98 | 1998 | Chuẩn ISO đầu tiên |\n| C++03 | 2003 | Sửa lỗi và hoàn thiện C++98 |\n| C++11 | 2011 | Nền tảng Modern C++ |\n| C++14 | 2014 | Cải tiến C++11 |\n| C++17 | 2017 | Structured bindings, optional, filesystem |\n| C++20 | 2020 | Concepts, ranges, modules, coroutines |\n| C++23 | 2023 | expected, print, mdspan và cải tiến thư viện |\n| C++26 | 2026 | Thế hệ tiếp theo, hoàn tất kỹ thuật tại WG21 |\n\n**Lưu ý:** Tên phiên bản như C++23 phản ánh chu kỳ hoàn thiện tiêu chuẩn, không nhất thiết trùng năm công bố tài liệu ISO. Chẳng hạn, C++23 được công bố chính thức dưới mã ISO/IEC 14882:2024.\n\n### 9.1. C++98 và C++03\n\nC++98 là phiên bản được chuẩn hóa quốc tế đầu tiên.\n\nNó thiết lập nền tảng cho nhiều thành phần quan trọng:\n\n- Classes.\n- Templates.\n- Exceptions.\n- Namespaces.\n- Standard Library.\n- Containers và algorithms.\n\nC++03 chủ yếu sửa đổi và làm rõ những vấn đề của C++98.\n\nCác phiên bản này có vai trò lịch sử lớn nhưng không phải lựa chọn mặc định lý tưởng cho người bắt đầu dự án mới ngày nay.\n\n### 9.2. C++11: Bước ngoặt của Modern C++\n\nC++11 là một trong những bản nâng cấp quan trọng nhất của C++.\n\nMột số tính năng nổi bật:\n\n- `auto`.\n- Lambda expressions.\n- Range-based `for`.\n- Move semantics.\n- Rvalue references.\n- `nullptr`.\n- `constexpr`.\n- `enum class`.\n- Smart pointers trong thư viện chuẩn.\n- Thư viện hỗ trợ concurrency.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> numbers{1, 2, 3};\n\n    for (auto number : numbers) {\n        std::cout << number << '\\n';\n    }\n}\n```\n\nĐây là cú pháp C++11 và tiếp tục hoạt động trong các chuẩn mới hơn.\n\n### 9.3. C++14: Hoàn thiện C++11\n\nC++14 tập trung cải tiến những tính năng đã được giới thiệu trong C++11.\n\nMột số bổ sung:\n\n- Generic lambdas.\n- Cải tiến `constexpr`.\n- Return type deduction cho hàm thông thường.\n- `std::make_unique`.\n- Binary literals.\n- Digit separators.\n\nVí dụ:\n\n```cpp\nauto add = [](auto a, auto b) {\n    return a + b;\n};\n```\n\nCú pháp generic lambda trong ví dụ được hỗ trợ từ C++14.\n\n### 9.4. C++17: Cân bằng giữa hiện đại và ổn định\n\nC++17 mang đến nhiều cải tiến giúp mã nguồn rõ ràng và thuận tiện hơn.\n\nMột số tính năng nổi bật:\n\n- Structured bindings.\n- `if constexpr`.\n- Inline variables.\n- `std::optional`.\n- `std::variant`.\n- `std::string_view`.\n- `std::filesystem`.\n- `std::any`.\n- Class template argument deduction.\n\nVí dụ structured bindings:\n\n```cpp\n#include <iostream>\n#include <utility>\n\nint main() {\n    std::pair<int, int> point{10, 20};\n\n    auto [x, y] = point;\n\n    std::cout << x << ' ' << y << '\\n';\n}\n```\n\nKết quả:\n\n```text\n10 20\n```\n\nThay vì phải truy cập `point.first` và `point.second`, structured bindings cho phép đặt tên trực tiếp cho các thành phần.\n\nĐây là một trong những lý do C++17 phù hợp làm nền tảng cho bộ tài liệu.\n\n### 9.5. C++20: Một bản nâng cấp lớn\n\nC++20 bổ sung nhiều cơ chế quan trọng:\n\n- Concepts.\n- Ranges.\n- Coroutines.\n- Modules.\n- Three-way comparison `<=>`.\n- `std::span`.\n- `std::format`.\n- `consteval` và `constinit`.\n\nVí dụ sử dụng concepts:\n\n```cpp\n#include <concepts>\n\ntemplate <std::integral T>\nT add(T a, T b) {\n    return a + b;\n}\n```\n\nConcepts giúp diễn đạt các ràng buộc kiểu cho template rõ ràng hơn.\n\nC++20 là bước phát triển lớn, không chỉ bổ sung một vài cú pháp nhỏ.\n\n### 9.6. C++23: Cải thiện trải nghiệm phát triển\n\nC++23 tiếp tục hoàn thiện ngôn ngữ và thư viện chuẩn.\n\nMột số tính năng đáng chú ý:\n\n- `std::expected`.\n- `std::print` và `std::println`.\n- `std::mdspan`.\n- Cải tiến Ranges.\n- `if consteval`.\n- Deducing this (explicit object parameter).\n- Nhiều cải tiến `constexpr`.\n\nVí dụ:\n\n```cpp\n#include <print>\n\nint main() {\n    std::println(\"Hello, {}!\", \"C++23\");\n}\n```\n\nĐây là ví dụ C++23.\n\nNó yêu cầu compiler và standard library có hỗ trợ `<print>`.\n\nNếu compiler chấp nhận chế độ C++23 nhưng header `<print>` chưa có trong thư viện tương ứng, chương trình vẫn không thể biên dịch thành công.\n\n### 9.7. C++26: Thế hệ tiếp theo\n\nC++26 tiếp tục mở rộng C++ với nhiều tính năng về ngôn ngữ và thư viện.\n\nNhững hướng cải tiến nổi bật gồm:\n\n- Static reflection.\n- Contracts.\n- Cải tiến compile-time programming.\n- `std::inplace_vector`.\n- Một số công cụ mới phục vụ concurrency và dữ liệu.\n- Những cải tiến về an toàn và tính biểu đạt của ngôn ngữ.\n\nWG21 đã hoàn tất công việc kỹ thuật trên C++26 vào tháng 3/2026. Quy trình phê duyệt, biên tập và công bố tài liệu ISO là những bước cần phân biệt với việc chốt nội dung kỹ thuật.\n\nNgoài ra, mức hỗ trợ C++26 của compiler và thư viện chuẩn vẫn phụ thuộc vào từng phiên bản công cụ.\n\n**Không nên mặc định rằng bật chế độ C++26 đồng nghĩa tất cả tính năng C++26 đều đã được triển khai đầy đủ.**\n\n---\n\n## 10. Vì sao bộ tài liệu sử dụng C++17 làm chuẩn?\n\nBộ tài liệu trang web này sử dụng **C++17 làm baseline** cho các bài nhập môn.\n\nĐiều này không có nghĩa C++17 là phiên bản tốt nhất trong mọi trường hợp hoặc các phiên bản mới hơn không đáng sử dụng.\n\nQuyết định này dựa trên ba yếu tố chính.\n\n### 10.1. Khả năng tương thích rộng\n\nC++17 đã được GCC, Clang và MSVC hỗ trợ trong thời gian dài.\n\nNhững tính năng phổ biến của C++17 thường có thể sử dụng trên các toolchain hiện đại mà không cần cấu hình thử nghiệm.\n\nĐiều này giúp người mới tránh được nhiều vấn đề do khác biệt giữa phiên bản compiler và standard library.\n\n### 10.2. Có đủ công cụ của Modern C++\n\nC++17 đã bao gồm phần lớn nền tảng quan trọng được giới thiệu từ C++11 và C++14.\n\nNgười học có thể sử dụng:\n\n```cpp\nauto\nnullptr\nconstexpr\nstd::vector\nstd::unique_ptr\n```\n\nCùng các tính năng mới hơn như:\n\n```cpp\nstd::optional\nstd::variant\nstd::string_view\n```\n\nNhờ đó, tài liệu có thể hướng dẫn theo phong cách C++ hiện đại mà không cần sử dụng ngay những cơ chế nâng cao của C++20.\n\n### 10.3. Tách kiến thức nền tảng và tính năng mới\n\nVí dụ một vòng lặp:\n\n```cpp\nfor (int i = 0; i < 10; ++i) {\n    // Process\n}\n```\n\nhoạt động trên C++11, C++14, C++17, C++20 và C++23.\n\nKhông có lý do phải viết lại bài học vòng lặp cho mỗi phiên bản.\n\nThay vào đó, các bài C++20 hoặc C++23 tập trung giải thích phần khác biệt so với nền tảng đã học.\n\n**Quy ước của bộ tài liệu:**\n\n- Bài cơ bản sử dụng C++17.\n- Tính năng xuất hiện ở C++20 trở lên phải được ghi rõ phiên bản.\n- Những cơ chế nâng cao được giải thích trong bài chuyên đề.\n- Ví dụ không phụ thuộc compiler extension nếu không có ghi chú.\n- Một chương trình yêu cầu chuẩn mới phải khai báo rõ yêu cầu đó.\n\n---\n\n## 11. Làm sao chọn phiên bản C++ cho dự án?\n\nKhông có quy tắc bắt buộc mọi dự án mới phải dùng cùng một phiên bản C++.\n\nViệc lựa chọn phụ thuộc vào nhu cầu thực tế.\n\n### 11.1. Những tiêu chí cần xem xét\n\n| Tiêu chí | Câu hỏi cần trả lời |\n|---|---|\n| Toolchain | Compiler hiện tại hỗ trợ những tính năng nào? |\n| Standard Library | Các API cần dùng đã được triển khai chưa? |\n| Platform | Dự án phải chạy trên những hệ điều hành nào? |\n| Dependency | Thư viện bên thứ ba yêu cầu chuẩn gì? |\n| Team | Các thành viên có thể build bằng cùng bộ công cụ không? |\n| Maintenance | Dự án cần được bảo trì trong bao lâu? |\n| Deployment | Môi trường build và sản phẩm có ràng buộc gì? |\n\n### 11.2. Lựa chọn theo tình huống\n\n**Học C++ cơ bản**\n\nC++17 là một lựa chọn phù hợp vì có cú pháp hiện đại và khả năng tương thích rộng.\n\n**Luyện thuật toán và lập trình thi đấu**\n\nSử dụng phiên bản mà hệ thống chấm bài hỗ trợ.\n\nKhông nên giả định tất cả online judge đều hỗ trợ cùng một chuẩn.\n\n**Phát triển ứng dụng desktop**\n\nC++17, C++20 hoặc C++23 đều có thể phù hợp, tùy compiler, framework và các tính năng cần sử dụng.\n\n**Phát triển hệ thống hoặc thư viện**\n\nCần đánh giá kỹ tính tương thích ABI, dependency, compiler, thư viện chuẩn và nền tảng triển khai.\n\n**Dự án sử dụng các tính năng C++ mới**\n\nCó thể chọn chuẩn mới hơn, nhưng nên xác minh từng tính năng thay vì chỉ dựa trên số phiên bản.\n\n### 11.3. Phiên bản mới không tự làm chương trình nhanh hơn\n\nMột chương trình C++23 không mặc định chạy nhanh hơn chương trình C++17.\n\nHiệu năng còn phụ thuộc vào:\n\n- Thuật toán.\n- Cấu trúc dữ liệu.\n- Chất lượng triển khai.\n- Mức tối ưu hóa.\n- Compiler và target architecture.\n- Truy cập bộ nhớ.\n- Thiết kế hệ thống.\n\nCác phiên bản mới có thể cung cấp những công cụ giúp viết chương trình hiệu quả hơn, nhưng không thay thế việc phân tích thuật toán và đo hiệu năng.\n\n---\n\n## 12. Cách chọn chuẩn C++ khi biên dịch\n\nHầu hết compiler C++ hiện đại cho phép chỉ định chuẩn ngôn ngữ thông qua tùy chọn dòng lệnh.\n\n### 12.1. GCC\n\nBiên dịch bằng C++17:\n\n```sh\ng++ -std=c++17 main.cpp -o app\n```\n\nBổ sung cảnh báo:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nVới compiler hỗ trợ, có thể lựa chọn:\n\n```sh\ng++ -std=c++20 main.cpp -o app\n```\n\nHoặc:\n\n```sh\ng++ -std=c++23 main.cpp -o app\n```\n\nCờ `-std=` lựa chọn chế độ ngôn ngữ, không phải cam kết rằng mọi tính năng thuộc phiên bản đó đều đã được triển khai.\n\n### 12.2. Clang\n\n```sh\nclang++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\n### 12.3. MSVC\n\nVới Developer Command Prompt của Visual Studio:\n\n```bat\ncl /std:c++17 /EHsc /W4 main.cpp /Fe:app.exe\n```\n\nCác tham số:\n\n| Tham số | Công dụng |\n|---|---|\n| `/std:c++17` | Chọn chế độ C++17 |\n| `/EHsc` | Cấu hình xử lý ngoại lệ C++ |\n| `/W4` | Bật nhiều cảnh báo |\n| `/Fe:app.exe` | Đặt tên tệp đầu ra |\n\n**Khuyến nghị:** Luôn cấu hình chuẩn C++ một cách tường minh.\n\nKhông nên dựa vào mặc định của compiler, bởi phiên bản mặc định có thể thay đổi sau khi cập nhật toolchain.\n\n---\n\n## 13. Cách kiểm tra phiên bản compiler và chuẩn ngôn ngữ\n\n### 13.1. Kiểm tra GCC\n\nMở terminal:\n\n```sh\ng++ --version\n```\n\nLệnh hiển thị thông tin về phiên bản GCC/G++ đã cài.\n\n### 13.2. Kiểm tra Clang\n\n```sh\nclang++ --version\n```\n\n### 13.3. Kiểm tra MSVC\n\nTrong Developer Command Prompt:\n\n```bat\ncl\n```\n\nLệnh hiển thị thông tin compiler và hướng dẫn sử dụng.\n\n### 13.4. Macro __cplusplus\n\nC++ cung cấp macro `__cplusplus` để nhận biết phiên bản chuẩn ngôn ngữ mà compiler đang sử dụng.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << __cplusplus << '\\n';\n}\n```\n\nKhi biên dịch ở chế độ C++17, giá trị chuẩn là:\n\n```text\n201703\n```\n\nMột số giá trị quan trọng:\n\n| Chuẩn | Giá trị macro |\n|---|---|\n| C++11 | `201103L` |\n| C++14 | `201402L` |\n| C++17 | `201703L` |\n| C++20 | `202002L` |\n| C++23 | `202302L` |\n\nVới MSVC, có thể cần bật `/Zc:__cplusplus` để macro phản ánh chính xác chế độ chuẩn đã chọn.\n\n### 13.5. Kiểm tra yêu cầu phiên bản khi biên dịch\n\nVí dụ:\n\n```cpp\n#if __cplusplus < 201703L\n#error This program requires C++17 or newer\n#endif\n\n#include <iostream>\n\nint main() {\n    std::cout << \"C++17 supported\\n\";\n}\n```\n\nNếu compiler được cấu hình với phiên bản C++ cũ hơn C++17, preprocessor sẽ phát sinh lỗi.\n\nLưu ý rằng `__cplusplus` chỉ giúp kiểm tra chế độ ngôn ngữ, không chứng minh toàn bộ standard library tương ứng được hỗ trợ.\n\nKhi cần kiểm tra một tính năng cụ thể, có thể sử dụng feature-test macro hoặc thực hiện kiểm tra khả năng biên dịch trong hệ thống build.\n\n---\n\n## 14. Những hiểu lầm phổ biến về C++\n\n### 14.1. C++ là C có thêm class\n\nKhông chính xác.\n\nC++ được phát triển từ C, nhưng đã hình thành hệ thống ngôn ngữ và thư viện riêng.\n\nModern C++ có nhiều phương pháp lập trình khác biệt đáng kể so với C truyền thống.\n\n### 14.2. Muốn học C++ phải học C trước\n\nKhông bắt buộc.\n\nCó thể học trực tiếp C++ hiện đại từ các khái niệm nền tảng như biến, hàm, kiểu dữ liệu và container.\n\nTuy nhiên, kiến thức về C vẫn hữu ích khi làm việc với API cấp thấp, hệ thống nhúng và phần mềm kế thừa.\n\n### 14.3. C++ luôn nhanh hơn Python hoặc Java\n\nKhông thể kết luận như vậy trong mọi trường hợp.\n\nC++ có khả năng tạo phần mềm native hiệu năng cao, nhưng kết quả thực tế phụ thuộc vào thuật toán, thư viện, workload và cách triển khai.\n\nMột chương trình C++ sử dụng thuật toán kém có thể chậm hơn chương trình Python sử dụng thư viện native được tối ưu tốt.\n\n### 14.4. C++ bắt buộc phải dùng new và delete\n\nKhông đúng.\n\nC++ hiện đại hỗ trợ quản lý tài nguyên thông qua RAII, standard containers và smart pointers.\n\nVí dụ:\n\n```cpp\n#include <vector>\n\nint main() {\n    std::vector<int> values{1, 2, 3};\n}\n```\n\nKhông cần tự cấp phát và giải phóng bộ nhớ cho dữ liệu của vector bằng `new` hoặc `delete`.\n\n### 14.5. Sử dụng C++23 thì mọi tính năng đều hoạt động\n\nKhông chắc chắn.\n\nCần phân biệt:\n\n- Tiêu chuẩn có đặc tả tính năng.\n- Compiler triển khai tính năng ngôn ngữ.\n- Standard Library triển khai API tương ứng.\n- Nền tảng và toolchain hỗ trợ cách build hoặc liên kết cần thiết.\n\nMột tính năng có thể được hỗ trợ ở compiler này nhưng chưa hoàn chỉnh ở compiler khác.\n\n### 14.6. C++17 đã cũ nên không đáng học\n\nKhông đúng.\n\nC++17 vẫn chứa những nền tảng quan trọng của Modern C++ và có thể được sử dụng trong nhiều loại phần mềm.\n\nViệc sử dụng C++17 làm baseline không ngăn bạn học và sử dụng C++20, C++23 hoặc những tiêu chuẩn mới hơn.\n\nĐiều cần tránh là nhầm **phiên bản được chọn cho dự án** với **giới hạn kiến thức của lập trình viên**.\n\n---\n\n## 15. Bài tập tự luyện\n\n### Bài 1. Giải thích C++ là gì\n\nTrình bày ngắn gọn:\n\n1. C++ thuộc nhóm ngôn ngữ lập trình nào?\n2. C++ được phát triển từ ngôn ngữ nào?\n3. C++ có thể được sử dụng trong những lĩnh vực nào?\n4. Vì sao không nên sử dụng C++ cho mọi dự án?\n\n### Bài 2. Phân biệt công cụ phát triển\n\nCho các tên:\n\n```text\nC++17\nGCC\nClang\nVisual Studio\nVisual Studio Code\nMSVC\nstd::vector\n```\n\nHãy phân loại chúng thành:\n\n- Chuẩn ngôn ngữ.\n- Compiler/toolchain.\n- IDE hoặc code editor.\n- Thành phần thư viện chuẩn.\n\n### Bài 3. Tìm hiểu compiler đang sử dụng\n\nKiểm tra môi trường lập trình của bạn và ghi lại:\n\n- Tên compiler.\n- Phiên bản compiler.\n- Hệ điều hành.\n- Chuẩn C++ được cấu hình.\n- Tên standard library nếu xác định được.\n\n**Gợi ý:** Sử dụng `g++ --version`, `clang++ --version` hoặc `cl` tùy môi trường.\n\n### Bài 4. Kiểm tra macro __cplusplus\n\nViết chương trình:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << __cplusplus << '\\n';\n}\n```\n\nBiên dịch với những chuẩn mà compiler hỗ trợ.\n\nSo sánh giá trị nhận được và giải thích ý nghĩa của macro.\n\n### Bài 5. Chọn phiên bản C++ phù hợp\n\nXét ba dự án:\n\n**Dự án A:** Chương trình giải thuật chạy trên online judge chỉ hỗ trợ C++17.\n\n**Dự án B:** Ứng dụng desktop cần sử dụng Concepts và Ranges của C++20.\n\n**Dự án C:** Thư viện được phân phối cho những hệ thống sử dụng nhiều phiên bản compiler khác nhau.\n\nHãy chọn baseline phù hợp cho từng dự án và giải thích lý do.\n\nKhông chỉ xem phiên bản mới nhất. Cần đánh giá cả tính tương thích, dependency và yêu cầu triển khai.\n\n---\n\n## 16. Tổng kết kiến thức\n\n| Khái niệm | Ý nghĩa |\n|---|---|\n| C++ | Ngôn ngữ lập trình đa mục đích |\n| Source code | Mã nguồn do lập trình viên viết |\n| Compiler | Công cụ biên dịch mã nguồn |\n| Linker | Công cụ liên kết object file và thư viện |\n| Standard Library | Bộ thư viện chuẩn của C++ |\n| STL | Nhóm thành phần container, iterator và algorithm |\n| ISO C++ Standard | Đặc tả tiêu chuẩn ngôn ngữ và thư viện |\n| GCC | Bộ công cụ biên dịch GNU |\n| Clang | Compiler frontend thuộc dự án LLVM |\n| MSVC | Compiler C++ của Microsoft |\n| IDE | Môi trường phát triển tích hợp |\n| C++11 | Nền tảng quan trọng của Modern C++ |\n| C++17 | Baseline của bộ tài liệu |\n| C++20 | Bổ sung Concepts, Ranges, Modules và Coroutines |\n| C++23 | Tiếp tục cải tiến ngôn ngữ và thư viện |\n| C++26 | Thế hệ tiêu chuẩn tiếp theo sau C++23 |\n\nSau bài học này, bạn cần hiểu được:\n\n1. C++ là ngôn ngữ lập trình, không phải một compiler hoặc IDE.\n2. C++ có thể được sử dụng cho cả phần mềm ứng dụng và phần mềm hệ thống.\n3. Compiler và Standard Library là những thành phần khác nhau của toolchain.\n4. Phiên bản C++ xác định những quy tắc và tính năng được đặc tả.\n5. Phiên bản compiler không đồng nghĩa với phiên bản ngôn ngữ.\n6. Một chương trình có thể yêu cầu chuẩn mới hơn dù phần lớn mã nguồn vẫn sử dụng cú pháp cũ.\n7. C++17 được chọn làm baseline học tập, không phải giới hạn cho mọi dự án.\n8. Việc lựa chọn công nghệ phải dựa trên yêu cầu kỹ thuật và khả năng tương thích thực tế.\n\n**Ghi nhớ:** Học C++ không chỉ là ghi nhớ cú pháp. Mục tiêu lâu dài là hiểu cách chương trình xử lý dữ liệu, sử dụng tài nguyên và biến những yêu cầu của bài toán thành phần mềm hoạt động chính xác.\n\n---\n\n## Tài liệu tham khảo\n\nĐối với những thông tin cần kiểm tra theo phiên bản, nên sử dụng các nguồn kỹ thuật được cập nhật thường xuyên:\n\n- [Standard C++ Foundation](https://isocpp.org/): Thông tin về ngôn ngữ và tiêu chuẩn C++.\n- [WG21](https://www.open-std.org/jtc1/sc22/wg21/): Nhóm tiêu chuẩn hóa C++.\n- [cppreference](https://en.cppreference.com/): Tra cứu ngôn ngữ và thư viện chuẩn.\n- [GCC C++ Standards Support](https://gcc.gnu.org/projects/cxx-status.html): Mức hỗ trợ các phiên bản C++ trong GCC.\n- [Clang C++ Status](https://clang.llvm.org/cxx_status.html): Mức hỗ trợ tính năng trong Clang.\n\nCác bảng tương thích nên được kiểm tra lại khi cập nhật compiler hoặc nâng chuẩn cho dự án.\n\n## Đọc tiếp\n\n- [Cài đặt môi trường C++](/cpp/bat-dau/cai-dat-moi-truong): Thiết lập compiler, editor và công cụ build trên Windows, Linux hoặc macOS.\n- [Lộ trình học C++](/cpp/bat-dau/lo-trinh-hoc): Xây dựng kế hoạch học từ cú pháp cơ bản đến thuật toán và phát triển phần mềm.\n- [C++17, C++20 và C++23](/cpp/stl/cpp17-20-23): Tìm hiểu những tính năng mới, khác biệt và vấn đề tương thích giữa các phiên bản.",
     "sourcePath": "content/cpp/getting-started/cpp-la-gi.md",
     "headings": [
       {
-        "title": "C++ được dùng khi nào?",
-        "id": "c-uoc-dung-khi-nao"
+        "title": "C++ là gì?",
+        "id": "c-la-gi"
       },
       {
-        "title": "Compiler và thư viện chuẩn",
-        "id": "compiler-va-thu-vien-chuan"
+        "title": "1. C++ là gì?",
+        "id": "1-c-la-gi"
       },
       {
-        "title": "Những mốc thường gặp",
-        "id": "nhung-moc-thuong-gap"
+        "title": "1.1. C++ có phải ngôn ngữ lập trình cấp cao?",
+        "id": "11-c-co-phai-ngon-ngu-lap-trinh-cap-cao"
       },
       {
-        "title": "Chuẩn dùng trong bộ tài liệu",
-        "id": "chuan-dung-trong-bo-tai-lieu"
+        "title": "1.2. C++ hỗ trợ những phong cách lập trình nào?",
+        "id": "12-c-ho-tro-nhung-phong-cach-lap-trinh-nao"
       },
       {
-        "title": "Lỗi thường gặp",
-        "id": "loi-thuong-gap"
+        "title": "2. Nguồn gốc của C++",
+        "id": "2-nguon-goc-cua-c"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "2.1. Tại sao lại có tên C++?",
+        "id": "21-tai-sao-lai-co-ten-c"
+      },
+      {
+        "title": "2.2. C và C++ có giống nhau không?",
+        "id": "22-c-va-c-co-giong-nhau-khong"
+      },
+      {
+        "title": "3. C++ được sử dụng ở đâu?",
+        "id": "3-c-uoc-su-dung-o-au"
+      },
+      {
+        "title": "3.1. Phát triển trò chơi",
+        "id": "31-phat-trien-tro-choi"
+      },
+      {
+        "title": "3.2. Ứng dụng desktop",
+        "id": "32-ung-dung-desktop"
+      },
+      {
+        "title": "3.3. Hệ thống nhúng và robot",
+        "id": "33-he-thong-nhung-va-robot"
+      },
+      {
+        "title": "3.4. Phần mềm hệ thống và hạ tầng",
+        "id": "34-phan-mem-he-thong-va-ha-tang"
+      },
+      {
+        "title": "4. So sánh C++ với một số ngôn ngữ lập trình",
+        "id": "4-so-sanh-c-voi-mot-so-ngon-ngu-lap-trinh"
+      },
+      {
+        "title": "4.1. Khi nào nên học C++?",
+        "id": "41-khi-nao-nen-hoc-c"
+      },
+      {
+        "title": "5. C++ có phải ngôn ngữ biên dịch không?",
+        "id": "5-c-co-phai-ngon-ngu-bien-dich-khong"
+      },
+      {
+        "title": "5.1. Mã nguồn (Source code)",
+        "id": "51-ma-nguon-source-code"
+      },
+      {
+        "title": "5.2. Compiler là gì?",
+        "id": "52-compiler-la-gi"
+      },
+      {
+        "title": "5.3. Các compiler C++ phổ biến",
+        "id": "53-cac-compiler-c-pho-bien"
+      },
+      {
+        "title": "5.4. Compiler không phải IDE",
+        "id": "54-compiler-khong-phai-ide"
+      },
+      {
+        "title": "6. Quá trình biên dịch C++ hoạt động như thế nào?",
+        "id": "6-qua-trinh-bien-dich-c-hoat-ong-nhu-the-nao"
+      },
+      {
+        "title": "6.1. Preprocessing",
+        "id": "61-preprocessing"
+      },
+      {
+        "title": "6.2. Compilation",
+        "id": "62-compilation"
+      },
+      {
+        "title": "6.3. Linking",
+        "id": "63-linking"
+      },
+      {
+        "title": "6.4. Có phải mọi chương trình C++ đều tạo ra file .exe?",
+        "id": "64-co-phai-moi-chuong-trinh-c-eu-tao-ra-file-exe"
+      },
+      {
+        "title": "7. Thư viện chuẩn C++ là gì?",
+        "id": "7-thu-vien-chuan-c-la-gi"
+      },
+      {
+        "title": "7.1. Ví dụ sử dụng thư viện chuẩn",
+        "id": "71-vi-du-su-dung-thu-vien-chuan"
+      },
+      {
+        "title": "7.2. Standard Library có giống STL không?",
+        "id": "72-standard-library-co-giong-stl-khong"
+      },
+      {
+        "title": "7.3. Các implementation của Standard Library",
+        "id": "73-cac-implementation-cua-standard-library"
+      },
+      {
+        "title": "8. C++ Standard là gì?",
+        "id": "8-c-standard-la-gi"
+      },
+      {
+        "title": "8.1. Vì sao C++ có nhiều phiên bản?",
+        "id": "81-vi-sao-c-co-nhieu-phien-ban"
+      },
+      {
+        "title": "8.2. Phiên bản C++ không phải phiên bản compiler",
+        "id": "82-phien-ban-c-khong-phai-phien-ban-compiler"
+      },
+      {
+        "title": "9. Lịch sử các phiên bản C++",
+        "id": "9-lich-su-cac-phien-ban-c"
+      },
+      {
+        "title": "9.1. C++98 và C++03",
+        "id": "91-c98-va-c03"
+      },
+      {
+        "title": "9.2. C++11: Bước ngoặt của Modern C++",
+        "id": "92-c11-buoc-ngoat-cua-modern-c"
+      },
+      {
+        "title": "9.3. C++14: Hoàn thiện C++11",
+        "id": "93-c14-hoan-thien-c11"
+      },
+      {
+        "title": "9.4. C++17: Cân bằng giữa hiện đại và ổn định",
+        "id": "94-c17-can-bang-giua-hien-ai-va-on-inh"
+      },
+      {
+        "title": "9.5. C++20: Một bản nâng cấp lớn",
+        "id": "95-c20-mot-ban-nang-cap-lon"
+      },
+      {
+        "title": "9.6. C++23: Cải thiện trải nghiệm phát triển",
+        "id": "96-c23-cai-thien-trai-nghiem-phat-trien"
+      },
+      {
+        "title": "9.7. C++26: Thế hệ tiếp theo",
+        "id": "97-c26-the-he-tiep-theo"
+      },
+      {
+        "title": "10. Vì sao bộ tài liệu sử dụng C++17 làm chuẩn?",
+        "id": "10-vi-sao-bo-tai-lieu-su-dung-c17-lam-chuan"
+      },
+      {
+        "title": "10.1. Khả năng tương thích rộng",
+        "id": "101-kha-nang-tuong-thich-rong"
+      },
+      {
+        "title": "10.2. Có đủ công cụ của Modern C++",
+        "id": "102-co-u-cong-cu-cua-modern-c"
+      },
+      {
+        "title": "10.3. Tách kiến thức nền tảng và tính năng mới",
+        "id": "103-tach-kien-thuc-nen-tang-va-tinh-nang-moi"
+      },
+      {
+        "title": "11. Làm sao chọn phiên bản C++ cho dự án?",
+        "id": "11-lam-sao-chon-phien-ban-c-cho-du-an"
+      },
+      {
+        "title": "11.1. Những tiêu chí cần xem xét",
+        "id": "111-nhung-tieu-chi-can-xem-xet"
+      },
+      {
+        "title": "11.2. Lựa chọn theo tình huống",
+        "id": "112-lua-chon-theo-tinh-huong"
+      },
+      {
+        "title": "11.3. Phiên bản mới không tự làm chương trình nhanh hơn",
+        "id": "113-phien-ban-moi-khong-tu-lam-chuong-trinh-nhanh-hon"
+      },
+      {
+        "title": "12. Cách chọn chuẩn C++ khi biên dịch",
+        "id": "12-cach-chon-chuan-c-khi-bien-dich"
+      },
+      {
+        "title": "12.1. GCC",
+        "id": "121-gcc"
+      },
+      {
+        "title": "12.2. Clang",
+        "id": "122-clang"
+      },
+      {
+        "title": "12.3. MSVC",
+        "id": "123-msvc"
+      },
+      {
+        "title": "13. Cách kiểm tra phiên bản compiler và chuẩn ngôn ngữ",
+        "id": "13-cach-kiem-tra-phien-ban-compiler-va-chuan-ngon-ngu"
+      },
+      {
+        "title": "13.1. Kiểm tra GCC",
+        "id": "131-kiem-tra-gcc"
+      },
+      {
+        "title": "13.2. Kiểm tra Clang",
+        "id": "132-kiem-tra-clang"
+      },
+      {
+        "title": "13.3. Kiểm tra MSVC",
+        "id": "133-kiem-tra-msvc"
+      },
+      {
+        "title": "13.4. Macro __cplusplus",
+        "id": "134-macro-cplusplus"
+      },
+      {
+        "title": "13.5. Kiểm tra yêu cầu phiên bản khi biên dịch",
+        "id": "135-kiem-tra-yeu-cau-phien-ban-khi-bien-dich"
+      },
+      {
+        "title": "14. Những hiểu lầm phổ biến về C++",
+        "id": "14-nhung-hieu-lam-pho-bien-ve-c"
+      },
+      {
+        "title": "14.1. C++ là C có thêm class",
+        "id": "141-c-la-c-co-them-class"
+      },
+      {
+        "title": "14.2. Muốn học C++ phải học C trước",
+        "id": "142-muon-hoc-c-phai-hoc-c-truoc"
+      },
+      {
+        "title": "14.3. C++ luôn nhanh hơn Python hoặc Java",
+        "id": "143-c-luon-nhanh-hon-python-hoac-java"
+      },
+      {
+        "title": "14.4. C++ bắt buộc phải dùng new và delete",
+        "id": "144-c-bat-buoc-phai-dung-new-va-delete"
+      },
+      {
+        "title": "14.5. Sử dụng C++23 thì mọi tính năng đều hoạt động",
+        "id": "145-su-dung-c23-thi-moi-tinh-nang-eu-hoat-ong"
+      },
+      {
+        "title": "14.6. C++17 đã cũ nên không đáng học",
+        "id": "146-c17-a-cu-nen-khong-ang-hoc"
+      },
+      {
+        "title": "15. Bài tập tự luyện",
+        "id": "15-bai-tap-tu-luyen"
+      },
+      {
+        "title": "Bài 1. Giải thích C++ là gì",
+        "id": "bai-1-giai-thich-c-la-gi"
+      },
+      {
+        "title": "Bài 2. Phân biệt công cụ phát triển",
+        "id": "bai-2-phan-biet-cong-cu-phat-trien"
+      },
+      {
+        "title": "Bài 3. Tìm hiểu compiler đang sử dụng",
+        "id": "bai-3-tim-hieu-compiler-ang-su-dung"
+      },
+      {
+        "title": "Bài 4. Kiểm tra macro __cplusplus",
+        "id": "bai-4-kiem-tra-macro-cplusplus"
+      },
+      {
+        "title": "Bài 5. Chọn phiên bản C++ phù hợp",
+        "id": "bai-5-chon-phien-ban-c-phu-hop"
+      },
+      {
+        "title": "16. Tổng kết kiến thức",
+        "id": "16-tong-ket-kien-thuc"
+      },
+      {
+        "title": "Tài liệu tham khảo",
+        "id": "tai-lieu-tham-khao"
       },
       {
         "title": "Đọc tiếp",
@@ -4636,7 +4906,7 @@ export const articles = [
   },
   {
     "title": "Biến, kiểu dữ liệu và quá trình biên dịch",
-    "description": "Khai báo biến, chọn kiểu an toàn và hiểu header, translation unit, compile, link.",
+    "description": "Hướng dẫn khai báo và khởi tạo biến, lựa chọn kiểu dữ liệu, const, constexpr, auto, phạm vi biến, quản lý bộ nhớ và quá trình biên dịch C++17.",
     "slug": "/cpp/bat-dau/bien-kieu-du-lieu",
     "category": "fundamentals",
     "categoryLabel": "C++ căn bản",
@@ -4644,13 +4914,20 @@ export const articles = [
     "difficulty": "beginner",
     "keywords": [
       "biến C++",
+      "kiểu dữ liệu C++",
+      "variable",
+      "data types",
+      "initialization",
       "const",
-      "kiểu dữ liệu",
+      "constexpr",
+      "auto",
       "integer overflow",
+      "scope",
+      "compiler",
       "translation unit",
       "linker"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-21",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -4662,28 +4939,392 @@ export const articles = [
     ],
     "featured": false,
     "priority": 20040,
-    "body": "Biến đặt tên cho một object có kiểu và thời gian sống. Chọn kiểu đúng giúp compiler bắt lỗi và giúp code diễn đạt miền giá trị.\n\n## Khai báo và khởi tạo\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    int age{16};\n    const double pi{3.14159};\n    std::string name{\"An\"};\n    auto score{95};\n    std::cout << age << ' ' << pi << ' ' << name << ' ' << score << '\\n';\n}\n```\n\nƯu tiên khởi tạo ngay khi khai báo. Dấu `{}` giúp phát hiện nhiều phép chuyển đổi thu hẹp không an toàn. `const` cấm sửa object qua tên đó; `auto` suy ra kiểu từ biểu thức khởi tạo nhưng biến vẫn có kiểu tĩnh.\n\n## Một số kiểu cơ bản\n\n- `bool`: `true` hoặc `false`.\n- `char`: đơn vị ký tự hẹp; mã hóa ký tự phụ thuộc encoding. Không mặc định một `char` chứa mọi ký tự Unicode.\n- `int`, `long`, `long long`: số nguyên có dấu với độ rộng phụ thuộc implementation trong một số trường hợp.\n- `float`, `double`: số dấu phẩy động gần đúng, không phù hợp để lưu tiền chính xác.\n- `std::string`: chuỗi ký tự tiện dụng trong C++.\n- `std::size_t`: kiểu không dấu thường dùng cho kích thước và chỉ số container.\n\nNếu cần độ rộng bit cố định, dùng `std::int32_t` hoặc `std::uint64_t` từ `<cstdint>` khi implementation có kiểu tương ứng.\n\n## Source đến executable\n\nMỗi file `.cpp` được xử lý thành một **translation unit** sau khi tiền xử lý `#include`. Compiler tạo object file; linker kết hợp object files và libraries. Header thường chứa khai báo, còn định nghĩa được đặt trong `.cpp`; vi phạm quy tắc định nghĩa có thể gây lỗi linker. Chi tiết nằm ở [header và translation units](/cpp/ky-thuat/header-source-modules).\n\n## Lỗi thường gặp\n\n- **Dùng biến chưa khởi tạo**: giá trị không hợp lệ hoặc hành vi không xác định; khởi tạo biến trước khi đọc.\n- **Tràn số nguyên có dấu**: nếu phép tính vượt miền biểu diễn, hành vi là undefined behavior; chọn kiểu đủ lớn và kiểm tra trước phép tính.\n- **So sánh số thực bằng `==`**: sai số biểu diễn có thể làm kết quả bất ngờ; so sánh theo tolerance khi bài toán cho phép.\n\n## Tự luyện\n\nKhai báo số lượng sản phẩm, giá và tổng tiền. Chọn kiểu cho từng biến; nếu tổng có thể lớn, giải thích vì sao `int` có thể chưa đủ.\n\n## Đọc tiếp\n\nHọc [toán tử và biểu thức](/cpp/bat-dau/toan-tu), sau đó xem [bảng kiểu dữ liệu và giới hạn](/cpp/tra-cuu/kieu-du-lieu).",
+    "body": "# Biến, kiểu dữ liệu và quá trình biên dịch trong C++\n\nKhi viết chương trình, chúng ta cần lưu trữ và xử lý thông tin như số tuổi, điểm số, tên người dùng hoặc kết quả tính toán.\n\nC++ cung cấp **biến (variables)** để quản lý dữ liệu và **kiểu dữ liệu (data types)** để xác định cách dữ liệu được biểu diễn, lưu trữ và xử lý.\n\nTuy nhiên, viết mã nguồn mới chỉ là bước đầu. Trước khi chương trình có thể chạy, mã C++ thường phải trải qua quá trình tiền xử lý, biên dịch và liên kết.\n\nBài học này giúp bạn hiểu:\n\n- Biến là gì và cách khai báo biến trong C++.\n- Sự khác biệt giữa khai báo, khởi tạo và gán giá trị.\n- Các kiểu dữ liệu cơ bản và cách lựa chọn.\n- Cách sử dụng `const`, `constexpr` và `auto`.\n- Phạm vi và thời gian sống của biến.\n- Chuyển đổi kiểu dữ liệu và những rủi ro thường gặp.\n- Cách compiler biến mã nguồn thành chương trình thực thi.\n\n**Tiêu chuẩn sử dụng:** C++17.\n\n## 1. Biến là gì?\n\n### 1.1. Khái niệm biến\n\nBiến (variable) là tên được khai báo để tham chiếu đến một thực thể dữ liệu trong chương trình. Trong những ví dụ cơ bản, biến đặt tên cho một đối tượng (object) có kiểu dữ liệu xác định.\n\nVí dụ:\n\n```cpp\nint age{16};\n```\n\nCâu lệnh trên tạo một biến tên `age` với:\n\n- **Tên biến:** `age`.\n- **Kiểu dữ liệu:** `int`.\n- **Giá trị ban đầu:** `16`.\n\nBiến có thể được sử dụng trong các biểu thức:\n\n```cpp\nint age{16};\n\nint nextYearAge = age + 1;\n```\n\nSau khi thực hiện:\n\n```text\nage = 16\nnextYearAge = 17\n```\n\n### 1.2. Ví dụ sử dụng biến\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{16};\n    double height{1.75};\n\n    std::cout << \"Tuoi: \" << age << '\\n';\n    std::cout << \"Chieu cao: \" << height << \" m\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nTuoi: 16\nChieu cao: 1.75 m\n```\n\nTrong chương trình:\n\n- `age` lưu số tuổi dưới dạng số nguyên.\n- `height` lưu chiều cao dưới dạng số thực.\n- `std::cout` hiển thị giá trị của các biến.\n\n**Lợi ích của biến:** Chương trình có thể sử dụng lại dữ liệu, thực hiện tính toán và cập nhật trạng thái mà không cần viết trực tiếp các giá trị ở mọi vị trí.\n\n---\n\n## 2. Khai báo, khởi tạo và gán giá trị\n\nBa khái niệm này thường bị nhầm lẫn khi bắt đầu học C++.\n\n### 2.1. Khai báo biến (Declaration)\n\nVí dụ:\n\n```cpp\nint number;\n```\n\nCâu lệnh trên khai báo biến `number` có kiểu `int`.\n\nTrong trường hợp này, câu lệnh cũng định nghĩa một đối tượng, nhưng không cung cấp giá trị khởi tạo tường minh.\n\nĐối với biến `int` cục bộ thông thường có thời gian lưu trữ tự động, giá trị ban đầu có thể là giá trị không xác định.\n\n**Không được đọc giá trị của biến như vậy trước khi khởi tạo hoặc gán giá trị hợp lệ.** Trong các trường hợp thông thường của C++17, việc sử dụng giá trị bất định của một `int` gây ra hành vi không xác định.\n\n### 2.2. Khởi tạo biến (Initialization)\n\nKhởi tạo là cung cấp giá trị ban đầu khi tạo biến.\n\nC++ hỗ trợ nhiều cú pháp:\n\n```cpp\nint a = 10;\nint b(10);\nint c{10};\nint d = {10};\n```\n\nCả bốn biến đều được khởi tạo với giá trị `10`.\n\nTuy nhiên, các hình thức khởi tạo không hoàn toàn tương đương trong mọi trường hợp, đặc biệt khi làm việc với class, constructor và danh sách khởi tạo.\n\n### 2.3. Khởi tạo bằng dấu ngoặc nhọn\n\nCú pháp thường được khuyến nghị cho các biến cơ bản:\n\n```cpp\nint age{16};\ndouble score{8.5};\nbool active{true};\n```\n\nMột lợi ích của cú pháp `{}` là giúp ngăn nhiều phép chuyển đổi thu hẹp dữ liệu (*narrowing conversion*).\n\nVí dụ:\n\n```cpp\nint number{3.14};\n```\n\nDòng trên không hợp lệ vì phép khởi tạo sẽ làm mất phần thập phân khi chuyển từ `double` sang `int`.\n\nTrong khi đó:\n\n```cpp\nint number = 3.14;\n```\n\nCâu lệnh có thể được biên dịch, nhưng giá trị thu được là `3` và compiler có thể phát cảnh báo.\n\n**Khuyến nghị:** Ưu tiên khởi tạo biến ngay khi khai báo và sử dụng `{}` khi phù hợp. Tuy nhiên, không nên coi mọi cách khởi tạo bằng `{}` đều giống nhau, nhất là với các container có constructor nhận `std::initializer_list`.\n\n### 2.4. Value initialization\n\nCó thể sử dụng cặp ngoặc nhọn rỗng:\n\n```cpp\nint count{};\ndouble total{};\nbool valid{};\n```\n\nĐối với các kiểu dữ liệu cơ bản ở trên, kết quả là:\n\n| Biến | Giá trị |\n|---|---|\n| `count` | `0` |\n| `total` | `0.0` |\n| `valid` | `false` |\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int count{};\n\n    std::cout << count << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n0\n```\n\nĐây là cách khởi tạo rõ ràng, đặc biệt hữu ích đối với biến đếm và biến tích lũy.\n\n### 2.5. Gán giá trị (Assignment)\n\nSau khi biến được tạo, có thể thay đổi giá trị bằng toán tử `=`.\n\n```cpp\nint score{50};\n\nscore = 80;\n```\n\nLúc này:\n\n```text\nscore = 80\n```\n\nPhân biệt:\n\n```cpp\nint score{50};\n```\n\nLà khai báo kết hợp khởi tạo.\n\n```cpp\nscore = 80;\n```\n\nLà phép gán cho biến đã tồn tại.\n\nKhông phải mọi biến đều có thể được gán lại, ví dụ biến `const`.\n\n---\n\n## 3. Quy tắc đặt tên biến\n\nTên biến trong C++ phải tuân theo quy tắc định danh (identifier).\n\n### 3.1. Quy tắc cơ bản\n\n- Phân biệt chữ hoa và chữ thường.\n- Không được bắt đầu bằng chữ số.\n- Không chứa khoảng trắng.\n- Không được trùng với từ khóa của C++.\n- Có thể sử dụng chữ cái, chữ số và dấu gạch dưới theo các quy tắc định danh của ngôn ngữ.\n\nVí dụ hợp lệ:\n\n```cpp\nint age{16};\nint studentCount{40};\ndouble averageScore{8.5};\nbool isActive{true};\n```\n\nVí dụ không hợp lệ:\n\n```cpp\nint 2students;\nint student count;\nint class;\n```\n\nTrong đó:\n\n- `2students` bắt đầu bằng chữ số.\n- `student count` chứa khoảng trắng.\n- `class` là từ khóa của C++.\n\n### 3.2. Đặt tên có ý nghĩa\n\nKhông nên viết:\n\n```cpp\nint a{40};\nint b{8};\nint c{a * b};\n```\n\nNếu không có ngữ cảnh, rất khó xác định các biến đại diện cho điều gì.\n\nNên viết:\n\n```cpp\nint quantity{40};\nint price{8};\n\nint total = quantity * price;\n```\n\nTên biến nên diễn đạt vai trò của dữ liệu, không chỉ mô tả kiểu dữ liệu.\n\n### 3.3. Một số naming convention\n\nCác phong cách phổ biến:\n\n| Phong cách | Ví dụ |\n|---|---|\n| camelCase | `studentCount` |\n| snake_case | `student_count` |\n| PascalCase | `StudentCount` |\n\nKhông có một phong cách đặt tên duy nhất bắt buộc cho mọi chương trình C++.\n\nĐiều quan trọng là **nhất quán trong cùng dự án**, tránh những tên mơ hồ và không tự tạo định danh thuộc phạm vi dành riêng cho implementation, chẳng hạn tên bắt đầu bằng hai dấu gạch dưới.\n\n---\n\n## 4. Các kiểu dữ liệu cơ bản\n\nKiểu dữ liệu quyết định những giá trị mà một đối tượng có thể biểu diễn và các thao tác có thể thực hiện trên đối tượng đó.\n\n### 4.1. Kiểu số nguyên\n\nCác kiểu số nguyên có dấu thường gặp:\n\n```cpp\nshort smallNumber{100};\nint age{16};\nlong population{1'000'000L};\nlong long distance{10'000'000'000LL};\n```\n\nBảng tổng quan:\n\n| Kiểu | Độ rộng tối thiểu theo chuẩn | Công dụng |\n|---|---|---|\n| `short` | 16 bit | Số nguyên |\n| `int` | 16 bit | Số nguyên thông dụng |\n| `long` | 32 bit | Số nguyên |\n| `long long` | 64 bit | Số nguyên phạm vi lớn |\n\nC++ quy định độ rộng tối thiểu và một số quan hệ giữa các kiểu, nhưng không yêu cầu `int` luôn rộng 32 bit.\n\nTrên các hệ thống desktop hiện đại, `int` thường là 32 bit.\n\n**Ví dụ:**\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{16};\n    long long population{10000000000LL};\n\n    std::cout << age << '\\n';\n    std::cout << population << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n16\n10000000000\n```\n\n### 4.2. Số nguyên không dấu (Unsigned)\n\nNgoài số nguyên có dấu, C++ hỗ trợ số nguyên không dấu:\n\n```cpp\nunsigned int count{100};\nunsigned long long size{1000000ULL};\n```\n\nCác kiểu unsigned biểu diễn số nguyên không âm.\n\nVí dụ trên một hệ thống có `unsigned int` 32 bit:\n\n```cpp\nunsigned int value{0};\n\n--value;\n```\n\nKết quả của `value` là:\n\n```text\n4294967295\n```\n\nĐây là kết quả phép toán modulo theo số lượng giá trị biểu diễn của kiểu unsigned, không phải hành vi không xác định.\n\n**Cần lưu ý:** Unsigned không tự động an toàn hơn signed.\n\nNếu trừ hai số không dấu mà kết quả toán học là số âm, chương trình có thể nhận một giá trị dương rất lớn do phép toán modulo.\n\n### 4.3. Kiểu số thực\n\nC++ cung cấp:\n\n```cpp\nfloat a{3.14f};\ndouble b{3.1415926535};\nlong double c{3.1415926535L};\n```\n\n| Kiểu | Đặc điểm |\n|---|---|\n| `float` | Thường có độ chính xác thấp hơn `double` |\n| `double` | Phổ biến trong tính toán số thực |\n| `long double` | Độ chính xác hoặc phạm vi phụ thuộc implementation |\n\nTrong nhiều môi trường thông dụng, `float` có khoảng 6 đến 9 chữ số thập phân có nghĩa, còn `double` có khoảng 15 đến 17 chữ số.\n\nĐây là đặc điểm thường gặp của những định dạng IEEE 754 tương ứng, không phải cam kết chung về mọi implementation.\n\n### 4.4. Sai số số thực\n\nXét biểu thức:\n\n```cpp\ndouble result = 0.1 + 0.2;\n```\n\nVề mặt toán học:\n\n\\[\n0.1 + 0.2 = 0.3\n\\]\n\nNhưng trong cách biểu diễn dấu phẩy động nhị phân thông dụng, giá trị lưu trữ có thể không chính xác tuyệt đối.\n\nVí dụ:\n\n```cpp\n#include <iomanip>\n#include <iostream>\n\nint main() {\n    double result = 0.1 + 0.2;\n\n    std::cout << std::setprecision(17)\n              << result << '\\n';\n\n    return 0;\n}\n```\n\nTrên những hệ thống sử dụng `double` IEEE 754 binary64, kết quả thường là:\n\n```text\n0.30000000000000004\n```\n\nĐiều này không có nghĩa C++ tính sai phép cộng. Vấn đề nằm ở giới hạn biểu diễn của kiểu số thực.\n\n**Ứng dụng thực tế:** Với các phép tính tài chính yêu cầu giá trị thập phân chính xác, có thể lưu tiền bằng đơn vị nguyên nhỏ nhất, chẳng hạn đồng hoặc xu, hoặc sử dụng kiểu số thập phân thích hợp.\n\n### 4.5. Kiểu bool\n\nKiểu `bool` biểu diễn hai giá trị:\n\n```cpp\nbool isOnline{true};\nbool isBanned{false};\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    bool valid{true};\n\n    std::cout << valid << '\\n';\n    std::cout << std::boolalpha << valid << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1\ntrue\n```\n\nMặc định, `std::cout` in `bool` thành `1` hoặc `0`.\n\nSử dụng `std::boolalpha` để hiển thị `true` và `false`.\n\n### 4.6. Kiểu char\n\n`char` được sử dụng để lưu một đơn vị ký tự hẹp.\n\n```cpp\nchar grade{'A'};\nchar symbol{'#'};\n```\n\nLưu ý sự khác biệt:\n\n```cpp\nchar letter{'A'};\n```\n\nvà:\n\n```cpp\nstd::string text{\"A\"};\n```\n\n- `'A'` là character literal thông thường.\n- `\"A\"` là string literal có chứa ký tự `A` và ký tự kết thúc null.\n\nMột `char` không thể đại diện cho mọi ký tự Unicode.\n\nVí dụ, trong UTF-8, nhiều ký tự tiếng Việt được mã hóa bằng nhiều byte. Vì vậy, không nên mặc định rằng một byte hoặc một `char` tương ứng với một ký tự mà người dùng nhìn thấy.\n\n### 4.7. Kiểu std::string\n\nĐể làm việc với chuỗi ký tự, thường sử dụng `std::string`.\n\nHeader:\n\n```cpp\n#include <string>\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string name{\"Nguyen Van An\"};\n\n    std::cout << name << '\\n';\n    std::cout << name.size() << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNguyen Van An\n13\n```\n\n`std::string::size()` trả về số đơn vị `char` trong chuỗi, không nhất thiết là số ký tự Unicode hiển thị.\n\nVới chuỗi UTF-8, một ký tự có dấu có thể chiếm nhiều byte.\n\n---\n\n## 5. Kích thước và giới hạn kiểu dữ liệu\n\n### 5.1. Toán tử sizeof\n\nC++ cung cấp toán tử `sizeof` để xác định kích thước lưu trữ của kiểu hoặc đối tượng, tính theo byte của C++.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << sizeof(char) << '\\n';\n    std::cout << sizeof(int) << '\\n';\n    std::cout << sizeof(double) << '\\n';\n\n    return 0;\n}\n```\n\nTrên nhiều hệ thống desktop hiện đại, kết quả thường là:\n\n```text\n1\n4\n8\n```\n\nCần phân biệt:\n\n- `sizeof(char)` luôn bằng `1`.\n- Một byte trong C++ chứa ít nhất 8 bit.\n- `sizeof(int)` và `sizeof(double)` phụ thuộc vào implementation.\n\n### 5.2. numeric_limits\n\nThư viện `<limits>` cung cấp thông tin về giới hạn kiểu dữ liệu.\n\n```cpp\n#include <iostream>\n#include <limits>\n\nint main() {\n    std::cout\n        << std::numeric_limits<int>::min()\n        << '\\n';\n\n    std::cout\n        << std::numeric_limits<int>::max()\n        << '\\n';\n\n    return 0;\n}\n```\n\nTrên hệ thống sử dụng `int` 32 bit với phạm vi thông dụng:\n\n```text\n-2147483648\n2147483647\n```\n\nMột số thành phần hữu ích:\n\n| Thành phần | Ý nghĩa |\n|---|---|\n| `min()` | Giá trị nhỏ nhất của kiểu nguyên; với kiểu số thực là giá trị dương chuẩn hóa nhỏ nhất |\n| `max()` | Giá trị hữu hạn lớn nhất |\n| `lowest()` | Giá trị hữu hạn thấp nhất |\n| `digits` | Số bit giá trị của kiểu nguyên hoặc số chữ số cơ số hai có nghĩa của kiểu số thực |\n| `digits10` | Số chữ số thập phân có thể biểu diễn mà không bị thay đổi khi chuyển đổi qua lại theo quy tắc tương ứng |\n\nĐặc biệt với số thực, `min()` không phải giá trị âm nhỏ nhất. Khi cần giới hạn thấp nhất, sử dụng `lowest()`.\n\n### 5.3. Kiểu số nguyên có độ rộng cố định\n\nHeader `<cstdint>` cung cấp những kiểu như:\n\n```cpp\n#include <cstdint>\n\nstd::int32_t score{100};\nstd::uint64_t count{1000000};\n```\n\nCác kiểu này có độ rộng đúng như tên gọi khi implementation hỗ trợ.\n\nVí dụ:\n\n| Kiểu | Ý nghĩa |\n|---|---|\n| `std::int8_t` | Số nguyên có dấu 8 bit |\n| `std::uint8_t` | Số nguyên không dấu 8 bit |\n| `std::int32_t` | Số nguyên có dấu 32 bit |\n| `std::uint32_t` | Số nguyên không dấu 32 bit |\n| `std::int64_t` | Số nguyên có dấu 64 bit |\n| `std::uint64_t` | Số nguyên không dấu 64 bit |\n\nCác kiểu có độ rộng chính xác này là tùy chọn theo tiêu chuẩn nếu implementation không có kiểu nguyên phù hợp.\n\n**Khi nào nên sử dụng?**\n\nCác kiểu có độ rộng cố định hữu ích khi làm việc với dữ liệu nhị phân, giao thức, định dạng tệp hoặc các trường hợp thực sự yêu cầu độ rộng cụ thể.\n\nKhông nhất thiết phải thay toàn bộ `int` bằng `std::int32_t`.\n\n---\n\n## 6. const, constexpr và auto\n\n### 6.1. const: Giá trị không thể thay đổi thông qua biến\n\nVí dụ:\n\n```cpp\nconst int maxStudents{45};\n```\n\nSau khi khởi tạo, không thể gán lại cho biến:\n\n```cpp\nmaxStudents = 50;\n```\n\nCâu lệnh trên không hợp lệ.\n\n`const` đặc biệt hữu ích khi biểu diễn dữ liệu không cần thay đổi trong phạm vi sử dụng.\n\n### 6.2. constexpr: Biểu thức hằng tại thời điểm biên dịch\n\nVí dụ:\n\n```cpp\nconstexpr int secondsPerMinute{60};\nconstexpr int minutesPerHour{60};\n\nconstexpr int secondsPerHour{\n    secondsPerMinute * minutesPerHour\n};\n```\n\nGiá trị `secondsPerHour` bằng `3600`.\n\nMột biến `constexpr` phải được khởi tạo bằng biểu thức hằng hợp lệ.\n\nVí dụ không hợp lệ:\n\n```cpp\nint age{};\nstd::cin >> age;\n\nconstexpr int currentAge{age};\n```\n\nVì `age` được đọc trong lúc chương trình chạy, không phải một giá trị hằng có thể dùng để khởi tạo `constexpr`.\n\n### 6.3. So sánh const và constexpr\n\n| Đặc điểm | const | constexpr |\n|---|---|---|\n| Không cho phép gán lại biến | Có | Có |\n| Bắt buộc khởi tạo bằng biểu thức hằng | Không | Có |\n| Có thể nhận giá trị tại runtime | Có | Không đối với khởi tạo constexpr |\n| Thích hợp cho hằng compile-time | Có thể, tùy ngữ cảnh | Rõ ràng hơn |\n\nVí dụ:\n\n```cpp\nint input{};\nstd::cin >> input;\n\nconst int value{input};\n```\n\nHợp lệ nếu dữ liệu đầu vào được đọc thành công.\n\nNgược lại:\n\n```cpp\nconstexpr int value{input};\n```\n\nKhông hợp lệ khi `input` không phải biểu thức hằng.\n\n### 6.4. auto: Tự suy luận kiểu dữ liệu\n\nVí dụ:\n\n```cpp\nauto age = 16;\nauto height = 1.75;\nauto active = true;\n```\n\nCompiler suy luận:\n\n| Biến | Kiểu |\n|---|---|\n| `age` | `int` |\n| `height` | `double` |\n| `active` | `bool` |\n\n`auto` không có nghĩa biến có thể tự do đổi kiểu trong khi chạy.\n\nVí dụ:\n\n```cpp\nauto value = 10;\n\nvalue = 20;\n```\n\nHợp lệ.\n\nNhưng:\n\n```cpp\nvalue = \"Hello\";\n```\n\nKhông hợp lệ vì `value` đã được suy luận thành `int`.\n\n### 6.5. Khi nào nên sử dụng auto?\n\nNên dùng khi kiểu dữ liệu đã rõ ràng hoặc khi cách viết kiểu tường minh gây dài dòng.\n\nVí dụ:\n\n```cpp\nauto it = values.begin();\n```\n\nĐặc biệt hữu ích khi làm việc với iterator, lambda và các kiểu template dài.\n\nVới những biến cơ bản, việc khai báo tường minh vẫn có thể dễ hiểu hơn:\n\n```cpp\nint age{16};\ndouble score{8.5};\n```\n\n**Nguyên tắc:** Dùng `auto` để giảm sự lặp lại và tăng tính rõ ràng, không phải để che giấu kiểu dữ liệu quan trọng.\n\n---\n\n## 7. Chuyển đổi kiểu dữ liệu (Type Conversion)\n\nChuyển đổi kiểu dữ liệu là quá trình biến đổi một giá trị sang kiểu khác.\n\n### 7.1. Chuyển đổi ngầm định\n\nC++ có thể tự chuyển đổi kiểu khi thực hiện biểu thức.\n\nVí dụ:\n\n```cpp\nint a{5};\ndouble b{2.5};\n\ndouble result = a + b;\n```\n\nKết quả:\n\n```text\n7.5\n```\n\nTrong phép cộng trên, giá trị `a` được chuyển sang kiểu `double` theo các quy tắc chuyển đổi số học.\n\n### 7.2. Chuyển đổi tường minh\n\nCó thể sử dụng `static_cast`:\n\n```cpp\ndouble value{9.8};\n\nint number = static_cast<int>(value);\n```\n\nKết quả:\n\n```text\nnumber = 9\n```\n\nPhần thập phân bị loại bỏ theo hướng về 0 khi chuyển một giá trị số thực hữu hạn, nằm trong phạm vi cho phép, sang kiểu nguyên.\n\n### 7.3. Tránh chia nguyên ngoài ý muốn\n\nVí dụ:\n\n```cpp\nint a{7};\nint b{2};\n\ndouble result = a / b;\n```\n\nKết quả là `3.0`, không phải `3.5`.\n\nVì phép chia nguyên được thực hiện trước khi chuyển kết quả sang `double`.\n\nCách sửa:\n\n```cpp\ndouble result = static_cast<double>(a) / b;\n```\n\nKết quả:\n\n```text\n3.5\n```\n\n### 7.4. Chuyển đổi có thể làm mất dữ liệu\n\nVí dụ:\n\n```cpp\ndouble price{99.99};\n\nint rounded = static_cast<int>(price);\n```\n\nGiá trị nhận được là `99`, không phải `100`.\n\n`static_cast<int>` không tự làm tròn đến số nguyên gần nhất.\n\nNgoài ra, nếu giá trị nguồn vượt phạm vi biểu diễn của kiểu đích, phép chuyển từ số thực sang kiểu nguyên có thể gây hành vi không xác định.\n\n**Khuyến nghị:** Trước khi chuyển kiểu, cần xác định phạm vi giá trị và mức độ mất mát dữ liệu có thể chấp nhận.\n\n---\n\n## 8. Tràn số nguyên (Integer Overflow)\n\nTràn số xảy ra khi kết quả một phép toán vượt phạm vi biểu diễn của kiểu dữ liệu.\n\n### 8.1. Ví dụ tràn số\n\nGiả sử `int` có phạm vi lớn nhất là `2147483647`.\n\n```cpp\nint value{2'000'000'000};\n\nint result = value * 2;\n```\n\nKết quả toán học là:\n\n```text\n4000000000\n```\n\nGiá trị này vượt phạm vi biểu diễn của `int` 32 bit có dấu.\n\nTrong C++17, tràn số nguyên có dấu gây ra *undefined behavior*.\n\nĐiều này có nghĩa tiêu chuẩn C++ không quy định kết quả hay hành vi của chương trình trong trường hợp đó.\n\nKhông nên mặc định rằng chương trình sẽ tự động chuyển thành số âm hoặc luôn báo lỗi.\n\n### 8.2. Sử dụng kiểu đủ rộng\n\nVí dụ:\n\n```cpp\nlong long value{2'000'000'000LL};\n\nlong long result = value * 2;\n```\n\nKết quả:\n\n```text\n4000000000\n```\n\n### 8.3. Chú ý kiểu dữ liệu của phép tính\n\nĐây là lỗi khá khó nhận ra:\n\n```cpp\nint a{2'000'000'000};\n\nlong long result = a * 2;\n```\n\nMặc dù `result` có kiểu `long long`, phép nhân vẫn được thực hiện bằng `int` trước khi gán.\n\nTrong môi trường `int` 32 bit, phép nhân trên gây tràn số có dấu.\n\nCách xử lý:\n\n```cpp\nlong long result = 1LL * a * 2;\n```\n\nHoặc:\n\n```cpp\nlong long result =\n    static_cast<long long>(a) * 2;\n```\n\n### 8.4. Kiểm tra trước phép tính\n\nSử dụng kiểu lớn hơn không giải quyết mọi trường hợp.\n\nVí dụ với hai số nguyên dương `a` và `b`, để kiểm tra phép nhân có vượt giới hạn của kiểu không, có thể kiểm tra trước:\n\n```cpp\n#include <iostream>\n#include <limits>\n\nint main() {\n    long long a{1'000'000'000};\n    long long b{10'000'000'000LL};\n\n    const long long limit =\n        std::numeric_limits<long long>::max();\n\n    if (a > limit / b) {\n        std::cerr << \"Integer overflow\\n\";\n        return 1;\n    }\n\n    const long long result = a * b;\n\n    std::cout << result << '\\n';\n\n    return 0;\n}\n```\n\nTrong ví dụ này, `a` và `b` đều dương. Công thức kiểm tra không thể áp dụng nguyên xi cho mọi tổ hợp số âm, số 0 và giá trị nhỏ nhất của kiểu nguyên.\n\n**Nguyên tắc:** Kiểm tra tràn trước khi thực hiện phép tính có nguy cơ vượt phạm vi, không phải sau khi phép tính đã xảy ra.\n\n---\n\n## 9. Phạm vi và thời gian sống của biến\n\nMột biến không nhất thiết tồn tại hoặc có thể truy cập từ mọi vị trí trong chương trình.\n\nCần phân biệt hai khái niệm:\n\n- **Scope:** Phạm vi mà tên có thể được sử dụng.\n- **Lifetime:** Khoảng thời gian đối tượng tồn tại.\n\n### 9.1. Biến cục bộ (Local Variable)\n\nBiến được khai báo bên trong một khối lệnh thường có phạm vi giới hạn trong khối đó.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{10};\n\n    if (a > 5) {\n        int b{20};\n\n        std::cout << b << '\\n';\n    }\n\n    std::cout << a << '\\n';\n\n    return 0;\n}\n```\n\nBiến `a` có thể được sử dụng trong phần còn lại của thân hàm `main`, sau vị trí khai báo.\n\nBiến `b` chỉ nằm trong phạm vi khối `if`.\n\nVì vậy, viết:\n\n```cpp\nstd::cout << b;\n```\n\nở ngoài khối `if` sẽ gây lỗi biên dịch vì tên `b` không còn nằm trong phạm vi nhìn thấy.\n\n### 9.2. Biến toàn cục (Global Variable)\n\nBiến khai báo ở namespace scope có thể được truy cập từ nhiều vị trí, tùy thuộc khai báo và linkage.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint total{100};\n\nint main() {\n    std::cout << total << '\\n';\n\n    return 0;\n}\n```\n\nBiến `total` ở đây có static storage duration.\n\nTuy nhiên, sử dụng nhiều biến toàn cục có thể khiến các thành phần phụ thuộc lẫn nhau và khó kiểm soát trạng thái.\n\nĐối với dữ liệu không cần chia sẻ toàn chương trình, nên ưu tiên phạm vi nhỏ hơn.\n\n### 9.3. Biến static cục bộ\n\n```cpp\n#include <iostream>\n\nvoid countCalls() {\n    static int count{0};\n\n    ++count;\n\n    std::cout << count << '\\n';\n}\n\nint main() {\n    countCalls();\n    countCalls();\n    countCalls();\n}\n```\n\nKết quả:\n\n```text\n1\n2\n3\n```\n\nKhác với biến cục bộ thông thường, biến `static` cục bộ duy trì đối tượng xuyên suốt các lần gọi hàm.\n\nTên của nó vẫn chỉ có phạm vi trong khối khai báo, nhưng đối tượng có static storage duration.\n\n### 9.4. Shadowing\n\nShadowing xảy ra khi một tên được khai báo ở phạm vi bên trong che khuất tên cùng định danh ở phạm vi bên ngoài.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int value{10};\n\n    {\n        int value{20};\n\n        std::cout << value << '\\n';\n    }\n\n    std::cout << value << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n20\n10\n```\n\nDù hợp lệ, shadowing có thể gây nhầm lẫn trong chương trình lớn.\n\nNên tránh sử dụng lại tên biến khi không có lý do rõ ràng.\n\n---\n\n## 10. Bộ nhớ và vòng đời đối tượng\n\nKhi một đối tượng được tạo, C++ xác định thời gian lưu trữ (storage duration) và quản lý vòng đời của nó theo quy tắc tương ứng.\n\nTrong phần căn bản, cần nắm hai trường hợp thường gặp.\n\n### 10.1. Automatic storage duration\n\nCác biến cục bộ thông thường thường có automatic storage duration.\n\nVí dụ:\n\n```cpp\nvoid calculate() {\n    int result{100};\n}\n```\n\nĐối tượng `result` được tạo trong quá trình thực hiện lời gọi hàm và kết thúc vòng đời khi rời khỏi khối tương ứng.\n\nCác đối tượng có automatic storage duration thường được triển khai bằng stack, nhưng tiêu chuẩn C++ không bắt buộc mọi đối tượng như vậy phải nằm trên một cấu trúc bộ nhớ cụ thể gọi là stack.\n\n### 10.2. Dynamic storage duration\n\nC++ cũng cho phép cấp phát bộ nhớ động.\n\nVí dụ:\n\n```cpp\nint* value = new int{42};\n\ndelete value;\n```\n\nĐối tượng được tạo bằng `new` cần được giải phóng đúng cách.\n\nNếu quên `delete`, chương trình có thể bị rò rỉ bộ nhớ.\n\nTrong C++ hiện đại, nên tránh quản lý quyền sở hữu bộ nhớ động thủ công khi có lựa chọn phù hợp hơn.\n\nVí dụ sử dụng `std::unique_ptr`:\n\n```cpp\n#include <memory>\n\nint main() {\n    auto value = std::make_unique<int>(42);\n\n    return 0;\n}\n```\n\nBộ nhớ được quản lý tự động theo vòng đời của smart pointer.\n\nTuy nhiên, không phải biến nào cũng cần cấp phát động.\n\nĐối với một giá trị nguyên thông thường:\n\n```cpp\nint value{42};\n```\n\nlà lựa chọn đơn giản hơn.\n\n**Nguyên tắc:** Chọn cơ chế lưu trữ và quản lý tài nguyên phù hợp với vòng đời thực tế của đối tượng, tránh cấp phát động khi không cần thiết.\n\n---\n\n## 11. Từ mã nguồn đến chương trình thực thi\n\nC++ là ngôn ngữ thường được biên dịch thành mã máy trước khi chạy.\n\nVí dụ, một dự án có file:\n\n```text\nmain.cpp\n```\n\nNội dung:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << \"Hello C++\\n\";\n\n    return 0;\n}\n```\n\nĐể chạy chương trình, mã nguồn phải được xử lý bởi compiler toolchain.\n\n### 11.1. Tổng quan quá trình build\n\nQuá trình build C++ thông thường:\n\n```text\nSource Code (.cpp)\n        |\n        v\nPreprocessing\n        |\n        v\nCompilation\n        |\n        v\nAssembly / Object Code\n        |\n        v\nObject File (.o / .obj)\n        |\n        v\nLinking\n        |\n        v\nExecutable\n```\n\nTùy compiler, một số bước có thể được kết hợp hoặc triển khai nội bộ khác nhau. Sơ đồ trên mô tả quy trình build phổ biến.\n\n### 11.2. Preprocessing\n\nPreprocessor xử lý các chỉ thị tiền xử lý như:\n\n```cpp\n#include <iostream>\n#define VERSION 1\n```\n\nVí dụ:\n\n```cpp\n#include \"Config.h\"\n```\n\nNội dung header được đưa vào quá trình tiền xử lý theo quy tắc của `#include`.\n\nBước này không chỉ đơn giản là sao chép văn bản trong mọi trường hợp, bởi preprocessor còn xử lý macro, điều kiện tiền xử lý và các chỉ thị khác.\n\n### 11.3. Compilation\n\nSau tiền xử lý, compiler phân tích mã nguồn theo các quy tắc của ngôn ngữ.\n\nCác công việc điển hình bao gồm:\n\n- Phân tích cú pháp.\n- Kiểm tra kiểu dữ liệu.\n- Kiểm tra những ràng buộc của ngôn ngữ.\n- Tạo biểu diễn trung gian.\n- Thực hiện tối ưu hóa nếu được cấu hình.\n- Sinh mã đích thông qua các bước thích hợp.\n\nVí dụ:\n\n```cpp\nint value = \"Hello\";\n```\n\nDòng trên không hợp lệ vì không có phép chuyển đổi phù hợp từ string literal sang `int` trong ngữ cảnh này.\n\nCompiler có thể phát hiện và thông báo lỗi.\n\n### 11.4. Object file\n\nSau quá trình biên dịch thành công, toolchain có thể tạo object file.\n\nMột số phần mở rộng thường gặp:\n\n| Nền tảng/toolchain | Object file |\n|---|---|\n| GCC/Clang trên nhiều hệ Unix | `.o` |\n| MSVC trên Windows | `.obj` |\n\nObject file thường chứa mã máy cùng thông tin cần thiết cho quá trình liên kết.\n\nObject file không nhất thiết là một chương trình có thể thực thi độc lập.\n\n### 11.5. Linking\n\nLinker kết hợp các object file và thư viện cần thiết để tạo sản phẩm cuối cùng.\n\nVí dụ, chương trình có thể gồm:\n\n```text\nmain.cpp\nMath.cpp\n```\n\n`main.cpp` gọi hàm `add()` được định nghĩa trong `Math.cpp`.\n\nCompiler có thể biên dịch hai file thành các object file riêng biệt.\n\nLinker sau đó liên kết chúng để lời gọi `add()` có thể được giải quyết đến định nghĩa phù hợp.\n\nNếu thiếu định nghĩa hàm hoặc một thành phần liên kết cần thiết, linker có thể báo lỗi như:\n\n```text\nundefined reference to `add(int, int)`\n```\n\nHoặc trên MSVC:\n\n```text\nunresolved external symbol\n```\n\n---\n\n## 12. Header, source file và translation unit\n\nKhi dự án phát triển, không nên đặt toàn bộ chương trình trong một file duy nhất.\n\nC++ thường tổ chức mã nguồn thành các header và source file.\n\n### 12.1. Header file\n\nHeader thường chứa các khai báo được chia sẻ giữa nhiều translation unit.\n\nVí dụ:\n\n**Math.h**\n\n```cpp\n#ifndef MATH_H\n#define MATH_H\n\nint add(int a, int b);\n\n#endif\n```\n\nĐây là include guard, giúp tránh xử lý lặp lại nội dung header trong cùng một translation unit.\n\nTên macro của include guard cần được chọn đủ riêng biệt trong dự án để tránh trùng tên.\n\n### 12.2. Source file\n\n**Math.cpp**\n\n```cpp\n#include \"Math.h\"\n\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nFile này chứa định nghĩa hàm `add()`.\n\n### 12.3. File main.cpp\n\n```cpp\n#include <iostream>\n#include \"Math.h\"\n\nint main() {\n    const int result = add(5, 3);\n\n    std::cout << result << '\\n';\n\n    return 0;\n}\n```\n\n### 12.4. Cấu trúc dự án\n\n```text\nProject/\n├── main.cpp\n├── Math.cpp\n└── Math.h\n```\n\nBiên dịch bằng GCC:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp Math.cpp -o app\n```\n\nKhi chạy, chương trình in:\n\n```text\n8\n```\n\n### 12.5. Translation unit là gì?\n\nMột translation unit là đơn vị mã nguồn được tạo sau khi một source file trải qua quá trình tiền xử lý, bao gồm nội dung header được đưa vào bằng `#include` cùng những biến đổi tiền xử lý liên quan.\n\nVí dụ:\n\n```text\nmain.cpp + included headers\n             |\n             v\n     Translation Unit 1\n\nMath.cpp + included headers\n             |\n             v\n     Translation Unit 2\n```\n\nThông thường, các translation unit được biên dịch riêng và sau đó liên kết.\n\n### 12.6. One Definition Rule (ODR)\n\nC++ có quy tắc về số lượng và tính nhất quán của các định nghĩa, gọi là *One Definition Rule*.\n\nVí dụ không nên đặt một định nghĩa biến toàn cục thông thường vào header rồi include ở nhiều source file:\n\n```cpp\nint globalValue{100};\n```\n\nNếu nhiều translation unit cùng định nghĩa một biến có external linkage như vậy, chương trình có thể vi phạm ODR và gặp lỗi multiple definition khi liên kết.\n\nMột cách tổ chức phù hợp là đặt khai báo trong header:\n\n```cpp\nextern int globalValue;\n```\n\nVà định nghĩa tại một source file:\n\n```cpp\nint globalValue{100};\n```\n\nC++17 cũng có inline variables cho những trường hợp cần định nghĩa biến phù hợp trong header.\n\nChi tiết về ODR, header organization và modules được trình bày trong bài [Header, source và translation units](/cpp/ky-thuat/header-source-modules).\n\n---\n\n## 13. Lệnh biên dịch C++17\n\n### 13.1. GCC (g++)\n\nBiên dịch chương trình:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nCác tham số:\n\n| Tham số | Công dụng |\n|---|---|\n| `-std=c++17` | Chọn chuẩn C++17 |\n| `-Wall` | Bật nhiều cảnh báo |\n| `-Wextra` | Bật cảnh báo bổ sung |\n| `-Wpedantic` | Cảnh báo về một số phần mở rộng ngoài chuẩn |\n| `-o app` | Đặt tên đầu ra |\n\nTrên Linux/macOS, chạy:\n\n```sh\n./app\n```\n\nTrên Windows PowerShell, với tệp `app.exe`:\n\n```powershell\n.\\app.exe\n```\n\n### 13.2. Clang\n\n```sh\nclang++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\n### 13.3. MSVC\n\nVới Developer Command Prompt của Visual Studio:\n\n```bat\ncl /std:c++17 /EHsc /W4 main.cpp /Fe:app.exe\n```\n\nCác tham số quan trọng:\n\n- `/std:c++17`: Chọn chuẩn C++17.\n- `/EHsc`: Cấu hình xử lý ngoại lệ C++.\n- `/W4`: Bật mức cảnh báo cao.\n- `/Fe:app.exe`: Đặt tên tệp thực thi.\n\n### 13.4. Build để debug\n\nGCC/Clang:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic -g -O0 main.cpp -o app\n```\n\nTrong đó:\n\n- `-g`: Thêm thông tin phục vụ debug.\n- `-O0`: Tắt phần lớn tối ưu hóa để thuận tiện cho việc kiểm tra chương trình.\n\nTrên môi trường hỗ trợ sanitizer:\n\n```sh\ng++ -std=c++17 -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer main.cpp -o app\n```\n\nSanitizer có thể phát hiện nhiều lỗi truy cập bộ nhớ hoặc hành vi không xác định trong quá trình chạy thử, nhưng không đảm bảo tìm được mọi lỗi.\n\n---\n\n## 14. Phân biệt lỗi biên dịch, liên kết và runtime\n\nKhông phải mọi lỗi C++ đều xảy ra ở cùng một giai đoạn.\n\n### 14.1. Compile-time error\n\nLỗi xảy ra khi mã nguồn vi phạm quy tắc ngôn ngữ mà compiler kiểm tra được.\n\nVí dụ:\n\n```cpp\nint age = \"Hello\";\n```\n\nCompiler không thể tạo chương trình hợp lệ từ câu lệnh này.\n\nNhững nguyên nhân thường gặp:\n\n- Sai cú pháp.\n- Thiếu dấu `;`.\n- Sử dụng tên chưa khai báo.\n- Chuyển kiểu không hợp lệ.\n- Gọi hàm không có overload phù hợp.\n\n### 14.2. Link-time error\n\nLỗi xuất hiện khi các object file hoặc thư viện không được liên kết thành công.\n\nVí dụ:\n\n```cpp\nint add(int a, int b);\n\nint main() {\n    return add(2, 3);\n}\n```\n\nNếu không có định nghĩa của `add()` trong các thành phần được liên kết, quá trình linking thường thất bại.\n\n### 14.3. Runtime error\n\nLỗi phát sinh khi chương trình đang chạy.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <stdexcept>\n\nint main() {\n    throw std::runtime_error(\"Operation failed\");\n}\n```\n\nNếu ngoại lệ không được xử lý, chương trình thường kết thúc bất thường.\n\nNhững tình huống khác có thể xuất hiện trong runtime:\n\n- Đầu vào không hợp lệ.\n- Không mở được tệp.\n- Không cấp phát được bộ nhớ.\n- Truy cập bộ nhớ sai.\n- Lỗi logic trong quá trình xử lý.\n\nLưu ý rằng không phải mọi lỗi runtime đều tạo exception. Một số thao tác sai có thể dẫn đến undefined behavior.\n\n### 14.4. Bảng phân biệt\n\n| Loại lỗi | Thời điểm | Ví dụ |\n|---|---|---|\n| Compile-time | Biên dịch | Sai kiểu, sai cú pháp |\n| Link-time | Liên kết | Thiếu định nghĩa hàm |\n| Runtime | Chạy chương trình | Ngoại lệ, lỗi truy cập bộ nhớ |\n| Logic | Chương trình xử lý sai yêu cầu | Công thức sai, điều kiện sai |\n\nMột lỗi logic có thể tồn tại dù chương trình biên dịch và chạy bình thường.\n\n---\n\n## 15. Ví dụ thực hành tổng hợp\n\n### Bài toán: Tính tổng tiền mua hàng\n\n**Yêu cầu:**\n\nViết chương trình nhập:\n\n- Số lượng sản phẩm.\n- Đơn giá của mỗi sản phẩm, tính bằng đồng Việt Nam.\n\nTính tổng tiền:\n\n\\[\nTotal = Quantity \\times Price\n\\]\n\nChương trình cần kiểm tra dữ liệu hợp lệ và tránh tràn số nguyên.\n\n### 15.1. Phân tích kiểu dữ liệu\n\nGiả sử bài toán quy định:\n\n- Số lượng nằm trong `[1, 1000000]`.\n- Đơn giá nằm trong `[0, 1000000000]`.\n\nTổng tiền tối đa:\n\n\\[\n10^6 \\times 10^9 = 10^{15}\n\\]\n\nGiá trị này vượt giới hạn của `int` 32 bit, nhưng nằm trong phạm vi tối thiểu được bảo đảm của `long long`.\n\nVì vậy:\n\n- Có thể dùng `int` cho `quantity` và `price` trên môi trường `int` 32 bit thông dụng.\n- Nên dùng `long long` cho kết quả và đảm bảo phép nhân được thực hiện bằng `long long`.\n\nĐể tránh phụ thuộc vào giả định độ rộng 32 bit khi đọc các giới hạn nêu trên, chương trình dưới đây sử dụng `long long` cho cả hai đầu vào.\n\n### 15.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n\nint main() {\n    long long quantity{};\n    long long price{};\n\n    std::cout << \"Nhap so luong: \";\n\n    if (!(std::cin >> quantity)) {\n        std::cerr << \"So luong khong hop le.\\n\";\n        return 1;\n    }\n\n    std::cout << \"Nhap don gia: \";\n\n    if (!(std::cin >> price)) {\n        std::cerr << \"Don gia khong hop le.\\n\";\n        return 1;\n    }\n\n    constexpr long long maxQuantity{1'000'000};\n    constexpr long long maxPrice{1'000'000'000};\n\n    if (quantity < 1 || quantity > maxQuantity) {\n        std::cerr << \"So luong vuot pham vi.\\n\";\n        return 1;\n    }\n\n    if (price < 0 || price > maxPrice) {\n        std::cerr << \"Don gia vuot pham vi.\\n\";\n        return 1;\n    }\n\n    const long long total = quantity * price;\n\n    std::cout << \"Tong tien: \" << total << \" VND\\n\";\n\n    return 0;\n}\n```\n\n### 15.3. Kết quả\n\nInput:\n\n```text\nNhap so luong: 5\nNhap don gia: 150000\n```\n\nOutput:\n\n```text\nTong tien: 750000 VND\n```\n\n### 15.4. Phân tích\n\nChương trình áp dụng nhiều kiến thức:\n\n| Thành phần | Kiến thức |\n|---|---|\n| `long long` | Lựa chọn kiểu nguyên đủ rộng |\n| `std::cin` | Đọc dữ liệu |\n| `if` | Kiểm tra điều kiện |\n| `constexpr` | Khai báo giới hạn cố định |\n| `const` | Giữ kết quả không thay đổi |\n| `quantity * price` | Biểu thức số học |\n| `std::cerr` | Thông báo lỗi |\n\nPhép nhân an toàn trong phạm vi đã quy định vì:\n\n\\[\nTotal_{\\max} = 10^{15}\n\\]\n\nGiá trị này nhỏ hơn giới hạn tối đa tối thiểu được C++ bảo đảm cho `long long`.\n\n### 15.5. Trường hợp kiểm thử\n\n| Quantity | Price | Kết quả |\n|---|---|---|\n| 1 | 10000 | 10000 |\n| 5 | 150000 | 750000 |\n| 1000000 | 1000000000 | 1000000000000000 |\n| 0 | 10000 | Từ chối |\n| -1 | 10000 | Từ chối |\n| 5 | -100 | Từ chối |\n| 1000001 | 10000 | Từ chối |\n| `abc` | 10000 | Lỗi nhập liệu |\n\nChú ý rằng kiểm tra phạm vi đầu vào còn giúp chứng minh phép nhân sẽ không vượt giới hạn của kiểu dữ liệu.\n\nĐây là cách thiết kế an toàn hơn việc chỉ chọn một kiểu dữ liệu lớn rồi mặc định mọi phép tính đều hợp lệ.\n\n---\n\n## 16. Những lỗi thường gặp\n\n### 16.1. Sử dụng biến chưa khởi tạo\n\nKhông nên:\n\n```cpp\nint count;\n\nstd::cout << count;\n```\n\nNên viết:\n\n```cpp\nint count{};\n```\n\nHoặc khởi tạo bằng giá trị thực tế trước khi sử dụng.\n\n### 16.2. Chọn kiểu dữ liệu không phù hợp\n\nVí dụ:\n\n```cpp\nint population{10'000'000'000};\n```\n\nTrên những implementation thông dụng, giá trị này không thể biểu diễn bằng `int`.\n\nVới cú pháp khởi tạo bằng `{}`, compiler phải chẩn đoán phép chuyển đổi thu hẹp không hợp lệ.\n\nCách xử lý:\n\n```cpp\nlong long population{10'000'000'000LL};\n```\n\n### 16.3. Nhầm phép chia nguyên\n\n```cpp\ndouble result = 7 / 2;\n```\n\nKết quả là `3.0`.\n\nMuốn có phần thập phân:\n\n```cpp\ndouble result = 7.0 / 2;\n```\n\n### 16.4. Lạm dụng unsigned\n\nVí dụ:\n\n```cpp\nunsigned int count{0};\n\ncount -= 1;\n```\n\nKết quả không phải `-1`.\n\nUnsigned sử dụng số học modulo, vì vậy giá trị sẽ quay về giới hạn lớn của kiểu.\n\nCần lựa chọn kiểu phù hợp với ý nghĩa dữ liệu thay vì mặc định unsigned luôn tốt hơn.\n\n### 16.5. Sử dụng biến ngoài phạm vi\n\n```cpp\nif (true) {\n    int value{10};\n}\n\nstd::cout << value;\n```\n\nTên `value` không nằm trong phạm vi sau khi khối `if` kết thúc.\n\n### 16.6. Không hiểu lifetime\n\nKhông trả về tham chiếu hoặc con trỏ đến biến cục bộ đã hết vòng đời.\n\nVí dụ sai:\n\n```cpp\nconst int& getValue() {\n    int value{10};\n\n    return value;\n}\n```\n\nNên trả về giá trị:\n\n```cpp\nint getValue() {\n    return 10;\n}\n```\n\n### 16.7. Nhầm lỗi linker với lỗi compiler\n\nNếu compiler báo không tìm thấy định nghĩa của hàm trong giai đoạn linking, việc thay đổi kiểu dữ liệu hoặc sửa cú pháp trong file gọi hàm không nhất thiết giải quyết được vấn đề.\n\nCần kiểm tra:\n\n- Source file chứa định nghĩa đã được đưa vào lệnh build chưa.\n- Khai báo và định nghĩa có khớp nhau không.\n- Namespace có chính xác không.\n- Có thiếu thư viện khi linking không.\n- Có vi phạm ODR không.\n\n---\n\n## 17. Bài tập tự luyện\n\n### Bài 1. Thông tin học sinh\n\n**Yêu cầu:** Khai báo các biến lưu:\n\n- Họ và tên.\n- Tuổi.\n- Điểm trung bình.\n- Trạng thái đang học.\n\nIn toàn bộ thông tin ra màn hình.\n\n**Gợi ý:** Sử dụng `std::string`, `int`, `double` và `bool`.\n\n### Bài 2. Tính diện tích hình chữ nhật\n\n**Yêu cầu:** Nhập chiều dài và chiều rộng, tính diện tích.\n\nCông thức:\n\n\\[\nS = a \\times b\n\\]\n\nVí dụ:\n\n```text\nInput:\n5 3\n\nOutput:\n15\n```\n\n**Gợi ý:** Sử dụng `double` nếu kích thước có thể chứa phần thập phân. Kiểm tra hai kích thước phải dương và hữu hạn.\n\n### Bài 3. Tính tuổi sau n năm\n\n**Yêu cầu:** Nhập tuổi hiện tại và số năm cần cộng thêm.\n\nVí dụ:\n\n```text\nInput:\n16 5\n\nOutput:\n21\n```\n\n**Gợi ý:** Kiểm tra giá trị âm và cân nhắc tràn số khi tính tổng.\n\n### Bài 4. Tính tổng tiền\n\n**Yêu cầu:** Nhập số lượng và đơn giá của một sản phẩm. Tính tổng tiền.\n\nVí dụ:\n\n```text\nInput:\n10 250000\n\nOutput:\n2500000\n```\n\n**Gợi ý:** Chọn kiểu dữ liệu dựa trên giá trị lớn nhất có thể xảy ra.\n\n### Bài 5. Kiểm tra giới hạn kiểu dữ liệu\n\n**Yêu cầu:** Viết chương trình in:\n\n- Kích thước `int`.\n- Kích thước `long long`.\n- Giá trị lớn nhất của `int`.\n- Giá trị lớn nhất của `long long`.\n\n**Gợi ý:** Sử dụng `sizeof` và `std::numeric_limits`.\n\n### Bài 6. Tổ chức chương trình nhiều file\n\n**Yêu cầu:** Tạo dự án gồm:\n\n```text\nProject/\n├── main.cpp\n├── Calculator.cpp\n└── Calculator.h\n```\n\nTrong đó:\n\n- `Calculator.h` khai báo hàm `add`.\n- `Calculator.cpp` định nghĩa hàm `add`.\n- `main.cpp` đọc hai số và gọi hàm.\n\nBiên dịch đồng thời hai file `.cpp` bằng GCC hoặc MSVC.\n\n**Mục tiêu:** Phân biệt declaration, definition, translation unit và linking.\n\n---\n\n## 18. Tổng kết kiến thức\n\n| Khái niệm | Ý nghĩa |\n|---|---|\n| Variable | Tên biến trong chương trình |\n| Data type | Kiểu dữ liệu và các thao tác hợp lệ |\n| Declaration | Khai báo một tên và kiểu |\n| Definition | Định nghĩa thực thể theo quy tắc của ngôn ngữ |\n| Initialization | Cung cấp giá trị ban đầu |\n| Assignment | Gán giá trị sau khi đối tượng tồn tại |\n| `const` | Không cho phép thay đổi qua đối tượng const |\n| `constexpr` | Khai báo thực thể dùng trong ngữ cảnh biểu thức hằng phù hợp |\n| `auto` | Suy luận kiểu dữ liệu |\n| `sizeof` | Xác định kích thước lưu trữ |\n| `static_cast` | Chuyển đổi kiểu tường minh |\n| Scope | Phạm vi có thể sử dụng tên |\n| Lifetime | Khoảng thời gian tồn tại của đối tượng |\n| Header | Tệp thường chứa khai báo dùng chung |\n| Translation unit | Đơn vị mã nguồn sau tiền xử lý |\n| Compiler | Xử lý và biên dịch mã nguồn |\n| Linker | Liên kết object file và thư viện |\n| Executable | Sản phẩm có thể thực thi |\n\nSau bài học này, bạn cần nắm được bốn nguyên tắc:\n\n1. **Khởi tạo trước khi sử dụng:** Không đọc giá trị bất định của biến.\n2. **Chọn kiểu theo miền giá trị:** Cần xét cả giá trị đầu vào và kết quả trung gian của phép tính.\n3. **Giữ phạm vi dữ liệu hợp lý:** Hạn chế trạng thái chia sẻ không cần thiết, tránh phụ thuộc vào đối tượng đã hết vòng đời.\n4. **Hiểu quy trình build:** Biết phân biệt lỗi compile, link và runtime để chẩn đoán đúng nguyên nhân.\n\nMột chương trình C++ tốt không chỉ cần biên dịch thành công. Dữ liệu phải có ý nghĩa rõ ràng, kiểu dữ liệu phù hợp và hành vi được xác định trong những trường hợp mà chương trình cam kết hỗ trợ.\n\n## Đọc tiếp\n\n- [Chương trình C++ đầu tiên](/cpp/bat-dau/chuong-trinh-dau-tien): Tìm hiểu cấu trúc chương trình và cách sử dụng compiler.\n- [Toán tử và biểu thức](/cpp/bat-dau/toan-tu): Thực hiện các phép toán, so sánh và xử lý biểu thức.\n- [Header, source và modules](/cpp/ky-thuat/header-source-modules): Tìm hiểu sâu hơn về tổ chức mã nguồn, translation unit, ODR và build.\n- [Kiểu dữ liệu và giới hạn](/cpp/tra-cuu/kieu-du-lieu): Tra cứu phạm vi, kích thước và các tính chất của kiểu dữ liệu trong C++17.",
     "sourcePath": "content/cpp/getting-started/bien-kieu-du-lieu.md",
     "headings": [
       {
-        "title": "Khai báo và khởi tạo",
-        "id": "khai-bao-va-khoi-tao"
+        "title": "Biến, kiểu dữ liệu và quá trình biên dịch trong C++",
+        "id": "bien-kieu-du-lieu-va-qua-trinh-bien-dich-trong-c"
       },
       {
-        "title": "Một số kiểu cơ bản",
-        "id": "mot-so-kieu-co-ban"
+        "title": "1. Biến là gì?",
+        "id": "1-bien-la-gi"
       },
       {
-        "title": "Source đến executable",
-        "id": "source-en-executable"
+        "title": "1.1. Khái niệm biến",
+        "id": "11-khai-niem-bien"
       },
       {
-        "title": "Lỗi thường gặp",
-        "id": "loi-thuong-gap"
+        "title": "1.2. Ví dụ sử dụng biến",
+        "id": "12-vi-du-su-dung-bien"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "2. Khai báo, khởi tạo và gán giá trị",
+        "id": "2-khai-bao-khoi-tao-va-gan-gia-tri"
+      },
+      {
+        "title": "2.1. Khai báo biến (Declaration)",
+        "id": "21-khai-bao-bien-declaration"
+      },
+      {
+        "title": "2.2. Khởi tạo biến (Initialization)",
+        "id": "22-khoi-tao-bien-initialization"
+      },
+      {
+        "title": "2.3. Khởi tạo bằng dấu ngoặc nhọn",
+        "id": "23-khoi-tao-bang-dau-ngoac-nhon"
+      },
+      {
+        "title": "2.4. Value initialization",
+        "id": "24-value-initialization"
+      },
+      {
+        "title": "2.5. Gán giá trị (Assignment)",
+        "id": "25-gan-gia-tri-assignment"
+      },
+      {
+        "title": "3. Quy tắc đặt tên biến",
+        "id": "3-quy-tac-at-ten-bien"
+      },
+      {
+        "title": "3.1. Quy tắc cơ bản",
+        "id": "31-quy-tac-co-ban"
+      },
+      {
+        "title": "3.2. Đặt tên có ý nghĩa",
+        "id": "32-at-ten-co-y-nghia"
+      },
+      {
+        "title": "3.3. Một số naming convention",
+        "id": "33-mot-so-naming-convention"
+      },
+      {
+        "title": "4. Các kiểu dữ liệu cơ bản",
+        "id": "4-cac-kieu-du-lieu-co-ban"
+      },
+      {
+        "title": "4.1. Kiểu số nguyên",
+        "id": "41-kieu-so-nguyen"
+      },
+      {
+        "title": "4.2. Số nguyên không dấu (Unsigned)",
+        "id": "42-so-nguyen-khong-dau-unsigned"
+      },
+      {
+        "title": "4.3. Kiểu số thực",
+        "id": "43-kieu-so-thuc"
+      },
+      {
+        "title": "4.4. Sai số số thực",
+        "id": "44-sai-so-so-thuc"
+      },
+      {
+        "title": "4.5. Kiểu bool",
+        "id": "45-kieu-bool"
+      },
+      {
+        "title": "4.6. Kiểu char",
+        "id": "46-kieu-char"
+      },
+      {
+        "title": "4.7. Kiểu std::string",
+        "id": "47-kieu-stdstring"
+      },
+      {
+        "title": "5. Kích thước và giới hạn kiểu dữ liệu",
+        "id": "5-kich-thuoc-va-gioi-han-kieu-du-lieu"
+      },
+      {
+        "title": "5.1. Toán tử sizeof",
+        "id": "51-toan-tu-sizeof"
+      },
+      {
+        "title": "5.2. numeric_limits",
+        "id": "52-numericlimits"
+      },
+      {
+        "title": "5.3. Kiểu số nguyên có độ rộng cố định",
+        "id": "53-kieu-so-nguyen-co-o-rong-co-inh"
+      },
+      {
+        "title": "6. const, constexpr và auto",
+        "id": "6-const-constexpr-va-auto"
+      },
+      {
+        "title": "6.1. const: Giá trị không thể thay đổi thông qua biến",
+        "id": "61-const-gia-tri-khong-the-thay-oi-thong-qua-bien"
+      },
+      {
+        "title": "6.2. constexpr: Biểu thức hằng tại thời điểm biên dịch",
+        "id": "62-constexpr-bieu-thuc-hang-tai-thoi-iem-bien-dich"
+      },
+      {
+        "title": "6.3. So sánh const và constexpr",
+        "id": "63-so-sanh-const-va-constexpr"
+      },
+      {
+        "title": "6.4. auto: Tự suy luận kiểu dữ liệu",
+        "id": "64-auto-tu-suy-luan-kieu-du-lieu"
+      },
+      {
+        "title": "6.5. Khi nào nên sử dụng auto?",
+        "id": "65-khi-nao-nen-su-dung-auto"
+      },
+      {
+        "title": "7. Chuyển đổi kiểu dữ liệu (Type Conversion)",
+        "id": "7-chuyen-oi-kieu-du-lieu-type-conversion"
+      },
+      {
+        "title": "7.1. Chuyển đổi ngầm định",
+        "id": "71-chuyen-oi-ngam-inh"
+      },
+      {
+        "title": "7.2. Chuyển đổi tường minh",
+        "id": "72-chuyen-oi-tuong-minh"
+      },
+      {
+        "title": "7.3. Tránh chia nguyên ngoài ý muốn",
+        "id": "73-tranh-chia-nguyen-ngoai-y-muon"
+      },
+      {
+        "title": "7.4. Chuyển đổi có thể làm mất dữ liệu",
+        "id": "74-chuyen-oi-co-the-lam-mat-du-lieu"
+      },
+      {
+        "title": "8. Tràn số nguyên (Integer Overflow)",
+        "id": "8-tran-so-nguyen-integer-overflow"
+      },
+      {
+        "title": "8.1. Ví dụ tràn số",
+        "id": "81-vi-du-tran-so"
+      },
+      {
+        "title": "8.2. Sử dụng kiểu đủ rộng",
+        "id": "82-su-dung-kieu-u-rong"
+      },
+      {
+        "title": "8.3. Chú ý kiểu dữ liệu của phép tính",
+        "id": "83-chu-y-kieu-du-lieu-cua-phep-tinh"
+      },
+      {
+        "title": "8.4. Kiểm tra trước phép tính",
+        "id": "84-kiem-tra-truoc-phep-tinh"
+      },
+      {
+        "title": "9. Phạm vi và thời gian sống của biến",
+        "id": "9-pham-vi-va-thoi-gian-song-cua-bien"
+      },
+      {
+        "title": "9.1. Biến cục bộ (Local Variable)",
+        "id": "91-bien-cuc-bo-local-variable"
+      },
+      {
+        "title": "9.2. Biến toàn cục (Global Variable)",
+        "id": "92-bien-toan-cuc-global-variable"
+      },
+      {
+        "title": "9.3. Biến static cục bộ",
+        "id": "93-bien-static-cuc-bo"
+      },
+      {
+        "title": "9.4. Shadowing",
+        "id": "94-shadowing"
+      },
+      {
+        "title": "10. Bộ nhớ và vòng đời đối tượng",
+        "id": "10-bo-nho-va-vong-oi-oi-tuong"
+      },
+      {
+        "title": "10.1. Automatic storage duration",
+        "id": "101-automatic-storage-duration"
+      },
+      {
+        "title": "10.2. Dynamic storage duration",
+        "id": "102-dynamic-storage-duration"
+      },
+      {
+        "title": "11. Từ mã nguồn đến chương trình thực thi",
+        "id": "11-tu-ma-nguon-en-chuong-trinh-thuc-thi"
+      },
+      {
+        "title": "11.1. Tổng quan quá trình build",
+        "id": "111-tong-quan-qua-trinh-build"
+      },
+      {
+        "title": "11.2. Preprocessing",
+        "id": "112-preprocessing"
+      },
+      {
+        "title": "11.3. Compilation",
+        "id": "113-compilation"
+      },
+      {
+        "title": "11.4. Object file",
+        "id": "114-object-file"
+      },
+      {
+        "title": "11.5. Linking",
+        "id": "115-linking"
+      },
+      {
+        "title": "12. Header, source file và translation unit",
+        "id": "12-header-source-file-va-translation-unit"
+      },
+      {
+        "title": "12.1. Header file",
+        "id": "121-header-file"
+      },
+      {
+        "title": "12.2. Source file",
+        "id": "122-source-file"
+      },
+      {
+        "title": "12.3. File main.cpp",
+        "id": "123-file-maincpp"
+      },
+      {
+        "title": "12.4. Cấu trúc dự án",
+        "id": "124-cau-truc-du-an"
+      },
+      {
+        "title": "12.5. Translation unit là gì?",
+        "id": "125-translation-unit-la-gi"
+      },
+      {
+        "title": "12.6. One Definition Rule (ODR)",
+        "id": "126-one-definition-rule-odr"
+      },
+      {
+        "title": "13. Lệnh biên dịch C++17",
+        "id": "13-lenh-bien-dich-c17"
+      },
+      {
+        "title": "13.1. GCC (g++)",
+        "id": "131-gcc-g"
+      },
+      {
+        "title": "13.2. Clang",
+        "id": "132-clang"
+      },
+      {
+        "title": "13.3. MSVC",
+        "id": "133-msvc"
+      },
+      {
+        "title": "13.4. Build để debug",
+        "id": "134-build-e-debug"
+      },
+      {
+        "title": "14. Phân biệt lỗi biên dịch, liên kết và runtime",
+        "id": "14-phan-biet-loi-bien-dich-lien-ket-va-runtime"
+      },
+      {
+        "title": "14.1. Compile-time error",
+        "id": "141-compile-time-error"
+      },
+      {
+        "title": "14.2. Link-time error",
+        "id": "142-link-time-error"
+      },
+      {
+        "title": "14.3. Runtime error",
+        "id": "143-runtime-error"
+      },
+      {
+        "title": "14.4. Bảng phân biệt",
+        "id": "144-bang-phan-biet"
+      },
+      {
+        "title": "15. Ví dụ thực hành tổng hợp",
+        "id": "15-vi-du-thuc-hanh-tong-hop"
+      },
+      {
+        "title": "Bài toán: Tính tổng tiền mua hàng",
+        "id": "bai-toan-tinh-tong-tien-mua-hang"
+      },
+      {
+        "title": "15.1. Phân tích kiểu dữ liệu",
+        "id": "151-phan-tich-kieu-du-lieu"
+      },
+      {
+        "title": "15.2. Chương trình C++17",
+        "id": "152-chuong-trinh-c17"
+      },
+      {
+        "title": "15.3. Kết quả",
+        "id": "153-ket-qua"
+      },
+      {
+        "title": "15.4. Phân tích",
+        "id": "154-phan-tich"
+      },
+      {
+        "title": "15.5. Trường hợp kiểm thử",
+        "id": "155-truong-hop-kiem-thu"
+      },
+      {
+        "title": "16. Những lỗi thường gặp",
+        "id": "16-nhung-loi-thuong-gap"
+      },
+      {
+        "title": "16.1. Sử dụng biến chưa khởi tạo",
+        "id": "161-su-dung-bien-chua-khoi-tao"
+      },
+      {
+        "title": "16.2. Chọn kiểu dữ liệu không phù hợp",
+        "id": "162-chon-kieu-du-lieu-khong-phu-hop"
+      },
+      {
+        "title": "16.3. Nhầm phép chia nguyên",
+        "id": "163-nham-phep-chia-nguyen"
+      },
+      {
+        "title": "16.4. Lạm dụng unsigned",
+        "id": "164-lam-dung-unsigned"
+      },
+      {
+        "title": "16.5. Sử dụng biến ngoài phạm vi",
+        "id": "165-su-dung-bien-ngoai-pham-vi"
+      },
+      {
+        "title": "16.6. Không hiểu lifetime",
+        "id": "166-khong-hieu-lifetime"
+      },
+      {
+        "title": "16.7. Nhầm lỗi linker với lỗi compiler",
+        "id": "167-nham-loi-linker-voi-loi-compiler"
+      },
+      {
+        "title": "17. Bài tập tự luyện",
+        "id": "17-bai-tap-tu-luyen"
+      },
+      {
+        "title": "Bài 1. Thông tin học sinh",
+        "id": "bai-1-thong-tin-hoc-sinh"
+      },
+      {
+        "title": "Bài 2. Tính diện tích hình chữ nhật",
+        "id": "bai-2-tinh-dien-tich-hinh-chu-nhat"
+      },
+      {
+        "title": "Bài 3. Tính tuổi sau n năm",
+        "id": "bai-3-tinh-tuoi-sau-n-nam"
+      },
+      {
+        "title": "Bài 4. Tính tổng tiền",
+        "id": "bai-4-tinh-tong-tien"
+      },
+      {
+        "title": "Bài 5. Kiểm tra giới hạn kiểu dữ liệu",
+        "id": "bai-5-kiem-tra-gioi-han-kieu-du-lieu"
+      },
+      {
+        "title": "Bài 6. Tổ chức chương trình nhiều file",
+        "id": "bai-6-to-chuc-chuong-trinh-nhieu-file"
+      },
+      {
+        "title": "18. Tổng kết kiến thức",
+        "id": "18-tong-ket-kien-thuc"
       },
       {
         "title": "Đọc tiếp",
@@ -4728,6 +5369,10 @@ export const articles = [
     "body": "# Toán tử và biểu thức trong C++\n\nTrong lập trình, chúng ta thường xuyên thực hiện các phép tính, so sánh giá trị hoặc kiểm tra điều kiện.\n\nVí dụ, một chương trình có thể cần:\n\n- Tính tổng điểm của học sinh.\n- Kiểm tra một số có chia hết cho 2 hay không.\n- Xác định người dùng có đủ tuổi sử dụng dịch vụ.\n- Cập nhật số lượng sản phẩm trong kho.\n- Kết hợp nhiều điều kiện để đưa ra quyết định.\n\nĐể thực hiện những công việc này, C++ cung cấp **toán tử (operators)** và **biểu thức (expressions)**.\n\nĐây là kiến thức nền tảng trước khi học câu lệnh điều kiện, vòng lặp và xây dựng thuật toán.\n\n## 1. Toán tử và biểu thức là gì?\n\n### 1.1. Toán tử (Operator)\n\nToán tử là ký hiệu hoặc từ khóa được sử dụng để thực hiện một phép toán trên một hoặc nhiều giá trị.\n\nVí dụ:\n\n```cpp\nint a{10};\nint b{5};\n\nint sum = a + b;\n```\n\nTrong câu lệnh `a + b`:\n\n- `a` và `b` là các toán hạng (operands).\n- `+` là toán tử (operator).\n- `a + b` là một biểu thức (expression).\n\nToán tử `+` thực hiện phép cộng hai giá trị.\n\n### 1.2. Biểu thức (Expression)\n\nBiểu thức là sự kết hợp của giá trị, biến, toán tử hoặc lời gọi hàm để thực hiện một phép tính hoặc thao tác.\n\nVí dụ:\n\n```cpp\nint a{10};\nint b{5};\n\nint result = a + b * 2;\n```\n\nBiểu thức:\n\n```cpp\na + b * 2\n```\n\nđược tính như sau:\n\n\\[\n10 + 5 \\times 2 = 20\n\\]\n\nPhép nhân được thực hiện trước phép cộng theo quy tắc ưu tiên toán tử.\n\n### 1.3. Phân loại toán tử\n\nC++ cung cấp nhiều nhóm toán tử khác nhau.\n\n| Nhóm | Ví dụ | Công dụng |\n|---|---|---|\n| Số học | `+`, `-`, `*`, `/`, `%` | Thực hiện phép tính |\n| So sánh | `==`, `!=`, `<`, `>` | So sánh giá trị |\n| Logic | `&&`, `\\|\\|`, `!` | Kết hợp điều kiện |\n| Gán | `=`, `+=`, `-=`, `*=` | Gán và cập nhật giá trị |\n| Tăng giảm | `++`, `--` | Tăng hoặc giảm một đơn vị |\n| Điều kiện | `?:` | Lựa chọn biểu thức theo điều kiện |\n| Bitwise | `&`, `\\|`, `^`, `~` | Thao tác trên các bit |\n\nTrong bài này, chúng ta tập trung vào những nhóm toán tử thường xuyên xuất hiện trong chương trình C++ cơ bản.\n\n---\n\n## 2. Toán tử số học (Arithmetic Operators)\n\nToán tử số học dùng để thực hiện các phép tính toán học.\n\n### 2.1. Các toán tử cơ bản\n\n| Toán tử | Ý nghĩa | Ví dụ | Kết quả |\n|---|---|---|---|\n| `+` | Cộng | `10 + 3` | `13` |\n| `-` | Trừ | `10 - 3` | `7` |\n| `*` | Nhân | `10 * 3` | `30` |\n| `/` | Chia | `10 / 3` | `3` |\n| `%` | Chia lấy dư | `10 % 3` | `1` |\n\nVí dụ chương trình:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{17};\n    int b{5};\n\n    std::cout << \"Tong: \" << a + b << '\\n';\n    std::cout << \"Hieu: \" << a - b << '\\n';\n    std::cout << \"Tich: \" << a * b << '\\n';\n    std::cout << \"Thuong: \" << a / b << '\\n';\n    std::cout << \"So du: \" << a % b << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nTong: 22\nHieu: 12\nTich: 85\nThuong: 3\nSo du: 2\n```\n\n**Giải thích:**\n\n- `17 + 5 = 22`\n- `17 - 5 = 12`\n- `17 × 5 = 85`\n- `17 / 5 = 3` khi thực hiện phép chia nguyên.\n- `17 % 5 = 2`, vì 17 chia 5 được 3 và dư 2.\n\n### 2.2. Phép chia số nguyên và số thực\n\nĐây là một trong những điểm dễ nhầm lẫn nhất khi mới học C++.\n\nXét chương trình:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{7};\n    int b{2};\n\n    std::cout << a / b << '\\n';\n    std::cout << 7.0 / 2 << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n3\n3.5\n```\n\n**Tại sao `7 / 2` lại bằng `3`?**\n\nKhi cả hai toán hạng đều là số nguyên, C++ thực hiện phép chia nguyên. Phần thập phân bị loại bỏ theo hướng về 0.\n\nMuốn nhận kết quả dạng số thực, ít nhất một toán hạng cần có kiểu số thực.\n\nVí dụ:\n\n```cpp\ndouble result = 7.0 / 2;\n```\n\nHoặc chuyển kiểu tường minh:\n\n```cpp\nint a{7};\nint b{2};\n\ndouble result = static_cast<double>(a) / b;\n```\n\nKết quả:\n\n```text\n3.5\n```\n\n`static_cast<double>(a)` chuyển giá trị của `a` sang kiểu `double` trước khi thực hiện phép chia.\n\n**Một lỗi thường gặp:**\n\n```cpp\nint a{7};\nint b{2};\n\ndouble result = a / b;\n```\n\nMặc dù `result` có kiểu `double`, kết quả vẫn là `3.0`.\n\nNguyên nhân là phép chia nguyên đã được thực hiện trước khi gán kết quả cho biến `result`.\n\n### 2.3. Toán tử chia lấy dư (%)\n\nToán tử `%` trả về phần dư của phép chia số nguyên.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << 10 % 3 << '\\n';\n    std::cout << 20 % 5 << '\\n';\n    std::cout << 17 % 4 << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1\n0\n1\n```\n\n**Ứng dụng phổ biến nhất là kiểm tra tính chia hết.**\n\nMột số nguyên `n` chia hết cho `k` khác `0` khi:\n\n```cpp\nn % k == 0\n```\n\nVí dụ kiểm tra một số chẵn:\n\n```cpp\nint n{12};\n\nbool isEven = (n % 2 == 0);\n```\n\nVì `12 % 2 == 0`, biến `isEven` có giá trị `true`.\n\nMột số ứng dụng khác của `%`:\n\n- Xác định số chẵn, số lẻ.\n- Kiểm tra tính chia hết.\n- Tách chữ số cuối của số nguyên không âm.\n- Tính thời gian theo chu kỳ.\n- Xử lý các bài toán số học và thuật toán.\n\n**Lưu ý về số âm:**\n\nTrong C++17, phép chia số nguyên cắt phần thập phân theo hướng về 0. Phần dư có cùng dấu với số bị chia nếu phần dư khác 0.\n\nVí dụ:\n\n```cpp\nstd::cout << -17 / 5 << '\\n';\nstd::cout << -17 % 5 << '\\n';\n```\n\nKết quả:\n\n```text\n-3\n-2\n```\n\nKhông nên mặc định kết quả `%` luôn không âm.\n\nNgoài ra, toán tử `%` chỉ áp dụng cho kiểu số nguyên, không sử dụng trực tiếp với `double` hoặc `float`.\n\n### 2.4. Phép chia cho 0\n\nTrong số học, phép chia cho 0 không được xác định.\n\nVới kiểu số nguyên trong C++, phép chia hoặc chia lấy dư cho 0 gây ra hành vi không xác định (*undefined behavior*).\n\nVí dụ không an toàn:\n\n```cpp\nint a{10};\nint b{0};\n\nint result = a / b;\n```\n\nCách xử lý:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{};\n    int b{};\n\n    if (!(std::cin >> a >> b)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    if (b == 0) {\n        std::cerr << \"Khong the chia cho 0.\\n\";\n        return 1;\n    }\n\n    std::cout << a / b << '\\n';\n\n    return 0;\n}\n```\n\nNgoài trường hợp chia cho 0, phép chia nguyên có dấu cũng có thể gặp trường hợp tràn số, chẳng hạn giá trị nhỏ nhất của `int` chia cho `-1`.\n\n**Nguyên tắc:** Luôn kiểm tra các điều kiện có thể khiến phép tính không hợp lệ trước khi thực hiện.\n\n---\n\n## 3. Toán tử so sánh (Comparison Operators)\n\nToán tử so sánh được sử dụng để kiểm tra mối quan hệ giữa hai giá trị.\n\nKết quả của phép so sánh có kiểu `bool`, nhận một trong hai giá trị:\n\n- `true`: Điều kiện đúng.\n- `false`: Điều kiện sai.\n\n### 3.1. Bảng toán tử so sánh\n\n| Toán tử | Ý nghĩa | Ví dụ | Kết quả |\n|---|---|---|---|\n| `==` | Bằng nhau | `5 == 5` | `true` |\n| `!=` | Khác nhau | `5 != 3` | `true` |\n| `>` | Lớn hơn | `5 > 3` | `true` |\n| `<` | Nhỏ hơn | `5 < 3` | `false` |\n| `>=` | Lớn hơn hoặc bằng | `5 >= 5` | `true` |\n| `<=` | Nhỏ hơn hoặc bằng | `3 <= 5` | `true` |\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{10};\n    int b{5};\n\n    std::cout << (a > b) << '\\n';\n    std::cout << (a == b) << '\\n';\n    std::cout << (a != b) << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1\n0\n1\n```\n\nMặc định, `std::cout` hiển thị giá trị `bool` dưới dạng:\n\n- `1` tương ứng với `true`.\n- `0` tương ứng với `false`.\n\nNếu muốn in chữ `true` và `false`, sử dụng `std::boolalpha`:\n\n```cpp\nstd::cout << std::boolalpha;\nstd::cout << (10 > 5) << '\\n';\n```\n\nKết quả:\n\n```text\ntrue\n```\n\n### 3.2. Phân biệt = và ==\n\nĐây là hai toán tử hoàn toàn khác nhau.\n\n**Toán tử `=` dùng để gán giá trị:**\n\n```cpp\nint a{5};\n\na = 10;\n```\n\nSau câu lệnh trên, `a` có giá trị `10`.\n\n**Toán tử `==` dùng để so sánh:**\n\n```cpp\nint a{5};\n\nbool result = (a == 10);\n```\n\nBiến `result` có giá trị `false`.\n\nMột lỗi phổ biến:\n\n```cpp\nint a{5};\n\nif (a = 10) {\n    std::cout << \"Dieu kien dung\\n\";\n}\n```\n\nỞ đây, `a = 10` là phép gán. Biểu thức trả về giá trị vừa gán, sau đó được chuyển sang kiểu `bool`.\n\nVì `10` khác `0`, điều kiện được xem là đúng.\n\nCách viết đúng khi muốn so sánh:\n\n```cpp\nif (a == 10) {\n    std::cout << \"a bang 10\\n\";\n}\n```\n\n### 3.3. So sánh trong một khoảng giá trị\n\nGiả sử cần kiểm tra điểm số nằm trong khoảng từ 0 đến 10.\n\nTrong toán học, ta có thể viết:\n\n\\[\n0 \\le x \\le 10\n\\]\n\nNhưng trong C++, không nên viết:\n\n```cpp\n0 <= x <= 10\n```\n\nBiểu thức này không được hiểu là hai phép so sánh độc lập cùng áp dụng lên `x`.\n\nThay vào đó, C++ sẽ nhóm thành:\n\n```cpp\n(0 <= x) <= 10\n```\n\nKết quả của `0 <= x` là `bool`, được chuyển thành `0` hoặc `1` khi so sánh với `10`.\n\nVì vậy, biểu thức trên luôn đúng với các giá trị `x` số học thông thường.\n\n**Cách viết chính xác:**\n\n```cpp\nbool valid = (x >= 0) && (x <= 10);\n```\n\nToán tử `&&` yêu cầu cả hai điều kiện đều đúng.\n\n### 3.4. So sánh số thực\n\nKiểu `float` và `double` có giới hạn về độ chính xác.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    double a{0.1};\n    double b{0.2};\n\n    std::cout << std::boolalpha;\n    std::cout << (a + b == 0.3) << '\\n';\n\n    return 0;\n}\n```\n\nTrên các hệ thống thông dụng sử dụng số thực IEEE 754, kết quả thường là:\n\n```text\nfalse\n```\n\nNguyên nhân là những giá trị như `0.1` không thể được biểu diễn chính xác tuyệt đối trong hệ nhị phân dấu phẩy động.\n\nVới các phép tính gần đúng, có thể so sánh sai số:\n\n```cpp\n#include <cmath>\n#include <iostream>\n\nint main() {\n    double a{0.1};\n    double b{0.2};\n    double expected{0.3};\n\n    constexpr double epsilon{1e-9};\n\n    bool equal = std::abs((a + b) - expected) < epsilon;\n\n    std::cout << std::boolalpha << equal << '\\n';\n}\n```\n\nKết quả trên các hệ thống thông dụng:\n\n```text\ntrue\n```\n\n`epsilon` là ngưỡng sai số cho phép.\n\nTuy nhiên, giá trị `1e-9` không phù hợp với mọi bài toán. Khi làm việc với những số có độ lớn rất khác nhau, cần cân nhắc sai số tuyệt đối, sai số tương đối hoặc kết hợp cả hai.\n\n---\n\n## 4. Toán tử logic (Logical Operators)\n\nToán tử logic cho phép kết hợp nhiều điều kiện trong một biểu thức.\n\nC++ có ba toán tử logic cơ bản:\n\n| Toán tử | Tên | Ý nghĩa |\n|---|---|---|\n| `&&` | AND | Cả hai điều kiện đều đúng |\n| `\\|\\|` | OR | Ít nhất một điều kiện đúng |\n| `!` | NOT | Đảo ngược giá trị logic |\n\n### 4.1. Toán tử AND (&&)\n\nBiểu thức:\n\n```cpp\na && b\n```\n\nchỉ cho kết quả `true` khi cả `a` và `b` đều đúng.\n\nBảng chân trị:\n\n| a | b | a && b |\n|---|---|---|\n| false | false | false |\n| false | true | false |\n| true | false | false |\n| true | true | true |\n\nVí dụ kiểm tra điều kiện tham gia một hoạt động:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{20};\n    bool hasTicket{true};\n\n    bool canEnter = (age >= 18) && hasTicket;\n\n    std::cout << std::boolalpha << canEnter << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\ntrue\n```\n\nNgười dùng chỉ được phép tham gia nếu đồng thời đủ tuổi và có vé.\n\n### 4.2. Toán tử OR (||)\n\nBiểu thức:\n\n```cpp\na || b\n```\n\ncho kết quả `true` nếu có ít nhất một điều kiện đúng.\n\nBảng chân trị:\n\n| a | b | a \\|\\| b |\n|---|---|---|\n| false | false | false |\n| false | true | true |\n| true | false | true |\n| true | true | true |\n\nVí dụ:\n\n```cpp\nbool isAdmin{false};\nbool isOwner{true};\n\nbool hasAccess = isAdmin || isOwner;\n```\n\nBiến `hasAccess` có giá trị `true`, vì người dùng là chủ sở hữu.\n\n### 4.3. Toán tử NOT (!)\n\nToán tử `!` đảo ngược giá trị logic.\n\n| a | !a |\n|---|---|\n| true | false |\n| false | true |\n\nVí dụ:\n\n```cpp\nbool isBanned{false};\n\nbool canAccess = !isBanned;\n```\n\nVì `isBanned` bằng `false`, giá trị `canAccess` sẽ là `true`.\n\n### 4.4. Kết hợp nhiều điều kiện\n\nGiả sử hệ thống có quy tắc:\n\n- Người dùng phải từ 18 tuổi.\n- Có vé hoặc thuộc nhóm khách mời.\n- Không bị cấm truy cập.\n\nBiểu thức:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{20};\n\n    bool hasTicket{false};\n    bool isGuest{true};\n    bool isBanned{false};\n\n    bool canEnter =\n        (age >= 18) &&\n        (hasTicket || isGuest) &&\n        !isBanned;\n\n    std::cout << std::boolalpha << canEnter << '\\n';\n}\n```\n\nKết quả:\n\n```text\ntrue\n```\n\nSử dụng dấu ngoặc giúp biểu thức rõ ràng hơn và giảm nguy cơ hiểu nhầm thứ tự ưu tiên.\n\n### 4.5. Short-circuit: Đánh giá ngắn mạch\n\nHai toán tử `&&` và `||` có cơ chế *short-circuit evaluation*.\n\nĐiều này có nghĩa là chương trình có thể bỏ qua vế phải khi kết quả đã được xác định từ vế trái.\n\n**Với toán tử &&:**\n\nNếu vế trái là `false`, toàn bộ biểu thức chắc chắn là `false`.\n\nVí dụ:\n\n```cpp\nint divisor{0};\n\nbool valid =\n    (divisor != 0) &&\n    (10 / divisor > 2);\n```\n\nChương trình không thực hiện phép chia khi `divisor == 0`.\n\n**Với toán tử ||:**\n\nNếu vế trái là `true`, toàn bộ biểu thức chắc chắn là `true`.\n\nVí dụ:\n\n```cpp\nbool isAdmin{true};\nbool hasPermission{false};\n\nbool allowed = isAdmin || hasPermission;\n```\n\nChương trình không cần đánh giá vế phải khi `isAdmin` đã là `true`.\n\nShort-circuit là một cơ chế quan trọng trong việc bảo vệ các phép toán hoặc thao tác có điều kiện.\n\n**Lưu ý:** Không nhầm lẫn `&&` với `&`, hoặc `||` với `|`. Các toán tử bitwise có cách hoạt động khác và không cung cấp cơ chế short-circuit tương tự.\n\n---\n\n## 5. Toán tử gán (Assignment Operators)\n\nToán tử gán được sử dụng để thay đổi giá trị của biến.\n\n### 5.1. Phép gán cơ bản\n\n```cpp\nint score{10};\n\nscore = 20;\n```\n\nSau khi thực hiện:\n\n```text\nscore = 20\n```\n\nGiá trị cũ của biến được thay bằng giá trị mới.\n\n### 5.2. Các toán tử gán kết hợp\n\nC++ cung cấp cú pháp rút gọn để cập nhật giá trị của biến.\n\n| Toán tử | Ví dụ | Ý nghĩa tương ứng |\n|---|---|---|\n| `+=` | `a += 5` | `a = a + 5` |\n| `-=` | `a -= 5` | `a = a - 5` |\n| `*=` | `a *= 5` | `a = a * 5` |\n| `/=` | `a /= 5` | `a = a / 5` |\n| `%=` | `a %= 5` | `a = a % 5` |\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int score{10};\n\n    score += 5;\n    std::cout << score << '\\n';\n\n    score *= 2;\n    std::cout << score << '\\n';\n\n    score -= 10;\n    std::cout << score << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n15\n30\n20\n```\n\nVề mặt kết quả trong các ví dụ đơn giản, `a += b` tương đương với `a = a + b`.\n\nTuy nhiên, phép gán kết hợp chỉ đánh giá toán hạng bên trái một lần, nên hai cách viết không hoàn toàn giống nhau trong mọi biểu thức phức tạp.\n\n### 5.3. Ứng dụng thực tế\n\nGiả sử chương trình quản lý số lượng sản phẩm:\n\n```cpp\nint stock{100};\n\nstock += 20;\nstock -= 15;\n```\n\nKết quả cuối cùng:\n\n```text\nstock = 105\n```\n\nTuy nhiên, trong phần mềm thực tế, không nên cho phép trừ số lượng tùy ý mà thiếu kiểm tra.\n\nVí dụ:\n\n```cpp\nint stock{10};\nint requested{15};\n\nif (requested >= 0 && requested <= stock) {\n    stock -= requested;\n}\n```\n\nĐiều kiện này ngăn việc trừ số lượng âm hoặc vượt quá số lượng hiện có.\n\n---\n\n## 6. Toán tử tăng và giảm (Increment & Decrement)\n\nC++ hỗ trợ hai toán tử:\n\n- `++`: Tăng một đơn vị.\n- `--`: Giảm một đơn vị.\n\nCó hai cách sử dụng:\n\n- Tiền tố (prefix).\n- Hậu tố (postfix).\n\n### 6.1. Toán tử tiền tố\n\nVí dụ:\n\n```cpp\nint a{5};\n\nint b = ++a;\n```\n\nToán tử `++a` tăng `a` trước, sau đó biểu thức cho giá trị mới.\n\nKết quả:\n\n```text\na = 6\nb = 6\n```\n\n### 6.2. Toán tử hậu tố\n\nVí dụ:\n\n```cpp\nint a{5};\n\nint b = a++;\n```\n\nToán tử `a++` tạo ra giá trị cũ của `a` làm kết quả biểu thức, đồng thời tăng `a` lên một đơn vị.\n\nKết quả:\n\n```text\na = 6\nb = 5\n```\n\n### 6.3. So sánh tiền tố và hậu tố\n\n| Biểu thức | Thao tác | Giá trị biểu thức |\n|---|---|---|\n| `++a` | Tăng a | Giá trị mới |\n| `a++` | Tăng a | Giá trị cũ |\n| `--a` | Giảm a | Giá trị mới |\n| `a--` | Giảm a | Giá trị cũ |\n\nVí dụ đầy đủ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{5};\n    int b{5};\n\n    std::cout << ++a << '\\n';\n    std::cout << b++ << '\\n';\n\n    std::cout << a << '\\n';\n    std::cout << b << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n6\n5\n6\n6\n```\n\nTrong vòng lặp `for` sử dụng biến kiểu số nguyên, hai cách sau thường mang lại cùng hành vi:\n\n```cpp\nfor (int i = 0; i < 10; ++i) {\n}\n```\n\n```cpp\nfor (int i = 0; i < 10; i++) {\n}\n```\n\nCó thể ưu tiên `++i` khi không cần giá trị cũ, giúp thể hiện rõ ý định.\n\n### 6.4. Tránh thay đổi một biến nhiều lần trong cùng biểu thức\n\nKhông nên viết:\n\n```cpp\nint i{1};\n\nint result = i++ + i++;\n```\n\nBiểu thức trên có hành vi không xác định trong C++17 vì hai phép tăng trên cùng một biến không được sắp thứ tự phù hợp với nhau.\n\nCách viết rõ ràng hơn:\n\n```cpp\nint i{1};\n\nint a = i++;\nint b = i++;\n\nint result = a + b;\n```\n\nKết quả:\n\n```text\na = 1\nb = 2\nresult = 3\ni = 3\n```\n\n**Nguyên tắc:** Nếu biểu thức có nhiều thao tác thay đổi trạng thái, hãy tách thành những câu lệnh đơn giản để dễ đọc, dễ kiểm tra và tránh lỗi thứ tự đánh giá.\n\n---\n\n## 7. Thứ tự ưu tiên toán tử (Operator Precedence)\n\nC++ cho phép kết hợp nhiều toán tử trong cùng một biểu thức.\n\nTuy nhiên, chúng không có cùng mức độ ưu tiên.\n\n### 7.1. Ví dụ cơ bản\n\nXét biểu thức:\n\n```cpp\nint result = 10 + 5 * 2;\n```\n\nKết quả:\n\n```text\n20\n```\n\nVì phép nhân có ưu tiên cao hơn phép cộng.\n\nNếu muốn thực hiện phép cộng trước:\n\n```cpp\nint result = (10 + 5) * 2;\n```\n\nKết quả:\n\n```text\n30\n```\n\nDấu ngoặc đơn `()` giúp xác định rõ cách nhóm các phép toán.\n\n### 7.2. Bảng ưu tiên các toán tử thường gặp\n\nBảng sau được sắp xếp từ mức ưu tiên cao đến thấp, chỉ bao gồm những nhóm toán tử cơ bản trong bài.\n\n| Mức | Toán tử | Chức năng |\n|---|---|---|\n| 1 | `()` | Nhóm biểu thức |\n| 2 | `++`, `--` hậu tố | Tăng, giảm hậu tố |\n| 3 | `++`, `--` tiền tố, `!`, `+`, `-` một ngôi | Toán tử một ngôi |\n| 4 | `*`, `/`, `%` | Nhân, chia, lấy dư |\n| 5 | `+`, `-` | Cộng, trừ |\n| 6 | `<`, `<=`, `>`, `>=` | So sánh quan hệ |\n| 7 | `==`, `!=` | So sánh bằng, khác |\n| 8 | `&&` | Logic AND |\n| 9 | `\\|\\|` | Logic OR |\n| 10 | `?:` | Toán tử điều kiện |\n| 11 | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | Gán |\n\nĐây là bảng rút gọn, không phải toàn bộ bảng ưu tiên của C++17. Những toán tử khác như dịch bit và bitwise cũng có vị trí riêng.\n\n### 7.3. Ví dụ kết hợp toán tử\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{10};\n    int b{5};\n    int c{2};\n\n    int result = a + b * c;\n\n    bool valid = a > b && b > c;\n\n    std::cout << result << '\\n';\n    std::cout << std::boolalpha << valid << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n20\ntrue\n```\n\nBiểu thức:\n\n```cpp\na + b * c\n```\n\nđược nhóm thành:\n\n```cpp\na + (b * c)\n```\n\nBiểu thức:\n\n```cpp\na > b && b > c\n```\n\nđược nhóm thành:\n\n```cpp\n(a > b) && (b > c)\n```\n\n### 7.4. Ưu tiên không đồng nghĩa với thứ tự đánh giá\n\nĐây là hai khái niệm khác nhau.\n\n**Thứ tự ưu tiên (precedence)** quy định các toán tử được nhóm với toán hạng như thế nào.\n\n**Thứ tự đánh giá (evaluation order)** quy định khi nào các toán hạng hoặc thao tác được thực hiện.\n\nVí dụ:\n\n```cpp\nint result = first() + second();\n```\n\nDấu `+` không đảm bảo `first()` luôn được gọi trước `second()`.\n\nTrong C++17, thứ tự đánh giá hai toán hạng của phép cộng không được chỉ định.\n\nNếu thứ tự thực hiện quan trọng, hãy viết:\n\n```cpp\nint a = first();\nint b = second();\n\nint result = a + b;\n```\n\nNhờ đó, việc gọi `first()` hoàn tất trước câu lệnh gọi `second()`.\n\n**Khuyến nghị:** Sử dụng dấu ngoặc để làm rõ cách nhóm biểu thức, nhưng đừng cho rằng dấu ngoặc luôn giải quyết được vấn đề thứ tự đánh giá.\n\n---\n\n## 8. Toán tử điều kiện ba ngôi (Conditional Operator)\n\nC++ cung cấp toán tử `?:` để lựa chọn một trong hai biểu thức dựa trên điều kiện.\n\nCú pháp:\n\n```cpp\ncondition ? valueIfTrue : valueIfFalse\n```\n\nNếu điều kiện đúng, biểu thức thứ hai được đánh giá.\n\nNếu điều kiện sai, biểu thức thứ ba được đánh giá.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{20};\n\n    const char* result =\n        (age >= 18) ? \"Nguoi lon\" : \"Chua du tuoi\";\n\n    std::cout << result << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNguoi lon\n```\n\nMột ví dụ khác:\n\n```cpp\nint a{10};\nint b{20};\n\nint maximum = (a > b) ? a : b;\n```\n\nKết quả:\n\n```text\nmaximum = 20\n```\n\nToán tử ba ngôi phù hợp khi cần chọn một giá trị trong hai giá trị.\n\nTuy nhiên, với những đoạn xử lý dài hoặc có nhiều điều kiện lồng nhau, sử dụng `if-else` thường rõ ràng hơn.\n\nKhông nên cố gắng rút gọn mọi logic vào một biểu thức duy nhất.\n\n---\n\n## 9. Chuyển đổi kiểu dữ liệu trong biểu thức\n\nKhi hai toán hạng có kiểu khác nhau, C++ có thể thực hiện chuyển đổi kiểu dữ liệu theo các quy tắc của ngôn ngữ.\n\nVí dụ:\n\n```cpp\nint a{5};\ndouble b{2.5};\n\ndouble result = a + b;\n```\n\nKết quả:\n\n```text\nresult = 7.5\n```\n\nTrong biểu thức này, `a` được chuyển sang kiểu `double` để thực hiện phép cộng.\n\n### 9.1. Chuyển đổi kiểu tường minh\n\nĐôi khi cần chủ động quyết định kiểu dữ liệu sử dụng trong phép tính.\n\nVí dụ tính trung bình cộng:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{7};\n    int b{8};\n\n    double average =\n        (static_cast<double>(a) + b) / 2;\n\n    std::cout << average << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n7.5\n```\n\n### 9.2. Tràn số nguyên (Integer Overflow)\n\nMỗi kiểu số nguyên có giới hạn giá trị có thể biểu diễn.\n\nGiả sử một phép tính vượt quá giới hạn của kiểu `int` có dấu:\n\n```cpp\nint a{2'000'000'000};\n\nint result = a * 2;\n```\n\nTrong môi trường phổ biến mà `int` có độ rộng 32 bit, phép nhân này vượt quá phạm vi biểu diễn.\n\nTràn số nguyên có dấu gây ra hành vi không xác định trong C++17.\n\nMột cách xử lý là sử dụng kiểu đủ rộng và thực hiện phép tính trên kiểu đó:\n\n```cpp\nlong long a{2'000'000'000LL};\n\nlong long result = a * 2;\n```\n\nKết quả:\n\n```text\n4000000000\n```\n\nTuy nhiên, `long long` cũng có giới hạn. Cần lựa chọn kiểu dữ liệu theo phạm vi thực tế của bài toán.\n\n**Lưu ý quan trọng:**\n\n```cpp\nint a{2'000'000'000};\n\nlong long result = a * 2;\n```\n\nDòng trên vẫn không an toàn trong môi trường `int` 32 bit, vì phép nhân được thực hiện bằng kiểu `int` trước khi kết quả được chuyển sang `long long`.\n\nCách đúng:\n\n```cpp\nlong long result = 1LL * a * 2;\n```\n\nToán hạng `1LL` giúp phép nhân được thực hiện bằng kiểu `long long`.\n\n---\n\n## 10. Ví dụ thực hành tổng hợp\n\n### Bài toán: Kiểm tra số nguyên hợp lệ\n\n**Yêu cầu:**\n\nViết chương trình nhập số nguyên `n` và kiểm tra:\n\n1. `n` có nằm trong đoạn `[1, 100]` không?\n2. `n` có phải số chẵn không?\n3. `n` có chia hết cho 3 và 5 không?\n\n### 10.1. Phân tích\n\nCác điều kiện cần sử dụng:\n\nKiểm tra phạm vi:\n\n```cpp\nn >= 1 && n <= 100\n```\n\nKiểm tra số chẵn:\n\n```cpp\nn % 2 == 0\n```\n\nKiểm tra chia hết cho cả 3 và 5:\n\n```cpp\nn % 3 == 0 && n % 5 == 0\n```\n\n### 10.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    std::cout << \"Nhap n: \";\n\n    if (!(std::cin >> n)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    const bool inRange = (n >= 1) && (n <= 100);\n    const bool isEven = (n % 2 == 0);\n    const bool divisibleBy3And5 =\n        (n % 3 == 0) && (n % 5 == 0);\n\n    std::cout << std::boolalpha;\n\n    std::cout << \"Trong pham vi: \"\n              << inRange << '\\n';\n\n    std::cout << \"La so chan: \"\n              << isEven << '\\n';\n\n    std::cout << \"Chia het cho 3 va 5: \"\n              << divisibleBy3And5 << '\\n';\n\n    return 0;\n}\n```\n\nVí dụ đầu vào:\n\n```text\n30\n```\n\nKết quả:\n\n```text\nNhap n: 30\nTrong pham vi: true\nLa so chan: true\nChia het cho 3 va 5: true\n```\n\n### 10.3. Phân tích trường hợp biên\n\n| n | Trong [1,100] | Chẵn | Chia hết cho 3 và 5 |\n|---|---|---|---|\n| 0 | false | true | true |\n| 1 | true | false | false |\n| 15 | true | false | true |\n| 30 | true | true | true |\n| 100 | true | true | false |\n| 105 | false | false | true |\n\n**Điểm cần chú ý:**\n\nCác biểu thức `isEven` và `divisibleBy3And5` vẫn được tính kể cả khi `n` nằm ngoài phạm vi `[1,100]`.\n\nĐây là hành vi có chủ đích trong ví dụ: ba điều kiện được kiểm tra độc lập.\n\nNếu yêu cầu nghiệp vụ là chỉ xử lý số nằm trong đoạn hợp lệ, chương trình nên kiểm tra `inRange` trước khi thực hiện các thao tác tiếp theo.\n\nViệc xác định chính xác yêu cầu quan trọng không kém việc viết đúng cú pháp.\n\n---\n\n## 11. Những lỗi thường gặp\n\n### 11.1. Nhầm toán tử gán với so sánh\n\nSai:\n\n```cpp\nif (a = 5) {\n}\n```\n\nĐúng khi muốn kiểm tra bằng nhau:\n\n```cpp\nif (a == 5) {\n}\n```\n\n### 11.2. Chia nguyên nhưng mong kết quả số thực\n\n```cpp\ndouble result = 5 / 2;\n```\n\nKết quả là `2.0`, không phải `2.5`.\n\nCách sửa:\n\n```cpp\ndouble result = 5.0 / 2;\n```\n\n### 11.3. Chia hoặc lấy dư cho 0\n\nSai:\n\n```cpp\nint result = a % 0;\n```\n\nCần kiểm tra mẫu số khác 0 trước khi thực hiện phép chia hoặc chia lấy dư.\n\n### 11.4. Nhầm toán tử logic với bitwise\n\n- `&&`: Logic AND.\n- `||`: Logic OR.\n- `&`: Bitwise AND.\n- `|`: Bitwise OR.\n\nChúng không thể được thay thế tùy ý cho nhau.\n\n### 11.5. Viết điều kiện khoảng không đúng\n\nSai:\n\n```cpp\nif (1 <= n <= 100) {\n}\n```\n\nĐúng:\n\n```cpp\nif (n >= 1 && n <= 100) {\n}\n```\n\n### 11.6. Biểu thức có quá nhiều tác dụng phụ\n\nKhông nên viết những biểu thức phức tạp vừa đọc, vừa thay đổi giá trị của cùng một biến nhiều lần.\n\nHãy tách thành các câu lệnh có thứ tự rõ ràng để tránh hành vi không xác định và giúp việc debug dễ dàng hơn.\n\n### 11.7. Chọn kiểu dữ liệu không đủ lớn\n\nCác phép cộng và nhân trên số nguyên có thể vượt phạm vi biểu diễn.\n\nCần xác định giới hạn đầu vào và giới hạn kết quả trước khi lựa chọn kiểu dữ liệu.\n\n---\n\n## 12. Bài tập tự luyện\n\nCác bài tập được sắp xếp từ cơ bản đến vận dụng.\n\n### Bài 1. Tính toán hai số\n\n**Yêu cầu:** Nhập hai số nguyên `a` và `b`, lần lượt tính:\n\n- Tổng.\n- Hiệu.\n- Tích.\n- Thương nguyên nếu `b` khác `0`.\n- Phần dư nếu `b` khác `0`.\n\nVí dụ:\n\n```text\nInput:\n10 3\n\nOutput:\nTong: 13\nHieu: 7\nTich: 30\nThuong: 3\nDu: 1\n```\n\n**Gợi ý:** Sử dụng năm toán tử số học cơ bản và kiểm tra dữ liệu trước phép chia. Cân nhắc phạm vi giá trị để tránh tràn số.\n\n### Bài 2. Kiểm tra chia hết\n\n**Yêu cầu:** Nhập số nguyên `n`. Kiểm tra số đó có chia hết cho cả `3` và `5` hay không.\n\nVí dụ:\n\n```text\nInput:\n30\n\nOutput:\ntrue\n```\n\n**Gợi ý:** Kết hợp toán tử `%`, `==` và `&&`.\n\n### Bài 3. Kiểm tra khoảng giá trị\n\n**Yêu cầu:** Nhập ba số nguyên `low`, `high`, `n`. Kiểm tra `n` có nằm trong đoạn đóng `[low, high]` hay không.\n\nVí dụ:\n\n```text\nInput:\n1 100 50\n\nOutput:\ntrue\n```\n\n**Gợi ý:** Sử dụng hai phép so sánh và `&&`.\n\nXử lý trường hợp `low > high` bằng cách thông báo khoảng không hợp lệ.\n\n### Bài 4. Tính điểm trung bình\n\n**Yêu cầu:** Nhập ba điểm số, tính trung bình cộng và in kết quả dưới dạng số thực.\n\nVí dụ:\n\n```text\nInput:\n7 8 9\n\nOutput:\n8\n```\n\n**Gợi ý:** Sử dụng kiểu `double` để giữ phần thập phân. Kiểm tra điểm nằm trong phạm vi hợp lệ.\n\n### Bài 5. Tách chữ số\n\n**Yêu cầu:** Nhập số nguyên không âm `n`. Xác định chữ số cuối cùng và phần còn lại sau khi bỏ chữ số cuối.\n\nVí dụ:\n\n```text\nInput:\n1234\n\nOutput:\nChu so cuoi: 4\nPhan con lai: 123\n```\n\n**Gợi ý:**\n\n- Chữ số cuối: `n % 10`.\n- Phần còn lại: `n / 10`.\n\n### Bài 6. Kiểm tra năm nhuận\n\n**Yêu cầu:** Nhập năm dương `year`. Xác định năm đó có phải năm nhuận theo lịch Gregory hay không.\n\nQuy tắc:\n\n- Năm chia hết cho `400` là năm nhuận.\n- Hoặc năm chia hết cho `4` nhưng không chia hết cho `100` là năm nhuận.\n- Những năm còn lại không phải năm nhuận.\n\nVí dụ:\n\n```text\nInput:\n2024\n\nOutput:\nNam nhuan\n```\n\n**Gợi ý:** Kết hợp `%`, `==`, `!=`, `&&` và `||`.\n\nThử nghiệm với các năm `1900`, `2000`, `2024` và `2025`.\n\n---\n\n## 13. Tổng kết kiến thức\n\n| Nhóm | Toán tử | Chức năng |\n|---|---|---|\n| Số học | `+`, `-`, `*`, `/`, `%` | Thực hiện phép tính |\n| So sánh | `==`, `!=`, `<`, `<=`, `>`, `>=` | So sánh giá trị |\n| Logic | `&&`, `\\|\\|`, `!` | Xử lý điều kiện logic |\n| Gán | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | Cập nhật biến |\n| Tăng giảm | `++`, `--` | Tăng hoặc giảm một đơn vị |\n| Điều kiện | `?:` | Chọn một trong hai biểu thức |\n\nSau khi hoàn thành bài học, bạn cần nắm được:\n\n1. Phân biệt toán tử, toán hạng và biểu thức.\n2. Thực hiện đúng các phép toán số học, đặc biệt là phép chia nguyên.\n3. Sử dụng toán tử so sánh để tạo biểu thức `bool`.\n4. Kết hợp điều kiện với `&&`, `||` và `!`.\n5. Hiểu sự khác biệt giữa tăng giảm tiền tố và hậu tố.\n6. Sử dụng dấu ngoặc để thể hiện rõ cách nhóm biểu thức.\n7. Phân biệt thứ tự ưu tiên với thứ tự đánh giá.\n8. Nhận diện lỗi chia cho 0, tràn số và chuyển đổi kiểu dữ liệu.\n\n**Điều quan trọng nhất:** Một biểu thức tốt không chỉ cho kết quả đúng mà còn phải dễ đọc, rõ ý nghĩa và có hành vi xác định với dữ liệu đầu vào được hỗ trợ.\n\n## Đọc tiếp\n\n- [Biến và kiểu dữ liệu](/cpp/bat-dau/bien-kieu-du-lieu): Hiểu các kiểu dữ liệu cơ bản và phạm vi biểu diễn.\n- [Nhập xuất, điều kiện và vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap): Ứng dụng toán tử vào chương trình có khả năng rẽ nhánh và lặp.\n- [Tra cứu cú pháp C++](/cpp/tra-cuu/cu-phap): Tổng hợp cú pháp thường gặp khi lập trình C++17.",
     "sourcePath": "content/cpp/getting-started/toan-tu.md",
     "headings": [
+      {
+        "title": "Toán tử và biểu thức trong C++",
+        "id": "toan-tu-va-bieu-thuc-trong-c"
+      },
       {
         "title": "1. Toán tử và biểu thức là gì?",
         "id": "1-toan-tu-va-bieu-thuc-la-gi"
@@ -5003,9 +5648,13 @@ export const articles = [
     ],
     "featured": false,
     "priority": 20060,
-    "body": "# Nhập xuất, câu lệnh điều kiện và vòng lặp trong C++\n\nMột chương trình không chỉ thực hiện các phép tính. Nó còn cần tiếp nhận dữ liệu, đưa ra quyết định và thực hiện những công việc lặp lại.\n\nTrong C++, ba nhóm kiến thức này đóng vai trò nền tảng:\n\n- **Nhập xuất (Input/Output):** Nhận dữ liệu đầu vào và hiển thị kết quả.\n- **Câu lệnh điều kiện (Conditional Statements):** Quyết định chương trình sẽ thực hiện công việc nào.\n- **Vòng lặp (Loops):** Thực hiện một công việc nhiều lần mà không cần viết lại cùng một đoạn mã.\n\nĐây cũng là những kiến thức được sử dụng thường xuyên khi giải bài tập lập trình, xây dựng thuật toán và phát triển phần mềm.\n\n## 1. Nhập và xuất dữ liệu\n\n### 1.1. Thư viện iostream\n\nĐể nhập xuất dữ liệu thông qua thiết bị đầu cuối (terminal), C++ cung cấp thư viện `<iostream>`.\n\nBa đối tượng thường gặp:\n\n| Đối tượng | Chức năng |\n|---|---|\n| `std::cin` | Đọc dữ liệu từ đầu vào chuẩn |\n| `std::cout` | Ghi dữ liệu ra đầu ra chuẩn |\n| `std::cerr` | Ghi thông báo lỗi ra luồng lỗi chuẩn |\n\nVí dụ đầu tiên:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cout << \"Nhap tuoi cua ban: \";\n    std::cin >> age;\n\n    std::cout << \"Ban \" << age << \" tuoi.\\n\";\n\n    return 0;\n}\n```\n\nKết quả khi nhập `16`:\n\n```text\nNhap tuoi cua ban: 16\nBan 16 tuoi.\n```\n\n**Giải thích:**\n\n- `#include <iostream>`: Khai báo sử dụng thư viện nhập xuất.\n- `int age{}`: Tạo biến số nguyên `age`, khởi tạo giá trị bằng `0`.\n- `std::cout <<`: Gửi dữ liệu ra màn hình.\n- `std::cin >>`: Đọc dữ liệu vào biến.\n- `'\\n'`: Xuống dòng.\n- `return 0`: Kết thúc chương trình và thông báo thực thi thành công.\n\nCần phân biệt hai toán tử:\n\n- `<<`: Toán tử chèn dữ liệu vào luồng xuất.\n- `>>`: Toán tử trích xuất dữ liệu từ luồng nhập.\n\n### 1.2. Nhập nhiều giá trị\n\nCó thể đọc nhiều biến trong một câu lệnh:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{};\n    int b{};\n\n    std::cin >> a >> b;\n\n    std::cout << \"Tong: \" << a + b << '\\n';\n\n    return 0;\n}\n```\n\nDữ liệu đầu vào:\n\n```text\n5 8\n```\n\nKết quả:\n\n```text\nTong: 13\n```\n\nNgười dùng cũng có thể nhập:\n\n```text\n5\n8\n```\n\nKết quả vẫn giống nhau.\n\n**Vì sao?**\n\nVới các kiểu dữ liệu số, `std::cin >>` tự động bỏ qua khoảng trắng, tab và ký tự xuống dòng ở đầu dữ liệu cần đọc.\n\nĐiều này đặc biệt hữu ích trong các bài toán lập trình thi đấu, khi dữ liệu được cung cấp qua nhiều dòng.\n\n### 1.3. Đọc một dòng văn bản với getline\n\n`std::cin >>` chỉ đọc một từ đối với kiểu `std::string`, vì quá trình đọc dừng tại khoảng trắng.\n\nVí dụ, nếu nhập `Nguyen Van A`, câu lệnh:\n\n```cpp\nstd::cin >> name;\n```\n\nchỉ lấy được `Nguyen`.\n\nĐể đọc toàn bộ dòng, sử dụng `std::getline()`:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n\n    std::cout << \"Nhap ho ten: \";\n    std::getline(std::cin, name);\n\n    std::cout << \"Xin chao, \" << name << \"!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNhap ho ten: Nguyen Van A\nXin chao, Nguyen Van A!\n```\n\n**Lưu ý quan trọng:** Nếu sử dụng `std::getline()` ngay sau `std::cin >>`, ký tự xuống dòng còn lại trong bộ đệm có thể khiến `getline()` đọc một dòng rỗng.\n\nCó thể loại bỏ phần còn lại của dòng trước khi đọc:\n\n```cpp\n#include <iostream>\n#include <limits>\n#include <string>\n\nint main() {\n    int age{};\n    std::string name;\n\n    if (!(std::cin >> age)) {\n        return 1;\n    }\n\n    std::cin.ignore(\n        std::numeric_limits<std::streamsize>::max(),\n        '\\n'\n    );\n\n    std::getline(std::cin, name);\n\n    std::cout << name << \": \" << age << '\\n';\n}\n```\n\n### 1.4. Kiểm tra dữ liệu đầu vào\n\nKhông phải người dùng lúc nào cũng nhập đúng.\n\nGiả sử chương trình yêu cầu một số nguyên nhưng nhận được chữ cái, quá trình đọc có thể thất bại.\n\nVì vậy, thay vì mặc định dữ liệu luôn hợp lệ, hãy kiểm tra kết quả:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cout << \"Nhap tuoi: \";\n\n    if (!(std::cin >> age)) {\n        std::cerr << \"Loi: Tuoi phai la so nguyen.\\n\";\n        return 1;\n    }\n\n    if (age < 0 || age > 150) {\n        std::cerr << \"Loi: Tuoi khong hop le.\\n\";\n        return 1;\n    }\n\n    std::cout << \"Tuoi hop le: \" << age << '\\n';\n\n    return 0;\n}\n```\n\nỞ đây có hai loại kiểm tra khác nhau:\n\n1. **Kiểm tra cú pháp dữ liệu:** Đầu vào có đọc được thành số nguyên hay không?\n2. **Kiểm tra tính hợp lệ:** Số nguyên đó có nằm trong phạm vi cho phép không?\n\nChẳng hạn:\n\n| Dữ liệu nhập | Kết quả |\n|---|---|\n| `16` | Hợp lệ |\n| `-5` | Không hợp lệ |\n| `200` | Không hợp lệ |\n| `abc` | Đọc thất bại |\n\nLưu ý rằng `std::cin >> age` có thể đọc thành công phần số của một chuỗi như `16abc` và để lại `abc` trong luồng nhập. Nếu cần xác thực toàn bộ dòng, phải xử lý thêm phần dữ liệu còn lại.\n\nĐây là một nguyên tắc quan trọng: **Đọc được dữ liệu không đồng nghĩa với dữ liệu hợp lệ.**\n\n---\n\n## 2. Câu lệnh điều kiện\n\nTrong thực tế, chương trình thường cần đưa ra quyết định.\n\nVí dụ:\n\n- Nếu điểm lớn hơn hoặc bằng 5, học sinh đạt yêu cầu.\n- Nếu mật khẩu không chính xác, từ chối đăng nhập.\n- Nếu số chia bằng 0, không thực hiện phép chia.\n- Nếu người dùng không có quyền, từ chối thao tác.\n\nC++ cung cấp các câu lệnh điều kiện để xử lý những tình huống này.\n\n### 2.1. Câu lệnh if\n\nCú pháp:\n\n```cpp\nif (condition) {\n    // Thuc hien khi dieu kien dung\n}\n```\n\nPhần thân chỉ được thực hiện khi biểu thức điều kiện có giá trị `true`.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cin >> age;\n\n    if (age >= 18) {\n        std::cout << \"Ban da du 18 tuoi.\\n\";\n    }\n\n    return 0;\n}\n```\n\nNếu nhập `20`, thông báo được hiển thị.\n\nNếu nhập `15`, chương trình bỏ qua khối `if`.\n\n### 2.2. Câu lệnh if-else\n\nKhi cần xử lý cả hai trường hợp đúng và sai, sử dụng `if-else`.\n\nCú pháp:\n\n```cpp\nif (condition) {\n    // Khi dieu kien dung\n} else {\n    // Khi dieu kien sai\n}\n```\n\nVí dụ kiểm tra số chẵn, lẻ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        return 1;\n    }\n\n    if (n % 2 == 0) {\n        std::cout << \"So chan\\n\";\n    } else {\n        std::cout << \"So le\\n\";\n    }\n\n    return 0;\n}\n```\n\nToán tử `%` trả về phần dư của phép chia nguyên.\n\n- Nếu `n % 2 == 0`, số đó là số chẵn.\n- Ngược lại, số đó là số lẻ.\n\n**Phân biệt `=` và `==`:**\n\n| Toán tử | Ý nghĩa |\n|---|---|\n| `=` | Gán giá trị |\n| `==` | So sánh bằng nhau |\n| `!=` | So sánh khác nhau |\n| `>` | Lớn hơn |\n| `<` | Nhỏ hơn |\n| `>=` | Lớn hơn hoặc bằng |\n| `<=` | Nhỏ hơn hoặc bằng |\n\nMột lỗi phổ biến là viết `if (a = 5)` thay vì `if (a == 5)`.\n\nBiểu thức đầu tiên thực hiện phép gán, sau đó chuyển giá trị được gán thành `bool` để kiểm tra. Với giá trị `5`, điều kiện luôn đúng.\n\n### 2.3. Câu lệnh else if if-else\n\nKhi chương trình có nhiều trường hợp, sử dụng chuỗi `else if`.\n\nVí dụ xếp loại điểm:\n\n```cpp\n#include <iostream>\n\nint main() {\n    double score{};\n\n    std::cout << \"Nhap diem: \";\n\n    if (!(std::cin >> score)) {\n        std::cerr << \"Diem khong hop le.\\n\";\n        return 1;\n    }\n\n    if (score < 0 || score > 10) {\n        std::cerr << \"Diem phai nam trong [0, 10].\\n\";\n        return 1;\n    }\n\n    if (score >= 8) {\n        std::cout << \"Gioi\\n\";\n    } else if (score >= 6.5) {\n        std::cout << \"Kha\\n\";\n    } else if (score >= 5) {\n        std::cout << \"Trung binh\\n\";\n    } else {\n        std::cout << \"Chua dat\\n\";\n    }\n\n    return 0;\n}\n```\n\nVí dụ nhập:\n\n```text\n7.5\n```\n\nKết quả:\n\n```text\nKha\n```\n\n**Cách chương trình hoạt động:**\n\n1. Kiểm tra `score >= 8`, kết quả sai.\n2. Kiểm tra `score >= 6.5`, kết quả đúng.\n3. Thực hiện nhánh in `Kha`.\n4. Bỏ qua những nhánh còn lại.\n\nĐiều quan trọng là **thứ tự kiểm tra ảnh hưởng trực tiếp đến kết quả**.\n\nNếu kiểm tra `score >= 5` trước `score >= 8`, điểm `9` có thể bị xếp vào nhóm trung bình.\n\n### 2.4. Câu lệnh switch\n\n`switch` phù hợp khi cần so sánh một biểu thức với nhiều giá trị rời rạc.\n\nVí dụ xây dựng menu:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int choice{};\n\n    std::cout << \"1. Bat dau\\n\";\n    std::cout << \"2. Cai dat\\n\";\n    std::cout << \"3. Thoat\\n\";\n\n    if (!(std::cin >> choice)) {\n        return 1;\n    }\n\n    switch (choice) {\n        case 1:\n            std::cout << \"Bat dau chuong trinh\\n\";\n            break;\n\n        case 2:\n            std::cout << \"Mo cai dat\\n\";\n            break;\n\n        case 3:\n            std::cout << \"Tam biet!\\n\";\n            break;\n\n        default:\n            std::cout << \"Lua chon khong hop le\\n\";\n            break;\n    }\n\n    return 0;\n}\n```\n\nCác thành phần chính:\n\n- `switch`: Nhận biểu thức cần kiểm tra.\n- `case`: Định nghĩa một giá trị có thể xảy ra.\n- `break`: Thoát khỏi câu lệnh `switch`.\n- `default`: Xử lý khi không có `case` nào phù hợp.\n\nNếu thiếu `break`, chương trình có thể tiếp tục chạy vào nhánh tiếp theo. Hành vi này được gọi là *fallthrough*.\n\nTrong C++17, có thể dùng `[[fallthrough]];` để thể hiện rõ trường hợp cố ý chạy xuyên nhánh.\n\n**Khi nào chọn if-else, khi nào chọn switch?**\n\n| Tình huống | Nên sử dụng |\n|---|---|\n| So sánh khoảng giá trị | `if-else` |\n| Kết hợp nhiều điều kiện logic | `if-else` |\n| Kiểm tra các giá trị nguyên cụ thể | `switch` |\n| Xử lý các giá trị enum | `switch` |\n\n`switch` không hỗ trợ trực tiếp so sánh khoảng như `score >= 8`, cũng không hỗ trợ `std::string` làm biểu thức lựa chọn trong C++17.\n\n---\n\n## 3. Vòng lặp trong C++\n\nGiả sử cần in các số từ 1 đến 100.\n\nViết 100 câu lệnh `std::cout` là cách làm dài dòng, khó bảo trì và rất dễ sai.\n\nVòng lặp giải quyết vấn đề bằng cách thực hiện một khối lệnh nhiều lần.\n\nC++ có ba dạng vòng lặp cơ bản:\n\n- `for`\n- `while`\n- `do-while`\n\n### 3.1. Vòng lặp for\n\n`for` thường được sử dụng khi có biến đếm hoặc khi biết trước số lần cần lặp.\n\nCú pháp:\n\n```cpp\nfor (initialization; condition; update) {\n    // Cong viec can lap\n}\n```\n\nTrong đó:\n\n- `initialization`: Khởi tạo biến đếm.\n- `condition`: Điều kiện tiếp tục vòng lặp.\n- `update`: Cập nhật biến đếm sau mỗi lần lặp.\n\nVí dụ in các số từ 1 đến 5:\n\n```cpp\n#include <iostream>\n\nint main() {\n    for (int i = 1; i <= 5; ++i) {\n        std::cout << i << ' ';\n    }\n\n    std::cout << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1 2 3 4 5\n```\n\n**Phân tích từng lần lặp:**\n\n| Lần lặp | Giá trị i | Điều kiện i <= 5 | Hành động |\n|---|---|---|---|\n| 1 | 1 | Đúng | In 1 |\n| 2 | 2 | Đúng | In 2 |\n| 3 | 3 | Đúng | In 3 |\n| 4 | 4 | Đúng | In 4 |\n| 5 | 5 | Đúng | In 5 |\n| 6 | 6 | Sai | Kết thúc |\n\nCâu lệnh `++i` tăng biến `i` lên một đơn vị.\n\nTrong ví dụ này, `i++` cũng cho kết quả tương đương.\n\n**Ví dụ: In số chẵn từ 2 đến 10**\n\n```cpp\nfor (int i = 2; i <= 10; i += 2) {\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n2 4 6 8 10\n```\n\nKhông bắt buộc mỗi vòng lặp chỉ tăng một đơn vị. Biến đếm có thể tăng hoặc giảm theo bước phù hợp.\n\n### 3.2. Vòng lặp while\n\n`while` phù hợp khi số lần lặp phụ thuộc vào một điều kiện và chưa xác định trước.\n\nCú pháp:\n\n```cpp\nwhile (condition) {\n    // Cong viec can lap\n}\n```\n\nĐiều kiện được kiểm tra **trước mỗi lần thực hiện thân vòng lặp**.\n\nVí dụ đếm ngược:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int count{5};\n\n    while (count > 0) {\n        std::cout << count << ' ';\n        --count;\n    }\n\n    std::cout << \"Bat dau!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n5 4 3 2 1 Bat dau!\n```\n\nChương trình thực hiện:\n\n1. Kiểm tra `count > 0`.\n2. In giá trị hiện tại.\n3. Giảm `count` đi một.\n4. Quay lại kiểm tra điều kiện.\n5. Thoát khi `count` bằng `0`.\n\nNếu điều kiện sai ngay từ đầu, thân vòng lặp sẽ không được thực hiện lần nào.\n\n### 3.3. Vòng lặp do-while\n\nKhác với `while`, vòng lặp `do-while` kiểm tra điều kiện **sau khi thực hiện thân vòng lặp**.\n\nVì vậy, thân vòng lặp luôn được thực hiện ít nhất một lần.\n\nCú pháp:\n\n```cpp\ndo {\n    // Cong viec can lap\n} while (condition);\n```\n\nVí dụ yêu cầu người dùng nhập `0` để thoát:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int choice{};\n\n    do {\n        std::cout << \"Nhap 0 de thoat: \";\n\n        if (!(std::cin >> choice)) {\n            std::cerr << \"Du lieu khong hop le.\\n\";\n            return 1;\n        }\n    } while (choice != 0);\n\n    std::cout << \"Da thoat chuong trinh.\\n\";\n\n    return 0;\n}\n```\n\nVí dụ quá trình chạy:\n\n```text\nNhap 0 de thoat: 5\nNhap 0 de thoat: 2\nNhap 0 de thoat: 0\nDa thoat chuong trinh.\n```\n\nỞ đây vòng lặp tiếp tục cho đến khi người dùng nhập `0`.\n\n**Lưu ý:** Khác với `while` và `for`, cú pháp `do-while` bắt buộc có dấu `;` sau điều kiện.\n\n### 3.4. So sánh ba loại vòng lặp\n\n| Tiêu chí | for | while | do-while |\n|---|---|---|---|\n| Kiểm tra điều kiện | Trước thân | Trước thân | Sau thân |\n| Có thể chạy 0 lần | Có | Có | Không |\n| Phù hợp với biến đếm | Rất tốt | Có thể | Có thể |\n| Phù hợp với nhập liệu lặp lại | Có thể | Tốt | Rất tốt |\n| Thường sử dụng | Duyệt, đếm | Lặp theo điều kiện | Menu, yêu cầu nhập lại |\n\nKhông có vòng lặp nào tốt nhất cho mọi trường hợp. Hãy chọn kiểu giúp người đọc hiểu rõ ý định của chương trình.\n\n---\n\n## 4. Điều khiển vòng lặp với break và continue\n\nNgoài điều kiện lặp, C++ cung cấp hai câu lệnh để thay đổi luồng thực thi.\n\n### 4.1. break: Thoát khỏi vòng lặp\n\n`break` lập tức kết thúc vòng lặp gần nhất bao quanh nó.\n\nVí dụ:\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i == 5) {\n        break;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 2 3 4\n```\n\nKhi `i` bằng `5`, vòng lặp kết thúc, không tiếp tục đến `10`.\n\n### 4.2. continue: Bỏ qua lần lặp hiện tại\n\n`continue` bỏ qua phần còn lại của thân vòng lặp hiện tại và chuyển sang bước lặp tiếp theo.\n\nVí dụ chỉ in số lẻ:\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i % 2 == 0) {\n        continue;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 3 5 7 9\n```\n\nKhác biệt cần nhớ:\n\n- `break`: Kết thúc toàn bộ vòng lặp hiện tại.\n- `continue`: Chỉ bỏ qua phần còn lại của lần lặp hiện tại.\n\nVới vòng lặp lồng nhau, `break` chỉ thoát khỏi vòng lặp gần nhất, không tự động thoát khỏi tất cả các vòng.\n\n---\n\n## 5. Bài toán thực hành: Tính tổng từ 1 đến n\n\nHãy vận dụng kiến thức vừa học vào một bài toán hoàn chỉnh.\n\n**Đề bài**\n\nNhập số nguyên dương `n`. Tính tổng:\n\n\\[\nS = 1 + 2 + 3 + \\cdots + n\n\\]\n\nVí dụ:\n\n**Input**\n\n```text\n5\n```\n\n**Output**\n\n```text\n15\n```\n\nVì:\n\n\\[\n1 + 2 + 3 + 4 + 5 = 15\n\\]\n\n### 5.1. Phân tích thuật toán\n\nCác bước giải quyết:\n\n1. Đọc số nguyên `n`.\n2. Kiểm tra `n` có hợp lệ không.\n3. Khởi tạo biến `sum = 0`.\n4. Dùng vòng lặp chạy từ `1` đến `n`.\n5. Cộng giá trị hiện tại vào `sum`.\n6. In kết quả.\n\n### 5.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    if (n <= 0 || n > 1'000'000) {\n        std::cerr << \"n phai nam trong [1, 1000000].\\n\";\n        return 1;\n    }\n\n    long long sum{};\n\n    for (int i = 1; i <= n; ++i) {\n        sum += i;\n    }\n\n    std::cout << sum << '\\n';\n\n    return 0;\n}\n```\n\n### 5.3. Phân tích chương trình\n\n**Biến n**\n\nLưu số nguyên đầu vào. Chương trình giới hạn `n` trong đoạn `[1, 1000000]` để xác định rõ phạm vi được hỗ trợ.\n\n**Biến sum**\n\nĐược khai báo dưới kiểu `long long`, có khả năng chứa các giá trị nguyên lớn hơn kiểu `int` thông thường.\n\n**Vòng lặp for**\n\nThực hiện phép cộng lần lượt:\n\n| i | sum trước phép cộng | sum sau phép cộng |\n|---|---|---|\n| 1 | 0 | 1 |\n| 2 | 1 | 3 |\n| 3 | 3 | 6 |\n| 4 | 6 | 10 |\n| 5 | 10 | 15 |\n\nKhi `i` vượt quá `n`, vòng lặp kết thúc.\n\n### 5.4. Phân tích độ phức tạp\n\nVòng lặp thực hiện `n` lần, mỗi lần chỉ có một phép cộng.\n\nVì vậy:\n\n- **Độ phức tạp thời gian:** `O(n)`.\n- **Độ phức tạp bộ nhớ phụ:** `O(1)`.\n\nChương trình không cần tạo mảng hoặc lưu toàn bộ các số từ `1` đến `n`.\n\n**Mở rộng:** Bài toán còn có thể giải bằng công thức:\n\n\\[\nS = \\frac{n(n+1)}{2}\n\\]\n\nCông thức này cho phép tính tổng với `O(1)` thời gian. Tuy nhiên, cần chú ý đến khả năng tràn số khi thực hiện phép nhân. Việc chọn kiểu dữ liệu và kiểm tra phạm vi đầu vào vẫn cần thiết.\n\n---\n\n## 6. Những lỗi thường gặp\n\n### 6.1. Vòng lặp vô hạn\n\nVí dụ:\n\n```cpp\nint i = 1;\n\nwhile (i <= 5) {\n    std::cout << i << '\\n';\n}\n```\n\nBiến `i` không bao giờ thay đổi.\n\nVì thế, điều kiện `i <= 5` luôn đúng và chương trình liên tục in `1`.\n\nCách sửa:\n\n```cpp\nint i = 1;\n\nwhile (i <= 5) {\n    std::cout << i << '\\n';\n    ++i;\n}\n```\n\nLưu ý rằng vòng lặp vô hạn không phải lúc nào cũng là lỗi. Một số chương trình server hoặc vòng lặp xử lý sự kiện cố tình chạy liên tục, nhưng phải có cơ chế dừng phù hợp.\n\n### 6.2. Sai điều kiện biên\n\nXét vòng lặp:\n\n```cpp\nfor (int i = 0; i <= 5; ++i) {\n    std::cout << i << ' ';\n}\n```\n\nVòng lặp này chạy **6 lần**, từ `0` đến `5`.\n\nNếu muốn chạy đúng 5 lần, cần viết:\n\n```cpp\nfor (int i = 0; i < 5; ++i) {\n    std::cout << i << ' ';\n}\n```\n\nLỗi này thường được gọi là *off-by-one error*.\n\nKhi duyệt mảng có `n` phần tử với chỉ số bắt đầu từ `0`, chỉ số hợp lệ thông thường là `0` đến `n - 1`.\n\n### 6.3. Quên dấu ngoặc nhọn\n\nVí dụ:\n\n```cpp\nif (score >= 5)\n    std::cout << \"Dat\\n\";\n    std::cout << \"Chuc mung!\\n\";\n```\n\nChỉ câu lệnh đầu tiên thuộc `if`.\n\nCâu lệnh in `Chuc mung!` luôn thực hiện, bất kể điều kiện đúng hay sai.\n\nNên sử dụng `{}` ngay cả khi chỉ có một câu lệnh:\n\n```cpp\nif (score >= 5) {\n    std::cout << \"Dat\\n\";\n    std::cout << \"Chuc mung!\\n\";\n}\n```\n\nCách viết này rõ ràng và an toàn hơn khi mở rộng chương trình.\n\n### 6.4. Không kiểm tra cin\n\nNếu dữ liệu đầu vào không khớp với kiểu cần đọc, `std::cin` có thể chuyển sang trạng thái lỗi.\n\nKhi đó, các lần đọc tiếp theo cũng có thể thất bại cho đến khi trạng thái lỗi được xử lý.\n\nVới chương trình đơn giản, có thể thông báo và kết thúc.\n\nVới chương trình yêu cầu người dùng nhập lại, cần xóa trạng thái lỗi bằng `std::cin.clear()` và loại bỏ dữ liệu không hợp lệ bằng `std::cin.ignore()` trước khi đọc tiếp.\n\n### 6.5. Sử dụng sai switch\n\nHai lỗi phổ biến:\n\n- Thiếu `break`, khiến chương trình chạy xuyên sang `case` tiếp theo.\n- Dùng `switch` để kiểm tra điều kiện dạng khoảng giá trị vốn phù hợp hơn với `if-else`.\n\nĐừng cố sử dụng `switch` cho mọi vấn đề chỉ vì mã trông ngắn hơn.\n\n---\n\n## 7. Bài tập tự luyện\n\nHãy tự giải trước khi tham khảo lời giải hoặc sử dụng công cụ hỗ trợ.\n\n### Bài 1. Kiểm tra số chẵn, lẻ\n\n**Yêu cầu:** Nhập số nguyên `n` và xác định số đó là chẵn hay lẻ.\n\nVí dụ:\n\n```text\nInput:\n7\n\nOutput:\nSo le\n```\n\n**Gợi ý:** Sử dụng toán tử `%` và câu lệnh `if-else`.\n\n### Bài 2. Tìm số lớn nhất\n\n**Yêu cầu:** Nhập ba số nguyên `a`, `b`, `c`. In giá trị lớn nhất.\n\nVí dụ:\n\n```text\nInput:\n5 12 8\n\nOutput:\n12\n```\n\n**Gợi ý:** Sử dụng `if-else` và phép so sánh. Cần xử lý cả trường hợp các số bằng nhau.\n\n### Bài 3. Tính tổng các số chẵn\n\n**Yêu cầu:** Nhập số nguyên dương `n`, tính tổng các số chẵn từ `1` đến `n`.\n\nVí dụ:\n\n```text\nInput:\n10\n\nOutput:\n30\n```\n\nVì:\n\n\\[\n2 + 4 + 6 + 8 + 10 = 30\n\\]\n\n**Gợi ý:** Kết hợp vòng lặp `for` với điều kiện `i % 2 == 0`.\n\n### Bài 4. Bảng cửu chương\n\n**Yêu cầu:** Nhập số nguyên `n` từ `1` đến `9`, in bảng nhân của số đó từ `1` đến `10`.\n\nVí dụ:\n\n```text\nInput:\n3\n\nOutput:\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n...\n3 x 10 = 30\n```\n\n**Gợi ý:** Sử dụng vòng lặp `for`.\n\n### Bài 5. Đếm chữ số\n\n**Yêu cầu:** Nhập số nguyên không âm `n`, xác định số chữ số thập phân của số đó.\n\nVí dụ:\n\n```text\nInput:\n12345\n\nOutput:\n5\n```\n\n**Gợi ý:** Mỗi lần chia nguyên cho `10`, ta loại bỏ một chữ số cuối.\n\nChú ý trường hợp đặc biệt `n = 0`, vì số `0` có một chữ số.\n\n---\n\n## 8. Tổng kết kiến thức\n\n| Thành phần | Vai trò |\n|---|---|\n| `std::cin` | Nhận dữ liệu |\n| `std::cout` | Xuất dữ liệu |\n| `std::cerr` | Thông báo lỗi |\n| `std::getline()` | Đọc một dòng |\n| `if` | Thực hiện khi điều kiện đúng |\n| `else if` | Kiểm tra điều kiện tiếp theo |\n| `else` | Xử lý trường hợp còn lại |\n| `switch` | Lựa chọn theo giá trị rời rạc |\n| `for` | Lặp với biến đếm hoặc bước lặp rõ ràng |\n| `while` | Lặp khi điều kiện còn đúng |\n| `do-while` | Thực hiện ít nhất một lần rồi kiểm tra |\n| `break` | Thoát khỏi vòng lặp hoặc switch |\n| `continue` | Bỏ qua phần còn lại của lần lặp hiện tại |\n\nSau bài học này, bạn cần có khả năng tự viết một chương trình thực hiện ba công việc cơ bản: **nhận dữ liệu, xử lý bằng điều kiện hoặc vòng lặp, và xuất kết quả**.\n\nQuan trọng hơn, hãy hình thành thói quen kiểm tra đầu vào, xác định rõ điều kiện dừng và thử nghiệm các trường hợp biên trước khi coi chương trình đã hoàn thành.\n\n## Đọc tiếp\n\n- [Toán tử trong C++](/cpp/bat-dau/toan-tu): Tìm hiểu biểu thức, toán tử logic và các phép so sánh.\n- [Hàm và phạm vi biến](/cpp/bat-dau/ham-pham-vi): Tổ chức chương trình thành những phần nhỏ, dễ tái sử dụng.\n- [Giải quyết bài toán bằng thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan): Học cách phân tích yêu cầu, thiết kế thuật toán và đánh giá độ phức tạp.",
+    "body": "# Nhập xuất, câu lệnh điều kiện và vòng lặp trong C++\n\nMột chương trình không chỉ thực hiện các phép tính. Nó còn cần tiếp nhận dữ liệu, đưa ra quyết định và thực hiện những công việc lặp lại.\n\nTrong C++, ba nhóm kiến thức này đóng vai trò nền tảng:\n\n- **Nhập xuất (Input/Output):** Nhận dữ liệu đầu vào và hiển thị kết quả.\n- **Câu lệnh điều kiện (Conditional Statements):** Quyết định chương trình sẽ thực hiện công việc nào.\n- **Vòng lặp (Loops):** Thực hiện một công việc nhiều lần mà không cần viết lại cùng một đoạn mã.\n\nĐây cũng là những kiến thức được sử dụng thường xuyên khi giải bài tập lập trình, xây dựng thuật toán và phát triển phần mềm.\n\n## 1. Nhập và xuất dữ liệu\n\n### 1.1. Thư viện iostream\n\nĐể nhập xuất dữ liệu thông qua thiết bị đầu cuối (terminal), C++ cung cấp thư viện `<iostream>`.\n\nBa đối tượng thường gặp:\n\n| Đối tượng | Chức năng |\n|---|---|\n| `std::cin` | Đọc dữ liệu từ đầu vào chuẩn |\n| `std::cout` | Ghi dữ liệu ra đầu ra chuẩn |\n| `std::cerr` | Ghi thông báo lỗi ra luồng lỗi chuẩn |\n\nVí dụ đầu tiên:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cout << \"Nhap tuoi cua ban: \";\n    std::cin >> age;\n\n    std::cout << \"Ban \" << age << \" tuoi.\\n\";\n\n    return 0;\n}\n```\n\nKết quả khi nhập `16`:\n\n```text\nNhap tuoi cua ban: 16\nBan 16 tuoi.\n```\n\n**Giải thích:**\n\n- `#include <iostream>`: Khai báo sử dụng thư viện nhập xuất.\n- `int age{}`: Tạo biến số nguyên `age`, khởi tạo giá trị bằng `0`.\n- `std::cout <<`: Gửi dữ liệu ra màn hình.\n- `std::cin >>`: Đọc dữ liệu vào biến.\n- `'\\n'`: Xuống dòng.\n- `return 0`: Kết thúc chương trình và thông báo thực thi thành công.\n\nCần phân biệt hai toán tử:\n\n- `<<`: Toán tử chèn dữ liệu vào luồng xuất.\n- `>>`: Toán tử trích xuất dữ liệu từ luồng nhập.\n\n### 1.2. Nhập nhiều giá trị\n\nCó thể đọc nhiều biến trong một câu lệnh:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{};\n    int b{};\n\n    std::cin >> a >> b;\n\n    std::cout << \"Tong: \" << a + b << '\\n';\n\n    return 0;\n}\n```\n\nDữ liệu đầu vào:\n\n```text\n5 8\n```\n\nKết quả:\n\n```text\nTong: 13\n```\n\nNgười dùng cũng có thể nhập:\n\n```text\n5\n8\n```\n\nKết quả vẫn giống nhau.\n\n**Vì sao?**\n\nVới các kiểu dữ liệu số, `std::cin >>` tự động bỏ qua khoảng trắng, tab và ký tự xuống dòng ở đầu dữ liệu cần đọc.\n\nĐiều này đặc biệt hữu ích trong các bài toán lập trình thi đấu, khi dữ liệu được cung cấp qua nhiều dòng.\n\n### 1.3. Đọc một dòng văn bản với getline\n\n`std::cin >>` chỉ đọc một từ đối với kiểu `std::string`, vì quá trình đọc dừng tại khoảng trắng.\n\nVí dụ, nếu nhập `Nguyen Van A`, câu lệnh:\n\n```cpp\nstd::cin >> name;\n```\n\nchỉ lấy được `Nguyen`.\n\nĐể đọc toàn bộ dòng, sử dụng `std::getline()`:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n\n    std::cout << \"Nhap ho ten: \";\n    std::getline(std::cin, name);\n\n    std::cout << \"Xin chao, \" << name << \"!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNhap ho ten: Nguyen Van A\nXin chao, Nguyen Van A!\n```\n\n**Lưu ý quan trọng:** Nếu sử dụng `std::getline()` ngay sau `std::cin >>`, ký tự xuống dòng còn lại trong bộ đệm có thể khiến `getline()` đọc một dòng rỗng.\n\nCó thể loại bỏ phần còn lại của dòng trước khi đọc:\n\n```cpp\n#include <iostream>\n#include <limits>\n#include <string>\n\nint main() {\n    int age{};\n    std::string name;\n\n    if (!(std::cin >> age)) {\n        return 1;\n    }\n\n    std::cin.ignore(\n        std::numeric_limits<std::streamsize>::max(),\n        '\\n'\n    );\n\n    std::getline(std::cin, name);\n\n    std::cout << name << \": \" << age << '\\n';\n}\n```\n\n### 1.4. Kiểm tra dữ liệu đầu vào\n\nKhông phải người dùng lúc nào cũng nhập đúng.\n\nGiả sử chương trình yêu cầu một số nguyên nhưng nhận được chữ cái, quá trình đọc có thể thất bại.\n\nVì vậy, thay vì mặc định dữ liệu luôn hợp lệ, hãy kiểm tra kết quả:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cout << \"Nhap tuoi: \";\n\n    if (!(std::cin >> age)) {\n        std::cerr << \"Loi: Tuoi phai la so nguyen.\\n\";\n        return 1;\n    }\n\n    if (age < 0 || age > 150) {\n        std::cerr << \"Loi: Tuoi khong hop le.\\n\";\n        return 1;\n    }\n\n    std::cout << \"Tuoi hop le: \" << age << '\\n';\n\n    return 0;\n}\n```\n\nỞ đây có hai loại kiểm tra khác nhau:\n\n1. **Kiểm tra cú pháp dữ liệu:** Đầu vào có đọc được thành số nguyên hay không?\n2. **Kiểm tra tính hợp lệ:** Số nguyên đó có nằm trong phạm vi cho phép không?\n\nChẳng hạn:\n\n| Dữ liệu nhập | Kết quả |\n|---|---|\n| `16` | Hợp lệ |\n| `-5` | Không hợp lệ |\n| `200` | Không hợp lệ |\n| `abc` | Đọc thất bại |\n\nLưu ý rằng `std::cin >> age` có thể đọc thành công phần số của một chuỗi như `16abc` và để lại `abc` trong luồng nhập. Nếu cần xác thực toàn bộ dòng, phải xử lý thêm phần dữ liệu còn lại.\n\nĐây là một nguyên tắc quan trọng: **Đọc được dữ liệu không đồng nghĩa với dữ liệu hợp lệ.**\n\n---\n\n## 2. Câu lệnh điều kiện\n\nTrong thực tế, chương trình thường cần đưa ra quyết định.\n\nVí dụ:\n\n- Nếu điểm lớn hơn hoặc bằng 5, học sinh đạt yêu cầu.\n- Nếu mật khẩu không chính xác, từ chối đăng nhập.\n- Nếu số chia bằng 0, không thực hiện phép chia.\n- Nếu người dùng không có quyền, từ chối thao tác.\n\nC++ cung cấp các câu lệnh điều kiện để xử lý những tình huống này.\n\n### 2.1. Câu lệnh if\n\nCú pháp:\n\n```cpp\nif (condition) {\n    // Thuc hien khi dieu kien dung\n}\n```\n\nPhần thân chỉ được thực hiện khi biểu thức điều kiện có giá trị `true`.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{};\n\n    std::cin >> age;\n\n    if (age >= 18) {\n        std::cout << \"Ban da du 18 tuoi.\\n\";\n    }\n\n    return 0;\n}\n```\n\nNếu nhập `20`, thông báo được hiển thị.\n\nNếu nhập `15`, chương trình bỏ qua khối `if`.\n\n### 2.2. Câu lệnh if-else\n\nKhi cần xử lý cả hai trường hợp đúng và sai, sử dụng `if-else`.\n\nCú pháp:\n\n```cpp\nif (condition) {\n    // Khi dieu kien dung\n} else {\n    // Khi dieu kien sai\n}\n```\n\nVí dụ kiểm tra số chẵn, lẻ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        return 1;\n    }\n\n    if (n % 2 == 0) {\n        std::cout << \"So chan\\n\";\n    } else {\n        std::cout << \"So le\\n\";\n    }\n\n    return 0;\n}\n```\n\nToán tử `%` trả về phần dư của phép chia nguyên.\n\n- Nếu `n % 2 == 0`, số đó là số chẵn.\n- Ngược lại, số đó là số lẻ.\n\n**Phân biệt `=` và `==`:**\n\n| Toán tử | Ý nghĩa |\n|---|---|\n| `=` | Gán giá trị |\n| `==` | So sánh bằng nhau |\n| `!=` | So sánh khác nhau |\n| `>` | Lớn hơn |\n| `<` | Nhỏ hơn |\n| `>=` | Lớn hơn hoặc bằng |\n| `<=` | Nhỏ hơn hoặc bằng |\n\nMột lỗi phổ biến là viết `if (a = 5)` thay vì `if (a == 5)`.\n\nBiểu thức đầu tiên thực hiện phép gán, sau đó chuyển giá trị được gán thành `bool` để kiểm tra. Với giá trị `5`, điều kiện luôn đúng.\n\n### 2.3. Câu lệnh else if if-else\n\nKhi chương trình có nhiều trường hợp, sử dụng chuỗi `else if`.\n\nVí dụ xếp loại điểm:\n\n```cpp\n#include <iostream>\n\nint main() {\n    double score{};\n\n    std::cout << \"Nhap diem: \";\n\n    if (!(std::cin >> score)) {\n        std::cerr << \"Diem khong hop le.\\n\";\n        return 1;\n    }\n\n    if (score < 0 || score > 10) {\n        std::cerr << \"Diem phai nam trong [0, 10].\\n\";\n        return 1;\n    }\n\n    if (score >= 8) {\n        std::cout << \"Gioi\\n\";\n    } else if (score >= 6.5) {\n        std::cout << \"Kha\\n\";\n    } else if (score >= 5) {\n        std::cout << \"Trung binh\\n\";\n    } else {\n        std::cout << \"Chua dat\\n\";\n    }\n\n    return 0;\n}\n```\n\nVí dụ nhập:\n\n```text\n7.5\n```\n\nKết quả:\n\n```text\nKha\n```\n\n**Cách chương trình hoạt động:**\n\n1. Kiểm tra `score >= 8`, kết quả sai.\n2. Kiểm tra `score >= 6.5`, kết quả đúng.\n3. Thực hiện nhánh in `Kha`.\n4. Bỏ qua những nhánh còn lại.\n\nĐiều quan trọng là **thứ tự kiểm tra ảnh hưởng trực tiếp đến kết quả**.\n\nNếu kiểm tra `score >= 5` trước `score >= 8`, điểm `9` có thể bị xếp vào nhóm trung bình.\n\n### 2.4. Câu lệnh switch\n\n`switch` phù hợp khi cần so sánh một biểu thức với nhiều giá trị rời rạc.\n\nVí dụ xây dựng menu:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int choice{};\n\n    std::cout << \"1. Bat dau\\n\";\n    std::cout << \"2. Cai dat\\n\";\n    std::cout << \"3. Thoat\\n\";\n\n    if (!(std::cin >> choice)) {\n        return 1;\n    }\n\n    switch (choice) {\n        case 1:\n            std::cout << \"Bat dau chuong trinh\\n\";\n            break;\n\n        case 2:\n            std::cout << \"Mo cai dat\\n\";\n            break;\n\n        case 3:\n            std::cout << \"Tam biet!\\n\";\n            break;\n\n        default:\n            std::cout << \"Lua chon khong hop le\\n\";\n            break;\n    }\n\n    return 0;\n}\n```\n\nCác thành phần chính:\n\n- `switch`: Nhận biểu thức cần kiểm tra.\n- `case`: Định nghĩa một giá trị có thể xảy ra.\n- `break`: Thoát khỏi câu lệnh `switch`.\n- `default`: Xử lý khi không có `case` nào phù hợp.\n\nNếu thiếu `break`, chương trình có thể tiếp tục chạy vào nhánh tiếp theo. Hành vi này được gọi là *fallthrough*.\n\nTrong C++17, có thể dùng `[[fallthrough]];` để thể hiện rõ trường hợp cố ý chạy xuyên nhánh.\n\n**Khi nào chọn if-else, khi nào chọn switch?**\n\n| Tình huống | Nên sử dụng |\n|---|---|\n| So sánh khoảng giá trị | `if-else` |\n| Kết hợp nhiều điều kiện logic | `if-else` |\n| Kiểm tra các giá trị nguyên cụ thể | `switch` |\n| Xử lý các giá trị enum | `switch` |\n\n`switch` không hỗ trợ trực tiếp so sánh khoảng như `score >= 8`, cũng không hỗ trợ `std::string` làm biểu thức lựa chọn trong C++17.\n\n---\n\n## 3. Vòng lặp trong C++\n\nGiả sử cần in các số từ 1 đến 100.\n\nViết 100 câu lệnh `std::cout` là cách làm dài dòng, khó bảo trì và rất dễ sai.\n\nVòng lặp giải quyết vấn đề bằng cách thực hiện một khối lệnh nhiều lần.\n\nC++ có ba dạng vòng lặp cơ bản:\n\n- `for`\n- `while`\n- `do-while`\n\n### 3.1. Vòng lặp for\n\n`for` thường được sử dụng khi có biến đếm hoặc khi biết trước số lần cần lặp.\n\nCú pháp:\n\n```cpp\nfor (a; b; c) {\n    // Cong viec can lap\n}\n```\n\nTrong đó:\n\n- `a`: Khởi tạo biến đếm.\n- `b`: Điều kiện tiếp tục vòng lặp.\n- `c`: Cập nhật biến đếm sau mỗi lần lặp.\n\nVí dụ in các số từ 1 đến 5:\n\n```cpp\n#include <iostream>\n\nint main() {\n    for (int i = 1; i <= 5; ++i) {\n        std::cout << i << ' ';\n    }\n\n    std::cout << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1 2 3 4 5\n```\n\n**Phân tích từng lần lặp:**\n\n| Lần lặp | Giá trị i | Điều kiện i <= 5 | Hành động |\n|---|---|---|---|\n| 1 | 1 | Đúng | In 1 |\n| 2 | 2 | Đúng | In 2 |\n| 3 | 3 | Đúng | In 3 |\n| 4 | 4 | Đúng | In 4 |\n| 5 | 5 | Đúng | In 5 |\n| 6 | 6 | Sai | Kết thúc |\n\nCâu lệnh `++i` tăng biến `i` lên một đơn vị.\n\nTrong ví dụ này, `i++` cũng cho kết quả tương đương.\n\n**Ví dụ: In số chẵn từ 2 đến 10**\n\n```cpp\nfor (int i = 2; i <= 10; i += 2) {\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n2 4 6 8 10\n```\n\nKhông bắt buộc mỗi vòng lặp chỉ tăng một đơn vị. Biến đếm có thể tăng hoặc giảm theo bước phù hợp.\n\n### 3.2. Vòng lặp while\n\n`while` phù hợp khi số lần lặp phụ thuộc vào một điều kiện và chưa xác định trước.\n\nCú pháp:\n\n```cpp\nwhile (condition) {\n    // Cong viec can lap\n}\n```\n\nĐiều kiện được kiểm tra **trước mỗi lần thực hiện thân vòng lặp**.\n\nVí dụ đếm ngược:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int count{5};\n\n    while (count > 0) {\n        std::cout << count << ' ';\n        --count;\n    }\n\n    std::cout << \"Bat dau!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n5 4 3 2 1 Bat dau!\n```\n\nChương trình thực hiện:\n\n1. Kiểm tra `count > 0`.\n2. In giá trị hiện tại.\n3. Giảm `count` đi một.\n4. Quay lại kiểm tra điều kiện.\n5. Thoát khi `count` bằng `0`.\n\nNếu điều kiện sai ngay từ đầu, thân vòng lặp sẽ không được thực hiện lần nào.\n\n### 3.3. Vòng lặp do-while\n\nKhác với `while`, vòng lặp `do-while` kiểm tra điều kiện **sau khi thực hiện thân vòng lặp**.\n\nVì vậy, thân vòng lặp luôn được thực hiện ít nhất một lần.\n\nCú pháp:\n\n```cpp\ndo {\n    // Cong viec can lap\n} while (condition);\n```\n\nVí dụ yêu cầu người dùng nhập `0` để thoát:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int choice{};\n\n    do {\n        std::cout << \"Nhap 0 de thoat: \";\n\n        if (!(std::cin >> choice)) {\n            std::cerr << \"Du lieu khong hop le.\\n\";\n            return 1;\n        }\n    } while (choice != 0);\n\n    std::cout << \"Da thoat chuong trinh.\\n\";\n\n    return 0;\n}\n```\n\nVí dụ quá trình chạy:\n\n```text\nNhap 0 de thoat: 5\nNhap 0 de thoat: 2\nNhap 0 de thoat: 0\nDa thoat chuong trinh.\n```\n\nỞ đây vòng lặp tiếp tục cho đến khi người dùng nhập `0`.\n\n**Lưu ý:** Khác với `while` và `for`, cú pháp `do-while` bắt buộc có dấu `;` sau điều kiện.\n\n### 3.4. So sánh ba loại vòng lặp\n\n| Tiêu chí | for | while | do-while |\n|---|---|---|---|\n| Kiểm tra điều kiện | Trước thân | Trước thân | Sau thân |\n| Có thể chạy 0 lần | Có | Có | Không |\n| Phù hợp với biến đếm | Rất tốt | Có thể | Có thể |\n| Phù hợp với nhập liệu lặp lại | Có thể | Tốt | Rất tốt |\n| Thường sử dụng | Duyệt, đếm | Lặp theo điều kiện | Menu, yêu cầu nhập lại |\n\nKhông có vòng lặp nào tốt nhất cho mọi trường hợp. Hãy chọn kiểu giúp người đọc hiểu rõ ý định của chương trình.\n\n---\n\n## 4. Điều khiển vòng lặp với break và continue\n\nNgoài điều kiện lặp, C++ cung cấp hai câu lệnh để thay đổi luồng thực thi.\n\n### 4.1. break: Thoát khỏi vòng lặp\n\n`break` lập tức kết thúc vòng lặp gần nhất bao quanh nó.\n\nVí dụ:\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i == 5) {\n        break;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 2 3 4\n```\n\nKhi `i` bằng `5`, vòng lặp kết thúc, không tiếp tục đến `10`.\n\n### 4.2. continue: Bỏ qua lần lặp hiện tại\n\n`continue` bỏ qua phần còn lại của thân vòng lặp hiện tại và chuyển sang bước lặp tiếp theo.\n\nVí dụ chỉ in số lẻ:\n\n```cpp\nfor (int i = 1; i <= 10; ++i) {\n    if (i % 2 == 0) {\n        continue;\n    }\n\n    std::cout << i << ' ';\n}\n```\n\nKết quả:\n\n```text\n1 3 5 7 9\n```\n\nKhác biệt cần nhớ:\n\n- `break`: Kết thúc toàn bộ vòng lặp hiện tại.\n- `continue`: Chỉ bỏ qua phần còn lại của lần lặp hiện tại.\n\nVới vòng lặp lồng nhau, `break` chỉ thoát khỏi vòng lặp gần nhất, không tự động thoát khỏi tất cả các vòng.\n\n---\n\n## 5. Bài toán thực hành: Tính tổng từ 1 đến n\n\nHãy vận dụng kiến thức vừa học vào một bài toán hoàn chỉnh.\n\n**Đề bài**\n\nNhập số nguyên dương `n`. Tính tổng:\n\n\\[\nS = 1 + 2 + 3 + \\cdots + n\n\\]\n\nVí dụ:\n\n**Input**\n\n```text\n5\n```\n\n**Output**\n\n```text\n15\n```\n\nVì:\n\n\\[\n1 + 2 + 3 + 4 + 5 = 15\n\\]\n\n### 5.1. Phân tích thuật toán\n\nCác bước giải quyết:\n\n1. Đọc số nguyên `n`.\n2. Kiểm tra `n` có hợp lệ không.\n3. Khởi tạo biến `sum = 0`.\n4. Dùng vòng lặp chạy từ `1` đến `n`.\n5. Cộng giá trị hiện tại vào `sum`.\n6. In kết quả.\n\n### 5.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    if (n <= 0 || n > 1'000'000) {\n        std::cerr << \"n phai nam trong [1, 1000000].\\n\";\n        return 1;\n    }\n\n    long long sum{};\n\n    for (int i = 1; i <= n; ++i) {\n        sum += i;\n    }\n\n    std::cout << sum << '\\n';\n\n    return 0;\n}\n```\n\n### 5.3. Phân tích chương trình\n\n**Biến n**\n\nLưu số nguyên đầu vào. Chương trình giới hạn `n` trong đoạn `[1, 1000000]` để xác định rõ phạm vi được hỗ trợ.\n\n**Biến sum**\n\nĐược khai báo dưới kiểu `long long`, có khả năng chứa các giá trị nguyên lớn hơn kiểu `int` thông thường.\n\n**Vòng lặp for**\n\nThực hiện phép cộng lần lượt:\n\n| i | sum trước phép cộng | sum sau phép cộng |\n|---|---|---|\n| 1 | 0 | 1 |\n| 2 | 1 | 3 |\n| 3 | 3 | 6 |\n| 4 | 6 | 10 |\n| 5 | 10 | 15 |\n\nKhi `i` vượt quá `n`, vòng lặp kết thúc.\n\n### 5.4. Phân tích độ phức tạp\n\nVòng lặp thực hiện `n` lần, mỗi lần chỉ có một phép cộng.\n\nVì vậy:\n\n- **Độ phức tạp thời gian:** `O(n)`.\n- **Độ phức tạp bộ nhớ phụ:** `O(1)`.\n\nChương trình không cần tạo mảng hoặc lưu toàn bộ các số từ `1` đến `n`.\n\n**Mở rộng:** Bài toán còn có thể giải bằng công thức:\n\n\\[\nS = \\frac{n(n+1)}{2}\n\\]\n\nCông thức này cho phép tính tổng với `O(1)` thời gian. Tuy nhiên, cần chú ý đến khả năng tràn số khi thực hiện phép nhân. Việc chọn kiểu dữ liệu và kiểm tra phạm vi đầu vào vẫn cần thiết.\n\n---\n\n## 6. Những lỗi thường gặp\n\n### 6.1. Vòng lặp vô hạn\n\nVí dụ:\n\n```cpp\nint i = 1;\n\nwhile (i <= 5) {\n    std::cout << i << '\\n';\n}\n```\n\nBiến `i` không bao giờ thay đổi.\n\nVì thế, điều kiện `i <= 5` luôn đúng và chương trình liên tục in `1`.\n\nCách sửa:\n\n```cpp\nint i = 1;\n\nwhile (i <= 5) {\n    std::cout << i << '\\n';\n    ++i;\n}\n```\n\nLưu ý rằng vòng lặp vô hạn không phải lúc nào cũng là lỗi. Một số chương trình server hoặc vòng lặp xử lý sự kiện cố tình chạy liên tục, nhưng phải có cơ chế dừng phù hợp.\n\n### 6.2. Sai điều kiện biên\n\nXét vòng lặp:\n\n```cpp\nfor (int i = 0; i <= 5; ++i) {\n    std::cout << i << ' ';\n}\n```\n\nVòng lặp này chạy **6 lần**, từ `0` đến `5`.\n\nNếu muốn chạy đúng 5 lần, cần viết:\n\n```cpp\nfor (int i = 0; i < 5; ++i) {\n    std::cout << i << ' ';\n}\n```\n\nLỗi này thường được gọi là *off-by-one error*.\n\nKhi duyệt mảng có `n` phần tử với chỉ số bắt đầu từ `0`, chỉ số hợp lệ thông thường là `0` đến `n - 1`.\n\n### 6.3. Quên dấu ngoặc nhọn\n\nVí dụ:\n\n```cpp\nif (score >= 5)\n    std::cout << \"Dat\\n\";\n    std::cout << \"Chuc mung!\\n\";\n```\n\nChỉ câu lệnh đầu tiên thuộc `if`.\n\nCâu lệnh in `Chuc mung!` luôn thực hiện, bất kể điều kiện đúng hay sai.\n\nNên sử dụng `{}` ngay cả khi chỉ có một câu lệnh:\n\n```cpp\nif (score >= 5) {\n    std::cout << \"Dat\\n\";\n    std::cout << \"Chuc mung!\\n\";\n}\n```\n\nCách viết này rõ ràng và an toàn hơn khi mở rộng chương trình.\n\n### 6.4. Không kiểm tra cin\n\nNếu dữ liệu đầu vào không khớp với kiểu cần đọc, `std::cin` có thể chuyển sang trạng thái lỗi.\n\nKhi đó, các lần đọc tiếp theo cũng có thể thất bại cho đến khi trạng thái lỗi được xử lý.\n\nVới chương trình đơn giản, có thể thông báo và kết thúc.\n\nVới chương trình yêu cầu người dùng nhập lại, cần xóa trạng thái lỗi bằng `std::cin.clear()` và loại bỏ dữ liệu không hợp lệ bằng `std::cin.ignore()` trước khi đọc tiếp.\n\n### 6.5. Sử dụng sai switch\n\nHai lỗi phổ biến:\n\n- Thiếu `break`, khiến chương trình chạy xuyên sang `case` tiếp theo.\n- Dùng `switch` để kiểm tra điều kiện dạng khoảng giá trị vốn phù hợp hơn với `if-else`.\n\nĐừng cố sử dụng `switch` cho mọi vấn đề chỉ vì mã trông ngắn hơn.\n\n---\n\n## 7. Bài tập tự luyện\n\nHãy tự giải trước khi tham khảo lời giải hoặc sử dụng công cụ hỗ trợ.\n\n### Bài 1. Kiểm tra số chẵn, lẻ\n\n**Yêu cầu:** Nhập số nguyên `n` và xác định số đó là chẵn hay lẻ.\n\nVí dụ:\n\n```text\nInput:\n7\n\nOutput:\nSo le\n```\n\n**Gợi ý:** Sử dụng toán tử `%` và câu lệnh `if-else`.\n\n### Bài 2. Tìm số lớn nhất\n\n**Yêu cầu:** Nhập ba số nguyên `a`, `b`, `c`. In giá trị lớn nhất.\n\nVí dụ:\n\n```text\nInput:\n5 12 8\n\nOutput:\n12\n```\n\n**Gợi ý:** Sử dụng `if-else` và phép so sánh. Cần xử lý cả trường hợp các số bằng nhau.\n\n### Bài 3. Tính tổng các số chẵn\n\n**Yêu cầu:** Nhập số nguyên dương `n`, tính tổng các số chẵn từ `1` đến `n`.\n\nVí dụ:\n\n```text\nInput:\n10\n\nOutput:\n30\n```\n\nVì:\n\n\\[\n2 + 4 + 6 + 8 + 10 = 30\n\\]\n\n**Gợi ý:** Kết hợp vòng lặp `for` với điều kiện `i % 2 == 0`.\n\n### Bài 4. Bảng cửu chương\n\n**Yêu cầu:** Nhập số nguyên `n` từ `1` đến `9`, in bảng nhân của số đó từ `1` đến `10`.\n\nVí dụ:\n\n```text\nInput:\n3\n\nOutput:\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n...\n3 x 10 = 30\n```\n\n**Gợi ý:** Sử dụng vòng lặp `for`.\n\n### Bài 5. Đếm chữ số\n\n**Yêu cầu:** Nhập số nguyên không âm `n`, xác định số chữ số thập phân của số đó.\n\nVí dụ:\n\n```text\nInput:\n12345\n\nOutput:\n5\n```\n\n**Gợi ý:** Mỗi lần chia nguyên cho `10`, ta loại bỏ một chữ số cuối.\n\nChú ý trường hợp đặc biệt `n = 0`, vì số `0` có một chữ số.\n\n---\n\n## 8. Tổng kết kiến thức\n\n| Thành phần | Vai trò |\n|---|---|\n| `std::cin` | Nhận dữ liệu |\n| `std::cout` | Xuất dữ liệu |\n| `std::cerr` | Thông báo lỗi |\n| `std::getline()` | Đọc một dòng |\n| `if` | Thực hiện khi điều kiện đúng |\n| `else if` | Kiểm tra điều kiện tiếp theo |\n| `else` | Xử lý trường hợp còn lại |\n| `switch` | Lựa chọn theo giá trị rời rạc |\n| `for` | Lặp với biến đếm hoặc bước lặp rõ ràng |\n| `while` | Lặp khi điều kiện còn đúng |\n| `do-while` | Thực hiện ít nhất một lần rồi kiểm tra |\n| `break` | Thoát khỏi vòng lặp hoặc switch |\n| `continue` | Bỏ qua phần còn lại của lần lặp hiện tại |\n\nSau bài học này, bạn cần có khả năng tự viết một chương trình thực hiện ba công việc cơ bản: **nhận dữ liệu, xử lý bằng điều kiện hoặc vòng lặp, và xuất kết quả**.\n\nQuan trọng hơn, hãy hình thành thói quen kiểm tra đầu vào, xác định rõ điều kiện dừng và thử nghiệm các trường hợp biên trước khi coi chương trình đã hoàn thành.\n\n## Đọc tiếp\n\n- [Toán tử trong C++](/cpp/bat-dau/toan-tu): Tìm hiểu biểu thức, toán tử logic và các phép so sánh.\n- [Hàm và phạm vi biến](/cpp/bat-dau/ham-pham-vi): Tổ chức chương trình thành những phần nhỏ, dễ tái sử dụng.\n- [Giải quyết bài toán bằng thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan): Học cách phân tích yêu cầu, thiết kế thuật toán và đánh giá độ phức tạp.",
     "sourcePath": "content/cpp/getting-started/nhap-xuat-dieu-kien-vong-lap.md",
     "headings": [
+      {
+        "title": "Nhập xuất, câu lệnh điều kiện và vòng lặp trong C++",
+        "id": "nhap-xuat-cau-lenh-ieu-kien-va-vong-lap-trong-c"
+      },
       {
         "title": "1. Nhập và xuất dữ liệu",
         "id": "1-nhap-va-xuat-du-lieu"
@@ -5158,7 +5807,7 @@ export const articles = [
   },
   {
     "title": "Hàm, tham số và phạm vi biến",
-    "description": "Chia chương trình thành hàm, truyền dữ liệu, trả kết quả và hiểu scope cơ bản.",
+    "description": "Hướng dẫn khai báo, định nghĩa và gọi hàm, truyền tham số, trả kết quả, phân biệt scope và lifetime, cùng cách tổ chức chương trình C++17 thành các hàm dễ bảo trì.",
     "slug": "/cpp/bat-dau/ham-pham-vi",
     "category": "fundamentals",
     "categoryLabel": "C++ căn bản",
@@ -5166,11 +5815,19 @@ export const articles = [
     "difficulty": "beginner",
     "keywords": [
       "function C++",
-      "tham số",
+      "hàm C++",
+      "parameter",
+      "argument",
       "return",
+      "void",
+      "function declaration",
+      "function definition",
+      "pass by value",
+      "pass by reference",
       "scope",
       "local variable",
-      "lifetime"
+      "lifetime",
+      "dangling reference"
     ],
     "updated": "2026-10-20",
     "collection": "cpp",
@@ -5183,28 +5840,488 @@ export const articles = [
     ],
     "featured": false,
     "priority": 20070,
-    "body": "Hàm đặt tên cho một thao tác để tái sử dụng và kiểm tra riêng. Tách logic thành hàm giúp `main` dễ đọc và giảm lặp code.\n\n## Cú pháp\n\n```cpp\n#include <iostream>\n\nint add(int left, int right) {\n    return left + right;\n}\n\nint main() {\n    const int result{add(2, 3)};\n    std::cout << result << '\\n';\n}\n```\n\n`int` trước tên hàm là kiểu trả về; `left`, `right` là tham số. `return` trả kết quả và kết thúc lời gọi. Hàm `void` không trả giá trị. Trong C++ cần khai báo hàm trước khi được gọi, thường bằng prototype trong header hoặc đặt định nghĩa phía trên caller.\n\n## Truyền theo giá trị và tham chiếu\n\nTham số giá trị tạo bản sao; sửa bản sao không sửa biến bên ngoài. Dùng `const T&` cho object lớn chỉ đọc để tránh sao chép và ngăn sửa qua tham số:\n\n```cpp\n#include <iostream>\n#include <string>\n\nbool is_named(const std::string& name) {\n    return !name.empty();\n}\n\nint main() {\n    const std::string name{\"An\"};\n    std::cout << is_named(name) << '\\n';\n}\n```\n\nTham chiếu phải gắn với object hợp lệ. Bài [references và pointers](/cpp/bat-dau/references-pointers) giải thích thêm về lifetime.\n\n## Scope và lifetime\n\nBiến khai báo trong `{}` chỉ truy cập được trong block đó. Biến local tự động bị hủy khi rời scope. Không trả về reference hoặc pointer tới biến local vì object đã hết lifetime.\n\n## Lỗi thường gặp\n\n- In kết quả trong hàm thay vì `return` khiến caller không nhận được giá trị.\n- Gọi hàm với sai số lượng hoặc kiểu tham số.\n- Cùng tên hàm nhưng khác kiểu trả về không tạo overload hợp lệ.\n- Trả reference tới local gây dangling reference.\n\n## Tự luyện\n\nViết `int square(int value)` và hàm `bool is_even(int value)`. Kiểm tra với số âm, 0 và số dương; dự đoán kết quả của `is_even(-4)`.\n\n## Đọc tiếp\n\nHọc [function overloading và default arguments](/cpp/trung-cap/overloading-default-arguments) và xem [đệ quy, call stack](/cpp/trung-cap/de-quy-call-stack).",
+    "body": "# Hàm, tham số và phạm vi biến trong C++\n\nKhi mới bắt đầu lập trình, chúng ta thường viết toàn bộ chương trình trong hàm `main()`.\n\nCách này phù hợp với những bài tập đơn giản. Tuy nhiên, khi chương trình có nhiều chức năng, việc đặt tất cả câu lệnh trong một hàm sẽ khiến mã nguồn khó đọc, khó kiểm thử và khó bảo trì.\n\nVí dụ, một chương trình quản lý điểm học sinh có thể cần thực hiện nhiều công việc:\n\n- Nhập điểm.\n- Kiểm tra điểm hợp lệ.\n- Tính điểm trung bình.\n- Xếp loại kết quả.\n- Hiển thị thông tin.\n\nThay vì viết mọi thao tác trong `main()`, chúng ta có thể chia chương trình thành những **hàm (functions)** có trách nhiệm rõ ràng.\n\nHàm là một trong những thành phần quan trọng nhất của lập trình C++.\n\nBài học này giúp bạn hiểu:\n\n1. Hàm là gì và tại sao cần sử dụng hàm.\n2. Cách khai báo, định nghĩa và gọi hàm.\n3. Sự khác nhau giữa tham số và đối số.\n4. Cách trả kết quả bằng `return`.\n5. Hàm `void` và hàm có giá trị trả về.\n6. Truyền tham số bằng giá trị và tham chiếu.\n7. Phạm vi biến (scope) và thời gian sống (lifetime).\n8. Cách tổ chức chương trình thành nhiều hàm.\n9. Những lỗi thường gặp và cách phòng tránh.\n\n**Tiêu chuẩn sử dụng:** C++17.\n\n---\n\n## 1. Hàm là gì?\n\nHàm (function) là một đơn vị mã nguồn có tên, được định nghĩa để thực hiện một công việc cụ thể.\n\nMột hàm có thể:\n\n- Nhận dữ liệu đầu vào thông qua tham số.\n- Xử lý dữ liệu.\n- Trả về kết quả.\n- Thực hiện những thao tác như in dữ liệu hoặc cập nhật đối tượng.\n\nVí dụ, chúng ta thường xuyên cần tính tổng hai số.\n\nNếu không sử dụng hàm:\n\n```cpp\nint a{5};\nint b{3};\n\nint result1 = a + b;\n\nint c{10};\nint d{20};\n\nint result2 = c + d;\n```\n\nKhi phép tính phức tạp hơn, việc lặp lại logic ở nhiều nơi khiến chương trình khó bảo trì.\n\nThay vào đó, có thể định nghĩa một hàm:\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nSau đó sử dụng:\n\n```cpp\nint result1 = add(5, 3);\nint result2 = add(10, 20);\n```\n\nKết quả:\n\n```text\nresult1 = 8\nresult2 = 30\n```\n\n### 1.1. Lợi ích của hàm\n\n| Lợi ích | Giải thích |\n|---|---|\n| Tái sử dụng | Một hàm có thể được gọi nhiều lần |\n| Giảm lặp mã | Không cần viết lại cùng một logic |\n| Dễ đọc | Tên hàm cho biết thao tác cần thực hiện |\n| Dễ kiểm thử | Có thể kiểm tra từng hàm độc lập |\n| Dễ bảo trì | Sửa logic tại một vị trí |\n| Chia nhỏ vấn đề | Biến bài toán lớn thành nhiều phần nhỏ |\n\nTuy nhiên, không nên tách mọi phép toán đơn giản thành một hàm riêng.\n\nMục tiêu là chia chương trình thành những phần **có ý nghĩa và trách nhiệm rõ ràng**, không phải tạo ra số lượng hàm nhiều nhất.\n\n---\n\n## 2. Cấu trúc của một hàm\n\nCú pháp tổng quát:\n\n```cpp\nReturnType functionName(ParameterList) {\n    // Function body\n}\n```\n\nTrong đó:\n\n| Thành phần | Ý nghĩa |\n|---|---|\n| `ReturnType` | Kiểu giá trị hàm trả về |\n| `functionName` | Tên hàm |\n| `ParameterList` | Danh sách tham số |\n| `{}` | Phần thân hàm |\n| `return` | Kết thúc lời gọi và có thể trả về giá trị |\n\nVí dụ:\n\n```cpp\nint add(int left, int right) {\n    return left + right;\n}\n```\n\nPhân tích:\n\n```cpp\nint\n```\n\nLà kiểu trả về.\n\n```cpp\nadd\n```\n\nLà tên hàm.\n\n```cpp\nint left, int right\n```\n\nLà danh sách tham số.\n\n```cpp\nreturn left + right;\n```\n\nTrả về kết quả phép cộng.\n\n### 2.1. Ví dụ hoàn chỉnh\n\n```cpp\n#include <iostream>\n\nint add(int a, int b) {\n    return a + b;\n}\n\nint main() {\n    const int result{add(5, 3)};\n\n    std::cout << result << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n8\n```\n\nQuá trình thực thi:\n\n1. Chương trình bắt đầu từ `main()`.\n2. Gặp lời gọi `add(5, 3)`.\n3. Hàm `add()` nhận hai giá trị.\n4. Thực hiện phép cộng.\n5. Trả về kết quả `8`.\n6. `main()` lưu kết quả vào `result`.\n7. Chương trình in `8`.\n\n### 2.2. Minh họa lời gọi hàm\n\n```text\nmain()\n  |\n  | add(5, 3)\n  v\nadd()\n  a = 5\n  b = 3\n  |\n  | return a + b\n  v\nmain()\n  result = 8\n```\n\nKhi một hàm được gọi, chương trình chuyển quyền điều khiển sang hàm đó.\n\nKhi lời gọi kết thúc bình thường, quyền điều khiển quay về vị trí gọi và việc thực thi tiếp tục.\n\n---\n\n## 3. Khai báo, định nghĩa và gọi hàm\n\nTrong C++, cần phân biệt ba khái niệm:\n\n- Function declaration.\n- Function definition.\n- Function call.\n\n### 3.1. Function declaration\n\nKhai báo hàm cho compiler biết một hàm tồn tại và cung cấp những thông tin cần thiết để kiểm tra lời gọi.\n\nVí dụ:\n\n```cpp\nint add(int a, int b);\n```\n\nĐây là một function declaration, thường được gọi là *function prototype* trong ngữ cảnh nhập môn.\n\nKhai báo cho compiler biết:\n\n- Tên hàm: `add`.\n- Kiểu trả về: `int`.\n- Hai tham số kiểu `int`.\n\nKhai báo này chưa chứa phần thân hàm.\n\n### 3.2. Function definition\n\nĐịnh nghĩa hàm cung cấp phần thân và cách hàm hoạt động.\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nĐịnh nghĩa hàm cũng là một dạng khai báo, nhưng có thêm phần triển khai.\n\n### 3.3. Function call\n\nGọi hàm để thực hiện công việc:\n\n```cpp\nint result = add(5, 3);\n```\n\nĐây là một function call.\n\n### 3.4. Tại sao cần khai báo hàm trước khi gọi?\n\nTrong C++, một lời gọi hàm thông thường cần có khai báo phù hợp đã được compiler nhìn thấy tại vị trí gọi.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << add(5, 3) << '\\n';\n}\n\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nChương trình trên không hợp lệ nếu trước lời gọi chưa có khai báo nào của `add()`.\n\nCompiler không tự động xem phần định nghĩa phía dưới là một khai báo đã có ở vị trí gọi.\n\n### 3.5. Cách 1: Định nghĩa trước main()\n\n```cpp\n#include <iostream>\n\nint add(int a, int b) {\n    return a + b;\n}\n\nint main() {\n    std::cout << add(5, 3) << '\\n';\n}\n```\n\nĐây là cách đơn giản, phù hợp với những chương trình nhỏ.\n\n### 3.6. Cách 2: Sử dụng function prototype\n\n```cpp\n#include <iostream>\n\nint add(int a, int b);\n\nint main() {\n    std::cout << add(5, 3) << '\\n';\n}\n\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nChương trình hợp lệ vì `add()` đã được khai báo trước khi gọi.\n\nCách tổ chức này cũng là nền tảng để tách mã nguồn thành header và source file.\n\n---\n\n## 4. Tham số và đối số\n\nHai khái niệm thường bị nhầm lẫn là **parameter** và **argument**.\n\n### 4.1. Parameter là gì?\n\nParameter (tham số) là tên hoặc khai báo được sử dụng trong danh sách tham số của hàm.\n\nVí dụ:\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nỞ đây:\n\n```cpp\na\nb\n```\n\nlà các tham số.\n\n### 4.2. Argument là gì?\n\nArgument (đối số) là biểu thức được cung cấp khi gọi hàm.\n\nVí dụ:\n\n```cpp\nadd(10, 20);\n```\n\nCác giá trị `10` và `20` là đối số.\n\n### 4.3. Phân biệt parameter và argument\n\n| Khái niệm | Vị trí | Ví dụ |\n|---|---|---|\n| Parameter | Khai báo hàm | `int a`, `int b` |\n| Argument | Lời gọi hàm | `10`, `20` |\n\nVí dụ:\n\n```cpp\nint multiply(int left, int right) {\n    return left * right;\n}\n```\n\nGọi:\n\n```cpp\nint result = multiply(4, 5);\n```\n\nÁnh xạ:\n\n```text\nArgument 4  -> Parameter left\nArgument 5  -> Parameter right\n```\n\nKết quả:\n\n```text\n20\n```\n\n### 4.4. Hàm không có tham số\n\nKhông phải hàm nào cũng cần nhận dữ liệu.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nvoid printWelcome() {\n    std::cout << \"Welcome to DevHubs Wiki!\\n\";\n}\n\nint main() {\n    printWelcome();\n}\n```\n\nKết quả:\n\n```text\nWelcome to DevHubs Wiki!\n```\n\nDấu ngoặc `()` trong lời gọi vẫn cần thiết, ngay cả khi hàm không có tham số.\n\n---\n\n## 5. return và giá trị trả về\n\nMột hàm có thể trả kết quả cho nơi gọi thông qua `return`.\n\n### 5.1. Hàm trả về số nguyên\n\n```cpp\nint square(int value) {\n    return value * value;\n}\n```\n\nSử dụng:\n\n```cpp\nint result = square(5);\n```\n\nKết quả:\n\n```text\n25\n```\n\nKiểu trả về `int` phải phù hợp với giá trị mà hàm trả về.\n\nỞ đây, ví dụ giả định phép nhân nằm trong phạm vi biểu diễn của `int`.\n\n### 5.2. Hàm trả về bool\n\nVí dụ kiểm tra số chẵn:\n\n```cpp\nbool isEven(int value) {\n    return value % 2 == 0;\n}\n```\n\nSử dụng:\n\n```cpp\n#include <iostream>\n\nbool isEven(int value) {\n    return value % 2 == 0;\n}\n\nint main() {\n    std::cout << std::boolalpha;\n\n    std::cout << isEven(4) << '\\n';\n    std::cout << isEven(5) << '\\n';\n    std::cout << isEven(-4) << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\ntrue\nfalse\ntrue\n```\n\n**Tại sao `isEven(-4)` bằng `true`?**\n\nVì:\n\n```cpp\n-4 % 2 == 0\n```\n\nlà điều kiện đúng.\n\nSố nguyên âm vẫn có thể là số chẵn.\n\n### 5.3. Hàm trả về double\n\nVí dụ tính trung bình cộng:\n\n```cpp\ndouble average(int a, int b) {\n    return (static_cast<double>(a) + b) / 2;\n}\n```\n\nSử dụng:\n\n```cpp\ndouble result = average(7, 8);\n```\n\nKết quả:\n\n```text\n7.5\n```\n\nViệc chuyển sang `double` trước khi cộng giúp tránh phép cộng trực tiếp trên kiểu `int` trong biểu thức này.\n\nTuy nhiên, với các giá trị nguyên rất lớn, việc chuyển sang `double` vẫn có thể gây mất độ chính xác biểu diễn.\n\n### 5.4. return kết thúc lời gọi hàm\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint calculate() {\n    return 10;\n\n    std::cout << \"Hello\\n\";\n}\n\nint main() {\n    std::cout << calculate() << '\\n';\n}\n```\n\nKết quả:\n\n```text\n10\n```\n\nCâu lệnh sau `return` trong cùng đường thực thi không được chạy.\n\nCompiler có thể cảnh báo về unreachable code.\n\n### 5.5. Hàm có nhiều nhánh return\n\nVí dụ:\n\n```cpp\nint absoluteValue(int value) {\n    if (value >= 0) {\n        return value;\n    }\n\n    return -value;\n}\n```\n\nHàm trả về:\n\n- `value` nếu không âm.\n- `-value` nếu âm.\n\nTuy nhiên, với giá trị nhỏ nhất của kiểu `int` có dấu, phép đổi dấu có thể gây tràn số nguyên.\n\nMột triển khai tổng quát cần xử lý trường hợp biên đó hoặc định nghĩa rõ phạm vi đầu vào được hỗ trợ.\n\n### 5.6. Mọi đường thực thi phải trả kết quả phù hợp\n\nKhông nên viết:\n\n```cpp\nint getScore(bool valid) {\n    if (valid) {\n        return 100;\n    }\n}\n```\n\nNếu `valid` bằng `false`, chương trình có thể đi đến cuối một hàm trả về `int` mà không trả giá trị.\n\nTrong C++17, điều này gây undefined behavior khi luồng thực thi đi tới cuối một hàm trả giá trị thông thường.\n\nCách sửa:\n\n```cpp\nint getScore(bool valid) {\n    if (valid) {\n        return 100;\n    }\n\n    return 0;\n}\n```\n\nHoặc thiết kế một cơ chế biểu diễn lỗi phù hợp nếu `0` không phải giá trị thay thế hợp lệ.\n\n---\n\n## 6. Hàm void\n\nKiểu trả về `void` biểu thị hàm không trả về một giá trị cho nơi gọi.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nvoid printMessage() {\n    std::cout << \"Hello C++!\\n\";\n}\n\nint main() {\n    printMessage();\n}\n```\n\nKết quả:\n\n```text\nHello C++!\n```\n\n### 6.1. Khi nào nên dùng void?\n\nHàm `void` phù hợp khi nhiệm vụ chính là thực hiện một thao tác.\n\nVí dụ:\n\n- In thông tin.\n- Ghi dữ liệu.\n- Cập nhật một đối tượng.\n- Thực hiện thao tác điều khiển.\n\nVí dụ:\n\n```cpp\nvoid printScore(int score) {\n    std::cout << \"Score: \" << score << '\\n';\n}\n```\n\n### 6.2. return trong hàm void\n\nHàm `void` có thể sử dụng:\n\n```cpp\nreturn;\n```\n\nđể kết thúc lời gọi sớm.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nvoid printPositive(int value) {\n    if (value <= 0) {\n        return;\n    }\n\n    std::cout << value << '\\n';\n}\n```\n\nNếu `value <= 0`, hàm kết thúc mà không in dữ liệu.\n\n### 6.3. Phân biệt in kết quả và trả kết quả\n\nHai hàm sau có mục đích khác nhau.\n\n**Hàm in kết quả:**\n\n```cpp\nvoid printSquare(int value) {\n    std::cout << value * value << '\\n';\n}\n```\n\n**Hàm trả kết quả:**\n\n```cpp\nint square(int value) {\n    return value * value;\n}\n```\n\nHàm `printSquare()` trực tiếp thực hiện output.\n\nHàm `square()` trả về giá trị để nơi gọi tiếp tục xử lý.\n\nVí dụ:\n\n```cpp\nint result = square(5);\n\nstd::cout << result + 10 << '\\n';\n```\n\nKết quả:\n\n```text\n35\n```\n\nKhông thể sử dụng kết quả của một lời gọi hàm `void` như thể đó là một giá trị `int`.\n\n### 6.4. Khi nào nên tách tính toán và nhập xuất?\n\nTrong nhiều trường hợp, nên tách logic tính toán khỏi việc in dữ liệu.\n\nVí dụ:\n\n```cpp\nint square(int value) {\n    return value * value;\n}\n\nvoid printResult(int value) {\n    std::cout << value << '\\n';\n}\n```\n\nSử dụng:\n\n```cpp\nprintResult(square(5));\n```\n\nThiết kế này giúp hàm tính toán dễ tái sử dụng và kiểm thử hơn.\n\nTuy nhiên, không cần tạo thêm hàm chỉ để bọc một câu lệnh `std::cout` nếu việc đó không mang lại lợi ích thực tế cho chương trình.\n\n---\n\n## 7. Truyền tham số theo giá trị\n\nC++ hỗ trợ nhiều hình thức truyền tham số.\n\nHình thức đơn giản nhất là **pass by value**.\n\n### 7.1. Cách hoạt động\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nvoid increase(int value) {\n    value += 10;\n}\n\nint main() {\n    int number{5};\n\n    increase(number);\n\n    std::cout << number << '\\n';\n}\n```\n\nKết quả:\n\n```text\n5\n```\n\nTại sao kết quả vẫn bằng `5`?\n\nVì hàm:\n\n```cpp\nvoid increase(int value)\n```\n\nnhận một tham số riêng được khởi tạo từ giá trị của `number`.\n\nThay đổi tham số `value` không làm thay đổi đối tượng `number` của người gọi.\n\n### 7.2. Minh họa\n\n```text\nmain()\n  number = 5\n      |\n      | increase(number)\n      v\nincrease()\n  value = 5\n  value += 10\n  value = 15\n      |\n      v\nmain()\n  number = 5\n```\n\n### 7.3. Khi nào nên truyền theo giá trị?\n\nPass by value thường phù hợp khi:\n\n- Kiểu dữ liệu nhỏ.\n- Hàm chỉ cần đọc giá trị.\n- Hàm cần một bản sao độc lập.\n- Hàm cần nhận quyền sở hữu một giá trị theo thiết kế API.\n\nVí dụ:\n\n```cpp\nbool isAdult(int age) {\n    return age >= 18;\n}\n```\n\nĐối với các kiểu như `int`, `bool` và `double`, truyền theo giá trị thường là lựa chọn đơn giản và hợp lý.\n\n---\n\n## 8. Truyền tham số bằng reference\n\nNếu muốn hàm thay đổi trực tiếp đối tượng được truyền vào, có thể sử dụng reference.\n\n### 8.1. Cú pháp\n\n```cpp\nvoid functionName(Type& parameter);\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nvoid increase(int& value) {\n    value += 10;\n}\n\nint main() {\n    int number{5};\n\n    increase(number);\n\n    std::cout << number << '\\n';\n}\n```\n\nKết quả:\n\n```text\n15\n```\n\n### 8.2. Tại sao giá trị thay đổi?\n\nHàm:\n\n```cpp\nvoid increase(int& value)\n```\n\nnhận một reference đến đối tượng của người gọi.\n\nTham số `value` không phải là một đối tượng `int` độc lập.\n\nDo đó:\n\n```cpp\nvalue += 10;\n```\n\nthay đổi trực tiếp `number`.\n\n### 8.3. Bảng so sánh\n\n| Đặc điểm | Pass by value | Pass by reference |\n|---|---|---|\n| Cú pháp | `T` | `T&` |\n| Tạo tham số giá trị riêng | Có | Không |\n| Có thể sửa đối tượng gốc qua tham số | Không | Có |\n| Phù hợp với kiểu nhỏ | Thường tốt | Tùy mục đích |\n| Phù hợp khi cần cập nhật dữ liệu gốc | Không | Có |\n\n### 8.4. Ví dụ hoán đổi hai số\n\n```cpp\n#include <iostream>\n\nvoid swapValues(int& a, int& b) {\n    int temp{a};\n\n    a = b;\n    b = temp;\n}\n\nint main() {\n    int x{10};\n    int y{20};\n\n    swapValues(x, y);\n\n    std::cout << x << ' ' << y << '\\n';\n}\n```\n\nKết quả:\n\n```text\n20 10\n```\n\nTrong mã C++ thực tế, thư viện chuẩn có sẵn `std::swap()` trong `<utility>`.\n\nVí dụ này được sử dụng để giải thích cơ chế truyền tham số bằng reference.\n\n---\n\n## 9. const reference\n\nĐôi khi hàm cần truy cập một đối tượng lớn nhưng không cần thay đổi nội dung.\n\nTrong trường hợp đó, `const T&` thường là lựa chọn phù hợp.\n\n### 9.1. Ví dụ với std::string\n\n```cpp\n#include <iostream>\n#include <string>\n\nvoid printName(const std::string& name) {\n    std::cout << name << '\\n';\n}\n\nint main() {\n    std::string name{\"Nguyen Van An\"};\n\n    printName(name);\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNguyen Van An\n```\n\n### 9.2. Lợi ích của const T&\n\nKhai báo:\n\n```cpp\nconst std::string& name\n```\n\ncó hai đặc điểm quan trọng:\n\n1. Không yêu cầu sao chép đối tượng chuỗi chỉ để đọc nó.\n2. Không cho phép hàm thay đổi chuỗi thông qua tham chiếu `name`.\n\nVí dụ không hợp lệ:\n\n```cpp\nvoid update(const std::string& name) {\n    name += \"!\";\n}\n```\n\nVì `name` là tham chiếu đến đối tượng const, phép sửa đổi thông qua tham chiếu đó không được phép.\n\n### 9.3. Khi nào nên sử dụng?\n\n| Tình huống | Kiểu tham số thường phù hợp |\n|---|---|\n| Chỉ đọc một số nguyên | `int` |\n| Chỉ đọc một bool | `bool` |\n| Chỉ đọc chuỗi lớn | `const std::string&` |\n| Chỉ đọc vector | `const std::vector<T>&` |\n| Cần sửa đối tượng gốc | `T&` |\n| Tham số có thể không có đối tượng | `T*` |\n\n**Lưu ý:** `const T&` không có nghĩa đối tượng gốc nhất thiết là bất biến. Nếu đối tượng không phải `const`, nó vẫn có thể được sửa thông qua tên hoặc tham chiếu khác có quyền phù hợp.\n\nNgoài ra, reference không tự động quản lý lifetime của đối tượng được tham chiếu.\n\nPhần này được giải thích sâu hơn trong bài [References và pointers](/cpp/bat-dau/references-pointers).\n\n---\n\n## 10. Trả về nhiều kết quả\n\nMột hàm có kiểu trả về thông thường chỉ trả về một đối tượng hoặc giá trị.\n\nTuy nhiên, đối tượng đó có thể chứa nhiều thông tin.\n\n### 10.1. Sử dụng struct\n\nGiả sử cần tính tổng và hiệu của hai số.\n\n```cpp\n#include <iostream>\n\nstruct Result {\n    int sum{};\n    int difference{};\n};\n\nResult calculate(int a, int b) {\n    return Result{a + b, a - b};\n}\n\nint main() {\n    const Result result = calculate(10, 3);\n\n    std::cout << result.sum << '\\n';\n    std::cout << result.difference << '\\n';\n}\n```\n\nKết quả:\n\n```text\n13\n7\n```\n\nHàm `calculate()` trả về một đối tượng `Result` chứa hai trường.\n\nVí dụ này giả định các phép cộng và trừ nằm trong phạm vi biểu diễn của `int`.\n\n### 10.2. Structured bindings trong C++17\n\nCó thể sử dụng:\n\n```cpp\nconst auto [sum, difference] = calculate(10, 3);\n```\n\nSau đó:\n\n```cpp\nstd::cout << sum << ' ' << difference << '\\n';\n```\n\nKết quả:\n\n```text\n13 7\n```\n\nStructured bindings là tính năng được giới thiệu trong C++17.\n\n### 10.3. Tại sao nên trả về struct?\n\nSử dụng `struct` giúp:\n\n- Gom các kết quả liên quan.\n- Đặt tên rõ ràng cho từng giá trị.\n- Giảm nhu cầu sử dụng nhiều output parameters.\n- Làm giao diện hàm dễ hiểu hơn.\n\nTrong những trường hợp đơn giản, `std::pair` cũng có thể phù hợp.\n\nTuy nhiên, nếu mỗi trường mang ý nghĩa nghiệp vụ riêng, một `struct` có tên và các thành viên có tên thường dễ bảo trì hơn.\n\n---\n\n## 11. Scope là gì?\n\n**Scope (phạm vi)** xác định những vị trí trong mã nguồn mà một tên có thể được sử dụng để tham chiếu đến thực thể đã khai báo.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int age{16};\n\n    std::cout << age << '\\n';\n}\n```\n\nBiến `age` có phạm vi cục bộ trong thân hàm `main()`, bắt đầu từ vị trí khai báo theo các quy tắc của ngôn ngữ.\n\nKhông thể tùy ý sử dụng tên `age` ở những hàm khác mà không truyền dữ liệu hoặc thiết lập cơ chế truy cập phù hợp.\n\n### 11.1. Block scope\n\nMột khối lệnh được biểu diễn bằng cặp dấu ngoặc nhọn:\n\n```cpp\n{\n    // Statements\n}\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{10};\n\n    if (a > 5) {\n        int b{20};\n\n        std::cout << a << '\\n';\n        std::cout << b << '\\n';\n    }\n\n    std::cout << a << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n10\n20\n10\n```\n\nBiến `a` được khai báo trong thân hàm.\n\nBiến `b` được khai báo trong khối `if`.\n\nVì vậy, câu lệnh sau không hợp lệ nếu đặt bên ngoài khối `if`:\n\n```cpp\nstd::cout << b;\n```\n\nTên `b` không còn nằm trong phạm vi có thể sử dụng.\n\n### 11.2. Scope trong vòng lặp\n\nVí dụ:\n\n```cpp\nfor (int i = 0; i < 5; ++i) {\n    std::cout << i << '\\n';\n}\n```\n\nBiến `i` được khai báo trong phần khởi tạo của vòng lặp `for`.\n\nPhạm vi của tên `i` gắn với câu lệnh `for`, bao gồm điều kiện, phần cập nhật và thân vòng lặp.\n\nSau vòng lặp, không thể sử dụng `i` theo cách:\n\n```cpp\nstd::cout << i;\n```\n\nnếu không có khai báo phù hợp khác.\n\n### 11.3. Scope của tham số hàm\n\nVí dụ:\n\n```cpp\nint square(int value) {\n    return value * value;\n}\n```\n\nTên tham số `value` được sử dụng trong định nghĩa hàm `square()`.\n\nMột hàm khác không thể tự động truy cập tham số đó.\n\nVí dụ không hợp lệ:\n\n```cpp\nvoid printValue() {\n    std::cout << value;\n}\n```\n\nNếu `value` chưa được khai báo trong phạm vi phù hợp, compiler sẽ báo lỗi.\n\n---\n\n## 12. Biến cục bộ và biến toàn cục\n\n### 12.1. Biến cục bộ\n\nBiến cục bộ thường được khai báo trong hàm hoặc một khối lệnh.\n\nVí dụ:\n\n```cpp\nvoid calculate() {\n    int result{100};\n}\n```\n\nBiến `result` chỉ được truy cập trong phạm vi phù hợp của khối khai báo.\n\nƯu điểm của biến cục bộ:\n\n- Giới hạn nơi có thể sử dụng tên.\n- Giảm phụ thuộc giữa các hàm.\n- Dễ theo dõi trạng thái.\n- Giúp chương trình dễ kiểm thử.\n\n### 12.2. Biến toàn cục\n\nBiến khai báo ở namespace scope có thể được sử dụng từ các vị trí phù hợp theo quy tắc phạm vi và linkage.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint total{100};\n\nvoid printTotal() {\n    std::cout << total << '\\n';\n}\n\nint main() {\n    printTotal();\n}\n```\n\nKết quả:\n\n```text\n100\n```\n\nBiến `total` trong ví dụ có static storage duration.\n\n### 12.3. Có nên dùng biến toàn cục?\n\nBiến toàn cục không phải lúc nào cũng sai.\n\nTuy nhiên, một chương trình có nhiều biến toàn cục có thể gặp những vấn đề như:\n\n- Nhiều hàm cùng thay đổi trạng thái.\n- Khó xác định nguồn gốc của thay đổi.\n- Tăng sự phụ thuộc giữa các thành phần.\n- Khó kiểm thử độc lập.\n- Phát sinh vấn đề đồng bộ trong chương trình đa luồng.\n\nĐối với dữ liệu không cần chia sẻ toàn chương trình, nên ưu tiên biến cục bộ và truyền tham số.\n\nVí dụ:\n\n```cpp\nint calculateTotal(int price, int quantity) {\n    return price * quantity;\n}\n```\n\nthường rõ ràng hơn một hàm âm thầm đọc hai biến toàn cục.\n\n### 12.4. Trường hợp hợp lý của hằng ở namespace scope\n\nVí dụ:\n\n```cpp\nnamespace Config {\n    inline constexpr int maxPlayers{100};\n}\n```\n\nĐây là cách định nghĩa hằng trong C++17 bằng inline variable.\n\nHằng có tên và phạm vi rõ ràng thường dễ kiểm soát hơn trạng thái toàn cục có thể sửa đổi tùy ý.\n\n---\n\n## 13. Shadowing: Biến che khuất biến khác\n\n**Shadowing** xảy ra khi một khai báo trong phạm vi bên trong che khuất tên cùng định danh ở phạm vi bên ngoài.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int value{10};\n\n    {\n        int value{20};\n\n        std::cout << value << '\\n';\n    }\n\n    std::cout << value << '\\n';\n}\n```\n\nKết quả:\n\n```text\n20\n10\n```\n\nTrong khối bên trong:\n\n```cpp\nint value{20};\n```\n\nche khuất tên `value` ở phạm vi ngoài.\n\nKhi rời khối, tên `value` bên ngoài lại được sử dụng.\n\n### 13.1. Shadowing có phải lỗi biên dịch?\n\nKhông nhất thiết.\n\nVí dụ trên là C++ hợp lệ.\n\nTuy nhiên, shadowing có thể gây nhầm lẫn khi mã nguồn phức tạp hơn.\n\n### 13.2. Ví dụ dễ gây lỗi logic\n\n```cpp\nint score{10};\n\nif (score > 0) {\n    int score{20};\n}\n```\n\nLập trình viên có thể tưởng rằng đang thay đổi biến `score` ban đầu.\n\nThực tế, câu lệnh trong khối `if` khai báo một biến mới.\n\n### 13.3. Cách phòng tránh\n\nNên:\n\n- Chọn tên biến rõ ràng.\n- Hạn chế sử dụng lại tên trong những scope lồng nhau.\n- Giữ scope nhỏ.\n- Sử dụng các cảnh báo liên quan đến shadowing khi phù hợp với compiler.\n\nMột số compiler hỗ trợ những cảnh báo như `-Wshadow`, nhưng cần cân nhắc chính sách cảnh báo của dự án.\n\n---\n\n## 14. Scope và lifetime khác nhau thế nào?\n\nScope và lifetime là hai khái niệm liên quan nhưng không giống nhau.\n\n**Scope** nói về nơi một tên có thể được sử dụng.\n\n**Lifetime** nói về khoảng thời gian một đối tượng tồn tại.\n\n### 14.1. Ví dụ biến cục bộ thông thường\n\n```cpp\nvoid calculate() {\n    int result{100};\n}\n```\n\nĐối tượng `result` có automatic storage duration.\n\nTrong ví dụ này, lifetime của đối tượng kết thúc khi rời khỏi khối chứa khai báo.\n\nTên `result` cũng chỉ có phạm vi bên trong khối đó.\n\n### 14.2. Biến static cục bộ\n\nXét ví dụ:\n\n```cpp\n#include <iostream>\n\nvoid countCalls() {\n    static int count{0};\n\n    ++count;\n\n    std::cout << count << '\\n';\n}\n\nint main() {\n    countCalls();\n    countCalls();\n    countCalls();\n}\n```\n\nKết quả:\n\n```text\n1\n2\n3\n```\n\nBiến `count` có:\n\n- Phạm vi tên cục bộ trong hàm.\n- Static storage duration.\n- Giá trị được giữ lại qua nhiều lần gọi hàm.\n\n### 14.3. Bảng so sánh\n\n| Khái niệm | Câu hỏi |\n|---|---|\n| Scope | Tôi có thể sử dụng tên này ở đâu? |\n| Lifetime | Đối tượng tồn tại trong bao lâu? |\n| Storage duration | Vùng lưu trữ của đối tượng được quản lý trong khoảng thời gian nào? |\n\nTrong nhiều ví dụ nhập môn, lifetime và phạm vi của biến cục bộ thông thường dường như kết thúc cùng lúc.\n\nNhưng điều đó không đúng cho mọi loại đối tượng, chẳng hạn biến `static`, đối tượng cấp phát động hoặc một số đối tượng tạm thời.\n\n---\n\n## 15. Không trả reference hoặc pointer đến biến local đã hết lifetime\n\nĐây là một lỗi nghiêm trọng trong C++.\n\n### 15.1. Ví dụ sai với reference\n\n```cpp\nint& getValue() {\n    int value{10};\n\n    return value;\n}\n```\n\nBiến `value` là đối tượng cục bộ có automatic storage duration.\n\nKhi hàm kết thúc, lifetime của đối tượng cũng kết thúc.\n\nReference trả về không còn hợp lệ để truy cập đối tượng đó.\n\nViệc sử dụng reference như vậy để đọc hoặc sửa đối tượng đã hết lifetime gây undefined behavior.\n\n### 15.2. Ví dụ sai với pointer\n\n```cpp\nint* getValue() {\n    int value{10};\n\n    return &value;\n}\n```\n\nHàm trả về địa chỉ của biến cục bộ.\n\nKhi hàm kết thúc, biến `value` bị hủy.\n\nPointer không còn hợp lệ để dereference.\n\n### 15.3. Cách viết đúng\n\nĐối với một giá trị đơn giản, trả về bằng giá trị:\n\n```cpp\nint getValue() {\n    return 10;\n}\n```\n\nHoặc:\n\n```cpp\nint calculate() {\n    int result{5 + 3};\n\n    return result;\n}\n```\n\nTrong C++ hiện đại, trả về đối tượng bằng giá trị thường là lựa chọn an toàn và hiệu quả nhờ copy elision, move semantics và các cơ chế tối ưu hóa của compiler.\n\nKhông nên trả về reference chỉ vì cho rằng như vậy luôn nhanh hơn.\n\n### 15.4. Có được trả reference trong C++ không?\n\nCó, nếu hợp đồng bảo đảm đối tượng được tham chiếu vẫn còn sống trong thời gian sử dụng.\n\nVí dụ:\n\n```cpp\nint& getFirst(int (&values)[3]) {\n    return values[0];\n}\n```\n\nHàm trả về reference đến phần tử đầu tiên của mảng được truyền vào.\n\nTuy nhiên, người gọi phải bảo đảm mảng còn sống trong thời gian sử dụng reference trả về.\n\nVấn đề không nằm ở bản thân kiểu reference mà ở **lifetime của đối tượng đích**.\n\nĐọc thêm tại [References và pointers](/cpp/bat-dau/references-pointers).\n\n---\n\n## 16. Một hàm gọi một hàm khác\n\nHàm có thể gọi những hàm khác.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint square(int value) {\n    return value * value;\n}\n\nint sumOfSquares(int a, int b) {\n    return square(a) + square(b);\n}\n\nint main() {\n    std::cout << sumOfSquares(3, 4) << '\\n';\n}\n```\n\nKết quả:\n\n```text\n25\n```\n\nVì:\n\n\\[\n3^2 + 4^2 = 9 + 16 = 25\n\\]\n\nVí dụ này giả định các phép tính nằm trong phạm vi của `int`.\n\n### 16.1. Luồng thực thi\n\n```text\nmain()\n  |\n  | sumOfSquares(3, 4)\n  v\nsumOfSquares()\n  |\n  | square(3)\n  v\nsquare()\n  return 9\n  |\n  v\nsumOfSquares()\n  |\n  | square(4)\n  v\nsquare()\n  return 16\n  |\n  v\nsumOfSquares()\n  return 25\n  |\n  v\nmain()\n  print 25\n```\n\nTrong chương trình này, `sumOfSquares()` tái sử dụng `square()` để thực hiện một công việc lớn hơn.\n\n### 16.2. Có nên tạo nhiều tầng gọi hàm?\n\nCó thể, nếu các tầng đó giúp phân chia trách nhiệm rõ ràng.\n\nTuy nhiên, không nên tạo những hàm trung gian chỉ để gọi tiếp một hàm khác mà không bổ sung ý nghĩa hoặc abstraction hữu ích.\n\nMột cấu trúc hàm tốt phải giúp code dễ hiểu hơn, không chỉ khiến code bị chia thành nhiều tệp hoặc nhiều lớp.\n\n---\n\n## 17. Hàm đệ quy: Giới thiệu\n\nMột hàm có thể gọi lại chính nó. Cơ chế này được gọi là **recursion (đệ quy)**.\n\nVí dụ tính giai thừa:\n\n\\[\nn! = n \\times (n-1)!\n\\]\n\nVới:\n\n\\[\n0! = 1\n\\]\n\nChương trình:\n\n```cpp\n#include <iostream>\n\nlong long factorial(int n) {\n    if (n <= 1) {\n        return 1;\n    }\n\n    return n * factorial(n - 1);\n}\n\nint main() {\n    std::cout << factorial(5) << '\\n';\n}\n```\n\nKết quả:\n\n```text\n120\n```\n\n### 17.1. Điều kiện dừng\n\nHàm đệ quy cần có điều kiện dừng.\n\nTrong ví dụ:\n\n```cpp\nif (n <= 1) {\n    return 1;\n}\n```\n\ngiúp kết thúc quá trình gọi đệ quy.\n\n### 17.2. Giới hạn của ví dụ\n\nHàm trên chỉ có ý nghĩa như một ví dụ học thuật cho đầu vào nguyên không âm và cần giới hạn để tránh tràn số.\n\nVới kiểu `long long` tối thiểu 64 bit theo tiêu chuẩn, giai thừa từ `0!` đến `20!` nằm trong phạm vi biểu diễn.\n\nKhông nên gọi hàm với số âm hoặc giá trị quá lớn mà không kiểm tra.\n\nMỗi lần gọi đệ quy cũng sử dụng tài nguyên thực thi. Đệ quy quá sâu có thể vượt giới hạn stack của môi trường.\n\nNội dung chi tiết sẽ được trình bày trong bài [Đệ quy và call stack](/cpp/trung-cap/de-quy-call-stack).\n\n---\n\n## 18. Function overloading: Giới thiệu\n\nC++ cho phép nhiều hàm cùng tên nếu có danh sách tham số phù hợp để phân biệt.\n\nCơ chế này gọi là **function overloading**.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint add(int a, int b) {\n    return a + b;\n}\n\ndouble add(double a, double b) {\n    return a + b;\n}\n\nint main() {\n    std::cout << add(2, 3) << '\\n';\n    std::cout << add(2.5, 3.5) << '\\n';\n}\n```\n\nKết quả:\n\n```text\n5\n6\n```\n\nCompiler lựa chọn overload phù hợp dựa trên đối số và các quy tắc overload resolution.\n\n### 18.1. Không thể overload chỉ bằng kiểu trả về\n\nVí dụ không hợp lệ:\n\n```cpp\nint getValue() {\n    return 10;\n}\n\ndouble getValue() {\n    return 10.5;\n}\n```\n\nHai hàm có cùng tên và cùng danh sách tham số nhưng chỉ khác kiểu trả về.\n\nĐiều này không tạo thành overload hợp lệ.\n\n### 18.2. Default arguments\n\nC++ còn cho phép cung cấp giá trị mặc định cho tham số.\n\nVí dụ:\n\n```cpp\nint multiply(int a, int b = 2) {\n    return a * b;\n}\n```\n\nCó thể gọi:\n\n```cpp\nmultiply(5);\nmultiply(5, 3);\n```\n\nKết quả tương ứng:\n\n```text\n10\n15\n```\n\nDefault arguments và overloading có nhiều quy tắc liên quan đến khai báo, overload resolution và tính mơ hồ.\n\nPhần nâng cao nằm trong bài [Function overloading và default arguments](/cpp/trung-cap/overloading-default-arguments).\n\n---\n\n## 19. Tổ chức chương trình thành nhiều hàm\n\nGiả sử cần viết chương trình:\n\n- Nhập hai số nguyên.\n- Tính tổng.\n- Tính hiệu.\n- In kết quả.\n\nCó thể viết tất cả trong `main()`.\n\nTuy nhiên, chúng ta sẽ chia logic thành những hàm phù hợp.\n\n### 19.1. Chương trình\n\n```cpp\n#include <iostream>\n\nint add(int a, int b) {\n    return a + b;\n}\n\nint subtract(int a, int b) {\n    return a - b;\n}\n\nvoid printResult(int sum, int difference) {\n    std::cout << \"Tong: \" << sum << '\\n';\n    std::cout << \"Hieu: \" << difference << '\\n';\n}\n\nint main() {\n    int a{};\n    int b{};\n\n    if (!(std::cin >> a >> b)) {\n        std::cerr << \"Du lieu khong hop le.\\n\";\n        return 1;\n    }\n\n    const int sum = add(a, b);\n    const int difference = subtract(a, b);\n\n    printResult(sum, difference);\n\n    return 0;\n}\n```\n\nInput:\n\n```text\n10 3\n```\n\nOutput:\n\n```text\nTong: 13\nHieu: 7\n```\n\n### 19.2. Vai trò từng hàm\n\n| Hàm | Trách nhiệm |\n|---|---|\n| `add()` | Tính tổng |\n| `subtract()` | Tính hiệu |\n| `printResult()` | Xuất kết quả |\n| `main()` | Điều phối luồng chương trình |\n\nĐây là một ví dụ đơn giản về phân chia trách nhiệm.\n\nTrong ví dụ này, hai phép tính được thực hiện bằng `int`. Chương trình giả định kết quả phép cộng và trừ không vượt phạm vi của kiểu.\n\nNếu xử lý dữ liệu lớn, cần bổ sung kiểm tra tràn hoặc thay đổi kiểu dữ liệu phù hợp.\n\n### 19.3. main() nên làm gì?\n\nTrong chương trình nhỏ, `main()` có thể chứa toàn bộ logic.\n\nNhưng với ứng dụng lớn, `main()` thường phù hợp với vai trò:\n\n- Khởi tạo chương trình.\n- Đọc cấu hình cần thiết.\n- Tạo những đối tượng hoặc dịch vụ chính.\n- Điều phối các thành phần.\n- Xử lý mã kết thúc chương trình.\n\nKhông có yêu cầu bắt buộc `main()` phải ngắn hơn một số dòng cụ thể.\n\nĐiều quan trọng là khả năng đọc hiểu và cấu trúc trách nhiệm.\n\n---\n\n## 20. Tách hàm sang nhiều file\n\nKhi dự án phát triển, những hàm liên quan có thể được tổ chức vào header và source file riêng.\n\nVí dụ:\n\n```text\nProject/\n├── main.cpp\n├── Calculator.cpp\n└── Calculator.h\n```\n\n### 20.1. Calculator.h\n\n```cpp\n#ifndef CALCULATOR_H\n#define CALCULATOR_H\n\nint add(int a, int b);\nint subtract(int a, int b);\n\n#endif\n```\n\nHeader chứa những khai báo cần thiết.\n\nInclude guard tránh việc nội dung header bị xử lý lặp lại trong cùng một translation unit.\n\n### 20.2. Calculator.cpp\n\n```cpp\n#include \"Calculator.h\"\n\nint add(int a, int b) {\n    return a + b;\n}\n\nint subtract(int a, int b) {\n    return a - b;\n}\n```\n\nSource file chứa định nghĩa.\n\n### 20.3. main.cpp\n\n```cpp\n#include <iostream>\n#include \"Calculator.h\"\n\nint main() {\n    const int a{10};\n    const int b{3};\n\n    std::cout << add(a, b) << '\\n';\n    std::cout << subtract(a, b) << '\\n';\n}\n```\n\n### 20.4. Biên dịch\n\nVới GCC:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp Calculator.cpp -o app\n```\n\nTrên hệ Unix-like, chạy:\n\n```sh\n./app\n```\n\nTrên Windows PowerShell, nếu sản phẩm là `app.exe`:\n\n```powershell\n.\\app.exe\n```\n\nKết quả:\n\n```text\n13\n7\n```\n\n### 20.5. Điều gì xảy ra nếu quên Calculator.cpp?\n\nNếu chỉ biên dịch và liên kết `main.cpp`:\n\n```sh\ng++ -std=c++17 main.cpp -o app\n```\n\nlinker thường không tìm được định nghĩa phù hợp của `add()` và `subtract()`.\n\nCó thể xuất hiện lỗi như:\n\n```text\nundefined reference to `add(int, int)`\n```\n\nĐây là lỗi ở giai đoạn liên kết, không phải lỗi do cú pháp gọi hàm trong `main()`.\n\nPhần tổ chức mã nguồn, translation unit và linker sẽ được giải thích sâu hơn trong bài [Header, source và modules](/cpp/ky-thuat/header-source-modules).\n\n---\n\n## 21. Ví dụ thực hành tổng hợp\n\n### Bài toán: Thống kê điểm học sinh\n\nViết chương trình:\n\n1. Nhập số lượng học sinh.\n2. Nhập điểm của từng học sinh.\n3. Kiểm tra điểm hợp lệ.\n4. Tính tổng điểm.\n5. Tính điểm trung bình.\n6. Tìm điểm lớn nhất.\n7. In báo cáo kết quả.\n\nYêu cầu tổ chức thành những hàm riêng thay vì đặt toàn bộ logic trong `main()`.\n\n### 21.1. Phân tích\n\nGiả sử:\n\n\\[\n1 \\le n \\le 100000\n\\]\n\nMỗi điểm là số nguyên:\n\n\\[\n0 \\le score \\le 10\n\\]\n\nCó thể chia chương trình thành:\n\n| Hàm | Trách nhiệm |\n|---|---|\n| `isValidScore()` | Kiểm tra điểm |\n| `calculateTotal()` | Tính tổng |\n| `findMaximum()` | Tìm điểm lớn nhất |\n| `calculateAverage()` | Tính trung bình |\n| `printReport()` | In kết quả |\n| `main()` | Nhập liệu và điều phối |\n\n### 21.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n#include <vector>\n\nbool isValidScore(int score) {\n    return score >= 0 && score <= 10;\n}\n\nlong long calculateTotal(\n    const std::vector<int>& scores\n) {\n    long long total{};\n\n    for (int score : scores) {\n        total += score;\n    }\n\n    return total;\n}\n\nint findMaximum(\n    const std::vector<int>& scores\n) {\n    int maximum = scores.front();\n\n    for (int score : scores) {\n        if (score > maximum) {\n            maximum = score;\n        }\n    }\n\n    return maximum;\n}\n\ndouble calculateAverage(\n    long long total,\n    std::size_t count\n) {\n    return static_cast<double>(total) / count;\n}\n\nvoid printReport(\n    long long total,\n    double average,\n    int maximum\n) {\n    std::cout << \"Tong: \" << total << '\\n';\n    std::cout << \"Trung binh: \" << average << '\\n';\n    std::cout << \"Cao nhat: \" << maximum << '\\n';\n}\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n) || n < 1 || n > 100000) {\n        std::cerr << \"So luong khong hop le.\\n\";\n        return 1;\n    }\n\n    std::vector<int> scores;\n    scores.reserve(static_cast<std::size_t>(n));\n\n    for (int i = 0; i < n; ++i) {\n        int score{};\n\n        if (!(std::cin >> score) ||\n            !isValidScore(score)) {\n            std::cerr << \"Diem khong hop le.\\n\";\n            return 1;\n        }\n\n        scores.push_back(score);\n    }\n\n    const long long total = calculateTotal(scores);\n    const int maximum = findMaximum(scores);\n\n    const double average = calculateAverage(\n        total,\n        scores.size()\n    );\n\n    printReport(total, average, maximum);\n\n    return 0;\n}\n```\n\n### 21.3. Input\n\n```text\n5\n7 9 4 8 10\n```\n\n### 21.4. Output\n\n```text\nTong: 38\nTrung binh: 7.6\nCao nhat: 10\n```\n\n### 21.5. Giải thích\n\n**Hàm kiểm tra điểm:**\n\n```cpp\nbool isValidScore(int score)\n```\n\nNhận một số nguyên và trả về `true` hoặc `false`.\n\n**Hàm tính tổng:**\n\n```cpp\nlong long calculateTotal(\n    const std::vector<int>& scores\n)\n```\n\nChỉ đọc dữ liệu và trả về tổng.\n\nSử dụng `const reference` giúp tránh sao chép toàn bộ vector.\n\n**Hàm tìm giá trị lớn nhất:**\n\n```cpp\nint findMaximum(\n    const std::vector<int>& scores\n)\n```\n\nSử dụng `scores.front()` để khởi tạo maximum.\n\nHàm này yêu cầu vector không rỗng. Trong chương trình trên, điều kiện đó được bảo đảm vì `n >= 1` và tất cả phần tử phải được đọc thành công trước khi gọi.\n\nNếu đây là API công khai có thể nhận vector rỗng, cần quy định hoặc triển khai thêm cách xử lý phù hợp.\n\n**Hàm tính trung bình:**\n\n```cpp\ndouble calculateAverage(\n    long long total,\n    std::size_t count\n)\n```\n\nSử dụng phép chia số thực.\n\nHàm yêu cầu `count > 0`. Điều kiện đó được bảo đảm tại vị trí gọi trong ví dụ.\n\n**Hàm in báo cáo:**\n\n```cpp\nvoid printReport(...)\n```\n\nChỉ chịu trách nhiệm hiển thị kết quả.\n\n### 21.6. Trường hợp kiểm thử\n\n| Trường hợp | Kết quả mong đợi |\n|---|---|\n| Một học sinh, điểm 0 | Hợp lệ |\n| Một học sinh, điểm 10 | Hợp lệ |\n| Nhiều học sinh cùng điểm | Hợp lệ |\n| `n = 0` | Từ chối |\n| `n < 0` | Từ chối |\n| `n > 100000` | Từ chối |\n| Điểm âm | Từ chối |\n| Điểm lớn hơn 10 | Từ chối |\n| Input không phải số | Từ chối |\n| Thiếu điểm | Từ chối |\n\n### 21.7. Độ phức tạp\n\nNhập dữ liệu:\n\n\\[\nO(n)\n\\]\n\nTính tổng:\n\n\\[\nO(n)\n\\]\n\nTìm maximum:\n\n\\[\nO(n)\n\\]\n\nTổng thời gian:\n\n\\[\nO(n)\n\\]\n\nBộ nhớ lưu điểm:\n\n\\[\nO(n)\n\\]\n\nViệc chia chương trình thành nhiều hàm không tự động thay đổi bậc độ phức tạp của thuật toán.\n\n### 21.8. Có thể cải thiện thiết kế không?\n\nCó.\n\nVí dụ hiện tại duyệt vector hai lần để tính tổng và maximum.\n\nNếu chương trình cần xử lý tập dữ liệu lớn hoặc muốn giảm số lần duyệt, có thể kết hợp hai công việc trong một hàm trả về một `struct`.\n\nTuy nhiên, đối với bài nhập môn, việc tách hàm theo từng phép tính giúp người học thấy rõ trách nhiệm và cơ chế gọi hàm.\n\n**Bài học:** Chia nhỏ chương trình phải phục vụ tính rõ ràng và khả năng tái sử dụng. Không nên tách hoặc gộp hàm một cách máy móc.\n\n---\n\n## 22. Những lỗi thường gặp\n\n### 22.1. Quên return trong hàm có giá trị trả về\n\nSai:\n\n```cpp\nint add(int a, int b) {\n    int result = a + b;\n}\n```\n\nNếu hàm đi tới cuối mà không trả về giá trị, chương trình có undefined behavior trong trường hợp thông thường.\n\nĐúng:\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n```\n\n### 22.2. Nhầm in kết quả với return\n\nSai nếu mục tiêu là nhận giá trị:\n\n```cpp\nvoid add(int a, int b) {\n    std::cout << a + b << '\\n';\n}\n```\n\nCâu lệnh trên in kết quả nhưng không trả về một giá trị cho người gọi.\n\nNếu cần sử dụng tiếp kết quả:\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n```\n\n### 22.3. Tưởng pass by value có thể sửa biến gốc\n\nVí dụ:\n\n```cpp\nvoid increase(int value) {\n    ++value;\n}\n```\n\nLời gọi:\n\n```cpp\nint number{10};\n\nincrease(number);\n```\n\nkhông thay đổi `number`.\n\nNếu cần sửa trực tiếp:\n\n```cpp\nvoid increase(int& value) {\n    ++value;\n}\n```\n\n### 22.4. Gọi sai số lượng tham số\n\nVí dụ:\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nLời gọi:\n\n```cpp\nadd(10);\n```\n\nkhông hợp lệ nếu không có overload hoặc default argument phù hợp.\n\n### 22.5. Gọi hàm trước khi khai báo\n\nKhông nên gọi một hàm chưa có khai báo phù hợp tại vị trí gọi.\n\nCó thể giải quyết bằng cách:\n\n- Đặt định nghĩa lên trước.\n- Viết function prototype.\n- Include header chứa khai báo.\n\n### 22.6. Nhầm phạm vi biến\n\nVí dụ:\n\n```cpp\nif (true) {\n    int value{10};\n}\n\nstd::cout << value;\n```\n\nTên `value` không nằm trong phạm vi của câu lệnh `std::cout`.\n\n### 22.7. Trả reference đến biến local\n\nSai:\n\n```cpp\nint& getValue() {\n    int value{10};\n\n    return value;\n}\n```\n\nReference trả về không còn hợp lệ để truy cập đối tượng sau khi `value` hết lifetime.\n\nNếu chỉ cần trả giá trị:\n\n```cpp\nint getValue() {\n    return 10;\n}\n```\n\n### 22.8. Chia cho 0 trong hàm\n\nVí dụ:\n\n```cpp\ndouble divide(double a, double b) {\n    return a / b;\n}\n```\n\nNếu API yêu cầu từ chối mẫu số bằng 0, cần kiểm tra điều kiện đó.\n\nĐặc biệt, với phép chia số nguyên, chia cho 0 gây undefined behavior.\n\nKhông nên để người gọi phải đoán những điều kiện đầu vào quan trọng.\n\n### 22.9. Đặt quá nhiều trách nhiệm trong một hàm\n\nMột hàm quá dài, xử lý nhiều công việc không liên quan thường khó kiểm thử và bảo trì.\n\nNên xem xét tách hàm khi một nhóm câu lệnh thực hiện một nhiệm vụ có ý nghĩa độc lập.\n\nTuy nhiên, không cần tạo hàm cho từng phép cộng hoặc từng câu lệnh nếu điều đó làm mã nguồn trở nên khó theo dõi hơn.\n\n---\n\n## 23. Bài tập tự luyện\n\n### Bài 1. Tính bình phương\n\nViết hàm:\n\n```cpp\nint square(int value);\n```\n\nHàm trả về bình phương của `value`.\n\nVí dụ:\n\n```text\nInput:\n5\n\nOutput:\n25\n```\n\n**Gợi ý:** Sử dụng toán tử nhân.\n\n**Yêu cầu bổ sung:** Xác định phạm vi đầu vào để phép nhân không tràn `int`.\n\n### Bài 2. Kiểm tra số chẵn\n\nViết hàm:\n\n```cpp\nbool isEven(int value);\n```\n\nHàm trả về `true` nếu số chẵn, ngược lại trả về `false`.\n\nKiểm thử với:\n\n```text\n-4\n-3\n0\n3\n4\n```\n\nDự đoán kết quả trước khi chạy chương trình.\n\n### Bài 3. Tìm số lớn nhất\n\nViết hàm:\n\n```cpp\nint maximum(int a, int b);\n```\n\nHàm trả về số lớn hơn trong hai số.\n\nVí dụ:\n\n```text\nInput:\n10 20\n\nOutput:\n20\n```\n\n**Yêu cầu:** Không thực hiện nhập xuất trực tiếp bên trong hàm `maximum()`.\n\n### Bài 4. Hoán đổi hai số\n\nViết hàm:\n\n```cpp\nvoid swapValues(int& a, int& b);\n```\n\nYêu cầu:\n\n- Không trả về giá trị.\n- Thay đổi trực tiếp hai biến được truyền vào.\n- Sử dụng biến tạm.\n\nVí dụ:\n\n```text\nBefore:\n10 20\n\nAfter:\n20 10\n```\n\n### Bài 5. Kiểm tra điểm hợp lệ\n\nViết hàm:\n\n```cpp\nbool isValidScore(double score);\n```\n\nĐiểm hợp lệ phải hữu hạn và nằm trong đoạn `[0, 10]`.\n\n**Gợi ý:** Sử dụng `std::isfinite()` trong `<cmath>` để từ chối NaN và infinity.\n\nKiểm thử các trường hợp biên như `0`, `10`, `-1` và `11`.\n\n### Bài 6. Tính tổng mảng\n\nViết hàm:\n\n```cpp\nlong long calculateTotal(\n    const std::vector<int>& values\n);\n```\n\nHàm tính tổng các phần tử mà không thay đổi vector đầu vào.\n\n**Yêu cầu bổ sung:** Xác định giới hạn dữ liệu hoặc bổ sung kiểm tra để tránh tràn `long long`.\n\n### Bài 7. Phân tích scope\n\nDự đoán kết quả chương trình:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int x{10};\n\n    {\n        int x{20};\n\n        std::cout << x << '\\n';\n    }\n\n    std::cout << x << '\\n';\n}\n```\n\nGiải thích:\n\n- Có bao nhiêu biến tên `x`?\n- Vì sao hai lệnh in có kết quả khác nhau?\n- Khai báo nào che khuất khai báo nào?\n\n### Bài 8. Phân tích lifetime\n\nXem hàm:\n\n```cpp\nconst int& getNumber() {\n    int number{100};\n\n    return number;\n}\n```\n\nTrả lời:\n\n1. Hàm có thể được khai báo với kiểu trả về như vậy không?\n2. Vì sao reference trả về không hợp lệ để đọc?\n3. Lifetime của `number` kết thúc khi nào?\n4. Nên thay đổi kiểu trả về như thế nào?\n\n### Bài 9. Tổ chức chương trình\n\nViết chương trình nhập chiều dài và chiều rộng hình chữ nhật.\n\nTạo ba hàm:\n\n```cpp\nbool isValidRectangle(double width, double height);\n\ndouble calculateArea(double width, double height);\n\ndouble calculatePerimeter(double width, double height);\n```\n\nYêu cầu:\n\n- Hai kích thước phải dương và hữu hạn.\n- Kiểm tra input.\n- Không thực hiện phép tính nếu dữ liệu không hợp lệ.\n- Hàm tính toán không trực tiếp in kết quả.\n- Kiểm tra kết quả số thực vẫn hữu hạn nếu có nguy cơ vượt phạm vi.\n\n### Bài 10. Chia chương trình lớn thành hàm\n\nCho một chương trình quản lý điểm học sinh đang chứa toàn bộ logic trong `main()`.\n\nHãy tách thành các hàm:\n\n```cpp\nbool isValidScore(int score);\n\nlong long calculateTotal(\n    const std::vector<int>& scores\n);\n\nint findMaximum(\n    const std::vector<int>& scores\n);\n\nvoid printReport(\n    long long total,\n    double average,\n    int maximum\n);\n```\n\nSau đó đánh giá:\n\n- Hàm nào nên trả giá trị?\n- Hàm nào nên dùng `void`?\n- Hàm nào nên nhận `const reference`?\n- Những hàm nào cần tiền điều kiện?\n- Hàm nào có thể kiểm thử mà không cần nhập xuất?\n\n---\n\n## 24. Tổng kết kiến thức\n\n| Khái niệm | Ý nghĩa |\n|---|---|\n| Function | Đơn vị mã nguồn thực hiện một nhiệm vụ |\n| Function declaration | Khai báo giao diện hàm |\n| Function definition | Cung cấp phần triển khai của hàm |\n| Function call | Gọi hàm để thực thi |\n| Parameter | Tham số trong khai báo/định nghĩa hàm |\n| Argument | Đối số tại lời gọi |\n| Return type | Kiểu kết quả trả về |\n| `return` | Kết thúc lời gọi và có thể trả giá trị |\n| `void` | Kiểu không có giá trị trả về |\n| Pass by value | Truyền bằng giá trị |\n| Pass by reference | Truyền bằng tham chiếu |\n| `const T&` | Tham chiếu chỉ đọc thông qua tham số |\n| Scope | Phạm vi tên có thể được sử dụng |\n| Lifetime | Thời gian tồn tại của đối tượng |\n| Local variable | Biến cục bộ |\n| Global variable | Biến ở phạm vi toàn cục/namespace phù hợp |\n| Shadowing | Khai báo bên trong che khuất tên bên ngoài |\n| Static local variable | Biến cục bộ có static storage duration |\n| Function overloading | Nhiều hàm cùng tên với danh sách tham số phân biệt phù hợp |\n| Recursion | Hàm gọi lại chính nó |\n\nSau bài học này, bạn cần nắm vững:\n\n1. **Sử dụng hàm để chia nhỏ chương trình thành các phần có trách nhiệm rõ ràng.**\n2. **Phân biệt declaration, definition và function call.**\n3. **Hiểu rõ sự khác nhau giữa parameter và argument.**\n4. **Sử dụng `return` khi cần trả kết quả và `void` khi hàm không trả giá trị.**\n5. **Phân biệt truyền tham số theo giá trị và tham chiếu.**\n6. **Sử dụng `const T&` khi cần đọc đối tượng lớn mà không sao chép.**\n7. **Không nhầm scope với lifetime.**\n8. **Không trả pointer hoặc reference đến biến local đã hết lifetime.**\n9. **Ưu tiên truyền dữ liệu qua tham số thay vì phụ thuộc không cần thiết vào biến toàn cục.**\n10. **Thiết kế hàm dễ đọc, dễ kiểm thử và phù hợp với yêu cầu thực tế.**\n\n**Nguyên tắc quan trọng nhất:** Một hàm tốt phải có mục đích rõ ràng, hợp đồng dễ hiểu và cách xử lý dữ liệu phù hợp.\n\nKhông phải hàm càng ngắn càng tốt, cũng không phải chương trình có càng nhiều hàm càng dễ bảo trì.\n\nMục tiêu là tạo ra cấu trúc mã nguồn giúp người đọc hiểu chương trình hoạt động như thế nào mà không phải theo dõi quá nhiều trạng thái hoặc phụ thuộc không cần thiết.\n\n---\n\n## Đọc tiếp\n\n- [Nhập xuất, điều kiện và vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap): Sử dụng điều kiện và vòng lặp trong thân hàm.\n- [References và pointers](/cpp/bat-dau/references-pointers): Tìm hiểu sâu hơn về truyền tham chiếu, địa chỉ bộ nhớ, pointer và lifetime.\n- [Function overloading và default arguments](/cpp/trung-cap/overloading-default-arguments): Phân biệt overload, tham số mặc định và quy tắc lựa chọn hàm.\n- [Đệ quy và call stack](/cpp/trung-cap/de-quy-call-stack): Hiểu cơ chế hàm tự gọi và cách quản lý trạng thái trong quá trình thực thi.\n- [Header, source và modules](/cpp/ky-thuat/header-source-modules): Tổ chức mã nguồn nhiều file và tìm hiểu quá trình compile/link.",
     "sourcePath": "content/cpp/getting-started/ham-pham-vi.md",
     "headings": [
       {
-        "title": "Cú pháp",
-        "id": "cu-phap"
+        "title": "Hàm, tham số và phạm vi biến trong C++",
+        "id": "ham-tham-so-va-pham-vi-bien-trong-c"
       },
       {
-        "title": "Truyền theo giá trị và tham chiếu",
-        "id": "truyen-theo-gia-tri-va-tham-chieu"
+        "title": "1. Hàm là gì?",
+        "id": "1-ham-la-gi"
       },
       {
-        "title": "Scope và lifetime",
-        "id": "scope-va-lifetime"
+        "title": "1.1. Lợi ích của hàm",
+        "id": "11-loi-ich-cua-ham"
       },
       {
-        "title": "Lỗi thường gặp",
-        "id": "loi-thuong-gap"
+        "title": "2. Cấu trúc của một hàm",
+        "id": "2-cau-truc-cua-mot-ham"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "2.1. Ví dụ hoàn chỉnh",
+        "id": "21-vi-du-hoan-chinh"
+      },
+      {
+        "title": "2.2. Minh họa lời gọi hàm",
+        "id": "22-minh-hoa-loi-goi-ham"
+      },
+      {
+        "title": "3. Khai báo, định nghĩa và gọi hàm",
+        "id": "3-khai-bao-inh-nghia-va-goi-ham"
+      },
+      {
+        "title": "3.1. Function declaration",
+        "id": "31-function-declaration"
+      },
+      {
+        "title": "3.2. Function definition",
+        "id": "32-function-definition"
+      },
+      {
+        "title": "3.3. Function call",
+        "id": "33-function-call"
+      },
+      {
+        "title": "3.4. Tại sao cần khai báo hàm trước khi gọi?",
+        "id": "34-tai-sao-can-khai-bao-ham-truoc-khi-goi"
+      },
+      {
+        "title": "3.5. Cách 1: Định nghĩa trước main()",
+        "id": "35-cach-1-inh-nghia-truoc-main"
+      },
+      {
+        "title": "3.6. Cách 2: Sử dụng function prototype",
+        "id": "36-cach-2-su-dung-function-prototype"
+      },
+      {
+        "title": "4. Tham số và đối số",
+        "id": "4-tham-so-va-oi-so"
+      },
+      {
+        "title": "4.1. Parameter là gì?",
+        "id": "41-parameter-la-gi"
+      },
+      {
+        "title": "4.2. Argument là gì?",
+        "id": "42-argument-la-gi"
+      },
+      {
+        "title": "4.3. Phân biệt parameter và argument",
+        "id": "43-phan-biet-parameter-va-argument"
+      },
+      {
+        "title": "4.4. Hàm không có tham số",
+        "id": "44-ham-khong-co-tham-so"
+      },
+      {
+        "title": "5. return và giá trị trả về",
+        "id": "5-return-va-gia-tri-tra-ve"
+      },
+      {
+        "title": "5.1. Hàm trả về số nguyên",
+        "id": "51-ham-tra-ve-so-nguyen"
+      },
+      {
+        "title": "5.2. Hàm trả về bool",
+        "id": "52-ham-tra-ve-bool"
+      },
+      {
+        "title": "5.3. Hàm trả về double",
+        "id": "53-ham-tra-ve-double"
+      },
+      {
+        "title": "5.4. return kết thúc lời gọi hàm",
+        "id": "54-return-ket-thuc-loi-goi-ham"
+      },
+      {
+        "title": "5.5. Hàm có nhiều nhánh return",
+        "id": "55-ham-co-nhieu-nhanh-return"
+      },
+      {
+        "title": "5.6. Mọi đường thực thi phải trả kết quả phù hợp",
+        "id": "56-moi-uong-thuc-thi-phai-tra-ket-qua-phu-hop"
+      },
+      {
+        "title": "6. Hàm void",
+        "id": "6-ham-void"
+      },
+      {
+        "title": "6.1. Khi nào nên dùng void?",
+        "id": "61-khi-nao-nen-dung-void"
+      },
+      {
+        "title": "6.2. return trong hàm void",
+        "id": "62-return-trong-ham-void"
+      },
+      {
+        "title": "6.3. Phân biệt in kết quả và trả kết quả",
+        "id": "63-phan-biet-in-ket-qua-va-tra-ket-qua"
+      },
+      {
+        "title": "6.4. Khi nào nên tách tính toán và nhập xuất?",
+        "id": "64-khi-nao-nen-tach-tinh-toan-va-nhap-xuat"
+      },
+      {
+        "title": "7. Truyền tham số theo giá trị",
+        "id": "7-truyen-tham-so-theo-gia-tri"
+      },
+      {
+        "title": "7.1. Cách hoạt động",
+        "id": "71-cach-hoat-ong"
+      },
+      {
+        "title": "7.2. Minh họa",
+        "id": "72-minh-hoa"
+      },
+      {
+        "title": "7.3. Khi nào nên truyền theo giá trị?",
+        "id": "73-khi-nao-nen-truyen-theo-gia-tri"
+      },
+      {
+        "title": "8. Truyền tham số bằng reference",
+        "id": "8-truyen-tham-so-bang-reference"
+      },
+      {
+        "title": "8.1. Cú pháp",
+        "id": "81-cu-phap"
+      },
+      {
+        "title": "8.2. Tại sao giá trị thay đổi?",
+        "id": "82-tai-sao-gia-tri-thay-oi"
+      },
+      {
+        "title": "8.3. Bảng so sánh",
+        "id": "83-bang-so-sanh"
+      },
+      {
+        "title": "8.4. Ví dụ hoán đổi hai số",
+        "id": "84-vi-du-hoan-oi-hai-so"
+      },
+      {
+        "title": "9. const reference",
+        "id": "9-const-reference"
+      },
+      {
+        "title": "9.1. Ví dụ với std::string",
+        "id": "91-vi-du-voi-stdstring"
+      },
+      {
+        "title": "9.2. Lợi ích của const T&",
+        "id": "92-loi-ich-cua-const-t"
+      },
+      {
+        "title": "9.3. Khi nào nên sử dụng?",
+        "id": "93-khi-nao-nen-su-dung"
+      },
+      {
+        "title": "10. Trả về nhiều kết quả",
+        "id": "10-tra-ve-nhieu-ket-qua"
+      },
+      {
+        "title": "10.1. Sử dụng struct",
+        "id": "101-su-dung-struct"
+      },
+      {
+        "title": "10.2. Structured bindings trong C++17",
+        "id": "102-structured-bindings-trong-c17"
+      },
+      {
+        "title": "10.3. Tại sao nên trả về struct?",
+        "id": "103-tai-sao-nen-tra-ve-struct"
+      },
+      {
+        "title": "11. Scope là gì?",
+        "id": "11-scope-la-gi"
+      },
+      {
+        "title": "11.1. Block scope",
+        "id": "111-block-scope"
+      },
+      {
+        "title": "11.2. Scope trong vòng lặp",
+        "id": "112-scope-trong-vong-lap"
+      },
+      {
+        "title": "11.3. Scope của tham số hàm",
+        "id": "113-scope-cua-tham-so-ham"
+      },
+      {
+        "title": "12. Biến cục bộ và biến toàn cục",
+        "id": "12-bien-cuc-bo-va-bien-toan-cuc"
+      },
+      {
+        "title": "12.1. Biến cục bộ",
+        "id": "121-bien-cuc-bo"
+      },
+      {
+        "title": "12.2. Biến toàn cục",
+        "id": "122-bien-toan-cuc"
+      },
+      {
+        "title": "12.3. Có nên dùng biến toàn cục?",
+        "id": "123-co-nen-dung-bien-toan-cuc"
+      },
+      {
+        "title": "12.4. Trường hợp hợp lý của hằng ở namespace scope",
+        "id": "124-truong-hop-hop-ly-cua-hang-o-namespace-scope"
+      },
+      {
+        "title": "13. Shadowing: Biến che khuất biến khác",
+        "id": "13-shadowing-bien-che-khuat-bien-khac"
+      },
+      {
+        "title": "13.1. Shadowing có phải lỗi biên dịch?",
+        "id": "131-shadowing-co-phai-loi-bien-dich"
+      },
+      {
+        "title": "13.2. Ví dụ dễ gây lỗi logic",
+        "id": "132-vi-du-de-gay-loi-logic"
+      },
+      {
+        "title": "13.3. Cách phòng tránh",
+        "id": "133-cach-phong-tranh"
+      },
+      {
+        "title": "14. Scope và lifetime khác nhau thế nào?",
+        "id": "14-scope-va-lifetime-khac-nhau-the-nao"
+      },
+      {
+        "title": "14.1. Ví dụ biến cục bộ thông thường",
+        "id": "141-vi-du-bien-cuc-bo-thong-thuong"
+      },
+      {
+        "title": "14.2. Biến static cục bộ",
+        "id": "142-bien-static-cuc-bo"
+      },
+      {
+        "title": "14.3. Bảng so sánh",
+        "id": "143-bang-so-sanh"
+      },
+      {
+        "title": "15. Không trả reference hoặc pointer đến biến local đã hết lifetime",
+        "id": "15-khong-tra-reference-hoac-pointer-en-bien-local-a-het-lifetime"
+      },
+      {
+        "title": "15.1. Ví dụ sai với reference",
+        "id": "151-vi-du-sai-voi-reference"
+      },
+      {
+        "title": "15.2. Ví dụ sai với pointer",
+        "id": "152-vi-du-sai-voi-pointer"
+      },
+      {
+        "title": "15.3. Cách viết đúng",
+        "id": "153-cach-viet-ung"
+      },
+      {
+        "title": "15.4. Có được trả reference trong C++ không?",
+        "id": "154-co-uoc-tra-reference-trong-c-khong"
+      },
+      {
+        "title": "16. Một hàm gọi một hàm khác",
+        "id": "16-mot-ham-goi-mot-ham-khac"
+      },
+      {
+        "title": "16.1. Luồng thực thi",
+        "id": "161-luong-thuc-thi"
+      },
+      {
+        "title": "16.2. Có nên tạo nhiều tầng gọi hàm?",
+        "id": "162-co-nen-tao-nhieu-tang-goi-ham"
+      },
+      {
+        "title": "17. Hàm đệ quy: Giới thiệu",
+        "id": "17-ham-e-quy-gioi-thieu"
+      },
+      {
+        "title": "17.1. Điều kiện dừng",
+        "id": "171-ieu-kien-dung"
+      },
+      {
+        "title": "17.2. Giới hạn của ví dụ",
+        "id": "172-gioi-han-cua-vi-du"
+      },
+      {
+        "title": "18. Function overloading: Giới thiệu",
+        "id": "18-function-overloading-gioi-thieu"
+      },
+      {
+        "title": "18.1. Không thể overload chỉ bằng kiểu trả về",
+        "id": "181-khong-the-overload-chi-bang-kieu-tra-ve"
+      },
+      {
+        "title": "18.2. Default arguments",
+        "id": "182-default-arguments"
+      },
+      {
+        "title": "19. Tổ chức chương trình thành nhiều hàm",
+        "id": "19-to-chuc-chuong-trinh-thanh-nhieu-ham"
+      },
+      {
+        "title": "19.1. Chương trình",
+        "id": "191-chuong-trinh"
+      },
+      {
+        "title": "19.2. Vai trò từng hàm",
+        "id": "192-vai-tro-tung-ham"
+      },
+      {
+        "title": "19.3. main() nên làm gì?",
+        "id": "193-main-nen-lam-gi"
+      },
+      {
+        "title": "20. Tách hàm sang nhiều file",
+        "id": "20-tach-ham-sang-nhieu-file"
+      },
+      {
+        "title": "20.1. Calculator.h",
+        "id": "201-calculatorh"
+      },
+      {
+        "title": "20.2. Calculator.cpp",
+        "id": "202-calculatorcpp"
+      },
+      {
+        "title": "20.3. main.cpp",
+        "id": "203-maincpp"
+      },
+      {
+        "title": "20.4. Biên dịch",
+        "id": "204-bien-dich"
+      },
+      {
+        "title": "20.5. Điều gì xảy ra nếu quên Calculator.cpp?",
+        "id": "205-ieu-gi-xay-ra-neu-quen-calculatorcpp"
+      },
+      {
+        "title": "21. Ví dụ thực hành tổng hợp",
+        "id": "21-vi-du-thuc-hanh-tong-hop"
+      },
+      {
+        "title": "Bài toán: Thống kê điểm học sinh",
+        "id": "bai-toan-thong-ke-iem-hoc-sinh"
+      },
+      {
+        "title": "21.1. Phân tích",
+        "id": "211-phan-tich"
+      },
+      {
+        "title": "21.2. Chương trình C++17",
+        "id": "212-chuong-trinh-c17"
+      },
+      {
+        "title": "21.3. Input",
+        "id": "213-input"
+      },
+      {
+        "title": "21.4. Output",
+        "id": "214-output"
+      },
+      {
+        "title": "21.5. Giải thích",
+        "id": "215-giai-thich"
+      },
+      {
+        "title": "21.6. Trường hợp kiểm thử",
+        "id": "216-truong-hop-kiem-thu"
+      },
+      {
+        "title": "21.7. Độ phức tạp",
+        "id": "217-o-phuc-tap"
+      },
+      {
+        "title": "21.8. Có thể cải thiện thiết kế không?",
+        "id": "218-co-the-cai-thien-thiet-ke-khong"
+      },
+      {
+        "title": "22. Những lỗi thường gặp",
+        "id": "22-nhung-loi-thuong-gap"
+      },
+      {
+        "title": "22.1. Quên return trong hàm có giá trị trả về",
+        "id": "221-quen-return-trong-ham-co-gia-tri-tra-ve"
+      },
+      {
+        "title": "22.2. Nhầm in kết quả với return",
+        "id": "222-nham-in-ket-qua-voi-return"
+      },
+      {
+        "title": "22.3. Tưởng pass by value có thể sửa biến gốc",
+        "id": "223-tuong-pass-by-value-co-the-sua-bien-goc"
+      },
+      {
+        "title": "22.4. Gọi sai số lượng tham số",
+        "id": "224-goi-sai-so-luong-tham-so"
+      },
+      {
+        "title": "22.5. Gọi hàm trước khi khai báo",
+        "id": "225-goi-ham-truoc-khi-khai-bao"
+      },
+      {
+        "title": "22.6. Nhầm phạm vi biến",
+        "id": "226-nham-pham-vi-bien"
+      },
+      {
+        "title": "22.7. Trả reference đến biến local",
+        "id": "227-tra-reference-en-bien-local"
+      },
+      {
+        "title": "22.8. Chia cho 0 trong hàm",
+        "id": "228-chia-cho-0-trong-ham"
+      },
+      {
+        "title": "22.9. Đặt quá nhiều trách nhiệm trong một hàm",
+        "id": "229-at-qua-nhieu-trach-nhiem-trong-mot-ham"
+      },
+      {
+        "title": "23. Bài tập tự luyện",
+        "id": "23-bai-tap-tu-luyen"
+      },
+      {
+        "title": "Bài 1. Tính bình phương",
+        "id": "bai-1-tinh-binh-phuong"
+      },
+      {
+        "title": "Bài 2. Kiểm tra số chẵn",
+        "id": "bai-2-kiem-tra-so-chan"
+      },
+      {
+        "title": "Bài 3. Tìm số lớn nhất",
+        "id": "bai-3-tim-so-lon-nhat"
+      },
+      {
+        "title": "Bài 4. Hoán đổi hai số",
+        "id": "bai-4-hoan-oi-hai-so"
+      },
+      {
+        "title": "Bài 5. Kiểm tra điểm hợp lệ",
+        "id": "bai-5-kiem-tra-iem-hop-le"
+      },
+      {
+        "title": "Bài 6. Tính tổng mảng",
+        "id": "bai-6-tinh-tong-mang"
+      },
+      {
+        "title": "Bài 7. Phân tích scope",
+        "id": "bai-7-phan-tich-scope"
+      },
+      {
+        "title": "Bài 8. Phân tích lifetime",
+        "id": "bai-8-phan-tich-lifetime"
+      },
+      {
+        "title": "Bài 9. Tổ chức chương trình",
+        "id": "bai-9-to-chuc-chuong-trinh"
+      },
+      {
+        "title": "Bài 10. Chia chương trình lớn thành hàm",
+        "id": "bai-10-chia-chuong-trinh-lon-thanh-ham"
+      },
+      {
+        "title": "24. Tổng kết kiến thức",
+        "id": "24-tong-ket-kien-thuc"
       },
       {
         "title": "Đọc tiếp",
@@ -5214,7 +6331,7 @@ export const articles = [
   },
   {
     "title": "Mảng và chuỗi",
-    "description": "Duyệt mảng một chiều, biểu diễn bảng hai chiều và thao tác chuỗi bằng std::string.",
+    "description": "Hướng dẫn sử dụng mảng một chiều, mảng hai chiều, std::array, std::string, truy cập phần tử, xử lý chuỗi và kiểm tra giới hạn trong C++17.",
     "slug": "/cpp/bat-dau/mang-string",
     "category": "fundamentals",
     "categoryLabel": "C++ căn bản",
@@ -5222,12 +6339,17 @@ export const articles = [
     "difficulty": "beginner",
     "keywords": [
       "array C++",
+      "std::array",
+      "mảng một chiều",
       "mảng hai chiều",
       "std::string",
       "char array",
-      "index"
+      "index",
+      "array bounds",
+      "getline",
+      "string manipulation"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-21",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -5239,28 +6361,448 @@ export const articles = [
     ],
     "featured": false,
     "priority": 20080,
-    "body": "Mảng lưu nhiều phần tử cùng kiểu theo thứ tự. `std::string` lưu chuỗi ký tự và cung cấp thao tác tiện hơn mảng `char`. `std::array` có kích thước cố định tại compile time; với kích thước linh hoạt, dùng [`std::vector`](/cpp/trung-cap/vector-struct-enum).\n\n## Mảng một chiều\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 4> scores{7, 9, 8, 10};\n    int total{};\n    for (int score : scores) total += score;\n    std::cout << total << '\\n';\n}\n```\n\nChỉ số bắt đầu từ 0 nên phần tử cuối có chỉ số `size() - 1`. Truy cập `scores.at(i)` kiểm tra biên và ném exception nếu sai; `scores[i]` không kiểm tra.\n\n## Mảng hai chiều\n\n```cpp\n#include <iostream>\n\nint main() {\nint grid[2][3]{{1, 2, 3}, {4, 5, 6}};\n    std::cout << grid[1][2] << '\\n';\n}\n```\n\n`grid[row][column]`; cả hai chỉ số đều phải trong giới hạn. Với bảng kích thước lúc chạy hoặc container lồng nhau, cân nhắc `std::vector`.\n\n## `std::string`\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    const std::string first{\"Dev\"};\n    const std::string second{\"Hubs\"};\n    std::string full{first + second};\n    full += \" Wiki\";\n    std::cout << full << '\\n';\n}\n```\n\n`std::string` là chuỗi byte theo encoding được chương trình sử dụng; `size()` đếm `char`, không nhất thiết là số ký tự người dùng nhìn thấy khi UTF-8 có ký tự nhiều byte. Đọc cả dòng bằng `std::getline(std::cin, text)`.\n\n## Mảng `char` và lỗi thường gặp\n\nChuỗi C kiểu `char[]` cần phần tử kết thúc `\\0`. Nếu không có byte kết thúc hoặc vùng chứa quá nhỏ, API C có thể đọc/ghi vượt biên. Code mới nên dùng `std::string` trừ khi giao tiếp API yêu cầu buffer byte cụ thể.\n\n- Không truy cập chỉ số âm hoặc bằng `size()`.\n- Không dùng `sizeof(array)` như độ dài sau khi mảng đã chuyển thành pointer trong tham số hàm.\n- Không dùng `strlen` trực tiếp cho dữ liệu nhị phân có byte 0 ở giữa.\n\n## Tự luyện\n\nTính phần tử lớn nhất và tổng đường chéo chính của ma trận vuông. Với mảng rỗng hoặc kích thước 0, quyết định rõ hành vi thay vì đọc phần tử đầu.\n\n## Đọc tiếp\n\nTìm hiểu [references và pointers](/cpp/bat-dau/references-pointers) và xem [sequence containers](/cpp/stl/sequence-containers).",
+    "body": "# Mảng và chuỗi trong C++\n\nTrong các bài học trước, chúng ta đã sử dụng biến để lưu trữ dữ liệu như số tuổi, điểm số hoặc kết quả tính toán.\n\nTuy nhiên, nếu cần lưu điểm của 40 học sinh, việc khai báo 40 biến riêng biệt sẽ khiến chương trình dài dòng và khó quản lý.\n\nVí dụ:\n\n```cpp\nint score1{8};\nint score2{9};\nint score3{7};\n```\n\nCách viết này không phù hợp khi số lượng dữ liệu tăng lên.\n\nĐể giải quyết vấn đề, C++ cung cấp các cấu trúc cho phép lưu và xử lý nhiều phần tử.\n\nHai nhóm kiến thức quan trọng là:\n\n- **Mảng (Array):** Lưu một tập hợp phần tử cùng kiểu và truy cập thông qua chỉ số.\n- **Chuỗi (String):** Biểu diễn và xử lý dữ liệu dạng văn bản.\n\nTrong C++ hiện đại, chúng ta thường sử dụng `std::array`, `std::vector` và `std::string` thay vì trực tiếp quản lý các mảng kiểu C khi không cần thiết.\n\nBài học này giúp bạn nắm được:\n\n1. Khái niệm và cách khai báo mảng.\n2. Truy cập và duyệt mảng một chiều.\n3. Sự khác biệt giữa mảng C và `std::array`.\n4. Cách sử dụng mảng hai chiều.\n5. Khai báo và thao tác với `std::string`.\n6. Phân biệt chuỗi C và chuỗi C++.\n7. Cách tránh truy cập ngoài phạm vi.\n8. Ứng dụng mảng và chuỗi trong những bài toán thực tế.\n\n**Tiêu chuẩn sử dụng:** C++17.\n\n---\n\n## 1. Mảng là gì?\n\nMảng (array) là cấu trúc lưu trữ một tập hợp các phần tử có cùng kiểu dữ liệu.\n\nMỗi phần tử có thể được truy cập thông qua một chỉ số (index).\n\nVí dụ, cần lưu điểm của 5 học sinh:\n\n```text\nĐiểm:     7   9   8   6   10\nChỉ số:   0   1   2   3    4\n```\n\nMột đặc điểm quan trọng của mảng trong C++ là **chỉ số bắt đầu từ 0**, không phải 1.\n\nVới mảng có 5 phần tử:\n\n- Phần tử đầu tiên có chỉ số `0`.\n- Phần tử thứ hai có chỉ số `1`.\n- Phần tử cuối cùng có chỉ số `4`.\n\n### 1.1. Tại sao cần sử dụng mảng?\n\nGiả sử cần tính tổng điểm của 5 học sinh.\n\nKhông sử dụng mảng:\n\n```cpp\nint a{7};\nint b{9};\nint c{8};\nint d{6};\nint e{10};\n\nint total = a + b + c + d + e;\n```\n\nSử dụng mảng:\n\n```cpp\n#include <array>\n\nstd::array<int, 5> scores{7, 9, 8, 6, 10};\n```\n\nKhi dữ liệu được tổ chức thành một tập hợp, chúng ta có thể dùng vòng lặp để xử lý thay vì phải viết một phép toán riêng cho từng biến.\n\n### 1.2. Đặc điểm của mảng\n\nMảng có một số đặc điểm cơ bản:\n\n- Các phần tử có cùng kiểu dữ liệu.\n- Mỗi phần tử có một vị trí xác định.\n- Chỉ số thường bắt đầu từ `0`.\n- Có thể truy cập trực tiếp phần tử thông qua chỉ số.\n- Các phần tử của mảng C và `std::array` được lưu liên tiếp trong bộ nhớ.\n\nĐối với mảng có kích thước cố định, số lượng phần tử được xác định khi khai báo kiểu mảng.\n\nNếu cần thay đổi số lượng phần tử trong lúc chạy chương trình, `std::vector` thường phù hợp hơn.\n\n---\n\n## 2. Khai báo mảng một chiều\n\nTrong C++, có hai cách biểu diễn mảng kích thước cố định mà người mới thường gặp:\n\n- Mảng truyền thống kiểu C.\n- `std::array` của thư viện chuẩn C++.\n\n### 2.1. Mảng truyền thống\n\nCú pháp:\n\n```cpp\nType name[size];\n```\n\nVí dụ:\n\n```cpp\nint scores[5]{7, 9, 8, 6, 10};\n```\n\nTrong đó:\n\n- `int`: Kiểu dữ liệu của phần tử.\n- `scores`: Tên mảng.\n- `5`: Số phần tử.\n- `{7, 9, 8, 6, 10}`: Danh sách giá trị khởi tạo.\n\nCó thể truy cập phần tử:\n\n```cpp\nscores[0];\nscores[1];\nscores[4];\n```\n\n### 2.2. Khởi tạo mảng\n\nVí dụ:\n\n```cpp\nint numbers[4]{1, 2, 3, 4};\n```\n\nHoặc:\n\n```cpp\nint numbers[4]{};\n```\n\nVới ví dụ thứ hai, cả bốn phần tử đều được khởi tạo thành `0`.\n\nCó thể bỏ kích thước khi compiler suy ra được từ danh sách khởi tạo:\n\n```cpp\nint numbers[]{10, 20, 30};\n```\n\nMảng trên có 3 phần tử.\n\n### 2.3. Mảng có kích thước cố định\n\nĐối với mảng C thông thường, kích thước phải là biểu thức hằng phù hợp theo chuẩn C++.\n\nVí dụ:\n\n```cpp\nconstexpr int size{5};\n\nint numbers[size]{};\n```\n\nĐây là cú pháp hợp lệ.\n\nNgược lại:\n\n```cpp\nint n{};\nstd::cin >> n;\n\nint numbers[n];\n```\n\nkhông phải C++17 chuẩn vì `n` chỉ có giá trị tại runtime.\n\nMột số compiler hỗ trợ mảng có kích thước biến đổi (Variable Length Array) dưới dạng extension, nhưng không nên dựa vào tính năng này trong mã C++17 portable.\n\nNếu kích thước được xác định lúc chạy, nên sử dụng `std::vector`.\n\n---\n\n## 3. std::array trong C++17\n\n`std::array` là một container của thư viện chuẩn, biểu diễn mảng có kích thước cố định.\n\nHeader:\n\n```cpp\n#include <array>\n```\n\nCú pháp:\n\n```cpp\nstd::array<Type, Size> name;\n```\n\nVí dụ:\n\n```cpp\nstd::array<int, 5> scores{7, 9, 8, 6, 10};\n```\n\n### 3.1. Ví dụ hoàn chỉnh\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 5> scores{7, 9, 8, 6, 10};\n\n    std::cout << scores[0] << '\\n';\n    std::cout << scores[2] << '\\n';\n    std::cout << scores[4] << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n7\n8\n10\n```\n\n### 3.2. Tại sao nên sử dụng std::array?\n\nSo với mảng truyền thống, `std::array` có giao diện thuận tiện hơn.\n\nVí dụ:\n\n```cpp\nscores.size();\nscores.at(0);\nscores.front();\nscores.back();\nscores.begin();\nscores.end();\n```\n\n| Thành phần | Công dụng |\n|---|---|\n| `size()` | Trả về số phần tử |\n| `empty()` | Kiểm tra mảng có rỗng không |\n| `at(index)` | Truy cập phần tử có kiểm tra phạm vi |\n| `operator[]` | Truy cập trực tiếp theo chỉ số |\n| `front()` | Truy cập phần tử đầu |\n| `back()` | Truy cập phần tử cuối |\n| `begin()` | Iterator đầu dãy |\n| `end()` | Iterator sau phần tử cuối |\n\n`std::array` tương thích tốt với các thuật toán của thư viện chuẩn như `std::sort`, `std::find` và `std::accumulate`.\n\n### 3.3. Kích thước không thay đổi\n\nVí dụ:\n\n```cpp\nstd::array<int, 3> values{1, 2, 3};\n```\n\nMảng có đúng 3 phần tử.\n\nKhông thể gọi:\n\n```cpp\nvalues.push_back(4);\n```\n\nvì `std::array` không cung cấp `push_back()`.\n\nKích thước là một phần của kiểu dữ liệu:\n\n```cpp\nstd::array<int, 3>\n```\n\nvà:\n\n```cpp\nstd::array<int, 5>\n```\n\nlà hai kiểu khác nhau.\n\nNếu cần thêm hoặc xóa phần tử linh hoạt, nên sử dụng `std::vector`.\n\n---\n\n## 4. Chỉ số và truy cập phần tử\n\n### 4.1. Chỉ số bắt đầu từ 0\n\nCho mảng:\n\n```cpp\nstd::array<int, 4> numbers{10, 20, 30, 40};\n```\n\nCác phần tử:\n\n| Chỉ số | Giá trị |\n|---|---|\n| `0` | 10 |\n| `1` | 20 |\n| `2` | 30 |\n| `3` | 40 |\n\nVới mảng có `n` phần tử và `n > 0`, chỉ số hợp lệ nằm trong đoạn:\n\n\\[\n0 \\le i < n\n\\]\n\nPhần tử cuối có chỉ số:\n\n\\[\nn - 1\n\\]\n\n### 4.2. Thay đổi phần tử\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 3> values{10, 20, 30};\n\n    values[1] = 100;\n\n    for (int value : values) {\n        std::cout << value << ' ';\n    }\n\n    std::cout << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n10 100 30\n```\n\nCâu lệnh:\n\n```cpp\nvalues[1] = 100;\n```\n\nthay đổi phần tử thứ hai.\n\n### 4.3. Truy cập ngoài phạm vi\n\nCho mảng:\n\n```cpp\nstd::array<int, 3> values{10, 20, 30};\n```\n\nBiểu thức:\n\n```cpp\nvalues[3]\n```\n\nkhông hợp lệ để truy cập phần tử vì chỉ số lớn nhất là `2`.\n\n`std::array::operator[]` không thực hiện kiểm tra phạm vi ở runtime theo hợp đồng giao diện.\n\nTruy cập ngoài phạm vi gây hành vi không xác định.\n\nChương trình có thể:\n\n- Bị crash.\n- Đọc dữ liệu không mong muốn.\n- Ghi đè bộ nhớ.\n- Có vẻ hoạt động bình thường trong một lần chạy.\n\nKhông nên dựa vào bất kỳ hành vi nào trong các trường hợp trên.\n\n### 4.4. Truy cập bằng at()\n\n`std::array` cung cấp hàm `at()` để kiểm tra chỉ số.\n\n```cpp\n#include <array>\n#include <iostream>\n#include <stdexcept>\n\nint main() {\n    std::array<int, 3> values{10, 20, 30};\n\n    try {\n        std::cout << values.at(3) << '\\n';\n    } catch (const std::out_of_range&) {\n        std::cerr << \"Chi so vuot pham vi.\\n\";\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nChi so vuot pham vi.\n```\n\nKhác với `operator[]`, `at()` ném `std::out_of_range` nếu chỉ số không hợp lệ.\n\n### 4.5. Mảng rỗng\n\nC++ cho phép khai báo:\n\n```cpp\nstd::array<int, 0> values{};\n```\n\nMảng này không có phần tử.\n\nKết quả:\n\n```cpp\nvalues.empty()\n```\n\nlà `true`.\n\nVới mảng rỗng, không được truy cập:\n\n```cpp\nvalues[0];\nvalues.front();\nvalues.back();\n```\n\nĐặc biệt, biểu thức:\n\n```cpp\nvalues.size() - 1\n```\n\nkhông nên dùng để lấy chỉ số cuối nếu chưa kiểm tra mảng không rỗng.\n\nVì `size()` trả về kiểu không dấu, phép trừ `0 - 1` có thể tạo ra một giá trị rất lớn.\n\n---\n\n## 5. Duyệt mảng một chiều\n\nDuyệt mảng là quá trình truy cập lần lượt các phần tử để đọc hoặc xử lý dữ liệu.\n\nCó nhiều cách thực hiện.\n\n### 5.1. Vòng lặp for\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 5> numbers{10, 20, 30, 40, 50};\n\n    for (std::size_t i = 0; i < numbers.size(); ++i) {\n        std::cout << numbers[i] << '\\n';\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n10\n20\n30\n40\n50\n```\n\n**Phân tích:**\n\n- `i = 0`: Bắt đầu tại phần tử đầu tiên.\n- `i < numbers.size()`: Bảo đảm chỉ số nằm trong phạm vi.\n- `++i`: Chuyển sang phần tử kế tiếp.\n- `numbers[i]`: Truy cập phần tử hiện tại.\n\nỞ đây sử dụng `std::size_t` vì đây là kiểu được `size()` trả về.\n\n### 5.2. Range-based for\n\nC++11 giới thiệu range-based `for`, giúp duyệt phần tử trực tiếp.\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 5> numbers{10, 20, 30, 40, 50};\n\n    for (int number : numbers) {\n        std::cout << number << ' ';\n    }\n\n    std::cout << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n10 20 30 40 50\n```\n\nCách viết này ngắn gọn khi không cần sử dụng chỉ số.\n\n### 5.3. Duyệt bằng reference\n\nXét đoạn mã:\n\n```cpp\nstd::array<int, 3> values{1, 2, 3};\n\nfor (int value : values) {\n    value *= 2;\n}\n```\n\nSau vòng lặp, mảng vẫn chứa:\n\n```text\n1 2 3\n```\n\nVì biến `value` nhận một bản sao của từng phần tử.\n\nMuốn sửa trực tiếp:\n\n```cpp\nfor (int& value : values) {\n    value *= 2;\n}\n```\n\nKết quả:\n\n```text\n2 4 6\n```\n\nKhi chỉ cần đọc, có thể sử dụng:\n\n```cpp\nfor (const auto& value : values) {\n    std::cout << value << '\\n';\n}\n```\n\nVới kiểu nhỏ như `int`, truyền theo giá trị trong vòng lặp thường rất đơn giản và phù hợp.\n\n---\n\n## 6. Các bài toán cơ bản với mảng\n\n### 6.1. Tính tổng phần tử\n\nCho mảng:\n\n```text\n7 9 8 6 10\n```\n\nYêu cầu tính:\n\n\\[\nS = 7 + 9 + 8 + 6 + 10 = 40\n\\]\n\nChương trình:\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 5> scores{7, 9, 8, 6, 10};\n\n    long long total{};\n\n    for (int score : scores) {\n        total += score;\n    }\n\n    std::cout << \"Tong: \" << total << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nTong: 40\n```\n\nSử dụng `long long` cho biến tổng giúp hỗ trợ phạm vi kết quả lớn hơn so với `int` thông thường.\n\nTuy nhiên, cần kiểm tra giới hạn đầu vào nếu tổng vẫn có nguy cơ vượt phạm vi `long long`.\n\n### 6.2. Tính trung bình cộng\n\nCông thức:\n\n\\[\nAverage = \\frac{Sum}{n}\n\\]\n\nVí dụ:\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 5> scores{7, 9, 8, 6, 10};\n\n    long long total{};\n\n    for (int score : scores) {\n        total += score;\n    }\n\n    const double average =\n        static_cast<double>(total) / scores.size();\n\n    std::cout << average << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n8\n```\n\nTrong ví dụ này, mảng chắc chắn có 5 phần tử.\n\nNếu xử lý một container có thể rỗng, cần kiểm tra `empty()` trước khi chia cho `size()`.\n\n### 6.3. Tìm giá trị lớn nhất\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 5> values{7, 12, 4, 20, 9};\n\n    int maximum = values[0];\n\n    for (int value : values) {\n        if (value > maximum) {\n            maximum = value;\n        }\n    }\n\n    std::cout << maximum << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n20\n```\n\n**Nguyên lý:**\n\n1. Giả sử phần tử đầu tiên là lớn nhất.\n2. Duyệt qua từng phần tử.\n3. Nếu gặp giá trị lớn hơn, cập nhật `maximum`.\n4. Sau khi duyệt hết, biến `maximum` chứa giá trị lớn nhất.\n\nCách này chỉ hợp lệ khi mảng có ít nhất một phần tử.\n\n### 6.4. Đếm số phần tử thỏa điều kiện\n\nVí dụ đếm số chẵn:\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<int, 6> values{1, 2, 3, 4, 5, 6};\n\n    int count{};\n\n    for (int value : values) {\n        if (value % 2 == 0) {\n            ++count;\n        }\n    }\n\n    std::cout << count << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n3\n```\n\nCác số chẵn là `2`, `4` và `6`.\n\n---\n\n## 7. Mảng hai chiều\n\nMảng hai chiều được sử dụng để biểu diễn dữ liệu có dạng hàng và cột.\n\nVí dụ, một bảng số liệu:\n\n```text\n1  2  3\n4  5  6\n```\n\nBảng trên gồm:\n\n- 2 hàng.\n- 3 cột.\n- Tổng cộng 6 phần tử.\n\n### 7.1. Khai báo mảng hai chiều\n\nCú pháp mảng C:\n\n```cpp\nType name[Rows][Columns];\n```\n\nVí dụ:\n\n```cpp\nint grid[2][3]{\n    {1, 2, 3},\n    {4, 5, 6}\n};\n```\n\nMảng này gồm hai mảng con, mỗi mảng con có ba phần tử.\n\n### 7.2. Truy cập phần tử\n\nCú pháp:\n\n```cpp\ngrid[row][column]\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int grid[2][3]{\n        {1, 2, 3},\n        {4, 5, 6}\n    };\n\n    std::cout << grid[0][0] << '\\n';\n    std::cout << grid[1][2] << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1\n6\n```\n\nTrong đó:\n\n```cpp\ngrid[0][0]\n```\n\nlà phần tử ở hàng đầu tiên, cột đầu tiên.\n\n```cpp\ngrid[1][2]\n```\n\nlà phần tử ở hàng thứ hai, cột thứ ba.\n\n### 7.3. Bảng chỉ số\n\nVới:\n\n```text\n1  2  3\n4  5  6\n```\n\nTa có:\n\n| Vị trí | Chỉ số | Giá trị |\n|---|---|---|\n| Hàng 1, cột 1 | `[0][0]` | 1 |\n| Hàng 1, cột 2 | `[0][1]` | 2 |\n| Hàng 1, cột 3 | `[0][2]` | 3 |\n| Hàng 2, cột 1 | `[1][0]` | 4 |\n| Hàng 2, cột 2 | `[1][1]` | 5 |\n| Hàng 2, cột 3 | `[1][2]` | 6 |\n\nVới bảng có `rows` hàng và `columns` cột, chỉ số hợp lệ:\n\n\\[\n0 \\le row < rows\n\\]\n\n\\[\n0 \\le column < columns\n\\]\n\n---\n\n## 8. Duyệt mảng hai chiều\n\nĐể duyệt mảng hai chiều theo từng hàng và từng cột, thường sử dụng hai vòng lặp lồng nhau.\n\n### 8.1. Vòng lặp lồng nhau\n\n```cpp\n#include <iostream>\n\nint main() {\n    int grid[2][3]{\n        {1, 2, 3},\n        {4, 5, 6}\n    };\n\n    for (int row = 0; row < 2; ++row) {\n        for (int column = 0; column < 3; ++column) {\n            std::cout << grid[row][column] << ' ';\n        }\n\n        std::cout << '\\n';\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1 2 3\n4 5 6\n```\n\n**Phân tích:**\n\n- Vòng lặp ngoài chọn hàng.\n- Vòng lặp trong duyệt các cột thuộc hàng đó.\n- Sau khi hoàn thành một hàng, chương trình xuống dòng.\n\n### 8.2. std::array hai chiều\n\nCó thể sử dụng các `std::array` lồng nhau:\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<std::array<int, 3>, 2> grid{{\n        {1, 2, 3},\n        {4, 5, 6}\n    }};\n\n    for (const auto& row : grid) {\n        for (int value : row) {\n            std::cout << value << ' ';\n        }\n\n        std::cout << '\\n';\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n1 2 3\n4 5 6\n```\n\nỞ đây:\n\n```cpp\nstd::array<int, 3>\n```\n\nbiểu diễn một hàng có ba phần tử.\n\nCòn:\n\n```cpp\nstd::array<std::array<int, 3>, 2>\n```\n\nbiểu diễn một mảng gồm hai hàng.\n\n### 8.3. Tính tổng tất cả phần tử\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<std::array<int, 3>, 2> grid{{\n        {1, 2, 3},\n        {4, 5, 6}\n    }};\n\n    long long total{};\n\n    for (const auto& row : grid) {\n        for (int value : row) {\n            total += value;\n        }\n    }\n\n    std::cout << total << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n21\n```\n\nVì:\n\n\\[\n1 + 2 + 3 + 4 + 5 + 6 = 21\n\\]\n\n### 8.4. Ma trận vuông và đường chéo chính\n\nMa trận vuông là bảng có số hàng bằng số cột.\n\nVí dụ:\n\n```text\n1  2  3\n4  5  6\n7  8  9\n```\n\nCác phần tử trên đường chéo chính có chỉ số:\n\n```text\n[0][0]\n[1][1]\n[2][2]\n```\n\nTổng đường chéo chính:\n\n\\[\nS = 1 + 5 + 9 = 15\n\\]\n\nChương trình:\n\n```cpp\n#include <array>\n#include <iostream>\n\nint main() {\n    std::array<std::array<int, 3>, 3> grid{{\n        {1, 2, 3},\n        {4, 5, 6},\n        {7, 8, 9}\n    }};\n\n    long long total{};\n\n    for (std::size_t i = 0; i < grid.size(); ++i) {\n        total += grid[i][i];\n    }\n\n    std::cout << total << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n15\n```\n\n---\n\n## 9. Mảng có kích thước linh hoạt\n\n`std::array` phù hợp khi kích thước được xác định tại compile time.\n\nNhưng giả sử chương trình yêu cầu:\n\n```text\nNhap so luong hoc sinh: 37\n```\n\nSố phần tử chỉ được biết sau khi chương trình chạy.\n\nTrong trường hợp đó, `std::vector` thường là lựa chọn phù hợp.\n\n### 9.1. Giới thiệu std::vector\n\nHeader:\n\n```cpp\n#include <vector>\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        return 1;\n    }\n\n    if (n < 0 || n > 100000) {\n        return 1;\n    }\n\n    std::vector<int> values(\n        static_cast<std::size_t>(n)\n    );\n\n    for (int& value : values) {\n        if (!(std::cin >> value)) {\n            return 1;\n        }\n    }\n\n    for (int value : values) {\n        std::cout << value << ' ';\n    }\n\n    std::cout << '\\n';\n\n    return 0;\n}\n```\n\nInput:\n\n```text\n5\n10 20 30 40 50\n```\n\nOutput:\n\n```text\n10 20 30 40 50\n```\n\n### 9.2. So sánh array và vector\n\n| Tiêu chí | Mảng C | std::array | std::vector |\n|---|---|---|---|\n| Kích thước cố định theo kiểu | Có | Có | Không |\n| Kích thước xác định lúc chạy | Không trong C++17 chuẩn | Không | Có |\n| Có `.size()` | Không | Có | Có |\n| Có `.at()` | Không | Có | Có |\n| Có `.push_back()` | Không | Không | Có |\n| Tự quản lý vùng chứa | Theo cơ chế mảng | Theo cơ chế đối tượng | Có |\n| Phù hợp | API cấp thấp, dữ liệu cố định | Tập hợp cố định | Tập hợp linh hoạt |\n\nBài này chỉ giới thiệu `std::vector` ở mức cần thiết.\n\nCác thao tác thêm, xóa phần tử, capacity, iterator invalidation và quản lý bộ nhớ của vector được trình bày trong bài [Vector, struct và enum](/cpp/trung-cap/vector-struct-enum).\n\n---\n\n## 10. Chuỗi trong C++ là gì?\n\nChuỗi (string) được sử dụng để biểu diễn dữ liệu văn bản.\n\nVí dụ:\n\n```text\nHello\nNguyen Van An\nDevHubs Wiki\n```\n\nTrong C++ hiện đại, kiểu thường được sử dụng là:\n\n```cpp\nstd::string\n```\n\nThư viện:\n\n```cpp\n#include <string>\n```\n\n### 10.1. Khai báo chuỗi\n\n```cpp\n#include <string>\n\nstd::string name{\"An\"};\nstd::string project{\"DevHubs Wiki\"};\nstd::string empty{};\n```\n\nTrong đó:\n\n- `name` chứa `\"An\"`.\n- `project` chứa `\"DevHubs Wiki\"`.\n- `empty` là chuỗi rỗng.\n\n### 10.2. Ví dụ hoàn chỉnh\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string name{\"Nguyen Van An\"};\n\n    std::cout << \"Xin chao, \" << name << \"!\\n\";\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nXin chao, Nguyen Van An!\n```\n\n### 10.3. Vì sao sử dụng std::string?\n\n`std::string` cung cấp nhiều thao tác thuận tiện:\n\n- Nối chuỗi.\n- So sánh chuỗi.\n- Truy cập phần tử.\n- Tìm chuỗi con.\n- Cắt chuỗi.\n- Kiểm tra độ dài.\n- Thêm hoặc xóa nội dung.\n\nNgoài ra, `std::string` quản lý vùng lưu trữ của chuỗi, giúp giảm nhu cầu thao tác thủ công với mảng ký tự.\n\nTuy nhiên, `std::string` không tự động hiểu toàn bộ khái niệm ký tự Unicode hoặc grapheme. Đây là điểm cần chú ý khi xử lý tiếng Việt và văn bản đa ngôn ngữ.\n\n---\n\n## 11. Các thao tác cơ bản với std::string\n\n### 11.1. Nối chuỗi\n\nSử dụng toán tử `+`:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    const std::string first{\"Dev\"};\n    const std::string second{\"Hubs\"};\n\n    std::string result = first + second;\n\n    std::cout << result << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nDevHubs\n```\n\nCó thể sử dụng `+=` để bổ sung nội dung:\n\n```cpp\nresult += \" Wiki\";\n```\n\nKết quả:\n\n```text\nDevHubs Wiki\n```\n\n### 11.2. Độ dài chuỗi\n\nSử dụng:\n\n```cpp\ntext.size()\n```\n\nhoặc:\n\n```cpp\ntext.length()\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string text{\"Hello\"};\n\n    std::cout << text.size() << '\\n';\n    std::cout << text.length() << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n5\n5\n```\n\nĐối với `std::string`, `size()` và `length()` trả về cùng một giá trị.\n\n### 11.3. Truy cập ký tự theo chỉ số\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string text{\"Hello\"};\n\n    std::cout << text[0] << '\\n';\n    std::cout << text[1] << '\\n';\n    std::cout << text[4] << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nH\ne\no\n```\n\nChuỗi `\"Hello\"` gồm 5 phần tử `char`:\n\n| Chỉ số | Phần tử |\n|---|---|\n| 0 | H |\n| 1 | e |\n| 2 | l |\n| 3 | l |\n| 4 | o |\n\n### 11.4. Thay đổi ký tự\n\n```cpp\nstd::string text{\"Hello\"};\n\ntext[0] = 'Y';\n```\n\nKết quả:\n\n```text\nYello\n```\n\nVới `std::string`, phép truy cập bằng chỉ số làm việc trên các phần tử `char`, không phải những ký tự Unicode hoàn chỉnh.\n\n### 11.5. Truy cập bằng at()\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <stdexcept>\n#include <string>\n\nint main() {\n    std::string text{\"Hello\"};\n\n    try {\n        std::cout << text.at(10) << '\\n';\n    } catch (const std::out_of_range&) {\n        std::cerr << \"Chi so khong hop le.\\n\";\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nChi so khong hop le.\n```\n\n`std::string::at()` kiểm tra phạm vi tương tự `std::array::at()`.\n\n---\n\n## 12. Đọc chuỗi từ bàn phím\n\nC++ hỗ trợ nhiều cách nhập chuỗi.\n\nHai cách thường gặp:\n\n```cpp\nstd::cin >> text;\n```\n\nvà:\n\n```cpp\nstd::getline(std::cin, text);\n```\n\n### 12.1. Nhập bằng cin\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n\n    std::cin >> name;\n\n    std::cout << name << '\\n';\n\n    return 0;\n}\n```\n\nNếu nhập:\n\n```text\nNguyen Van An\n```\n\nKết quả:\n\n```text\nNguyen\n```\n\nNguyên nhân là `operator>>` đối với `std::string` đọc một token và dừng khi gặp khoảng trắng phân tách.\n\n### 12.2. Nhập cả dòng bằng getline\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n\n    std::getline(std::cin, name);\n\n    std::cout << name << '\\n';\n\n    return 0;\n}\n```\n\nInput:\n\n```text\nNguyen Van An\n```\n\nOutput:\n\n```text\nNguyen Van An\n```\n\n`std::getline()` đọc nội dung dòng cho đến ký tự phân cách xuống dòng, không đưa ký tự phân cách đó vào chuỗi.\n\n### 12.3. Kết hợp cin và getline\n\nMột lỗi phổ biến xảy ra khi sử dụng `std::getline()` ngay sau `std::cin >>`.\n\nVí dụ:\n\n```cpp\nint age{};\nstd::string name;\n\nstd::cin >> age;\nstd::getline(std::cin, name);\n```\n\nSau khi đọc số tuổi, ký tự xuống dòng có thể vẫn còn trong luồng nhập.\n\n`getline()` có thể đọc ngay phần còn lại của dòng, khiến `name` trở thành chuỗi rỗng.\n\nCách xử lý:\n\n```cpp\n#include <iostream>\n#include <limits>\n#include <string>\n\nint main() {\n    int age{};\n    std::string name;\n\n    std::cout << \"Nhap tuoi: \";\n\n    if (!(std::cin >> age)) {\n        std::cerr << \"Tuoi khong hop le.\\n\";\n        return 1;\n    }\n\n    std::cin.ignore(\n        std::numeric_limits<std::streamsize>::max(),\n        '\\n'\n    );\n\n    std::cout << \"Nhap ho ten: \";\n\n    if (!std::getline(std::cin, name)) {\n        std::cerr << \"Khong doc duoc ho ten.\\n\";\n        return 1;\n    }\n\n    std::cout << name << \": \" << age << '\\n';\n\n    return 0;\n}\n```\n\n---\n\n## 13. Tìm kiếm và cắt chuỗi\n\n`std::string` cung cấp những hàm để xử lý nội dung văn bản.\n\n### 13.1. Tìm chuỗi con với find()\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string text{\"DevHubs Wiki\"};\n\n    const auto position = text.find(\"Wiki\");\n\n    if (position != std::string::npos) {\n        std::cout << position << '\\n';\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n8\n```\n\nChuỗi `\"Wiki\"` bắt đầu tại chỉ số `8`.\n\nNếu không tìm thấy, `find()` trả về:\n\n```cpp\nstd::string::npos\n```\n\n`npos` là giá trị đặc biệt biểu thị không tìm thấy vị trí phù hợp.\n\nKhông nên mặc định giá trị trả về khi không tìm thấy luôn bằng `-1` theo kiểu số có dấu.\n\n### 13.2. Cắt chuỗi với substr()\n\nCú pháp:\n\n```cpp\ntext.substr(position, count)\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string text{\"DevHubs Wiki\"};\n\n    std::string first = text.substr(0, 7);\n    std::string second = text.substr(8, 4);\n\n    std::cout << first << '\\n';\n    std::cout << second << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nDevHubs\nWiki\n```\n\nTrong đó:\n\n- `position`: Vị trí bắt đầu.\n- `count`: Số phần tử `char` cần lấy.\n\nNếu vị trí bắt đầu lớn hơn `size()`, `substr()` ném `std::out_of_range`.\n\nNếu số lượng yêu cầu vượt quá phần còn lại của chuỗi, hàm chỉ lấy đến cuối chuỗi.\n\n### 13.3. So sánh chuỗi\n\nCó thể sử dụng:\n\n```cpp\na == b\na != b\na < b\na > b\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string a{\"Hello\"};\n    std::string b{\"Hello\"};\n\n    std::cout << std::boolalpha;\n    std::cout << (a == b) << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\ntrue\n```\n\nPhép so sánh mặc định của `std::string` phân biệt chữ hoa và chữ thường.\n\nVí dụ:\n\n```cpp\nstd::string a{\"hello\"};\nstd::string b{\"Hello\"};\n```\n\nHai chuỗi không bằng nhau.\n\nNgoài ra, thứ tự từ điển của `std::string` dựa trên các phần tử `char`, không tự động áp dụng quy tắc sắp xếp ngôn ngữ tự nhiên của tiếng Việt.\n\n### 13.4. Những hàm thường gặp\n\n| Hàm | Công dụng |\n|---|---|\n| `size()` | Lấy độ dài |\n| `length()` | Lấy độ dài |\n| `empty()` | Kiểm tra chuỗi rỗng |\n| `clear()` | Xóa nội dung |\n| `find()` | Tìm chuỗi con |\n| `substr()` | Tạo chuỗi con |\n| `append()` | Nối thêm chuỗi |\n| `push_back()` | Thêm một `char` |\n| `pop_back()` | Xóa phần tử cuối |\n| `front()` | Truy cập phần tử đầu |\n| `back()` | Truy cập phần tử cuối |\n| `at()` | Truy cập có kiểm tra phạm vi |\n\nKhông gọi `front()`, `back()` hoặc `pop_back()` trên chuỗi rỗng.\n\n---\n\n## 14. Duyệt và xử lý ký tự trong chuỗi\n\nVì `std::string` chứa một dãy phần tử `char`, có thể sử dụng vòng lặp để duyệt.\n\n### 14.1. Duyệt từng phần tử\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string text{\"Hello\"};\n\n    for (char character : text) {\n        std::cout << character << '\\n';\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nH\ne\nl\nl\no\n```\n\n### 14.2. Đếm ký tự cụ thể\n\nVí dụ đếm chữ `a`:\n\n```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string text{\"banana\"};\n\n    int count{};\n\n    for (char character : text) {\n        if (character == 'a') {\n            ++count;\n        }\n    }\n\n    std::cout << count << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n3\n```\n\n### 14.3. Đảo ngược chuỗi\n\nThư viện `<algorithm>` cung cấp `std::reverse()`.\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string text{\"Hello\"};\n\n    std::reverse(text.begin(), text.end());\n\n    std::cout << text << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nolleH\n```\n\n**Lưu ý:** Cách này phù hợp với ví dụ ASCII.\n\nNếu chuỗi chứa UTF-8 với ký tự nhiều byte, đảo ngược từng byte có thể phá hỏng dữ liệu mã hóa.\n\nĐối với văn bản Unicode, cần sử dụng thuật toán hiểu cấu trúc mã hóa và đơn vị ký tự phù hợp.\n\n---\n\n## 15. Chuỗi, byte và Unicode\n\nĐây là một điểm quan trọng khi xử lý văn bản tiếng Việt.\n\n### 15.1. std::string lưu gì?\n\n`std::string` là một chuỗi các phần tử `char`.\n\nVề mặt dữ liệu, nó có thể lưu văn bản được mã hóa theo UTF-8, nhưng bản thân `std::string` không tự phân tích Unicode.\n\nVí dụ:\n\n```cpp\nstd::string text{\"Hello\"};\n```\n\nVới các ký tự ASCII thông thường, mỗi ký tự chiếm một byte trên các hệ thống phổ biến có byte 8 bit.\n\nNhưng các ký tự như:\n\n```text\nă\nâ\nđ\nê\nộ\n```\n\ncó thể chiếm nhiều byte khi mã hóa bằng UTF-8.\n\n### 15.2. size() không phải lúc nào cũng là số ký tự\n\nNếu dữ liệu được mã hóa theo UTF-8, một chuỗi tiếng Việt có thể chứa nhiều byte hơn số ký tự hiển thị.\n\nVì vậy:\n\n```cpp\ntext.size()\n```\n\ntrả về số phần tử `char`, không phải số chữ cái hoặc grapheme mà người dùng nhìn thấy.\n\nTrong môi trường byte 8 bit sử dụng UTF-8, giá trị này tương ứng với số byte của chuỗi.\n\n### 15.3. Một ký tự Unicode có thể gồm nhiều code point\n\nNgoài việc một code point UTF-8 có thể chiếm nhiều byte, một ký tự hiển thị cũng có thể được tạo thành từ nhiều code point.\n\nVí dụ, chữ có dấu có thể được biểu diễn dưới dạng:\n\n- Một code point dựng sẵn.\n- Một chữ cái cơ sở kết hợp với dấu.\n\nHai cách biểu diễn có thể trông giống nhau nhưng có dữ liệu byte khác nhau.\n\nDo đó, những thao tác như:\n\n- Đếm ký tự hiển thị.\n- Cắt chuỗi theo ký tự.\n- Chuyển chữ hoa/chữ thường tiếng Việt.\n- So sánh Unicode có chuẩn hóa.\n- Đảo ngược văn bản.\n\ncần được thiết kế riêng khi xử lý Unicode.\n\n**Nguyên tắc:** Không áp dụng trực tiếp thuật toán thao tác trên từng `char` cho văn bản UTF-8 nếu yêu cầu thực sự là xử lý từng ký tự Unicode.\n\n---\n\n## 16. Mảng char và chuỗi kiểu C\n\nTrước khi `std::string` trở thành công cụ phổ biến, chuỗi trong C và nhiều API cấp thấp được biểu diễn bằng mảng `char`.\n\nVí dụ:\n\n```cpp\nchar text[]{\"Hello\"};\n```\n\nMảng này thực tế chứa:\n\n```text\n'H' 'e' 'l' 'l' 'o' '\\0'\n```\n\nKý tự:\n\n```cpp\n'\\0'\n```\n\nđược gọi là null terminator.\n\nNó đánh dấu điểm kết thúc của C-style string.\n\n### 16.1. Kích thước và độ dài khác nhau\n\nXét:\n\n```cpp\nchar text[]{\"Hello\"};\n```\n\nMảng có 6 phần tử:\n\n- 5 ký tự nội dung.\n- 1 ký tự kết thúc null.\n\nVí dụ:\n\n```cpp\n#include <cstring>\n#include <iostream>\n\nint main() {\n    char text[]{\"Hello\"};\n\n    std::cout << sizeof(text) << '\\n';\n    std::cout << std::strlen(text) << '\\n';\n\n    return 0;\n}\n```\n\nTrên các implementation C++ thông dụng, kết quả:\n\n```text\n6\n5\n```\n\nVì:\n\n```cpp\nsizeof(text)\n```\n\ntrả về kích thước mảng tính bằng byte C++.\n\nCòn:\n\n```cpp\nstd::strlen(text)\n```\n\nđếm số phần tử trước ký tự null đầu tiên.\n\n### 16.2. Nguy cơ thiếu null terminator\n\nVí dụ:\n\n```cpp\nchar text[3]{'A', 'B', 'C'};\n```\n\nĐây là mảng gồm ba ký tự, nhưng không chứa ký tự kết thúc `'\\0'`.\n\nNó không phải C-style string được kết thúc null hợp lệ.\n\nKhông được truyền trực tiếp mảng này vào những hàm kỳ vọng chuỗi kết thúc null như `std::strlen()`.\n\nNếu làm vậy, hàm có thể tiếp tục đọc ngoài mảng để tìm `'\\0'`, dẫn đến hành vi không xác định.\n\n### 16.3. Dữ liệu nhị phân có thể chứa byte 0\n\nCần phân biệt dữ liệu văn bản kiểu C với dữ liệu nhị phân.\n\nVí dụ:\n\n```cpp\nchar data[4]{'A', '\\0', 'B', 'C'};\n```\n\nMảng có bốn phần tử.\n\nNhưng:\n\n```cpp\nstd::strlen(data)\n```\n\ntrả về `1`, vì hàm dừng ở null terminator đầu tiên.\n\nDo đó, không nên dùng `strlen()` để xác định kích thước dữ liệu nhị phân.\n\n### 16.4. Nên dùng char[] hay std::string?\n\n| Tình huống | Lựa chọn |\n|---|---|\n| Xử lý văn bản thông thường | `std::string` |\n| Chuỗi có độ dài thay đổi | `std::string` |\n| Làm việc với API C cần buffer | `char[]` hoặc buffer phù hợp |\n| Xử lý vùng byte có kích thước xác định | Container/buffer có kích thước rõ ràng |\n| Lưu chuỗi bất biến dạng view | Cân nhắc `std::string_view` |\n\nTrong các chương trình C++17 mới, nên ưu tiên `std::string` cho văn bản thông thường.\n\nMảng `char` vẫn cần thiết khi làm việc với một số API cấp thấp, giao thức hoặc những hệ thống có yêu cầu bộ nhớ cụ thể.\n\n---\n\n## 17. Truyền mảng và chuỗi vào hàm\n\nKhi chương trình phát triển, cần chia logic thành các hàm.\n\nMảng và chuỗi có cách truyền tham số khác nhau.\n\n### 17.1. Truyền std::array bằng const reference\n\nVí dụ:\n\n```cpp\n#include <array>\n#include <iostream>\n\nvoid printValues(const std::array<int, 3>& values) {\n    for (int value : values) {\n        std::cout << value << ' ';\n    }\n\n    std::cout << '\\n';\n}\n\nint main() {\n    std::array<int, 3> values{10, 20, 30};\n\n    printValues(values);\n}\n```\n\nKết quả:\n\n```text\n10 20 30\n```\n\nSử dụng:\n\n```cpp\nconst std::array<int, 3>&\n```\n\ncho phép hàm đọc mảng mà không sao chép toàn bộ đối tượng `std::array`.\n\n### 17.2. Truyền std::string bằng const reference\n\n```cpp\n#include <iostream>\n#include <string>\n\nvoid printName(const std::string& name) {\n    std::cout << name << '\\n';\n}\n\nint main() {\n    std::string name{\"Nguyen Van An\"};\n\n    printName(name);\n}\n```\n\nCách này tránh sao chép chuỗi khi hàm chỉ cần đọc.\n\n### 17.3. Mảng C có thể chuyển thành pointer\n\nXét:\n\n```cpp\nvoid printValues(const int values[], std::size_t count);\n```\n\nTrong khai báo tham số hàm, `const int values[]` được điều chỉnh thành kiểu con trỏ `const int*`.\n\nVì vậy, hàm không tự biết số phần tử của mảng gốc.\n\nMột cách triển khai:\n\n```cpp\n#include <cstddef>\n#include <iostream>\n\nvoid printValues(const int* values, std::size_t count) {\n    if (values == nullptr && count != 0) {\n        return;\n    }\n\n    for (std::size_t i = 0; i < count; ++i) {\n        std::cout << values[i] << ' ';\n    }\n\n    std::cout << '\\n';\n}\n\nint main() {\n    int numbers[3]{10, 20, 30};\n\n    printValues(numbers, 3);\n}\n```\n\nĐiều kiện an toàn của hàm không chỉ là con trỏ khác null.\n\nNếu `count > 0`, con trỏ còn phải trỏ đến một vùng chứa hợp lệ có ít nhất `count` phần tử có thể đọc.\n\n### 17.4. Không dùng sizeof(pointer) để tính số phần tử\n\nVí dụ:\n\n```cpp\nvoid process(int numbers[]) {\n    // numbers duoc dieu chinh thanh int*\n}\n```\n\nBên trong hàm, `numbers` không còn là một tham số mang kiểu mảng có kích thước đầy đủ.\n\nDo đó:\n\n```cpp\nsizeof(numbers)\n```\n\nnếu được compiler chấp nhận trong ngữ cảnh này, sẽ đo kích thước con trỏ, không phải tổng kích thước mảng ban đầu.\n\nĐể xử lý chính xác, có thể truyền thêm kích thước hoặc sử dụng container phù hợp như `std::array` và `std::vector`.\n\n---\n\n## 18. Độ phức tạp khi xử lý mảng và chuỗi\n\nKhi dữ liệu lớn, không chỉ cần viết đúng mà còn phải quan tâm đến số phép toán chương trình thực hiện.\n\nMột số độ phức tạp thường gặp:\n\n| Thao tác | Độ phức tạp điển hình |\n|---|---|\n| Truy cập phần tử theo chỉ số | `O(1)` |\n| Duyệt toàn bộ mảng n phần tử | `O(n)` |\n| Tính tổng n phần tử | `O(n)` |\n| Tìm lớn nhất bằng duyệt tuần tự | `O(n)` |\n| Tìm tuyến tính | `O(n)` |\n| Duyệt ma trận r × c | `O(r × c)` |\n| Sao chép chuỗi dài n phần tử | `O(n)` |\n| So sánh hai chuỗi | `O(min(n, m))` trong trường hợp xấu theo độ dài cần so sánh |\n| Tìm chuỗi con | Phụ thuộc thuật toán và implementation |\n\n### 18.1. Ví dụ độ phức tạp O(n)\n\n```cpp\nlong long total{};\n\nfor (int value : values) {\n    total += value;\n}\n```\n\nNếu có `n` phần tử, vòng lặp thực hiện `n` lần.\n\nDo đó, độ phức tạp thời gian là `O(n)`.\n\n### 18.2. Ví dụ độ phức tạp O(r × c)\n\n```cpp\nfor (const auto& row : grid) {\n    for (int value : row) {\n        process(value);\n    }\n}\n```\n\nGiả sử:\n\n- `r` hàng.\n- `c` cột mỗi hàng.\n- `process()` chạy trong thời gian `O(1)`.\n\nTổng số lần gọi `process()` là:\n\n\\[\nr \\times c\n\\]\n\nĐộ phức tạp:\n\n\\[\nO(r \\times c)\n\\]\n\n### 18.3. Tại sao cần quan tâm?\n\nVới mảng 10 phần tử, nhiều cách làm đều chạy nhanh.\n\nNhưng khi dữ liệu tăng đến hàng triệu phần tử, thuật toán có độ phức tạp không phù hợp có thể trở thành vấn đề lớn.\n\nĐộ phức tạp là kiến thức nền tảng trước khi học sắp xếp, tìm kiếm, prefix sum và các thuật toán tối ưu khác.\n\n---\n\n## 19. Những lỗi thường gặp\n\n### 19.1. Truy cập chỉ số vượt giới hạn\n\nSai:\n\n```cpp\nstd::array<int, 3> values{1, 2, 3};\n\nstd::cout << values[3];\n```\n\nMảng có 3 phần tử nhưng chỉ số hợp lệ là `0`, `1`, `2`.\n\nCách phòng tránh:\n\n```cpp\nif (index < values.size()) {\n    std::cout << values[index];\n}\n```\n\nVới chỉ số kiểu số nguyên có dấu, cần kiểm tra cả điều kiện không âm trước khi chuyển sang kiểu chỉ số không dấu.\n\n### 19.2. Sai điều kiện vòng lặp\n\nSai:\n\n```cpp\nfor (std::size_t i = 0; i <= values.size(); ++i) {\n    std::cout << values[i];\n}\n```\n\nĐiều kiện `<=` khiến vòng lặp truy cập đến `values[values.size()]`.\n\nCách đúng:\n\n```cpp\nfor (std::size_t i = 0; i < values.size(); ++i) {\n    std::cout << values[i];\n}\n```\n\n### 19.3. Đọc phần tử đầu của mảng rỗng\n\nSai khi mảng có thể rỗng:\n\n```cpp\nint maximum = values[0];\n```\n\nCần kiểm tra:\n\n```cpp\nif (values.empty()) {\n    // Xu ly truong hop rong\n}\n```\n\nKhông nên tự đặt giá trị lớn nhất bằng `0` nếu mảng có thể chứa toàn số âm.\n\n### 19.4. Nhầm độ dài với chỉ số cuối\n\nVới mảng có `n` phần tử:\n\n```text\nSize = n\nLast index = n - 1\n```\n\nCông thức chỉ số cuối chỉ có ý nghĩa nếu `n > 0`.\n\n### 19.5. Nhầm số byte với số ký tự Unicode\n\n```cpp\ntext.size()\n```\n\ntrả về số phần tử `char`.\n\nTrong UTF-8, kết quả này không nhất thiết bằng số ký tự hiển thị.\n\n### 19.6. Đảo ngược UTF-8 theo byte\n\n```cpp\nstd::reverse(text.begin(), text.end());\n```\n\ncó thể làm hỏng chuỗi UTF-8 chứa ký tự nhiều byte.\n\nNếu cần đảo ngược văn bản Unicode, phải xác định đơn vị đảo ngược phù hợp.\n\n### 19.7. Quên null terminator trong C-string\n\nMảng `char` không có ký tự `'\\0'` kết thúc không thể được sử dụng an toàn như C-style string với những API kỳ vọng chuỗi kết thúc null.\n\n### 19.8. Giữ reference hoặc pointer sau khi dữ liệu thay đổi\n\nVới `std::vector`, thao tác tăng kích thước có thể khiến vùng lưu trữ được cấp phát lại.\n\nKhi xảy ra reallocation, những pointer, reference và iterator cũ đến phần tử sẽ mất hiệu lực.\n\nCần kiểm tra quy tắc invalidation khi sử dụng container động.\n\n### 19.9. Dùng mảng quá lớn trong vùng lưu trữ tự động\n\nVí dụ:\n\n```cpp\nint values[10'000'000]{};\n```\n\nMột mảng cục bộ quá lớn có thể vượt giới hạn tài nguyên của môi trường thực thi, thường gặp là giới hạn stack.\n\nVới dữ liệu lớn, nên cân nhắc `std::vector` và kiểm tra giới hạn bộ nhớ của hệ thống.\n\nKhông nên mặc định mọi mảng đều an toàn chỉ vì cú pháp khai báo hợp lệ.\n\n---\n\n## 20. Ví dụ thực hành tổng hợp\n\n### Bài toán: Thống kê điểm học sinh\n\nViết chương trình:\n\n1. Nhập số lượng học sinh `n`.\n2. Nhập điểm nguyên của từng học sinh.\n3. Kiểm tra điểm nằm trong đoạn `[0, 10]`.\n4. Tính tổng điểm.\n5. Tính điểm trung bình.\n6. Xác định điểm cao nhất.\n7. Đếm số học sinh có điểm từ 5 trở lên.\n\n### 20.1. Phân tích\n\nGiả sử:\n\n\\[\n1 \\le n \\le 100000\n\\]\n\nMỗi điểm:\n\n\\[\n0 \\le score \\le 10\n\\]\n\nTổng điểm lớn nhất:\n\n\\[\n100000 \\times 10 = 1000000\n\\]\n\nCó thể sử dụng `long long` cho biến tổng để hỗ trợ mở rộng phạm vi tính toán.\n\nSử dụng `std::vector` vì số học sinh được nhập trong lúc chạy.\n\n### 20.2. Chương trình C++17\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n)) {\n        std::cerr << \"So luong khong hop le.\\n\";\n        return 1;\n    }\n\n    if (n < 1 || n > 100000) {\n        std::cerr << \"So luong vuot pham vi.\\n\";\n        return 1;\n    }\n\n    std::vector<int> scores;\n    scores.reserve(static_cast<std::size_t>(n));\n\n    for (int i = 0; i < n; ++i) {\n        int score{};\n\n        if (!(std::cin >> score)) {\n            std::cerr << \"Khong doc duoc diem.\\n\";\n            return 1;\n        }\n\n        if (score < 0 || score > 10) {\n            std::cerr << \"Diem khong hop le.\\n\";\n            return 1;\n        }\n\n        scores.push_back(score);\n    }\n\n    long long total{};\n    int maximum = scores.front();\n    int passed{};\n\n    for (int score : scores) {\n        total += score;\n\n        if (score > maximum) {\n            maximum = score;\n        }\n\n        if (score >= 5) {\n            ++passed;\n        }\n    }\n\n    const double average =\n        static_cast<double>(total) / scores.size();\n\n    std::cout << \"Tong: \" << total << '\\n';\n    std::cout << \"Trung binh: \" << average << '\\n';\n    std::cout << \"Cao nhat: \" << maximum << '\\n';\n    std::cout << \"Dat: \" << passed << '\\n';\n\n    return 0;\n}\n```\n\n### 20.3. Input\n\n```text\n5\n7 9 4 8 10\n```\n\n### 20.4. Output\n\n```text\nTong: 38\nTrung binh: 7.6\nCao nhat: 10\nDat: 4\n```\n\n### 20.5. Phân tích kết quả\n\nTổng điểm:\n\n\\[\n7 + 9 + 4 + 8 + 10 = 38\n\\]\n\nĐiểm trung bình:\n\n\\[\nAverage = \\frac{38}{5} = 7.6\n\\]\n\nĐiểm cao nhất:\n\n\\[\nMax = 10\n\\]\n\nSố học sinh đạt từ 5 điểm trở lên: `4`.\n\n### 20.6. Phân tích độ phức tạp\n\nChương trình có hai vòng lặp chính:\n\n- Nhập `n` phần tử: `O(n)`.\n- Thống kê `n` phần tử: `O(n)`.\n\nTổng thời gian:\n\n\\[\nO(n)\n\\]\n\nBộ nhớ dùng để lưu điểm:\n\n\\[\nO(n)\n\\]\n\n### 20.7. Các trường hợp cần kiểm thử\n\n| Trường hợp | Kết quả mong đợi |\n|---|---|\n| `n = 1`, điểm 10 | Xử lý thành công |\n| `n = 1`, điểm 0 | Xử lý thành công |\n| `n = 0` | Từ chối |\n| `n < 0` | Từ chối |\n| `n > 100000` | Từ chối |\n| Điểm âm | Từ chối |\n| Điểm lớn hơn 10 | Từ chối |\n| Nhập ký tự thay vì số | Từ chối |\n| Thiếu dữ liệu | Từ chối |\n| Tất cả điểm bằng 0 | Tổng và trung bình bằng 0 |\n\n**Điểm đáng chú ý:** Vì chương trình bảo đảm `n >= 1`, lời gọi `scores.front()` hợp lệ sau khi toàn bộ dữ liệu được đọc thành công.\n\nNếu bài toán cho phép `n = 0`, cần thiết kế lại cách xử lý maximum và average thay vì truy cập phần tử đầu hoặc chia cho 0.\n\n---\n\n## 21. Bài tập tự luyện\n\n### Bài 1. Tính tổng mảng\n\n**Yêu cầu:** Nhập `n` số nguyên và tính tổng các phần tử.\n\nVí dụ:\n\n```text\nInput:\n5\n1 2 3 4 5\n\nOutput:\n15\n```\n\n**Gợi ý:** Sử dụng vòng lặp và biến tích lũy `long long`.\n\n### Bài 2. Tìm phần tử lớn nhất và nhỏ nhất\n\n**Yêu cầu:** Nhập một mảng số nguyên, tìm giá trị lớn nhất và nhỏ nhất.\n\nVí dụ:\n\n```text\nInput:\n5\n7 2 9 1 4\n\nOutput:\nMax: 9\nMin: 1\n```\n\n**Gợi ý:** Khởi tạo maximum và minimum từ phần tử đầu tiên sau khi xác nhận mảng không rỗng.\n\n### Bài 3. Đếm số chẵn và số lẻ\n\n**Yêu cầu:** Nhập `n` số nguyên. Đếm số phần tử chẵn và số phần tử lẻ.\n\nVí dụ:\n\n```text\nInput:\n6\n1 2 3 4 5 6\n\nOutput:\nChan: 3\nLe: 3\n```\n\n**Gợi ý:** Sử dụng toán tử `%`.\n\n### Bài 4. Đảo ngược mảng\n\n**Yêu cầu:** Nhập một mảng và in các phần tử theo thứ tự ngược lại.\n\nVí dụ:\n\n```text\nInput:\n5\n1 2 3 4 5\n\nOutput:\n5 4 3 2 1\n```\n\n**Gợi ý:** Có thể duyệt ngược bằng chỉ số hoặc sử dụng `std::reverse()`.\n\nChú ý khi giảm chỉ số có kiểu không dấu.\n\n### Bài 5. Tổng đường chéo chính\n\n**Yêu cầu:** Nhập ma trận vuông kích thước `n × n`, tính tổng các phần tử trên đường chéo chính.\n\nVí dụ:\n\n```text\nInput:\n3\n1 2 3\n4 5 6\n7 8 9\n\nOutput:\n15\n```\n\n**Gợi ý:** Chỉ lấy phần tử có chỉ số hàng bằng chỉ số cột.\n\n### Bài 6. Tìm giá trị lớn nhất trong ma trận\n\n**Yêu cầu:** Nhập ma trận có `r` hàng và `c` cột, tìm phần tử lớn nhất.\n\nVí dụ:\n\n```text\nInput:\n2 3\n1 9 3\n4 5 6\n\nOutput:\n9\n```\n\n**Yêu cầu bổ sung:** Xác định rõ hành vi khi `r = 0` hoặc `c = 0`, không truy cập phần tử đầu của ma trận rỗng.\n\n### Bài 7. Đếm ký tự trong chuỗi\n\n**Yêu cầu:** Nhập một dòng văn bản ASCII và một ký tự, đếm số lần ký tự đó xuất hiện.\n\nVí dụ:\n\n```text\nInput:\nbanana\na\n\nOutput:\n3\n```\n\n**Gợi ý:** Sử dụng `std::getline()` và vòng lặp.\n\n### Bài 8. Kiểm tra chuỗi đối xứng\n\nMột chuỗi đối xứng (palindrome) là chuỗi đọc từ trái sang phải và từ phải sang trái giống nhau.\n\nVí dụ:\n\n```text\nmadam\nlevel\nradar\n```\n\n**Yêu cầu:** Viết chương trình kiểm tra chuỗi ASCII đầu vào có đối xứng hay không.\n\nVí dụ:\n\n```text\nInput:\nlevel\n\nOutput:\nYES\n```\n\n**Gợi ý:** So sánh hai đầu chuỗi và di chuyển dần vào giữa.\n\nKhông cần tạo bản sao chuỗi nếu sử dụng hai chỉ số.\n\n### Bài 9. Tìm phần tử xuất hiện nhiều nhất\n\n**Yêu cầu:** Nhập một mảng số nguyên, tìm giá trị xuất hiện nhiều lần nhất.\n\nVí dụ:\n\n```text\nInput:\n7\n1 2 2 3 3 3 4\n\nOutput:\n3\n```\n\n**Gợi ý:** Có thể bắt đầu bằng cách sắp xếp mảng rồi đếm các nhóm giá trị liên tiếp.\n\nNếu nhiều giá trị có cùng tần suất cao nhất, cần quy định rõ cách lựa chọn kết quả.\n\n---\n\n## 22. Tổng kết kiến thức\n\n| Thành phần | Vai trò |\n|---|---|\n| `T array[N]` | Mảng C có kích thước cố định |\n| `std::array<T, N>` | Container mảng cố định |\n| `std::vector<T>` | Container mảng động |\n| `array[index]` | Truy cập phần tử theo chỉ số |\n| `array.at(index)` | Truy cập có kiểm tra phạm vi |\n| `size()` | Lấy số phần tử |\n| `empty()` | Kiểm tra container rỗng |\n| `front()` | Truy cập phần tử đầu |\n| `back()` | Truy cập phần tử cuối |\n| Range-based `for` | Duyệt tập hợp |\n| `std::string` | Chuỗi gồm các phần tử `char` |\n| `std::getline()` | Đọc một dòng |\n| `find()` | Tìm chuỗi con |\n| `substr()` | Tạo chuỗi con |\n| `std::string::npos` | Biểu thị không tìm thấy |\n| `char[]` | Mảng ký tự |\n| `'\\0'` | Ký tự kết thúc C-string |\n| `std::strlen()` | Đếm phần tử trước null terminator |\n\nSau bài học này, bạn cần nắm được:\n\n1. **Mảng lưu nhiều phần tử cùng kiểu.** Mỗi phần tử được truy cập thông qua chỉ số.\n2. **Chỉ số hợp lệ bắt đầu từ 0.** Với `n` phần tử, phạm vi thông thường là `[0, n - 1]`.\n3. **std::array phù hợp với kích thước cố định.** Khi kích thước thay đổi trong runtime, có thể sử dụng `std::vector`.\n4. **Mảng hai chiều biểu diễn dữ liệu dạng hàng và cột.** Mỗi chiều cần được kiểm tra giới hạn riêng.\n5. **std::string cung cấp các thao tác chuỗi thuận tiện.** Không cần tự quản lý null terminator khi thực hiện các thao tác chuỗi thông thường.\n6. **size() không nhất thiết bằng số ký tự Unicode hiển thị.** Với văn bản UTF-8, cần phân biệt byte, code point và grapheme.\n7. **Không truy cập phần tử ngoài phạm vi.** Những lỗi này có thể gây undefined behavior.\n8. **Không đọc phần tử đầu của container rỗng.** Cần kiểm tra điều kiện trước khi truy cập.\n9. **Cần hiểu độ phức tạp khi xử lý dữ liệu lớn.** Duyệt một chiều thường có `O(n)`, còn ma trận hai chiều có `O(r × c)` nếu xử lý mỗi phần tử trong thời gian hằng số.\n\n**Nguyên tắc quan trọng nhất:** Chọn cấu trúc dữ liệu theo yêu cầu thực tế, giữ phạm vi truy cập hợp lệ và không giả định chương trình an toàn chỉ vì nó biên dịch thành công.\n\n---\n\n## Đọc tiếp\n\n- [Hàm và phạm vi biến](/cpp/bat-dau/ham-pham-vi): Tổ chức logic xử lý mảng và chuỗi thành các hàm.\n- [References và pointers](/cpp/bat-dau/references-pointers): Hiểu cách truyền mảng, tham chiếu và truy cập dữ liệu gián tiếp.\n- [Vector, struct và enum](/cpp/trung-cap/vector-struct-enum): Làm việc với container động và các kiểu dữ liệu do lập trình viên định nghĩa.\n- [Prefix Sum và Difference Array](/cpp/thuat-toan/prefix-sum-difference-array): Tối ưu các bài toán tính tổng trên đoạn và cập nhật dữ liệu.\n- [Sequence Containers](/cpp/stl/sequence-containers): Tìm hiểu sâu hơn về những container tuần tự trong thư viện chuẩn C++.",
     "sourcePath": "content/cpp/getting-started/mang-string.md",
     "headings": [
       {
-        "title": "Mảng một chiều",
-        "id": "mang-mot-chieu"
+        "title": "Mảng và chuỗi trong C++",
+        "id": "mang-va-chuoi-trong-c"
       },
       {
-        "title": "Mảng hai chiều",
-        "id": "mang-hai-chieu"
+        "title": "1. Mảng là gì?",
+        "id": "1-mang-la-gi"
       },
       {
-        "title": "`std::string`",
-        "id": "stdstring"
+        "title": "1.1. Tại sao cần sử dụng mảng?",
+        "id": "11-tai-sao-can-su-dung-mang"
       },
       {
-        "title": "Mảng `char` và lỗi thường gặp",
-        "id": "mang-char-va-loi-thuong-gap"
+        "title": "1.2. Đặc điểm của mảng",
+        "id": "12-ac-iem-cua-mang"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "2. Khai báo mảng một chiều",
+        "id": "2-khai-bao-mang-mot-chieu"
+      },
+      {
+        "title": "2.1. Mảng truyền thống",
+        "id": "21-mang-truyen-thong"
+      },
+      {
+        "title": "2.2. Khởi tạo mảng",
+        "id": "22-khoi-tao-mang"
+      },
+      {
+        "title": "2.3. Mảng có kích thước cố định",
+        "id": "23-mang-co-kich-thuoc-co-inh"
+      },
+      {
+        "title": "3. std::array trong C++17",
+        "id": "3-stdarray-trong-c17"
+      },
+      {
+        "title": "3.1. Ví dụ hoàn chỉnh",
+        "id": "31-vi-du-hoan-chinh"
+      },
+      {
+        "title": "3.2. Tại sao nên sử dụng std::array?",
+        "id": "32-tai-sao-nen-su-dung-stdarray"
+      },
+      {
+        "title": "3.3. Kích thước không thay đổi",
+        "id": "33-kich-thuoc-khong-thay-oi"
+      },
+      {
+        "title": "4. Chỉ số và truy cập phần tử",
+        "id": "4-chi-so-va-truy-cap-phan-tu"
+      },
+      {
+        "title": "4.1. Chỉ số bắt đầu từ 0",
+        "id": "41-chi-so-bat-au-tu-0"
+      },
+      {
+        "title": "4.2. Thay đổi phần tử",
+        "id": "42-thay-oi-phan-tu"
+      },
+      {
+        "title": "4.3. Truy cập ngoài phạm vi",
+        "id": "43-truy-cap-ngoai-pham-vi"
+      },
+      {
+        "title": "4.4. Truy cập bằng at()",
+        "id": "44-truy-cap-bang-at"
+      },
+      {
+        "title": "4.5. Mảng rỗng",
+        "id": "45-mang-rong"
+      },
+      {
+        "title": "5. Duyệt mảng một chiều",
+        "id": "5-duyet-mang-mot-chieu"
+      },
+      {
+        "title": "5.1. Vòng lặp for",
+        "id": "51-vong-lap-for"
+      },
+      {
+        "title": "5.2. Range-based for",
+        "id": "52-range-based-for"
+      },
+      {
+        "title": "5.3. Duyệt bằng reference",
+        "id": "53-duyet-bang-reference"
+      },
+      {
+        "title": "6. Các bài toán cơ bản với mảng",
+        "id": "6-cac-bai-toan-co-ban-voi-mang"
+      },
+      {
+        "title": "6.1. Tính tổng phần tử",
+        "id": "61-tinh-tong-phan-tu"
+      },
+      {
+        "title": "6.2. Tính trung bình cộng",
+        "id": "62-tinh-trung-binh-cong"
+      },
+      {
+        "title": "6.3. Tìm giá trị lớn nhất",
+        "id": "63-tim-gia-tri-lon-nhat"
+      },
+      {
+        "title": "6.4. Đếm số phần tử thỏa điều kiện",
+        "id": "64-em-so-phan-tu-thoa-ieu-kien"
+      },
+      {
+        "title": "7. Mảng hai chiều",
+        "id": "7-mang-hai-chieu"
+      },
+      {
+        "title": "7.1. Khai báo mảng hai chiều",
+        "id": "71-khai-bao-mang-hai-chieu"
+      },
+      {
+        "title": "7.2. Truy cập phần tử",
+        "id": "72-truy-cap-phan-tu"
+      },
+      {
+        "title": "7.3. Bảng chỉ số",
+        "id": "73-bang-chi-so"
+      },
+      {
+        "title": "8. Duyệt mảng hai chiều",
+        "id": "8-duyet-mang-hai-chieu"
+      },
+      {
+        "title": "8.1. Vòng lặp lồng nhau",
+        "id": "81-vong-lap-long-nhau"
+      },
+      {
+        "title": "8.2. std::array hai chiều",
+        "id": "82-stdarray-hai-chieu"
+      },
+      {
+        "title": "8.3. Tính tổng tất cả phần tử",
+        "id": "83-tinh-tong-tat-ca-phan-tu"
+      },
+      {
+        "title": "8.4. Ma trận vuông và đường chéo chính",
+        "id": "84-ma-tran-vuong-va-uong-cheo-chinh"
+      },
+      {
+        "title": "9. Mảng có kích thước linh hoạt",
+        "id": "9-mang-co-kich-thuoc-linh-hoat"
+      },
+      {
+        "title": "9.1. Giới thiệu std::vector",
+        "id": "91-gioi-thieu-stdvector"
+      },
+      {
+        "title": "9.2. So sánh array và vector",
+        "id": "92-so-sanh-array-va-vector"
+      },
+      {
+        "title": "10. Chuỗi trong C++ là gì?",
+        "id": "10-chuoi-trong-c-la-gi"
+      },
+      {
+        "title": "10.1. Khai báo chuỗi",
+        "id": "101-khai-bao-chuoi"
+      },
+      {
+        "title": "10.2. Ví dụ hoàn chỉnh",
+        "id": "102-vi-du-hoan-chinh"
+      },
+      {
+        "title": "10.3. Vì sao sử dụng std::string?",
+        "id": "103-vi-sao-su-dung-stdstring"
+      },
+      {
+        "title": "11. Các thao tác cơ bản với std::string",
+        "id": "11-cac-thao-tac-co-ban-voi-stdstring"
+      },
+      {
+        "title": "11.1. Nối chuỗi",
+        "id": "111-noi-chuoi"
+      },
+      {
+        "title": "11.2. Độ dài chuỗi",
+        "id": "112-o-dai-chuoi"
+      },
+      {
+        "title": "11.3. Truy cập ký tự theo chỉ số",
+        "id": "113-truy-cap-ky-tu-theo-chi-so"
+      },
+      {
+        "title": "11.4. Thay đổi ký tự",
+        "id": "114-thay-oi-ky-tu"
+      },
+      {
+        "title": "11.5. Truy cập bằng at()",
+        "id": "115-truy-cap-bang-at"
+      },
+      {
+        "title": "12. Đọc chuỗi từ bàn phím",
+        "id": "12-oc-chuoi-tu-ban-phim"
+      },
+      {
+        "title": "12.1. Nhập bằng cin",
+        "id": "121-nhap-bang-cin"
+      },
+      {
+        "title": "12.2. Nhập cả dòng bằng getline",
+        "id": "122-nhap-ca-dong-bang-getline"
+      },
+      {
+        "title": "12.3. Kết hợp cin và getline",
+        "id": "123-ket-hop-cin-va-getline"
+      },
+      {
+        "title": "13. Tìm kiếm và cắt chuỗi",
+        "id": "13-tim-kiem-va-cat-chuoi"
+      },
+      {
+        "title": "13.1. Tìm chuỗi con với find()",
+        "id": "131-tim-chuoi-con-voi-find"
+      },
+      {
+        "title": "13.2. Cắt chuỗi với substr()",
+        "id": "132-cat-chuoi-voi-substr"
+      },
+      {
+        "title": "13.3. So sánh chuỗi",
+        "id": "133-so-sanh-chuoi"
+      },
+      {
+        "title": "13.4. Những hàm thường gặp",
+        "id": "134-nhung-ham-thuong-gap"
+      },
+      {
+        "title": "14. Duyệt và xử lý ký tự trong chuỗi",
+        "id": "14-duyet-va-xu-ly-ky-tu-trong-chuoi"
+      },
+      {
+        "title": "14.1. Duyệt từng phần tử",
+        "id": "141-duyet-tung-phan-tu"
+      },
+      {
+        "title": "14.2. Đếm ký tự cụ thể",
+        "id": "142-em-ky-tu-cu-the"
+      },
+      {
+        "title": "14.3. Đảo ngược chuỗi",
+        "id": "143-ao-nguoc-chuoi"
+      },
+      {
+        "title": "15. Chuỗi, byte và Unicode",
+        "id": "15-chuoi-byte-va-unicode"
+      },
+      {
+        "title": "15.1. std::string lưu gì?",
+        "id": "151-stdstring-luu-gi"
+      },
+      {
+        "title": "15.2. size() không phải lúc nào cũng là số ký tự",
+        "id": "152-size-khong-phai-luc-nao-cung-la-so-ky-tu"
+      },
+      {
+        "title": "15.3. Một ký tự Unicode có thể gồm nhiều code point",
+        "id": "153-mot-ky-tu-unicode-co-the-gom-nhieu-code-point"
+      },
+      {
+        "title": "16. Mảng char và chuỗi kiểu C",
+        "id": "16-mang-char-va-chuoi-kieu-c"
+      },
+      {
+        "title": "16.1. Kích thước và độ dài khác nhau",
+        "id": "161-kich-thuoc-va-o-dai-khac-nhau"
+      },
+      {
+        "title": "16.2. Nguy cơ thiếu null terminator",
+        "id": "162-nguy-co-thieu-null-terminator"
+      },
+      {
+        "title": "16.3. Dữ liệu nhị phân có thể chứa byte 0",
+        "id": "163-du-lieu-nhi-phan-co-the-chua-byte-0"
+      },
+      {
+        "title": "16.4. Nên dùng char[] hay std::string?",
+        "id": "164-nen-dung-char-hay-stdstring"
+      },
+      {
+        "title": "17. Truyền mảng và chuỗi vào hàm",
+        "id": "17-truyen-mang-va-chuoi-vao-ham"
+      },
+      {
+        "title": "17.1. Truyền std::array bằng const reference",
+        "id": "171-truyen-stdarray-bang-const-reference"
+      },
+      {
+        "title": "17.2. Truyền std::string bằng const reference",
+        "id": "172-truyen-stdstring-bang-const-reference"
+      },
+      {
+        "title": "17.3. Mảng C có thể chuyển thành pointer",
+        "id": "173-mang-c-co-the-chuyen-thanh-pointer"
+      },
+      {
+        "title": "17.4. Không dùng sizeof(pointer) để tính số phần tử",
+        "id": "174-khong-dung-sizeofpointer-e-tinh-so-phan-tu"
+      },
+      {
+        "title": "18. Độ phức tạp khi xử lý mảng và chuỗi",
+        "id": "18-o-phuc-tap-khi-xu-ly-mang-va-chuoi"
+      },
+      {
+        "title": "18.1. Ví dụ độ phức tạp O(n)",
+        "id": "181-vi-du-o-phuc-tap-on"
+      },
+      {
+        "title": "18.2. Ví dụ độ phức tạp O(r × c)",
+        "id": "182-vi-du-o-phuc-tap-or-c"
+      },
+      {
+        "title": "18.3. Tại sao cần quan tâm?",
+        "id": "183-tai-sao-can-quan-tam"
+      },
+      {
+        "title": "19. Những lỗi thường gặp",
+        "id": "19-nhung-loi-thuong-gap"
+      },
+      {
+        "title": "19.1. Truy cập chỉ số vượt giới hạn",
+        "id": "191-truy-cap-chi-so-vuot-gioi-han"
+      },
+      {
+        "title": "19.2. Sai điều kiện vòng lặp",
+        "id": "192-sai-ieu-kien-vong-lap"
+      },
+      {
+        "title": "19.3. Đọc phần tử đầu của mảng rỗng",
+        "id": "193-oc-phan-tu-au-cua-mang-rong"
+      },
+      {
+        "title": "19.4. Nhầm độ dài với chỉ số cuối",
+        "id": "194-nham-o-dai-voi-chi-so-cuoi"
+      },
+      {
+        "title": "19.5. Nhầm số byte với số ký tự Unicode",
+        "id": "195-nham-so-byte-voi-so-ky-tu-unicode"
+      },
+      {
+        "title": "19.6. Đảo ngược UTF-8 theo byte",
+        "id": "196-ao-nguoc-utf-8-theo-byte"
+      },
+      {
+        "title": "19.7. Quên null terminator trong C-string",
+        "id": "197-quen-null-terminator-trong-c-string"
+      },
+      {
+        "title": "19.8. Giữ reference hoặc pointer sau khi dữ liệu thay đổi",
+        "id": "198-giu-reference-hoac-pointer-sau-khi-du-lieu-thay-oi"
+      },
+      {
+        "title": "19.9. Dùng mảng quá lớn trong vùng lưu trữ tự động",
+        "id": "199-dung-mang-qua-lon-trong-vung-luu-tru-tu-ong"
+      },
+      {
+        "title": "20. Ví dụ thực hành tổng hợp",
+        "id": "20-vi-du-thuc-hanh-tong-hop"
+      },
+      {
+        "title": "Bài toán: Thống kê điểm học sinh",
+        "id": "bai-toan-thong-ke-iem-hoc-sinh"
+      },
+      {
+        "title": "20.1. Phân tích",
+        "id": "201-phan-tich"
+      },
+      {
+        "title": "20.2. Chương trình C++17",
+        "id": "202-chuong-trinh-c17"
+      },
+      {
+        "title": "20.3. Input",
+        "id": "203-input"
+      },
+      {
+        "title": "20.4. Output",
+        "id": "204-output"
+      },
+      {
+        "title": "20.5. Phân tích kết quả",
+        "id": "205-phan-tich-ket-qua"
+      },
+      {
+        "title": "20.6. Phân tích độ phức tạp",
+        "id": "206-phan-tich-o-phuc-tap"
+      },
+      {
+        "title": "20.7. Các trường hợp cần kiểm thử",
+        "id": "207-cac-truong-hop-can-kiem-thu"
+      },
+      {
+        "title": "21. Bài tập tự luyện",
+        "id": "21-bai-tap-tu-luyen"
+      },
+      {
+        "title": "Bài 1. Tính tổng mảng",
+        "id": "bai-1-tinh-tong-mang"
+      },
+      {
+        "title": "Bài 2. Tìm phần tử lớn nhất và nhỏ nhất",
+        "id": "bai-2-tim-phan-tu-lon-nhat-va-nho-nhat"
+      },
+      {
+        "title": "Bài 3. Đếm số chẵn và số lẻ",
+        "id": "bai-3-em-so-chan-va-so-le"
+      },
+      {
+        "title": "Bài 4. Đảo ngược mảng",
+        "id": "bai-4-ao-nguoc-mang"
+      },
+      {
+        "title": "Bài 5. Tổng đường chéo chính",
+        "id": "bai-5-tong-uong-cheo-chinh"
+      },
+      {
+        "title": "Bài 6. Tìm giá trị lớn nhất trong ma trận",
+        "id": "bai-6-tim-gia-tri-lon-nhat-trong-ma-tran"
+      },
+      {
+        "title": "Bài 7. Đếm ký tự trong chuỗi",
+        "id": "bai-7-em-ky-tu-trong-chuoi"
+      },
+      {
+        "title": "Bài 8. Kiểm tra chuỗi đối xứng",
+        "id": "bai-8-kiem-tra-chuoi-oi-xung"
+      },
+      {
+        "title": "Bài 9. Tìm phần tử xuất hiện nhiều nhất",
+        "id": "bai-9-tim-phan-tu-xuat-hien-nhieu-nhat"
+      },
+      {
+        "title": "22. Tổng kết kiến thức",
+        "id": "22-tong-ket-kien-thuc"
       },
       {
         "title": "Đọc tiếp",
@@ -5269,8 +6811,8 @@ export const articles = [
     ]
   },
   {
-    "title": "References và pointers cơ bản",
-    "description": "Phân biệt truyền giá trị, reference và pointer, đồng thời tránh truy cập object hết vòng đời.",
+    "title": "References và pointers cơ bản trong C++",
+    "description": "Hướng dẫn tham chiếu, con trỏ, địa chỉ bộ nhớ, truyền tham số, const correctness và cách tránh dangling pointer, dangling reference trong C++17.",
     "slug": "/cpp/bat-dau/references-pointers",
     "category": "fundamentals",
     "categoryLabel": "C++ căn bản",
@@ -5278,13 +6820,18 @@ export const articles = [
     "difficulty": "beginner",
     "keywords": [
       "reference C++",
-      "pointer",
+      "pointer C++",
       "address",
       "nullptr",
       "dereference",
-      "dangling"
+      "const reference",
+      "pass by value",
+      "pass by reference",
+      "dangling pointer",
+      "dangling reference",
+      "lifetime"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-21",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -5296,28 +6843,428 @@ export const articles = [
     ],
     "featured": false,
     "priority": 20090,
-    "body": "Reference và pointer cho phép truy cập một object thông qua tên hoặc địa chỉ thay vì tạo bản sao. Dùng chúng khi cần truyền object lớn, biểu diễn optional link hoặc làm việc với API; phải đảm bảo object còn sống.\n\n## Reference\n\n```cpp\n#include <iostream>\n\nvoid add_bonus(int& score) {\n    score += 5;\n}\n\nvoid print_score(const int& score) {\n    std::cout << score << '\\n';\n}\n\nint main() {\n    int score{10};\n    add_bonus(score);\n    print_score(score);\n}\n```\n\n`T&` là lvalue reference; `const T&` cho phép đọc mà không sao chép. Reference phải được khởi tạo khi khai báo và không thể đổi sang trỏ object khác. Không có null reference hợp lệ.\n\n## Pointer\n\n```cpp\n#include <iostream>\n\nint main() {\nint score{10};\nint* pointer{&score};\n*pointer = 12;\n\nint* optional_score{nullptr};\nif (optional_score != nullptr) {\n    std::cout << *optional_score;\n}\n    std::cout << ' ' << score << '\\n';\n}\n```\n\n`&score` lấy địa chỉ, `*pointer` dereference. Pointer có thể là `nullptr` hoặc trỏ sai/hết hạn; chỉ dereference khi chắc chắn nó trỏ tới object còn sống.\n\n## Chọn cách truyền\n\n- Kiểu nhỏ như `int`, `bool`: truyền theo giá trị thường đơn giản nhất.\n- Object lớn, chỉ đọc: `const T&`.\n- Object phải sửa: `T&`.\n- Có thể không có object hoặc API dùng sentinel: `T*`, kiểm tra null.\n- Ownership động: ưu tiên smart pointer ở [RAII](/cpp/stl/raii-smart-pointers), không tự quản lý `new`/`delete` nếu không cần.\n\n## Lỗi thường gặp\n\n- Trả pointer/reference tới biến local đã bị hủy.\n- Dereference `nullptr`.\n- Dùng pointer sau khi vùng chứa `std::vector` reallocate; địa chỉ cũ có thể mất hiệu lực.\n- Sửa object qua pointer/reference khi hợp đồng hàm chỉ nên đọc; dùng `const`.\n\n## Tự luyện\n\nViết hàm đổi chỗ hai số bằng `int&`. Viết thêm hàm nhận `const std::string&` và trả về độ dài chuỗi, không tạo bản sao.\n\n## Đọc tiếp\n\nTìm hiểu [stack, heap và lifetime](/cpp/trung-cap/stack-heap-lifetime), rồi học [smart pointers](/cpp/stl/raii-smart-pointers).",
+    "body": "# References và pointers cơ bản trong C++\n\nKhi lập trình C++, chúng ta thường truyền dữ liệu giữa các hàm, thay đổi giá trị của biến hoặc làm việc trực tiếp với các đối tượng đã tồn tại.\n\nMột cách đơn giản là tạo bản sao dữ liệu. Tuy nhiên, không phải lúc nào sao chép cũng cần thiết hoặc phù hợp.\n\nC++ cung cấp hai cơ chế quan trọng:\n\n- **Reference (tham chiếu):** Cho phép sử dụng một tên khác để truy cập đối tượng đã tồn tại.\n- **Pointer (con trỏ):** Là một giá trị có thể chứa địa chỉ của đối tượng hoặc hàm, hoặc biểu diễn trạng thái không trỏ đến đối tượng nào.\n\nHai cơ chế này được sử dụng rộng rãi trong hàm, cấu trúc dữ liệu, thư viện chuẩn và các hệ thống phần mềm.\n\nTuy nhiên, sử dụng sai reference hoặc pointer có thể gây ra những lỗi khó phát hiện như truy cập bộ nhớ không hợp lệ, dangling reference hoặc undefined behavior.\n\nBài học này giúp bạn hiểu:\n\n1. Địa chỉ bộ nhớ và đối tượng trong C++.\n2. Sự khác biệt giữa truyền giá trị và truyền tham chiếu.\n3. Cách khai báo và sử dụng reference.\n4. Cách khai báo và sử dụng pointer.\n5. Vai trò của `const` và `nullptr`.\n6. Phạm vi, thời gian sống và nguy cơ dangling.\n7. Cách lựa chọn phương thức truyền tham số phù hợp.\n8. Những lỗi thường gặp và cách phòng tránh.\n\n**Tiêu chuẩn sử dụng:** C++17.\n\n---\n\n## 1. Đối tượng và địa chỉ bộ nhớ\n\n### 1.1. Đối tượng trong C++\n\nKhi khai báo:\n\n```cpp\nint score{10};\n```\n\nChương trình tạo một đối tượng có kiểu `int`, được truy cập thông qua tên `score`.\n\nĐối tượng này có:\n\n- Kiểu dữ liệu là `int`.\n- Giá trị hiện tại là `10`.\n- Vị trí lưu trữ theo cách triển khai của chương trình.\n- Thời gian sống được xác định bởi các quy tắc C++.\n\nTrong những tình huống thông thường, một đối tượng có địa chỉ bộ nhớ mà chương trình có thể lấy bằng toán tử `&`.\n\n### 1.2. Toán tử lấy địa chỉ (&)\n\nSử dụng toán tử `&` để lấy địa chỉ của biến:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int score{10};\n\n    std::cout << score << '\\n';\n    std::cout << &score << '\\n';\n\n    return 0;\n}\n```\n\nVí dụ kết quả:\n\n```text\n10\n0x7ffd4a3b1c2c\n```\n\nĐịa chỉ hiển thị chỉ mang tính minh họa.\n\nĐịa chỉ thực tế có thể khác giữa các lần chạy, hệ điều hành, compiler và môi trường thực thi.\n\n**Phân biệt:**\n\n```cpp\nscore\n```\n\nBiểu thức dùng để truy cập giá trị của đối tượng `score`.\n\n```cpp\n&score\n```\n\nBiểu thức lấy địa chỉ của đối tượng `score`.\n\nToán tử `&` trong ngữ cảnh này là *address-of operator*.\n\nKhông nhầm với dấu `&` dùng trong khai báo reference hoặc toán tử bitwise AND.\n\n### 1.3. Minh họa mối quan hệ\n\nGiả sử biến `score` được lưu tại một địa chỉ:\n\n```text\nVariable: score\nType:     int\nValue:    10\nAddress:  0x1000\n```\n\nMột pointer có thể lưu địa chỉ đó:\n\n```text\nscore\n+----------+\n|    10    |  Address: 0x1000\n+----------+\n     ^\n     |\n     |\npointer\n+----------+\n|  0x1000  |\n+----------+\n```\n\nSơ đồ chỉ minh họa quan hệ giữa pointer và đối tượng. Nó không mô tả bố cục bộ nhớ thực tế của mọi hệ thống.\n\nĐiều quan trọng là: **Địa chỉ không phải giá trị của đối tượng.**\n\n---\n\n## 2. Truyền tham số theo giá trị\n\nTrước khi tìm hiểu reference và pointer, cần hiểu cơ chế truyền tham số thông thường.\n\n### 2.1. Pass by value\n\nKhi truyền tham số bằng giá trị (*pass by value*), tham số của hàm được khởi tạo từ đối số được truyền vào.\n\nVới các kiểu dữ liệu cơ bản như `int`, có thể hiểu đơn giản rằng hàm nhận một bản sao của giá trị.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nvoid addBonus(int score) {\n    score += 5;\n}\n\nint main() {\n    int score{10};\n\n    addBonus(score);\n\n    std::cout << score << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n10\n```\n\n**Tại sao giá trị không thay đổi?**\n\nHàm `addBonus()` nhận một biến tham số riêng:\n\n```cpp\nvoid addBonus(int score)\n```\n\nKhi gọi:\n\n```cpp\naddBonus(score);\n```\n\nGiá trị `10` được truyền vào tham số `score` của hàm.\n\nSau đó:\n\n```cpp\nscore += 5;\n```\n\nchỉ thay đổi tham số bên trong hàm.\n\nBiến `score` trong `main()` vẫn có giá trị `10`.\n\n### 2.2. Minh họa truyền giá trị\n\n```text\nmain()\n  score = 10\n      |\n      | Truyen gia tri\n      v\naddBonus()\n  score = 10\n  score += 5\n  score = 15\n\nKet thuc ham\n\nmain()\n  score = 10\n```\n\nHai biến không phải cùng một đối tượng.\n\n### 2.3. Khi nào nên truyền giá trị?\n\nPass by value thường phù hợp với các kiểu nhỏ:\n\n```cpp\nint\nbool\nchar\ndouble\n```\n\nVí dụ:\n\n```cpp\nint square(int number) {\n    return number * number;\n}\n```\n\nĐối với các đối tượng lớn như `std::string` hoặc `std::vector`, việc sao chép có thể tốn thêm tài nguyên.\n\nTuy nhiên, truyền giá trị không phải lúc nào cũng chậm. Một số kiểu được tối ưu tốt, và việc truyền giá trị có thể là lựa chọn phù hợp khi hàm cần sở hữu bản sao hoặc thay đổi dữ liệu độc lập.\n\n---\n\n## 3. Reference là gì?\n\nReference (tham chiếu) cho phép một tên được liên kết với một đối tượng đã tồn tại.\n\nTrong phần cơ bản, chúng ta tập trung vào **lvalue reference**, được khai báo bằng `T&`.\n\n### 3.1. Khai báo reference\n\nCú pháp:\n\n```cpp\nType& name = object;\n```\n\nVí dụ:\n\n```cpp\nint score{10};\n\nint& ref = score;\n```\n\nTrong đó:\n\n- `score` là biến gốc.\n- `ref` là reference được liên kết với `score`.\n- `int&` là kiểu tham chiếu đến `int`.\n\nReference không tạo ra một đối tượng `int` thứ hai.\n\nNó cho phép truy cập chính đối tượng `score`.\n\n### 3.2. Thay đổi giá trị qua reference\n\n```cpp\n#include <iostream>\n\nint main() {\n    int score{10};\n\n    int& ref = score;\n\n    ref = 20;\n\n    std::cout << score << '\\n';\n    std::cout << ref << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n20\n20\n```\n\nKhi thực hiện:\n\n```cpp\nref = 20;\n```\n\nC++ gán giá trị `20` cho đối tượng mà `ref` đang tham chiếu.\n\nVì `ref` liên kết với `score`, giá trị của `score` cũng thay đổi.\n\n### 3.3. Minh họa reference\n\n```text\nscore ─────┐\n           v\n        +------+\n        |  10  |\n        +------+\n           ^\nref ───────┘\n```\n\nCả `score` và `ref` đều cho phép truy cập cùng một đối tượng.\n\nKhông nên hiểu sơ đồ này là reference bắt buộc được lưu bằng một con trỏ trong bộ nhớ. C++ không quy định reference phải có một cấu trúc lưu trữ cụ thể.\n\n### 3.4. Reference phải được khởi tạo\n\nVí dụ không hợp lệ:\n\n```cpp\nint& ref;\n```\n\nMột lvalue reference thông thường phải được liên kết với đối tượng hoặc thực thể phù hợp ngay khi khởi tạo.\n\nCách đúng:\n\n```cpp\nint value{10};\n\nint& ref = value;\n```\n\n### 3.5. Reference không thể được liên kết lại\n\nXét:\n\n```cpp\nint a{10};\nint b{20};\n\nint& ref = a;\n```\n\nSau đó:\n\n```cpp\nref = b;\n```\n\nCâu lệnh này **không chuyển reference sang tham chiếu biến `b`**.\n\nNó thực hiện phép gán giá trị của `b` cho `a`.\n\nKết quả:\n\n```text\na = 20\nb = 20\n```\n\n`ref` vẫn tham chiếu đến `a`.\n\nĐây là một trong những khác biệt quan trọng giữa reference và pointer.\n\n---\n\n## 4. Truyền tham số bằng reference\n\n### 4.1. Pass by reference\n\nTruyền tham số bằng reference cho phép hàm thao tác trên đối tượng được truyền vào mà không cần tạo bản sao đối tượng đó.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nvoid addBonus(int& score) {\n    score += 5;\n}\n\nint main() {\n    int score{10};\n\n    addBonus(score);\n\n    std::cout << score << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n15\n```\n\nHàm:\n\n```cpp\nvoid addBonus(int& score)\n```\n\nnhận một reference đến đối tượng do người gọi cung cấp.\n\nVì vậy:\n\n```cpp\nscore += 5;\n```\n\nthay đổi trực tiếp biến `score` trong `main()`.\n\n### 4.2. So sánh pass by value và pass by reference\n\n| Đặc điểm | Pass by value | Pass by reference |\n|---|---|---|\n| Tham số là đối tượng riêng | Có | Không, tham số là tham chiếu |\n| Có thể thay đổi biến gốc qua tham số | Không | Có, với reference không const |\n| Phải sao chép đối tượng | Theo ngữ nghĩa truyền giá trị, có thể được tối ưu | Không |\n| Phù hợp với kiểu nhỏ | Rất tốt | Tùy mục đích |\n| Phù hợp khi cần sửa đối tượng gốc | Không | Có |\n\nVí dụ hai hàm:\n\n```cpp\nvoid updateValue(int value) {\n    value = 100;\n}\n\nvoid updateReference(int& value) {\n    value = 100;\n}\n```\n\nTrong trường hợp cần sửa trực tiếp biến của người gọi, `updateReference()` thể hiện mục đích rõ ràng hơn.\n\n### 4.3. Ví dụ đổi chỗ hai số\n\nMột ứng dụng phổ biến của reference là hoán đổi giá trị.\n\n```cpp\n#include <iostream>\n\nvoid swapValues(int& a, int& b) {\n    int temp{a};\n\n    a = b;\n    b = temp;\n}\n\nint main() {\n    int x{10};\n    int y{20};\n\n    swapValues(x, y);\n\n    std::cout << x << ' ' << y << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n20 10\n```\n\n**Phân tích:**\n\nBan đầu:\n\n```text\nx = 10\ny = 20\n```\n\nSau:\n\n```cpp\nint temp{a};\n```\n\nTa có:\n\n```text\ntemp = 10\n```\n\nTiếp theo:\n\n```cpp\na = b;\n```\n\nKết quả:\n\n```text\nx = 20\n```\n\nCuối cùng:\n\n```cpp\nb = temp;\n```\n\nKết quả:\n\n```text\ny = 10\n```\n\nHai giá trị được hoán đổi thành công.\n\nTrong chương trình thực tế, C++ đã cung cấp `std::swap()` trong thư viện `<utility>`:\n\n```cpp\n#include <utility>\n\nstd::swap(x, y);\n```\n\nKhông cần tự viết hàm hoán đổi cho mọi trường hợp. Ví dụ trên nhằm minh họa cơ chế reference.\n\n---\n\n## 5. const reference\n\nKhông phải hàm nào nhận reference cũng cần sửa dữ liệu.\n\nĐôi khi chúng ta chỉ muốn đọc một đối tượng lớn mà không tạo bản sao.\n\n### 5.1. Khai báo const reference\n\nCú pháp:\n\n```cpp\nconst Type& name = object;\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n\nvoid printName(const std::string& name) {\n    std::cout << name << '\\n';\n}\n\nint main() {\n    std::string name{\"Nguyen Van An\"};\n\n    printName(name);\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nNguyen Van An\n```\n\n### 5.2. Tại sao sử dụng const T&?\n\nXét hàm:\n\n```cpp\nvoid printName(std::string name);\n```\n\nTham số `name` được truyền bằng giá trị.\n\nVới đối số là một chuỗi hiện có, việc truyền theo giá trị thường tạo một đối tượng `std::string` riêng, có thể cần sao chép dữ liệu.\n\nTrong khi đó:\n\n```cpp\nvoid printName(const std::string& name);\n```\n\nkhông yêu cầu sao chép đối tượng chuỗi chỉ để đọc nội dung.\n\nĐiều này đặc biệt hữu ích đối với những đối tượng có chi phí sao chép đáng kể:\n\n```cpp\nstd::string\nstd::vector<int>\nstd::map<int, int>\n```\n\n### 5.3. const ngăn sửa dữ liệu thông qua reference\n\nVí dụ:\n\n```cpp\nvoid update(const int& value) {\n    value = 100;\n}\n```\n\nHàm trên không hợp lệ.\n\nNguyên nhân là `value` là tham chiếu đến `const int`.\n\nKhông thể sửa đối tượng thông qua tham chiếu này.\n\nTuy nhiên, `const T&` không nhất thiết khiến bản thân đối tượng gốc trở thành bất biến.\n\nNếu đối tượng gốc không phải `const`, nó vẫn có thể được sửa thông qua một tên hoặc tham chiếu không const khác.\n\n### 5.4. const reference và temporary object\n\nMột `const T&` cũng có thể liên kết với đối tượng tạm thời phù hợp.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n\nvoid printName(const std::string& name) {\n    std::cout << name << '\\n';\n}\n\nint main() {\n    printName(std::string{\"An\"});\n}\n```\n\nTrong ví dụ này, đối tượng chuỗi tạm thời vẫn tồn tại trong thời gian lời gọi hàm sử dụng nó.\n\nC++ có các quy tắc kéo dài thời gian sống của temporary trong một số trường hợp liên kết reference.\n\nTuy nhiên, điều đó **không có nghĩa có thể tùy ý lưu hoặc trả về reference đến temporary**.\n\nCần xét đúng ngữ cảnh lifetime trước khi giữ reference lâu dài.\n\n### 5.5. Khi nào dùng T& và const T&?\n\n| Kiểu tham số | Mục đích |\n|---|---|\n| `T&` | Hàm cần thay đổi đối tượng |\n| `const T&` | Hàm chỉ cần đọc đối tượng mà không sao chép |\n| `T` | Hàm cần giá trị độc lập hoặc bản sao |\n\nĐối với kiểu nhỏ như `int`, truyền bằng giá trị thường đơn giản hơn `const int&` nếu hàm chỉ cần đọc.\n\n---\n\n## 6. Pointer là gì?\n\nPointer (con trỏ) là một đối tượng có kiểu con trỏ, có thể chứa địa chỉ của một đối tượng hoặc biểu diễn các trạng thái đặc biệt như null.\n\nKhác với reference, pointer có thể được gán lại để trỏ đến đối tượng khác.\n\n### 6.1. Khai báo pointer\n\nCú pháp:\n\n```cpp\nType* pointerName;\n```\n\nVí dụ:\n\n```cpp\nint score{10};\n\nint* pointer = &score;\n```\n\nTrong đó:\n\n- `int*` là kiểu con trỏ đến `int`.\n- `pointer` là tên biến con trỏ.\n- `&score` lấy địa chỉ của biến `score`.\n\nBiến `pointer` chứa địa chỉ của `score`.\n\n### 6.2. Truy cập đối tượng qua pointer\n\nĐể truy cập đối tượng mà pointer đang trỏ đến, sử dụng toán tử `*`.\n\nToán tử này được gọi là *dereference operator*.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int score{10};\n\n    int* pointer = &score;\n\n    std::cout << *pointer << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n10\n```\n\nỞ đây:\n\n```cpp\npointer\n```\n\nlà biến con trỏ chứa địa chỉ.\n\nCòn:\n\n```cpp\n*pointer\n```\n\nlà biểu thức truy cập đối tượng được con trỏ trỏ đến.\n\n### 6.3. Thay đổi giá trị qua pointer\n\n```cpp\n#include <iostream>\n\nint main() {\n    int score{10};\n\n    int* pointer = &score;\n\n    *pointer = 20;\n\n    std::cout << score << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n20\n```\n\nCâu lệnh:\n\n```cpp\n*pointer = 20;\n```\n\nthay đổi đối tượng `score`, không phải địa chỉ được lưu trong biến `pointer`.\n\n### 6.4. Phân biệt & và *\n\nHai toán tử này có ý nghĩa phụ thuộc ngữ cảnh.\n\n```cpp\nint score{10};\n\nint* pointer = &score;\n```\n\nTrong đó:\n\n```cpp\n&score\n```\n\nLấy địa chỉ của biến.\n\n```cpp\n*pointer\n```\n\nTruy cập đối tượng mà con trỏ trỏ đến.\n\nVí dụ:\n\n```text\nscore       -> 10\n&score      -> Dia chi cua score\npointer     -> Dia chi cua score\n*pointer    -> 10\n```\n\nLưu ý `*` cũng là toán tử nhân trong biểu thức số học, còn `&` có thể là toán tử bitwise AND. Compiler phân biệt chúng theo ngữ cảnh cú pháp.\n\n---\n\n## 7. Pointer có thể thay đổi đối tượng đích\n\nĐây là điểm khác biệt lớn so với reference.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int a{10};\n    int b{20};\n\n    int* pointer = &a;\n\n    std::cout << *pointer << '\\n';\n\n    pointer = &b;\n\n    std::cout << *pointer << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n10\n20\n```\n\nBan đầu:\n\n```cpp\nint* pointer = &a;\n```\n\nCon trỏ trỏ đến `a`.\n\nSau đó:\n\n```cpp\npointer = &b;\n```\n\nCon trỏ được cập nhật để trỏ đến `b`.\n\n**So sánh với reference:**\n\n```cpp\nint a{10};\nint b{20};\n\nint& ref = a;\n\nref = b;\n```\n\nTrong ví dụ reference, `ref` không đổi đối tượng đích. Thay vào đó, giá trị của `b` được gán cho `a`.\n\n---\n\n## 8. nullptr và con trỏ null\n\nKhông phải lúc nào pointer cũng trỏ đến một đối tượng hợp lệ.\n\nC++11 giới thiệu `nullptr`, và tính năng này tiếp tục được sử dụng trong C++17.\n\n### 8.1. Khởi tạo pointer bằng nullptr\n\n```cpp\nint* pointer{nullptr};\n```\n\nLúc này, pointer không trỏ đến đối tượng `int` nào.\n\n`nullptr` là một null pointer literal có kiểu `std::nullptr_t`.\n\nNó phù hợp hơn việc sử dụng số nguyên `0` hoặc macro `NULL` trong mã C++ hiện đại.\n\n### 8.2. Kiểm tra trước khi dereference\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int score{10};\n\n    int* pointer{nullptr};\n\n    if (pointer != nullptr) {\n        std::cout << *pointer << '\\n';\n    } else {\n        std::cout << \"Pointer is null\\n\";\n    }\n\n    pointer = &score;\n\n    if (pointer != nullptr) {\n        std::cout << *pointer << '\\n';\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\nPointer is null\n10\n```\n\n### 8.3. Không dereference nullptr\n\nVí dụ không an toàn:\n\n```cpp\nint* pointer{nullptr};\n\nstd::cout << *pointer;\n```\n\nDereference null pointer gây ra hành vi không xác định.\n\nChương trình có thể bị crash, nhưng tiêu chuẩn C++ không đảm bảo rằng mọi trường hợp đều sinh ra một lỗi rõ ràng.\n\n### 8.4. Kiểm tra null chưa đủ để đảm bảo an toàn\n\nXét:\n\n```cpp\nif (pointer != nullptr) {\n    use(*pointer);\n}\n```\n\nĐiều kiện chỉ kiểm tra rằng pointer không ở trạng thái null.\n\nNó **không chứng minh** rằng pointer đang trỏ đến một đối tượng còn sống và hợp lệ.\n\nMột pointer có thể không null nhưng đã trở thành dangling pointer.\n\nĐây là lý do kiểm tra lifetime quan trọng không kém kiểm tra `nullptr`.\n\n---\n\n## 9. Truyền tham số bằng pointer\n\nMột hàm cũng có thể nhận địa chỉ đối tượng thông qua pointer.\n\n### 9.1. Ví dụ thay đổi giá trị\n\n```cpp\n#include <iostream>\n\nvoid addBonus(int* score) {\n    if (score == nullptr) {\n        return;\n    }\n\n    *score += 5;\n}\n\nint main() {\n    int score{10};\n\n    addBonus(&score);\n\n    std::cout << score << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n15\n```\n\nPhân tích:\n\n```cpp\naddBonus(&score);\n```\n\nTruyền địa chỉ của `score`.\n\n```cpp\nvoid addBonus(int* score)\n```\n\nNhận một con trỏ đến `int`.\n\n```cpp\n*score += 5;\n```\n\nThay đổi đối tượng được con trỏ trỏ đến.\n\n### 9.2. Pointer có thể biểu diễn tham số tùy chọn\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nvoid printScore(const int* score) {\n    if (score == nullptr) {\n        std::cout << \"No score\\n\";\n        return;\n    }\n\n    std::cout << *score << '\\n';\n}\n\nint main() {\n    int score{95};\n\n    printScore(&score);\n    printScore(nullptr);\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n95\nNo score\n```\n\nHàm hỗ trợ hai trường hợp:\n\n- Có đối tượng `score`.\n- Không có đối tượng nào được cung cấp.\n\nVì vậy, pointer phù hợp khi trạng thái không có đối tượng là một phần hợp lệ của API.\n\n### 9.3. Pointer được truyền bằng giá trị\n\nMột điểm quan trọng: khi viết:\n\n```cpp\nvoid update(int* pointer)\n```\n\nthì bản thân biến con trỏ được truyền bằng giá trị.\n\nHàm nhận một bản sao của giá trị con trỏ.\n\nVí dụ:\n\n```cpp\nvoid resetPointer(int* pointer) {\n    pointer = nullptr;\n}\n```\n\nKhi gọi:\n\n```cpp\nint value{10};\nint* pointer = &value;\n\nresetPointer(pointer);\n```\n\nBiến `pointer` trong hàm gọi vẫn trỏ đến `value`.\n\nBởi vì `resetPointer()` chỉ thay đổi bản sao của con trỏ.\n\nNgược lại, nếu hàm thực hiện:\n\n```cpp\n*pointer = 20;\n```\n\nthì đối tượng được trỏ đến có thể thay đổi.\n\nCần phân biệt **thay đổi con trỏ** với **thay đổi đối tượng mà con trỏ trỏ đến**.\n\n---\n\n## 10. const và pointer\n\nKhi sử dụng pointer, vị trí của `const` rất quan trọng.\n\n### 10.1. Pointer đến đối tượng const\n\nVí dụ:\n\n```cpp\nint a{10};\nint b{20};\n\nconst int* pointer = &a;\n```\n\nCó thể chuyển pointer sang đối tượng khác:\n\n```cpp\npointer = &b;\n```\n\nNhưng không thể sửa đối tượng thông qua pointer này:\n\n```cpp\n*pointer = 30;\n```\n\nDòng trên không hợp lệ.\n\nCách khai báo tương đương:\n\n```cpp\nint const* pointer = &a;\n```\n\n### 10.2. Const pointer\n\nVí dụ:\n\n```cpp\nint a{10};\nint b{20};\n\nint* const pointer = &a;\n```\n\nCon trỏ được cố định sau khi khởi tạo.\n\nKhông thể gán lại:\n\n```cpp\npointer = &b;\n```\n\nNhưng có thể sửa đối tượng:\n\n```cpp\n*pointer = 30;\n```\n\nKết quả:\n\n```text\na = 30\n```\n\n### 10.3. Const pointer đến const object\n\n```cpp\nint a{10};\n\nconst int* const pointer = &a;\n```\n\nTrong trường hợp này:\n\n- Không thể gán lại pointer.\n- Không thể sửa `a` thông qua pointer.\n\n### 10.4. Bảng so sánh\n\n| Khai báo | Đổi đối tượng đích | Sửa dữ liệu qua pointer |\n|---|---|---|\n| `int* p` | Có | Có |\n| `const int* p` | Có | Không |\n| `int* const p` | Không | Có |\n| `const int* const p` | Không | Không |\n\nCác dòng chứa `const` pointer phải được khởi tạo phù hợp ngay khi khai báo.\n\nVí dụ:\n\n```cpp\nint value{10};\n\nint* const pointer = &value;\n```\n\nKhi đọc khai báo con trỏ, cần xác định `const` áp dụng cho bản thân con trỏ hay đối tượng được trỏ đến.\n\n---\n\n## 11. So sánh reference và pointer\n\nReference và pointer đều cho phép truy cập một đối tượng gián tiếp, nhưng có ngữ nghĩa khác nhau.\n\n| Đặc điểm | Reference | Pointer |\n|---|---|---|\n| Cú pháp khai báo cơ bản | `T&` | `T*` |\n| Phải khởi tạo khi khai báo | Có với reference thông thường | Không bắt buộc, nhưng nên khởi tạo |\n| Có thể biểu diễn null hợp lệ | Không | Có |\n| Có thể đổi đối tượng đích | Không | Có |\n| Cần dereference tường minh | Không | Có |\n| Có thể dùng để sửa đối tượng | Có | Có |\n| Tự quản lý lifetime | Không | Không |\n| Mặc định thể hiện ownership | Không | Không |\n| Phù hợp tham số bắt buộc | Tốt | Có thể |\n| Phù hợp tham số tùy chọn | Không trực tiếp | Tốt |\n\n### 11.1. Ví dụ tổng hợp\n\n```cpp\n#include <iostream>\n\nint main() {\n    int value{10};\n\n    int& ref = value;\n    int* ptr = &value;\n\n    ref += 5;\n    *ptr += 5;\n\n    std::cout << value << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n20\n```\n\nCả reference và pointer đều thao tác trên cùng một đối tượng `value`.\n\n### 11.2. Nên sử dụng loại nào?\n\nNếu một hàm luôn yêu cầu đối tượng hợp lệ:\n\n```cpp\nvoid update(Player& player);\n```\n\nReference thường thể hiện ý định rõ ràng.\n\nNếu đối tượng có thể không tồn tại:\n\n```cpp\nvoid update(Player* player);\n```\n\nPointer có thể biểu diễn trạng thái `nullptr`.\n\nNếu hàm chỉ đọc:\n\n```cpp\nvoid inspect(const Player& player);\n```\n\nCó thể dùng `const reference` để tránh sao chép đối tượng lớn.\n\nCác ví dụ trên giả định kiểu `Player` đã được định nghĩa.\n\n**Lưu ý:** Không nên sử dụng pointer chỉ vì nghĩ rằng nó luôn nhanh hơn reference. Hiệu năng còn phụ thuộc vào kiểu dữ liệu, cách sử dụng và tối ưu hóa của compiler.\n\n---\n\n## 12. Lifetime của đối tượng\n\nĐể sử dụng reference hoặc pointer an toàn, cần hiểu đối tượng mà chúng truy cập tồn tại trong bao lâu.\n\n### 12.1. Lifetime là gì?\n\nLifetime là khoảng thời gian đối tượng tồn tại theo các quy tắc của C++.\n\nVí dụ:\n\n```cpp\nvoid calculate() {\n    int result{100};\n}\n```\n\nBiến `result` có automatic storage duration.\n\nTrong trường hợp này, đối tượng được tạo khi thực thi đến khai báo và kết thúc lifetime khi rời khỏi khối tương ứng.\n\nKhông thể tiếp tục sử dụng một reference hoặc pointer để truy cập đối tượng sau khi lifetime của nó kết thúc.\n\n### 12.2. Reference không kéo dài lifetime trong mọi trường hợp\n\nVí dụ:\n\n```cpp\nint& getValue() {\n    int value{10};\n\n    return value;\n}\n```\n\nHàm trên trả về reference đến biến cục bộ `value`.\n\nKhi hàm kết thúc, đối tượng `value` cũng hết lifetime.\n\nReference trả về trở thành dangling reference.\n\nNếu người gọi sử dụng reference để truy cập đối tượng đã hết lifetime, chương trình có hành vi không xác định.\n\n### 12.3. Pointer cũng không quản lý lifetime\n\nVí dụ:\n\n```cpp\nint* getValue() {\n    int value{10};\n\n    return &value;\n}\n```\n\nHàm trả về địa chỉ của biến cục bộ.\n\nNhưng khi hàm kết thúc, đối tượng `value` không còn tồn tại.\n\nCon trỏ trả về không còn trỏ đến một đối tượng `int` còn sống hợp lệ.\n\n**Điều quan trọng:** Pointer không tự giữ cho đối tượng tồn tại.\n\nReference cũng không tự đảm bảo rằng đối tượng được tham chiếu luôn còn sống.\n\n### 12.4. Cách xử lý an toàn\n\nNếu muốn trả về một giá trị độc lập:\n\n```cpp\nint getValue() {\n    int value{10};\n\n    return value;\n}\n```\n\nĐối với `int`, trả về bằng giá trị thường đơn giản và an toàn.\n\nC++ hiện đại cũng có những cơ chế tối ưu hóa việc trả về đối tượng bằng giá trị, bao gồm copy elision và move semantics.\n\nKhông nên mặc định rằng trả về bằng reference luôn nhanh hơn hoặc tốt hơn.\n\n---\n\n## 13. Dangling pointer và dangling reference\n\nDangling xảy ra khi một reference hoặc pointer không còn liên kết với đối tượng hợp lệ để sử dụng như dự định.\n\nĐây là nguồn gốc của nhiều lỗi bộ nhớ nghiêm trọng.\n\n### 13.1. Dangling pointer\n\nVí dụ không an toàn:\n\n```cpp\nint* pointer{nullptr};\n\n{\n    int value{10};\n    pointer = &value;\n}\n\n// value da het lifetime\n// Khong duoc dereference pointer.\n```\n\nSau khi rời khỏi khối:\n\n```cpp\n{\n    int value{10};\n}\n```\n\nĐối tượng `value` đã kết thúc lifetime.\n\nPointer trước đó không còn an toàn để dereference.\n\n### 13.2. Dangling reference\n\nVí dụ:\n\n```cpp\nconst int& getValue() {\n    int value{10};\n\n    return value;\n}\n```\n\nReference trả về không còn hợp lệ để truy cập giá trị của biến cục bộ đã bị hủy.\n\nKhông nên trả về reference đến những đối tượng mà thời gian sống không đủ dài.\n\n### 13.3. nullptr và dangling khác nhau\n\n| Trạng thái | Ý nghĩa |\n|---|---|\n| Null pointer | Không trỏ đến đối tượng nào |\n| Valid pointer | Trỏ đến đối tượng hoặc thực thể hợp lệ trong ngữ cảnh sử dụng |\n| Dangling pointer | Đã mất hiệu lực đối với đối tượng trước đó |\n| Valid reference | Liên kết với thực thể hợp lệ |\n| Dangling reference | Thực thể được tham chiếu không còn hợp lệ để truy cập |\n\nMột dangling pointer không nhất thiết có giá trị `nullptr`.\n\nVì vậy:\n\n```cpp\nif (pointer != nullptr)\n```\n\nkhông đủ để bảo đảm dereference an toàn.\n\n### 13.4. Ba nguyên tắc bảo vệ lifetime\n\n**Thứ nhất:** Không trả về reference hoặc pointer đến biến cục bộ sắp hết lifetime.\n\n**Thứ hai:** Không lưu pointer/reference lâu hơn thời gian sống của đối tượng mà nó truy cập.\n\n**Thứ ba:** Khi container hoặc đối tượng sở hữu dữ liệu thay đổi, cần kiểm tra xem các địa chỉ, reference và iterator cũ còn hợp lệ hay không.\n\n---\n\n## 14. Pointer, reference và std::vector\n\nMột vấn đề thực tế thường gặp là lưu địa chỉ của phần tử trong `std::vector`.\n\n### 14.1. Truy cập phần tử bằng reference\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{10, 20, 30};\n\n    int& first = values[0];\n\n    first = 100;\n\n    std::cout << values[0] << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n100\n```\n\nReference `first` liên kết với phần tử đầu tiên của vector.\n\n### 14.2. Truy cập phần tử bằng pointer\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{10, 20, 30};\n\n    int* pointer = &values[0];\n\n    *pointer = 100;\n\n    std::cout << values[0] << '\\n';\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n100\n```\n\nTrong hai ví dụ trên, vector không thay đổi cấu trúc theo cách làm mất hiệu lực reference hoặc pointer đang sử dụng.\n\n### 14.3. Nguy cơ reallocation\n\n`std::vector` lưu các phần tử liên tiếp trong bộ nhớ.\n\nKhi cần tăng capacity, vector có thể cấp phát một vùng lưu trữ mới và di chuyển hoặc sao chép các phần tử sang đó.\n\nVí dụ:\n\n```cpp\nstd::vector<int> values{10, 20, 30};\n\nint* pointer = &values[0];\n\nvalues.push_back(40);\n```\n\nNếu `push_back()` khiến vector reallocate, pointer trước đó sẽ mất hiệu lực.\n\nKhông được tiếp tục dereference pointer ấy.\n\n**Quan trọng:** Không phải mọi lần gọi `push_back()` đều reallocate. Điều này phụ thuộc vào capacity hiện tại.\n\n### 14.4. Lựa chọn an toàn hơn\n\nNếu chỉ cần phần tử theo vị trí, có thể lưu chỉ số thay vì giữ địa chỉ lâu dài.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{10, 20, 30};\n\n    const std::size_t index{0};\n\n    values.push_back(40);\n\n    if (index < values.size()) {\n        std::cout << values[index] << '\\n';\n    }\n\n    return 0;\n}\n```\n\nKết quả:\n\n```text\n10\n```\n\nCách này không phụ thuộc vào địa chỉ bộ nhớ cũ.\n\nTuy nhiên, chỉ số cũng không phải một định danh ổn định nếu chương trình thêm hoặc xóa phần tử ở những vị trí làm thay đổi thứ tự.\n\nVí dụ, xóa phần tử đầu tiên sẽ khiến các phần tử phía sau dịch chuyển vị trí.\n\n**Nguyên tắc:** Chọn cách tham chiếu dữ liệu dựa trên những thay đổi mà container có thể thực hiện.\n\n---\n\n## 15. Pointer và mảng\n\nMảng trong C++ có quan hệ chặt chẽ với pointer, nhưng mảng và pointer không phải cùng một kiểu.\n\n### 15.1. Mảng cơ bản\n\n```cpp\nint numbers[3]{10, 20, 30};\n```\n\nTruy cập bằng chỉ số:\n\n```cpp\nnumbers[0];\nnumbers[1];\nnumbers[2];\n```\n\n### 15.2. Pointer đến phần tử\n\n```cpp\nint numbers[3]{10, 20, 30};\n\nint* pointer = numbers;\n```\n\nTrong biểu thức trên, tên mảng được chuyển đổi thành pointer đến phần tử đầu tiên.\n\nCó thể truy cập:\n\n```cpp\n*pointer\n```\n\nKết quả là `10`.\n\nHoặc:\n\n```cpp\n*(pointer + 1)\n```\n\nKết quả là `20`.\n\n### 15.3. Pointer arithmetic\n\nĐối với con trỏ trỏ đến phần tử của mảng, cộng một đơn vị sẽ di chuyển đến phần tử tiếp theo, không phải đơn giản tăng địa chỉ lên một byte.\n\nVí dụ:\n\n```cpp\nint numbers[3]{10, 20, 30};\n\nint* pointer = numbers;\n\n++pointer;\n```\n\nLúc này, pointer trỏ đến `numbers[1]`.\n\nCần chú ý giới hạn mảng. Việc tạo và sử dụng pointer ngoài phạm vi cho phép có thể gây hành vi không xác định.\n\n### 15.4. Ưu tiên container hiện đại\n\nTrong mã C++17, khi phù hợp, nên ưu tiên:\n\n```cpp\nstd::array<int, 3> numbers{10, 20, 30};\n```\n\nhoặc:\n\n```cpp\nstd::vector<int> numbers{10, 20, 30};\n```\n\nCác container này cung cấp giao diện rõ ràng hơn để quản lý kích thước và thao tác với dữ liệu.\n\nPointer vẫn cần thiết để hiểu hoạt động của mảng, các API cấp thấp và một số cấu trúc dữ liệu.\n\n---\n\n## 16. Reference trong vòng lặp\n\nRange-based `for` là một nơi reference được sử dụng rất phổ biến.\n\n### 16.1. Duyệt bằng giá trị\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{1, 2, 3};\n\n    for (int value : values) {\n        value *= 2;\n    }\n\n    for (int value : values) {\n        std::cout << value << ' ';\n    }\n}\n```\n\nKết quả:\n\n```text\n1 2 3\n```\n\nỞ vòng lặp đầu tiên, `value` là biến riêng nhận giá trị phần tử.\n\nThay đổi `value` không làm thay đổi phần tử trong vector.\n\n### 16.2. Duyệt bằng reference\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> values{1, 2, 3};\n\n    for (int& value : values) {\n        value *= 2;\n    }\n\n    for (int value : values) {\n        std::cout << value << ' ';\n    }\n}\n```\n\nKết quả:\n\n```text\n2 4 6\n```\n\nỞ đây:\n\n```cpp\nint& value\n```\n\nlà reference đến từng phần tử.\n\nVì vậy, phép gán tác động trực tiếp lên vector.\n\n### 16.3. Duyệt chỉ đọc\n\nNếu không cần sửa phần tử:\n\n```cpp\nfor (const auto& value : values) {\n    std::cout << value << '\\n';\n}\n```\n\nCách này thường được sử dụng khi phần tử là các đối tượng lớn hoặc phức tạp.\n\n### 16.4. Bảng lựa chọn\n\n| Cú pháp | Hành vi |\n|---|---|\n| `auto item` | Nhận giá trị riêng của từng phần tử |\n| `auto& item` | Tham chiếu để có thể sửa phần tử |\n| `const auto& item` | Tham chiếu chỉ đọc |\n| `auto&& item` | Forwarding reference trong ngữ cảnh suy luận phù hợp |\n\n`auto&&` liên quan đến những quy tắc suy luận kiểu và value category nâng cao. Người mới nên nắm chắc ba cách đầu tiên trước.\n\n---\n\n## 17. Reference, pointer và quyền sở hữu\n\nMột khái niệm quan trọng trong thiết kế C++ hiện đại là **ownership**, tức trách nhiệm quản lý vòng đời tài nguyên.\n\n### 17.1. Reference không thể hiện quyền sở hữu\n\nVí dụ:\n\n```cpp\nvoid printScore(const int& score) {\n    std::cout << score << '\\n';\n}\n```\n\nHàm chỉ sử dụng đối tượng được truyền vào.\n\nThông thường, người gọi vẫn chịu trách nhiệm bảo đảm đối tượng còn sống trong thời gian hàm sử dụng nó.\n\n### 17.2. Raw pointer không mặc định sở hữu dữ liệu\n\nVí dụ:\n\n```cpp\nvoid update(int* value) {\n    if (value != nullptr) {\n        ++(*value);\n    }\n}\n```\n\nHàm nhận một pointer để truy cập dữ liệu.\n\nKhông nên tự động hiểu rằng hàm có quyền giải phóng vùng nhớ mà pointer trỏ đến.\n\nNếu API chuyển giao ownership bằng raw pointer, hợp đồng sử dụng phải mô tả rõ. Trong C++ hiện đại, nên ưu tiên những kiểu biểu diễn ownership tường minh.\n\n### 17.3. Smart pointer\n\nC++ cung cấp smart pointer trong `<memory>`:\n\n| Kiểu | Vai trò |\n|---|---|\n| `std::unique_ptr<T>` | Quản lý đối tượng với quyền sở hữu độc quyền |\n| `std::shared_ptr<T>` | Chia sẻ quyền sở hữu |\n| `std::weak_ptr<T>` | Quan sát đối tượng được quản lý bằng shared_ptr mà không tăng quyền sở hữu |\n\nVí dụ:\n\n```cpp\n#include <memory>\n\nint main() {\n    auto value = std::make_unique<int>(42);\n}\n```\n\nĐối tượng được quản lý sẽ được hủy tự động khi `unique_ptr` sở hữu cuối cùng của nó kết thúc lifetime, theo cơ chế quản lý tương ứng.\n\nTrong ví dụ này, `unique_ptr` là chủ sở hữu duy nhất.\n\n### 17.4. Không lạm dụng cấp phát động\n\nKhông nên viết:\n\n```cpp\nint* value = new int{42};\n```\n\nchỉ để lưu một số nguyên thông thường.\n\nThay vào đó:\n\n```cpp\nint value{42};\n```\n\nđơn giản hơn và không yêu cầu quản lý cấp phát động.\n\n**Nguyên tắc:** Reference và raw pointer thường phù hợp để truy cập dữ liệu không sở hữu. Khi cần quản lý quyền sở hữu động, nên cân nhắc RAII và smart pointer.\n\nNội dung chuyên sâu nằm trong bài [RAII và smart pointers](/cpp/stl/raii-smart-pointers).\n\n---\n\n## 18. Cách chọn phương thức truyền tham số\n\nKhông nên mặc định truyền mọi tham số bằng reference hoặc pointer.\n\nLựa chọn phụ thuộc vào kiểu dữ liệu, mục đích sử dụng và hợp đồng của hàm.\n\n| Tình huống | Lựa chọn thường phù hợp |\n|---|---|\n| Truyền số nguyên nhỏ | `int` |\n| Truyền bool | `bool` |\n| Đọc string không cần sao chép | `const std::string&` |\n| Đọc vector không cần sao chép | `const std::vector<T>&` |\n| Sửa đối tượng của người gọi | `T&` |\n| Đối tượng có thể vắng mặt | `T*` |\n| Thay đổi đối tượng qua pointer tùy chọn | `T*` |\n| Chuyển quyền sở hữu độc quyền | `std::unique_ptr<T>` |\n| Chia sẻ quyền sở hữu khi thật sự cần | `std::shared_ptr<T>` |\n\nVí dụ:\n\n```cpp\nvoid setScore(int score);\n```\n\nPhù hợp nếu chỉ cần sử dụng một giá trị số nguyên.\n\n```cpp\nvoid updateScore(int& score);\n```\n\nPhù hợp nếu cần thay đổi điểm số của người gọi.\n\n```cpp\nvoid printName(const std::string& name);\n```\n\nPhù hợp khi cần đọc chuỗi hiện có mà không cần sao chép.\n\n```cpp\nvoid printScore(const int* score);\n```\n\nPhù hợp nếu cho phép không có đối tượng điểm số.\n\n### 18.1. Ba trường hợp cần phân tích\n\nKhi thiết kế một hàm nhận pointer hoặc reference, nên xác định rõ:\n\n**Trường hợp thành công**\n\nĐối tượng tồn tại, dữ liệu hợp lệ và hàm thực hiện đúng chức năng.\n\n**Trường hợp lỗi**\n\nĐối với pointer, đầu vào có thể là `nullptr`, hoặc dữ liệu được trỏ đến không đáp ứng điều kiện nghiệp vụ.\n\nĐối với reference, cần xác định rằng người gọi phải cung cấp một đối tượng hợp lệ còn sống.\n\n**Trường hợp sử dụng sai**\n\nNgười gọi có thể giữ reference quá lâu, truyền dangling pointer, hoặc sửa dữ liệu mà API chỉ cho phép đọc.\n\nMột giao diện tốt nên hạn chế tối đa các trạng thái sử dụng sai có thể biểu diễn.\n\nVí dụ, nếu hàm luôn cần một đối tượng hợp lệ, sử dụng `T&` thường rõ nghĩa hơn `T*` vì không phải thiết kế thêm trường hợp `nullptr`.\n\n---\n\n## 19. Những lỗi thường gặp\n\n### 19.1. Dereference nullptr\n\nSai:\n\n```cpp\nint* pointer{nullptr};\n\n*pointer = 10;\n```\n\nCách xử lý:\n\n```cpp\nif (pointer != nullptr) {\n    *pointer = 10;\n}\n```\n\nNhớ rằng điều kiện này chỉ bảo vệ trường hợp null, không bảo đảm pointer không dangling.\n\n### 19.2. Trả pointer đến biến local\n\nSai:\n\n```cpp\nint* getNumber() {\n    int number{10};\n\n    return &number;\n}\n```\n\nNên trả về giá trị khi phù hợp:\n\n```cpp\nint getNumber() {\n    return 10;\n}\n```\n\n### 19.3. Trả reference đến biến local\n\nSai:\n\n```cpp\nint& getNumber() {\n    int number{10};\n\n    return number;\n}\n```\n\nReference trả về không hợp lệ để truy cập đối tượng sau khi hàm kết thúc.\n\n### 19.4. Nhầm pointer với dữ liệu được trỏ đến\n\n```cpp\nint value{10};\n\nint* pointer = &value;\n```\n\nHai câu lệnh sau khác nhau:\n\n```cpp\npointer = nullptr;\n```\n\nThay đổi giá trị của biến pointer.\n\n```cpp\n*pointer = 20;\n```\n\nThay đổi đối tượng được pointer trỏ đến, với điều kiện pointer hợp lệ.\n\nKhông thể thực hiện dòng thứ hai sau khi đã đặt pointer thành `nullptr` mà chưa gán lại một địa chỉ hợp lệ.\n\n### 19.5. Nhầm reference assignment với rebinding\n\n```cpp\nint a{10};\nint b{20};\n\nint& ref = a;\n\nref = b;\n```\n\nCâu lệnh cuối không làm `ref` chuyển sang `b`.\n\nNó gán giá trị `20` cho `a`.\n\n### 19.6. Giữ pointer sau vector reallocation\n\nNếu vector cấp phát lại vùng lưu trữ, pointer hoặc reference đến các phần tử cũ sẽ mất hiệu lực.\n\nCần kiểm tra quy tắc iterator/reference invalidation trước khi giữ địa chỉ của phần tử lâu dài.\n\n### 19.7. Thiếu const correctness\n\nNếu hàm chỉ đọc dữ liệu:\n\n```cpp\nvoid print(const std::string& text);\n```\n\nthường phù hợp hơn:\n\n```cpp\nvoid print(std::string& text);\n```\n\nvì kiểu `const std::string&` thể hiện rõ rằng hàm không sửa chuỗi thông qua tham số.\n\nNgoài ra, nó cho phép truyền các đối tượng `const` phù hợp.\n\n### 19.8. Lạm dụng new và delete\n\nKhông cần cấp phát động cho mọi đối tượng.\n\nRaw pointer không đồng nghĩa với việc phải sử dụng `new`.\n\nTrong phần lớn trường hợp đơn giản, biến cục bộ, container chuẩn và các cơ chế RAII là lựa chọn dễ quản lý hơn.\n\n---\n\n## 20. Ví dụ thực hành tổng hợp\n\n### Bài toán: Cập nhật điểm học sinh\n\nViết chương trình thực hiện các công việc:\n\n1. Lưu điểm số ban đầu.\n2. In điểm số.\n3. Cộng điểm thưởng bằng reference.\n4. Điều chỉnh điểm bằng pointer.\n5. Kiểm tra pointer trước khi sử dụng.\n6. Không cho phép điểm vượt quá phạm vi `[0, 100]`.\n\n### 20.1. Chương trình C++17\n\n```cpp\n#include <iostream>\n\nvoid printScore(const int& score) {\n    std::cout << \"Score: \" << score << '\\n';\n}\n\nbool addBonus(int& score, int bonus) {\n    if (score < 0 || score > 100) {\n        return false;\n    }\n\n    if (bonus < 0 || bonus > 100 - score) {\n        return false;\n    }\n\n    score += bonus;\n    return true;\n}\n\nbool setScore(int* score, int value) {\n    if (score == nullptr) {\n        return false;\n    }\n\n    if (value < 0 || value > 100) {\n        return false;\n    }\n\n    *score = value;\n    return true;\n}\n\nint main() {\n    int score{70};\n\n    printScore(score);\n\n    if (addBonus(score, 10)) {\n        printScore(score);\n    }\n\n    if (setScore(&score, 95)) {\n        printScore(score);\n    }\n\n    if (!setScore(nullptr, 50)) {\n        std::cout << \"Invalid target\\n\";\n    }\n\n    return 0;\n}\n```\n\n### 20.2. Kết quả\n\n```text\nScore: 70\nScore: 80\nScore: 95\nInvalid target\n```\n\n### 20.3. Phân tích\n\nHàm:\n\n```cpp\nvoid printScore(const int& score)\n```\n\nchỉ đọc điểm số.\n\nHàm:\n\n```cpp\nbool addBonus(int& score, int bonus)\n```\n\nthay đổi trực tiếp điểm số thông qua reference.\n\nHàm:\n\n```cpp\nbool setScore(int* score, int value)\n```\n\nnhận pointer và cho phép trường hợp không có đối tượng đích.\n\nTrước khi dereference, hàm kiểm tra:\n\n```cpp\nif (score == nullptr)\n```\n\nĐồng thời kiểm tra giá trị mới thuộc đoạn `[0, 100]`.\n\n### 20.4. Các trường hợp kiểm thử\n\n| Điểm ban đầu | Thao tác | Kết quả |\n|---|---|---|\n| 70 | Cộng 10 | 80 |\n| 90 | Cộng 10 | 100 |\n| 95 | Cộng 10 | Từ chối |\n| 70 | Cộng -5 | Từ chối |\n| 70 | Gán 100 | 100 |\n| 70 | Gán 150 | Từ chối |\n| Không có pointer đích | Gán 50 | Từ chối |\n\nTrong ví dụ này, `setScore()` không thể kiểm tra một pointer dangling chỉ bằng cách so sánh với `nullptr`.\n\nHợp đồng của hàm vẫn yêu cầu rằng mọi pointer không null được truyền vào phải trỏ đến một đối tượng `int` còn sống và có thể sửa đổi.\n\n### 20.5. Đánh giá thiết kế\n\nVí dụ cho thấy cả ba cách truyền dữ liệu:\n\n- `int`: Truyền giá trị nhỏ.\n- `int&`: Thay đổi đối tượng bắt buộc tồn tại.\n- `int*`: Thay đổi đối tượng có thể vắng mặt.\n\nĐối với ứng dụng thực tế, có thể cân nhắc đóng gói điểm số và quy tắc cập nhật trong một class thay vì cho phép nhiều hàm thao tác trực tiếp.\n\nTuy nhiên, trong bài học này, các hàm độc lập giúp làm rõ sự khác biệt giữa các phương thức truyền tham số.\n\n---\n\n## 21. Bài tập tự luyện\n\n### Bài 1. Đổi chỗ hai số bằng reference\n\n**Yêu cầu:** Viết hàm:\n\n```cpp\nvoid swapValues(int& a, int& b);\n```\n\nHàm phải hoán đổi giá trị hai biến được truyền vào.\n\nVí dụ:\n\n```text\nBefore:\na = 10\nb = 20\n\nAfter:\na = 20\nb = 10\n```\n\n**Gợi ý:** Sử dụng một biến tạm để lưu giá trị của `a`.\n\n### Bài 2. Tăng giá trị bằng pointer\n\n**Yêu cầu:** Viết hàm:\n\n```cpp\nbool increment(int* value);\n```\n\nQuy tắc:\n\n- Nếu pointer bằng `nullptr`, trả về `false`.\n- Nếu pointer hợp lệ và giá trị chưa đạt giới hạn `int`, tăng giá trị lên một.\n- Nếu giá trị đã đạt `std::numeric_limits<int>::max()`, trả về `false`.\n- Khi tăng thành công, trả về `true`.\n\n**Gợi ý:** Include `<limits>` và kiểm tra trước khi cộng.\n\n### Bài 3. Đọc độ dài chuỗi bằng const reference\n\n**Yêu cầu:** Viết hàm:\n\n```cpp\nstd::size_t getLength(const std::string& text);\n```\n\nHàm trả về số đơn vị `char` trong chuỗi.\n\nVí dụ:\n\n```text\nInput:\nHello\n\nOutput:\n5\n```\n\n**Gợi ý:** Sử dụng `std::string::size()`.\n\nChú ý rằng giá trị này không phải số ký tự Unicode hiển thị trong mọi trường hợp.\n\n### Bài 4. Tìm phần tử lớn nhất\n\n**Yêu cầu:** Viết hàm:\n\n```cpp\nbool findMax(\n    const std::vector<int>& values,\n    int& result\n);\n```\n\nQuy tắc:\n\n- Nếu vector rỗng, trả về `false`.\n- Nếu vector có dữ liệu, gán giá trị lớn nhất vào `result`.\n- Trả về `true` khi tìm thành công.\n\n**Gợi ý:** Sử dụng vòng lặp hoặc `std::max_element()`.\n\n### Bài 5. Phân biệt pointer và reference\n\nCho chương trình:\n\n```cpp\nint a{10};\nint b{20};\n\nint& ref = a;\nint* ptr = &a;\n\nref = b;\nptr = &b;\n\n*ptr = 30;\n```\n\n**Yêu cầu:** Xác định giá trị cuối cùng của:\n\n```text\na\nb\nref\n*ptr\n```\n\nGiải thích tại sao phép gán cho `ref` và phép gán cho `ptr` có hành vi khác nhau.\n\n### Bài 6. Phân tích dangling pointer\n\nXem đoạn mã:\n\n```cpp\nint* pointer{nullptr};\n\n{\n    int value{100};\n    pointer = &value;\n}\n```\n\n**Yêu cầu:**\n\n1. Giải thích tại sao pointer không còn hợp lệ để dereference.\n2. Kiểm tra `pointer != nullptr` có giải quyết vấn đề không?\n3. Đề xuất cách thiết kế lại để dữ liệu còn sống trong thời gian sử dụng.\n\n### Bài 7. Reference với vector\n\n**Yêu cầu:** Nhập `n` số nguyên vào `std::vector<int>`, sau đó tăng mỗi phần tử lên một đơn vị bằng reference.\n\nĐiều kiện:\n\n- `n` nằm trong `[0, 100000]`.\n- Kiểm tra dữ liệu nhập.\n- Không tăng phần tử nếu phép cộng gây tràn `int`.\n- Không tạo một vector thứ hai chỉ để lưu kết quả.\n\n**Gợi ý:** Sử dụng:\n\n```cpp\nfor (int& value : values) {\n    // Update value\n}\n```\n\n---\n\n## 22. Tổng kết kiến thức\n\n| Khái niệm | Ý nghĩa |\n|---|---|\n| Reference | Tên tham chiếu đến thực thể đã tồn tại |\n| Pointer | Đối tượng con trỏ có thể chứa địa chỉ |\n| `T&` | Lvalue reference đến T |\n| `const T&` | Lvalue reference đến const T |\n| `T*` | Pointer đến T |\n| `const T*` | Pointer đến const T |\n| `T* const` | Const pointer đến T |\n| `&value` | Lấy địa chỉ |\n| `*pointer` | Dereference pointer |\n| `nullptr` | Null pointer literal |\n| Pass by value | Truyền dữ liệu thông qua tham số theo giá trị |\n| Pass by reference | Truyền bằng tham chiếu |\n| Lifetime | Thời gian tồn tại của đối tượng |\n| Dangling pointer | Pointer không còn hợp lệ đối với đối tượng trước đó |\n| Dangling reference | Reference không còn hợp lệ để truy cập thực thể được tham chiếu |\n| Ownership | Trách nhiệm quản lý vòng đời tài nguyên |\n| RAII | Quản lý tài nguyên theo vòng đời đối tượng |\n\nSau bài học này, bạn cần nắm vững những nguyên tắc:\n\n1. **Reference không tạo bản sao đối tượng được tham chiếu.** Nó cung cấp cách truy cập đối tượng đã tồn tại.\n2. **Pointer có thể đổi đối tượng đích hoặc mang giá trị null.** Reference thông thường không có hai khả năng này.\n3. **const thể hiện giới hạn thao tác.** Khi chỉ cần đọc dữ liệu, sử dụng const reference hoặc pointer đến const khi phù hợp.\n4. **Không được dereference pointer không hợp lệ.** Kiểm tra null là cần thiết trong nhiều API, nhưng không đủ để chứng minh lifetime.\n5. **Reference và raw pointer không tự quản lý ownership.** Cần bảo đảm đối tượng đích còn sống trong thời gian sử dụng.\n6. **Không lạm dụng cấp phát động.** Ưu tiên kiểu dữ liệu, container và công cụ quản lý tài nguyên phù hợp với yêu cầu thực tế.\n\nQuan trọng nhất, **reference và pointer không chỉ là hai cách viết khác nhau để truy cập bộ nhớ**. Chúng còn thể hiện những hợp đồng khác nhau về tính bắt buộc của đối tượng, khả năng thay đổi đích, quyền sửa dữ liệu và trách nhiệm quản lý vòng đời.\n\nHiểu rõ các hợp đồng này là nền tảng để xây dựng phần mềm C++ an toàn, dễ đọc và dễ bảo trì.\n\n## Đọc tiếp\n\n- [Hàm và phạm vi biến](/cpp/bat-dau/ham-pham-vi): Tìm hiểu tham số, giá trị trả về, scope và cách tổ chức hàm.\n- [Mảng và string](/cpp/bat-dau/mang-string): Hiểu cách quản lý tập hợp dữ liệu và các thao tác truy cập phần tử.\n- [Stack, heap và lifetime](/cpp/trung-cap/stack-heap-lifetime): Nghiên cứu sâu hơn về storage duration, object lifetime và quản lý bộ nhớ.\n- [RAII và smart pointers](/cpp/stl/raii-smart-pointers): Sử dụng `std::unique_ptr`, `std::shared_ptr` và các kỹ thuật quản lý tài nguyên trong C++ hiện đại.",
     "sourcePath": "content/cpp/getting-started/references-pointers.md",
     "headings": [
       {
-        "title": "Reference",
-        "id": "reference"
+        "title": "References và pointers cơ bản trong C++",
+        "id": "references-va-pointers-co-ban-trong-c"
       },
       {
-        "title": "Pointer",
-        "id": "pointer"
+        "title": "1. Đối tượng và địa chỉ bộ nhớ",
+        "id": "1-oi-tuong-va-ia-chi-bo-nho"
       },
       {
-        "title": "Chọn cách truyền",
-        "id": "chon-cach-truyen"
+        "title": "1.1. Đối tượng trong C++",
+        "id": "11-oi-tuong-trong-c"
       },
       {
-        "title": "Lỗi thường gặp",
-        "id": "loi-thuong-gap"
+        "title": "1.2. Toán tử lấy địa chỉ (&)",
+        "id": "12-toan-tu-lay-ia-chi"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "1.3. Minh họa mối quan hệ",
+        "id": "13-minh-hoa-moi-quan-he"
+      },
+      {
+        "title": "2. Truyền tham số theo giá trị",
+        "id": "2-truyen-tham-so-theo-gia-tri"
+      },
+      {
+        "title": "2.1. Pass by value",
+        "id": "21-pass-by-value"
+      },
+      {
+        "title": "2.2. Minh họa truyền giá trị",
+        "id": "22-minh-hoa-truyen-gia-tri"
+      },
+      {
+        "title": "2.3. Khi nào nên truyền giá trị?",
+        "id": "23-khi-nao-nen-truyen-gia-tri"
+      },
+      {
+        "title": "3. Reference là gì?",
+        "id": "3-reference-la-gi"
+      },
+      {
+        "title": "3.1. Khai báo reference",
+        "id": "31-khai-bao-reference"
+      },
+      {
+        "title": "3.2. Thay đổi giá trị qua reference",
+        "id": "32-thay-oi-gia-tri-qua-reference"
+      },
+      {
+        "title": "3.3. Minh họa reference",
+        "id": "33-minh-hoa-reference"
+      },
+      {
+        "title": "3.4. Reference phải được khởi tạo",
+        "id": "34-reference-phai-uoc-khoi-tao"
+      },
+      {
+        "title": "3.5. Reference không thể được liên kết lại",
+        "id": "35-reference-khong-the-uoc-lien-ket-lai"
+      },
+      {
+        "title": "4. Truyền tham số bằng reference",
+        "id": "4-truyen-tham-so-bang-reference"
+      },
+      {
+        "title": "4.1. Pass by reference",
+        "id": "41-pass-by-reference"
+      },
+      {
+        "title": "4.2. So sánh pass by value và pass by reference",
+        "id": "42-so-sanh-pass-by-value-va-pass-by-reference"
+      },
+      {
+        "title": "4.3. Ví dụ đổi chỗ hai số",
+        "id": "43-vi-du-oi-cho-hai-so"
+      },
+      {
+        "title": "5. const reference",
+        "id": "5-const-reference"
+      },
+      {
+        "title": "5.1. Khai báo const reference",
+        "id": "51-khai-bao-const-reference"
+      },
+      {
+        "title": "5.2. Tại sao sử dụng const T&?",
+        "id": "52-tai-sao-su-dung-const-t"
+      },
+      {
+        "title": "5.3. const ngăn sửa dữ liệu thông qua reference",
+        "id": "53-const-ngan-sua-du-lieu-thong-qua-reference"
+      },
+      {
+        "title": "5.4. const reference và temporary object",
+        "id": "54-const-reference-va-temporary-object"
+      },
+      {
+        "title": "5.5. Khi nào dùng T& và const T&?",
+        "id": "55-khi-nao-dung-t-va-const-t"
+      },
+      {
+        "title": "6. Pointer là gì?",
+        "id": "6-pointer-la-gi"
+      },
+      {
+        "title": "6.1. Khai báo pointer",
+        "id": "61-khai-bao-pointer"
+      },
+      {
+        "title": "6.2. Truy cập đối tượng qua pointer",
+        "id": "62-truy-cap-oi-tuong-qua-pointer"
+      },
+      {
+        "title": "6.3. Thay đổi giá trị qua pointer",
+        "id": "63-thay-oi-gia-tri-qua-pointer"
+      },
+      {
+        "title": "6.4. Phân biệt & và *",
+        "id": "64-phan-biet-va"
+      },
+      {
+        "title": "7. Pointer có thể thay đổi đối tượng đích",
+        "id": "7-pointer-co-the-thay-oi-oi-tuong-ich"
+      },
+      {
+        "title": "8. nullptr và con trỏ null",
+        "id": "8-nullptr-va-con-tro-null"
+      },
+      {
+        "title": "8.1. Khởi tạo pointer bằng nullptr",
+        "id": "81-khoi-tao-pointer-bang-nullptr"
+      },
+      {
+        "title": "8.2. Kiểm tra trước khi dereference",
+        "id": "82-kiem-tra-truoc-khi-dereference"
+      },
+      {
+        "title": "8.3. Không dereference nullptr",
+        "id": "83-khong-dereference-nullptr"
+      },
+      {
+        "title": "8.4. Kiểm tra null chưa đủ để đảm bảo an toàn",
+        "id": "84-kiem-tra-null-chua-u-e-am-bao-an-toan"
+      },
+      {
+        "title": "9. Truyền tham số bằng pointer",
+        "id": "9-truyen-tham-so-bang-pointer"
+      },
+      {
+        "title": "9.1. Ví dụ thay đổi giá trị",
+        "id": "91-vi-du-thay-oi-gia-tri"
+      },
+      {
+        "title": "9.2. Pointer có thể biểu diễn tham số tùy chọn",
+        "id": "92-pointer-co-the-bieu-dien-tham-so-tuy-chon"
+      },
+      {
+        "title": "9.3. Pointer được truyền bằng giá trị",
+        "id": "93-pointer-uoc-truyen-bang-gia-tri"
+      },
+      {
+        "title": "10. const và pointer",
+        "id": "10-const-va-pointer"
+      },
+      {
+        "title": "10.1. Pointer đến đối tượng const",
+        "id": "101-pointer-en-oi-tuong-const"
+      },
+      {
+        "title": "10.2. Const pointer",
+        "id": "102-const-pointer"
+      },
+      {
+        "title": "10.3. Const pointer đến const object",
+        "id": "103-const-pointer-en-const-object"
+      },
+      {
+        "title": "10.4. Bảng so sánh",
+        "id": "104-bang-so-sanh"
+      },
+      {
+        "title": "11. So sánh reference và pointer",
+        "id": "11-so-sanh-reference-va-pointer"
+      },
+      {
+        "title": "11.1. Ví dụ tổng hợp",
+        "id": "111-vi-du-tong-hop"
+      },
+      {
+        "title": "11.2. Nên sử dụng loại nào?",
+        "id": "112-nen-su-dung-loai-nao"
+      },
+      {
+        "title": "12. Lifetime của đối tượng",
+        "id": "12-lifetime-cua-oi-tuong"
+      },
+      {
+        "title": "12.1. Lifetime là gì?",
+        "id": "121-lifetime-la-gi"
+      },
+      {
+        "title": "12.2. Reference không kéo dài lifetime trong mọi trường hợp",
+        "id": "122-reference-khong-keo-dai-lifetime-trong-moi-truong-hop"
+      },
+      {
+        "title": "12.3. Pointer cũng không quản lý lifetime",
+        "id": "123-pointer-cung-khong-quan-ly-lifetime"
+      },
+      {
+        "title": "12.4. Cách xử lý an toàn",
+        "id": "124-cach-xu-ly-an-toan"
+      },
+      {
+        "title": "13. Dangling pointer và dangling reference",
+        "id": "13-dangling-pointer-va-dangling-reference"
+      },
+      {
+        "title": "13.1. Dangling pointer",
+        "id": "131-dangling-pointer"
+      },
+      {
+        "title": "13.2. Dangling reference",
+        "id": "132-dangling-reference"
+      },
+      {
+        "title": "13.3. nullptr và dangling khác nhau",
+        "id": "133-nullptr-va-dangling-khac-nhau"
+      },
+      {
+        "title": "13.4. Ba nguyên tắc bảo vệ lifetime",
+        "id": "134-ba-nguyen-tac-bao-ve-lifetime"
+      },
+      {
+        "title": "14. Pointer, reference và std::vector",
+        "id": "14-pointer-reference-va-stdvector"
+      },
+      {
+        "title": "14.1. Truy cập phần tử bằng reference",
+        "id": "141-truy-cap-phan-tu-bang-reference"
+      },
+      {
+        "title": "14.2. Truy cập phần tử bằng pointer",
+        "id": "142-truy-cap-phan-tu-bang-pointer"
+      },
+      {
+        "title": "14.3. Nguy cơ reallocation",
+        "id": "143-nguy-co-reallocation"
+      },
+      {
+        "title": "14.4. Lựa chọn an toàn hơn",
+        "id": "144-lua-chon-an-toan-hon"
+      },
+      {
+        "title": "15. Pointer và mảng",
+        "id": "15-pointer-va-mang"
+      },
+      {
+        "title": "15.1. Mảng cơ bản",
+        "id": "151-mang-co-ban"
+      },
+      {
+        "title": "15.2. Pointer đến phần tử",
+        "id": "152-pointer-en-phan-tu"
+      },
+      {
+        "title": "15.3. Pointer arithmetic",
+        "id": "153-pointer-arithmetic"
+      },
+      {
+        "title": "15.4. Ưu tiên container hiện đại",
+        "id": "154-uu-tien-container-hien-ai"
+      },
+      {
+        "title": "16. Reference trong vòng lặp",
+        "id": "16-reference-trong-vong-lap"
+      },
+      {
+        "title": "16.1. Duyệt bằng giá trị",
+        "id": "161-duyet-bang-gia-tri"
+      },
+      {
+        "title": "16.2. Duyệt bằng reference",
+        "id": "162-duyet-bang-reference"
+      },
+      {
+        "title": "16.3. Duyệt chỉ đọc",
+        "id": "163-duyet-chi-oc"
+      },
+      {
+        "title": "16.4. Bảng lựa chọn",
+        "id": "164-bang-lua-chon"
+      },
+      {
+        "title": "17. Reference, pointer và quyền sở hữu",
+        "id": "17-reference-pointer-va-quyen-so-huu"
+      },
+      {
+        "title": "17.1. Reference không thể hiện quyền sở hữu",
+        "id": "171-reference-khong-the-hien-quyen-so-huu"
+      },
+      {
+        "title": "17.2. Raw pointer không mặc định sở hữu dữ liệu",
+        "id": "172-raw-pointer-khong-mac-inh-so-huu-du-lieu"
+      },
+      {
+        "title": "17.3. Smart pointer",
+        "id": "173-smart-pointer"
+      },
+      {
+        "title": "17.4. Không lạm dụng cấp phát động",
+        "id": "174-khong-lam-dung-cap-phat-ong"
+      },
+      {
+        "title": "18. Cách chọn phương thức truyền tham số",
+        "id": "18-cach-chon-phuong-thuc-truyen-tham-so"
+      },
+      {
+        "title": "18.1. Ba trường hợp cần phân tích",
+        "id": "181-ba-truong-hop-can-phan-tich"
+      },
+      {
+        "title": "19. Những lỗi thường gặp",
+        "id": "19-nhung-loi-thuong-gap"
+      },
+      {
+        "title": "19.1. Dereference nullptr",
+        "id": "191-dereference-nullptr"
+      },
+      {
+        "title": "19.2. Trả pointer đến biến local",
+        "id": "192-tra-pointer-en-bien-local"
+      },
+      {
+        "title": "19.3. Trả reference đến biến local",
+        "id": "193-tra-reference-en-bien-local"
+      },
+      {
+        "title": "19.4. Nhầm pointer với dữ liệu được trỏ đến",
+        "id": "194-nham-pointer-voi-du-lieu-uoc-tro-en"
+      },
+      {
+        "title": "19.5. Nhầm reference assignment với rebinding",
+        "id": "195-nham-reference-assignment-voi-rebinding"
+      },
+      {
+        "title": "19.6. Giữ pointer sau vector reallocation",
+        "id": "196-giu-pointer-sau-vector-reallocation"
+      },
+      {
+        "title": "19.7. Thiếu const correctness",
+        "id": "197-thieu-const-correctness"
+      },
+      {
+        "title": "19.8. Lạm dụng new và delete",
+        "id": "198-lam-dung-new-va-delete"
+      },
+      {
+        "title": "20. Ví dụ thực hành tổng hợp",
+        "id": "20-vi-du-thuc-hanh-tong-hop"
+      },
+      {
+        "title": "Bài toán: Cập nhật điểm học sinh",
+        "id": "bai-toan-cap-nhat-iem-hoc-sinh"
+      },
+      {
+        "title": "20.1. Chương trình C++17",
+        "id": "201-chuong-trinh-c17"
+      },
+      {
+        "title": "20.2. Kết quả",
+        "id": "202-ket-qua"
+      },
+      {
+        "title": "20.3. Phân tích",
+        "id": "203-phan-tich"
+      },
+      {
+        "title": "20.4. Các trường hợp kiểm thử",
+        "id": "204-cac-truong-hop-kiem-thu"
+      },
+      {
+        "title": "20.5. Đánh giá thiết kế",
+        "id": "205-anh-gia-thiet-ke"
+      },
+      {
+        "title": "21. Bài tập tự luyện",
+        "id": "21-bai-tap-tu-luyen"
+      },
+      {
+        "title": "Bài 1. Đổi chỗ hai số bằng reference",
+        "id": "bai-1-oi-cho-hai-so-bang-reference"
+      },
+      {
+        "title": "Bài 2. Tăng giá trị bằng pointer",
+        "id": "bai-2-tang-gia-tri-bang-pointer"
+      },
+      {
+        "title": "Bài 3. Đọc độ dài chuỗi bằng const reference",
+        "id": "bai-3-oc-o-dai-chuoi-bang-const-reference"
+      },
+      {
+        "title": "Bài 4. Tìm phần tử lớn nhất",
+        "id": "bai-4-tim-phan-tu-lon-nhat"
+      },
+      {
+        "title": "Bài 5. Phân biệt pointer và reference",
+        "id": "bai-5-phan-biet-pointer-va-reference"
+      },
+      {
+        "title": "Bài 6. Phân tích dangling pointer",
+        "id": "bai-6-phan-tich-dangling-pointer"
+      },
+      {
+        "title": "Bài 7. Reference với vector",
+        "id": "bai-7-reference-voi-vector"
+      },
+      {
+        "title": "22. Tổng kết kiến thức",
+        "id": "22-tong-ket-kien-thuc"
       },
       {
         "title": "Đọc tiếp",
@@ -6252,7 +8199,7 @@ export const articles = [
   },
   {
     "title": "C++17, C++20 và C++23",
-    "description": "So sánh các tính năng hiện đại thường gặp và kiểm tra hỗ trợ compiler, thư viện.",
+    "description": "So sánh những thay đổi quan trọng giữa C++17, C++20 và C++23, từ Concepts, Ranges, Coroutines, Modules đến std::expected, std::print, cùng hướng dẫn kiểm tra tương thích và nâng cấp dự án.",
     "slug": "/cpp/stl/cpp17-20-23",
     "category": "modern",
     "categoryLabel": "STL và C++ hiện đại",
@@ -6262,10 +8209,18 @@ export const articles = [
       "C++17",
       "C++20",
       "C++23",
-      "language mode",
-      "standard library support",
+      "Modern C++",
       "concepts",
-      "ranges"
+      "ranges",
+      "coroutines",
+      "modules",
+      "std::expected",
+      "std::print",
+      "std::span",
+      "compiler support",
+      "feature-test macros",
+      "CMake",
+      "standard library"
     ],
     "updated": "2026-10-20",
     "collection": "cpp",
@@ -6278,28 +8233,480 @@ export const articles = [
     ],
     "featured": false,
     "priority": 22100,
-    "body": "C++17 là baseline của bộ tài liệu. Chọn chuẩn mới hơn khi dự án kiểm soát được compiler, standard library và nền tảng build cần hỗ trợ.\n\n## Các tính năng tiêu biểu\n\n- **C++17**: structured bindings, `if constexpr`, `std::optional`, `std::variant`, `std::filesystem`, inline variables.\n- **C++20**: concepts, ranges, coroutines, modules, `std::span`, `std::jthread`, toán tử `<=>`.\n- **C++23**: `std::expected`, `std::print` và nhiều bổ sung ngôn ngữ/thư viện khác.\n\nDanh sách này không có nghĩa mọi feature đều sẵn có trên mọi compiler. Tính năng có thể được hỗ trợ một phần; một mode như `-std=c++23` không đảm bảo thư viện đã triển khai đầy đủ.\n\n## Chọn mode\n\n```sh\ng++ -std=c++17 main.cpp -o app\nclang++ -std=c++20 main.cpp -o app\n```\n\nMSVC dùng `/std:c++17` hoặc mode tương ứng. Trong CMake, khai báo yêu cầu theo target; xem [CMake](/cpp/ky-thuat/cmake). Đọc bảng hỗ trợ chính thức của [GCC](https://gcc.gnu.org/projects/cxx-status.html), [Clang](https://clang.llvm.org/cxx_status) hoặc [MSVC](https://learn.microsoft.com/en-us/cpp/overview/visual-cpp-language-conformance?view=msvc-170) và kiểm tra riêng language feature lẫn standard library.\n\n## Hướng dẫn chọn chuẩn\n\n- Chọn chuẩn thấp nhất đáp ứng nhu cầu và chính sách hỗ trợ sản phẩm.\n- Thư viện công khai cần ghi rõ chuẩn tối thiểu và compiler đã kiểm tra.\n- Tránh đặt `latest` trong build tái lập; compiler mới có thể đổi ý nghĩa flag này.\n- Kiểm tra feature theo feature-test macro khi cần hỗ trợ nhiều toolchain.\n\n## Lỗi thường gặp\n\n- Bật C++23 nhưng compile lỗi vì thư viện chuẩn cũ.\n- Dùng extension GNU và cho rằng đó là C++ portable.\n- Nâng chuẩn dự án mà không kiểm tra CI, toolchain của người dùng và dependency.\n\n## Tự luyện\n\nChọn một tính năng C++20 hoặc C++23 bạn muốn dùng. Kiểm tra ngôn ngữ, thư viện, phiên bản compiler, platform CI và fallback nếu thiếu.\n\n## Đọc tiếp\n\nXem [lambda và structured bindings](/cpp/stl/lambda-auto-range), [CMake](/cpp/ky-thuat/cmake) và [lộ trình học](/cpp/bat-dau/lo-trinh-hoc).",
+    "body": "# C++17, C++20 và C++23: Những thay đổi quan trọng\n\nC++ là ngôn ngữ liên tục phát triển. Những phiên bản mới không chỉ bổ sung cú pháp mà còn cải tiến hệ thống kiểu, cách tổ chức chương trình, khả năng lập trình tổng quát và thư viện chuẩn.\n\nTrong số các phiên bản Modern C++, ba cột mốc đáng chú ý là:\n\n- **C++17:** Hoàn thiện nhiều công cụ nền tảng, bổ sung các tiện ích thư viện và cải thiện cách viết chương trình.\n- **C++20:** Một bản nâng cấp lớn với Concepts, Ranges, Coroutines, Modules và những thay đổi quan trọng trong ngôn ngữ.\n- **C++23:** Tiếp tục cải tiến tính biểu đạt, khả năng xử lý lỗi, lập trình tổng quát và thư viện chuẩn.\n\nTuy nhiên, phiên bản mới hơn không tự động đồng nghĩa với chương trình nhanh hơn, an toàn hơn hoặc dễ bảo trì hơn.\n\nViệc lựa chọn chuẩn C++ cần dựa trên **những tính năng thực sự cần thiết, khả năng hỗ trợ của toolchain và yêu cầu tương thích của dự án**.\n\nBài viết này tập trung vào:\n\n1. Những thay đổi quan trọng giữa C++17, C++20 và C++23.\n2. Ví dụ thực tế của các tính năng mới.\n3. Sự khác biệt giữa hỗ trợ ngôn ngữ và thư viện chuẩn.\n4. Cách kiểm tra tính năng bằng feature-test macros.\n5. Cấu hình GCC, Clang, MSVC và CMake.\n6. Những rủi ro khi nâng cấp dự án.\n7. Chiến lược lựa chọn và duy trì chuẩn C++ lâu dài.\n\n**Đối tượng:** Người học đã nắm được C++ căn bản, hàm, reference, pointer, class và những container thường dùng.\n\n---\n\n## 1. Hiểu đúng về các phiên bản C++\n\n### 1.1. Phiên bản C++ là gì?\n\nMỗi phiên bản C++ là một lần cập nhật tiêu chuẩn ngôn ngữ và thư viện chuẩn do tổ chức tiêu chuẩn hóa quốc tế công bố.\n\nMột phiên bản có thể thay đổi:\n\n- Cú pháp và quy tắc ngôn ngữ.\n- Cách kiểm tra kiểu.\n- Các công cụ lập trình tổng quát.\n- Quy tắc về đối tượng và biểu thức.\n- Những thành phần của Standard Library.\n- Một số hành vi được tiêu chuẩn quy định.\n\nVí dụ, đoạn mã:\n\n```cpp\nauto [name, score] = student;\n```\n\nsử dụng *structured bindings*, được giới thiệu trong C++17.\n\nTrong khi đó:\n\n```cpp\ntemplate <std::integral T>\nT square(T value) {\n    return value * value;\n}\n```\n\nsử dụng Concepts của C++20 và cần include `<concepts>`.\n\nVì vậy, một chương trình hợp lệ trong C++20 chưa chắc biên dịch được bằng chế độ C++17.\n\n### 1.2. Chuẩn mới có thay thế hoàn toàn chuẩn cũ?\n\nKhông.\n\nPhần lớn những kiến thức cơ bản như biến, hàm, vòng lặp, class và thuật toán vẫn tiếp tục được sử dụng.\n\nVí dụ:\n\n```cpp\nfor (int i = 0; i < 10; ++i) {\n    std::cout << i << '\\n';\n}\n```\n\nvẫn hợp lệ trong C++17, C++20 và C++23.\n\nTuy nhiên, không nên hiểu các phiên bản mới luôn tương thích hoàn toàn với mã cũ.\n\nMột số thay đổi có thể khiến chương trình trước đây biên dịch được nhưng không còn hợp lệ, hoặc thay đổi cách compiler diễn giải một biểu thức.\n\nĐó là lý do nâng chuẩn cần được xem như một thay đổi kỹ thuật có thể ảnh hưởng đến toàn bộ dự án.\n\n---\n\n## 2. Tổng quan C++17, C++20 và C++23\n\n| Tiêu chí | C++17 | C++20 | C++23 |\n|---|---|---|---|\n| Structured bindings | Có | Có | Có |\n| `if constexpr` | Có | Có | Có |\n| `std::optional` | Có | Có | Có |\n| `std::variant` | Có | Có | Có |\n| `std::filesystem` | Có | Có | Có |\n| Concepts | Không | Có | Có |\n| Ranges | Không | Có | Mở rộng |\n| Coroutines | Không | Có | Bổ sung thư viện |\n| Modules | Không | Có | Bổ sung `std` modules |\n| Three-way comparison `<=>` | Không | Có | Có |\n| `std::span` | Không | Có | Có |\n| `std::format` | Không | Có | Có |\n| `std::jthread` | Không | Có | Có |\n| `std::expected` | Không | Không | Có |\n| `std::print` | Không | Không | Có |\n| `std::mdspan` | Không | Không | Có |\n| Explicit object parameter | Không | Không | Có |\n\nBảng thể hiện phiên bản tiêu chuẩn giới thiệu tính năng.\n\nNó **không bảo đảm mọi tính năng đều đã được compiler và standard library hiện tại triển khai**.\n\nMột số tính năng, đặc biệt là Modules, Coroutines và thư viện C++23, có thể yêu cầu compiler mới, tùy chọn build bổ sung hoặc cách tích hợp riêng.\n\n---\n\n## 3. C++17: Nền tảng Modern C++\n\nC++17 được phát hành trong chu kỳ tiêu chuẩn năm 2017.\n\nPhiên bản này tập trung cải thiện tính rõ ràng, giảm mã lặp và bổ sung những công cụ thư viện phổ biến.\n\n### 3.1. Structured bindings\n\nTrước C++17, khi sử dụng `std::pair`, chúng ta thường truy cập:\n\n```cpp\npoint.first;\npoint.second;\n```\n\nC++17 cho phép tách các thành phần và đặt tên bằng structured bindings.\n\n```cpp\n#include <iostream>\n#include <utility>\n\nint main() {\n    std::pair<int, int> point{10, 20};\n\n    auto [x, y] = point;\n\n    std::cout << x << ' ' << y << '\\n';\n}\n```\n\nKết quả:\n\n```text\n10 20\n```\n\nStructured bindings còn hữu ích khi duyệt map:\n\n```cpp\nfor (const auto& [name, score] : scores) {\n    std::cout << name << \": \" << score << '\\n';\n}\n```\n\nThay vì:\n\n```cpp\nfor (const auto& entry : scores) {\n    std::cout << entry.first << \": \"\n              << entry.second << '\\n';\n}\n```\n\nCách viết mới thường dễ đọc hơn khi các thành phần có ý nghĩa riêng.\n\n### 3.2. if constexpr\n\n`if constexpr` cho phép lựa chọn nhánh tại thời điểm biên dịch dựa trên biểu thức hằng.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <type_traits>\n\ntemplate <typename T>\nvoid describe(const T& value) {\n    if constexpr (std::is_integral_v<T>) {\n        std::cout << \"Integer: \" << value << '\\n';\n    } else {\n        std::cout << \"Other type\\n\";\n    }\n}\n\nint main() {\n    describe(42);\n    describe(3.14);\n}\n```\n\nKết quả:\n\n```text\nInteger: 42\nOther type\n```\n\nKhác với `if` thông thường, trong ngữ cảnh template phù hợp, nhánh không được chọn sẽ bị loại bỏ sau khi điều kiện được xác định khi khởi tạo template.\n\nĐiều này giúp viết generic code mà không cần dùng quá nhiều kỹ thuật SFINAE phức tạp.\n\n### 3.3. std::optional\n\n`std::optional<T>` biểu diễn một giá trị có thể tồn tại hoặc không tồn tại.\n\nHeader:\n\n```cpp\n#include <optional>\n```\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <optional>\n\nstd::optional<int> findPositive(int value) {\n    if (value <= 0) {\n        return std::nullopt;\n    }\n\n    return value;\n}\n\nint main() {\n    auto result = findPositive(10);\n\n    if (result.has_value()) {\n        std::cout << *result << '\\n';\n    }\n}\n```\n\nKết quả:\n\n```text\n10\n```\n\n`std::optional` giúp tránh sử dụng những giá trị đặc biệt như `-1` để biểu diễn thất bại khi `-1` cũng có thể là một giá trị hợp lệ của dữ liệu.\n\nTuy nhiên, optional không chứa thông tin chi tiết về nguyên nhân thất bại. Đây là một khác biệt quan trọng so với `std::expected` của C++23.\n\n### 3.4. std::variant\n\n`std::variant` có thể lưu một giá trị thuộc một trong nhiều kiểu được khai báo trước.\n\n```cpp\n#include <iostream>\n#include <string>\n#include <variant>\n\nint main() {\n    std::variant<int, std::string> value{42};\n\n    std::cout << std::get<int>(value) << '\\n';\n\n    value = std::string{\"Hello\"};\n\n    std::cout << std::get<std::string>(value) << '\\n';\n}\n```\n\nKết quả:\n\n```text\n42\nHello\n```\n\n`std::variant` là một dạng type-safe discriminated union, phù hợp với dữ liệu có nhiều trạng thái được xác định rõ.\n\n### 3.5. Những bổ sung khác của C++17\n\n| Tính năng | Vai trò |\n|---|---|\n| `std::string_view` | Biểu diễn vùng dữ liệu chuỗi không sở hữu |\n| `std::filesystem` | Thao tác với đường dẫn và hệ thống tệp |\n| `std::any` | Lưu giá trị thuộc nhiều kiểu khác nhau |\n| Inline variables | Cho phép định nghĩa biến inline phù hợp trong header |\n| Class template argument deduction | Suy luận tham số template khi khởi tạo đối tượng |\n| Fold expressions | Xử lý parameter packs trong template |\n\n**Giới hạn cần hiểu:** Những kiểu không sở hữu dữ liệu như `std::string_view` không tự bảo đảm vùng dữ liệu tham chiếu vẫn còn sống.\n\nC++17 cung cấp công cụ hiện đại hơn, nhưng người lập trình vẫn phải hiểu lifetime và ownership.\n\n---\n\n## 4. C++20: Một bước nâng cấp lớn\n\nC++20 được xem là một trong những phiên bản quan trọng nhất kể từ C++11.\n\nBốn nhóm tính năng nổi bật gồm:\n\n- Concepts.\n- Ranges.\n- Coroutines.\n- Modules.\n\nNgoài ra còn có nhiều cải tiến về compile-time programming, so sánh đối tượng, xử lý chuỗi và lập trình đồng thời.\n\n---\n\n## 5. Concepts trong C++20\n\n### 5.1. Vấn đề của template truyền thống\n\nTrong C++17, chúng ta có thể viết:\n\n```cpp\ntemplate <typename T>\nT add(T a, T b) {\n    return a + b;\n}\n```\n\nTuy nhiên, không phải kiểu `T` nào cũng hỗ trợ toán tử `+`.\n\nNếu truyền một kiểu không phù hợp, compiler có thể tạo ra thông báo lỗi template khá dài.\n\n### 5.2. Giải pháp với Concepts\n\nC++20 cho phép định nghĩa các ràng buộc rõ ràng hơn.\n\nVí dụ:\n\n```cpp\n#include <concepts>\n#include <iostream>\n\ntemplate <std::integral T>\nT add(T a, T b) {\n    return a + b;\n}\n\nint main() {\n    std::cout << add(5, 3) << '\\n';\n}\n```\n\nKết quả:\n\n```text\n8\n```\n\nConcept `std::integral` yêu cầu kiểu dữ liệu thỏa mãn ràng buộc kiểu số nguyên tương ứng.\n\nVì vậy, lời gọi:\n\n```cpp\nadd(3.5, 2.5);\n```\n\nkhông thỏa ràng buộc của template trên.\n\nCompiler có thể chẩn đoán trực tiếp vấn đề về ràng buộc kiểu.\n\n### 5.3. Tự định nghĩa concept\n\n```cpp\n#include <concepts>\n\ntemplate <typename T>\nconcept Number =\n    std::integral<T> || std::floating_point<T>;\n\ntemplate <Number T>\nT square(T value) {\n    return value * value;\n}\n```\n\nConcept `Number` cho phép các kiểu thỏa mãn `std::integral` hoặc `std::floating_point`.\n\nĐây là một cách mô tả hợp đồng kiểu tại compile time.\n\n### 5.4. Khi nào nên sử dụng Concepts?\n\nConcepts đặc biệt hữu ích khi:\n\n- Xây dựng generic libraries.\n- Thiết kế template APIs.\n- Muốn mô tả ràng buộc kiểu rõ ràng.\n- Cần cải thiện khả năng chẩn đoán lỗi template.\n- Muốn giảm một phần độ phức tạp của SFINAE.\n\nTuy nhiên, Concepts không bảo đảm template luôn đúng về logic.\n\nMột kiểu có thể thỏa mãn các ràng buộc cú pháp nhưng vẫn có hành vi không đáp ứng những giả định ngữ nghĩa của thuật toán.\n\n**Khuyến nghị:** Chỉ áp dụng Concepts khi ràng buộc kiểu mang lại giá trị thực tế. Đừng biến mọi hàm thông thường thành template chỉ để sử dụng tính năng mới.\n\n---\n\n## 6. Ranges trong C++20\n\nRanges cải tiến cách làm việc với container, iterator và các phép biến đổi dữ liệu.\n\n### 6.1. Cách làm với C++17\n\nGiả sử có một vector số nguyên và cần in bình phương của các số chẵn.\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> numbers{1, 2, 3, 4, 5, 6};\n\n    for (int value : numbers) {\n        if (value % 2 == 0) {\n            std::cout << value * value << ' ';\n        }\n    }\n\n    std::cout << '\\n';\n}\n```\n\nKết quả:\n\n```text\n4 16 36\n```\n\nCách này hoàn toàn hợp lệ và dễ hiểu.\n\n### 6.2. Cách làm với C++20 Ranges\n\n```cpp\n#include <iostream>\n#include <ranges>\n#include <vector>\n\nint main() {\n    std::vector<int> numbers{1, 2, 3, 4, 5, 6};\n\n    auto result =\n        numbers\n        | std::views::filter([](int x) {\n            return x % 2 == 0;\n        })\n        | std::views::transform([](int x) {\n            return x * x;\n        });\n\n    for (int value : result) {\n        std::cout << value << ' ';\n    }\n\n    std::cout << '\\n';\n}\n```\n\nKết quả:\n\n```text\n4 16 36\n```\n\n### 6.3. Ranges hoạt động như thế nào?\n\nTrong ví dụ:\n\n```cpp\nstd::views::filter(...)\n```\n\ntạo một view dùng để lựa chọn các phần tử thỏa điều kiện.\n\nCòn:\n\n```cpp\nstd::views::transform(...)\n```\n\ntạo một view biểu diễn kết quả của phép biến đổi.\n\nCác view này thường hỗ trợ tính toán lười (*lazy evaluation*).\n\nĐiều đó có nghĩa những giá trị được xử lý khi chương trình thực sự duyệt view, thay vì nhất thiết tạo ra toàn bộ một vector kết quả ngay lập tức.\n\n### 6.4. View không đồng nghĩa với container sở hữu dữ liệu\n\nVí dụ:\n\n```cpp\nauto even = numbers | std::views::filter(predicate);\n```\n\nNếu view tham chiếu đến `numbers`, cần bảo đảm `numbers` còn sống trong thời gian sử dụng view.\n\nNgoài ra, thay đổi container nguồn có thể làm mất hiệu lực iterator hoặc ảnh hưởng đến cách view hoạt động.\n\n**Cần phân biệt:**\n\n- Container: Quản lý một tập hợp dữ liệu theo hợp đồng của nó.\n- Range: Khái niệm tổng quát về một dãy có thể duyệt.\n- View: Một loại range phù hợp để xây dựng các thao tác và phép biến đổi, không nhất thiết sở hữu dữ liệu.\n\n### 6.5. Khi nào nên dùng Ranges?\n\nRanges phù hợp khi chương trình có nhiều bước:\n\n- Lọc dữ liệu.\n- Biến đổi dữ liệu.\n- Lấy một phần dãy.\n- Kết hợp các phép xử lý.\n- Làm việc với generic algorithms.\n\nTuy nhiên, một vòng lặp `for` đơn giản vẫn có thể dễ đọc hơn một pipeline phức tạp.\n\nĐộ ngắn của mã nguồn không phải tiêu chí duy nhất để đánh giá khả năng bảo trì.\n\n---\n\n## 7. std::span trong C++20\n\n`std::span` cung cấp một view không sở hữu trên một dãy phần tử liên tiếp trong bộ nhớ.\n\nHeader:\n\n```cpp\n#include <span>\n```\n\n### 7.1. Ví dụ\n\n```cpp\n#include <array>\n#include <iostream>\n#include <span>\n#include <vector>\n\nvoid printValues(std::span<const int> values) {\n    for (int value : values) {\n        std::cout << value << ' ';\n    }\n\n    std::cout << '\\n';\n}\n\nint main() {\n    std::array<int, 3> fixed{1, 2, 3};\n    std::vector<int> dynamic{4, 5, 6};\n\n    printValues(fixed);\n    printValues(dynamic);\n}\n```\n\nKết quả:\n\n```text\n1 2 3\n4 5 6\n```\n\n### 7.2. Lợi ích\n\nTrong C++17, một API có thể phải nhận:\n\n```cpp\nvoid process(const int* data, std::size_t size);\n```\n\nVới C++20:\n\n```cpp\nvoid process(std::span<const int> data);\n```\n\n`std::span` kết hợp thông tin về vùng phần tử và kích thước trong cùng một đối tượng.\n\nNó giúp giao diện rõ ràng hơn và giảm nguy cơ truyền sai số phần tử.\n\nTuy nhiên:\n\n- `std::span` không sở hữu vùng nhớ.\n- Không tự kéo dài lifetime của dữ liệu nguồn.\n- Không biến mọi truy cập ngoài biên thành exception.\n- Có thể mất hiệu lực nếu vùng lưu trữ nguồn không còn hợp lệ.\n\n**Nguyên tắc:** `std::span` là công cụ biểu diễn một vùng dữ liệu liên tiếp, không phải công cụ quản lý quyền sở hữu.\n\n---\n\n## 8. Coroutines trong C++20\n\nCoroutines cho phép một hàm tạm dừng thực thi và tiếp tục sau đó mà không cần kết thúc hoàn toàn trạng thái thực thi của nó.\n\nChúng hữu ích trong những hệ thống như:\n\n- Asynchronous I/O.\n- Event-driven programming.\n- Generators.\n- Task scheduling.\n- Các framework xử lý bất đồng bộ.\n\nC++20 giới thiệu những cơ chế ngôn ngữ:\n\n```cpp\nco_await\nco_yield\nco_return\n```\n\n### 8.1. Coroutines không đồng nghĩa với đa luồng\n\nĐây là một nhầm lẫn phổ biến.\n\nCoroutine không tự động tạo thread mới.\n\nNó cũng không tự biến mọi hàm thành thao tác bất đồng bộ.\n\nCơ chế tạm dừng, tiếp tục thực thi và lập lịch phụ thuộc vào coroutine type, awaiter và framework sử dụng.\n\n### 8.2. Coroutine cần hạ tầng phù hợp\n\nC++20 cung cấp các cơ chế cốt lõi và header `<coroutine>`, nhưng không cung cấp một coroutine task framework tổng quát để thay thế mọi thư viện bất đồng bộ.\n\nViệc tự xây dựng coroutine type cần hiểu:\n\n- Coroutine promise.\n- Coroutine handle.\n- Suspension points.\n- Lifetime của coroutine frame.\n- Quy tắc hủy và tiếp tục thực thi.\n\nĐó là lý do nên học Coroutines trong một bài chuyên sâu, thay vì sử dụng chúng chỉ để thay thế hàm hoặc vòng lặp thông thường.\n\n---\n\n## 9. Modules trong C++20\n\nModules được thiết kế nhằm cải tiến mô hình tổ chức mã nguồn và những vấn đề liên quan đến header truyền thống.\n\n### 9.1. Cách tổ chức truyền thống\n\nC++ thường sử dụng:\n\n```cpp\n#include \"Math.h\"\n```\n\nHeader được đưa vào quá trình tiền xử lý, thường làm cho nhiều translation unit phải phân tích lại những nội dung giống nhau.\n\nVới dự án lớn, điều này có thể làm tăng chi phí build.\n\n### 9.2. Module interface\n\nVí dụ một module đơn giản:\n\n```cpp\nexport module Math;\n\nexport int add(int a, int b) {\n    return a + b;\n}\n```\n\nTrong một translation unit khác:\n\n```cpp\nimport Math;\n\nint main() {\n    return add(2, 3);\n}\n```\n\nĐây là ví dụ cú pháp C++20.\n\n**Lưu ý:** Không thể giả định chỉ cần đưa hai đoạn mã vào hai file `.cpp` rồi gọi lệnh biên dịch thông thường là mọi compiler đều xử lý modules chính xác.\n\nQuá trình build phải cung cấp dependency ordering và quản lý những sản phẩm trung gian của module theo yêu cầu toolchain.\n\n### 9.3. Modules có thay thế hoàn toàn headers?\n\nKhông nhất thiết.\n\nTrong thực tế, nhiều dự án vẫn sử dụng:\n\n- Traditional headers.\n- Header-only libraries.\n- Modules.\n- Các thư viện bên thứ ba chưa hỗ trợ modules.\n\nModules và headers có thể cùng tồn tại trong một dự án.\n\n### 9.4. Khi nào nên áp dụng Modules?\n\nModules đáng cân nhắc khi:\n\n- Dự án có quy mô đủ lớn.\n- Toolchain được kiểm soát.\n- Build system hỗ trợ module dependency scanning.\n- Các dependency cần thiết tương thích.\n- Đội ngũ hiểu những vấn đề tích hợp và build cache.\n\nKhông nên chuyển toàn bộ framework sang Modules chỉ vì đang nâng từ C++17 lên C++20.\n\n**Trade-off:** Modules có thể cải thiện cách tổ chức và hiệu quả build, nhưng cũng bổ sung yêu cầu mới đối với compiler, build system và quản lý dependency.\n\n---\n\n## 10. Những cải tiến C++20 khác\n\nNgoài bốn nhóm tính năng lớn, C++20 còn bổ sung nhiều công cụ quan trọng.\n\n### 10.1. Three-way comparison\n\nToán tử:\n\n```cpp\n<=>\n```\n\nđược gọi là *three-way comparison operator*, hay spaceship operator.\n\nVí dụ:\n\n```cpp\n#include <compare>\n\nstruct Version {\n    int major{};\n    int minor{};\n\n    auto operator<=>(const Version&) const = default;\n};\n```\n\nVới các thành viên phù hợp, compiler có thể sinh phép so sánh theo thứ tự khai báo các thành viên.\n\nĐiều này giúp giảm mã lặp khi định nghĩa quan hệ thứ tự cho một kiểu dữ liệu.\n\n### 10.2. Designated initializers\n\n```cpp\nstruct Config {\n    int width{};\n    int height{};\n};\n\nConfig config{\n    .width = 1920,\n    .height = 1080\n};\n```\n\nC++20 hỗ trợ designated initializers cho những aggregate phù hợp.\n\nLưu ý khác với C, C++ yêu cầu các designator tuân theo thứ tự khai báo thành viên.\n\n### 10.3. std::format\n\nHeader:\n\n```cpp\n#include <format>\n```\n\nVí dụ:\n\n```cpp\n#include <format>\n#include <iostream>\n\nint main() {\n    const auto message =\n        std::format(\"Score: {}\", 95);\n\n    std::cout << message << '\\n';\n}\n```\n\nKết quả:\n\n```text\nScore: 95\n```\n\n`std::format` cung cấp cơ chế định dạng chuỗi hiện đại.\n\nTuy nhiên, nó là một tính năng thư viện. Mức hỗ trợ phụ thuộc vào standard library, không chỉ compiler.\n\n### 10.4. std::jthread\n\n`std::jthread` bổ sung một cơ chế quản lý thread thuận tiện hơn trong nhiều tình huống.\n\nKhi đối tượng `std::jthread` còn joinable bị hủy, destructor của nó yêu cầu dừng và thực hiện join theo cơ chế được định nghĩa.\n\nNó cũng tích hợp với stop token để hỗ trợ cooperative cancellation.\n\nĐiều này có thể giảm một số lỗi quản lý vòng đời thread, nhưng không tự giải quyết data race, deadlock hoặc mọi vấn đề đồng bộ.\n\n---\n\n## 11. C++23: Tập trung cải tiến khả năng sử dụng\n\nC++23 tiếp tục mở rộng C++ với nhiều tiện ích mới.\n\nMột số tính năng đáng chú ý:\n\n| Tính năng | Mục đích |\n|---|---|\n| `std::expected` | Biểu diễn kết quả hoặc thông tin lỗi |\n| `std::print` | Xuất dữ liệu có định dạng |\n| `std::println` | Xuất dữ liệu có định dạng và xuống dòng |\n| `std::mdspan` | View dữ liệu nhiều chiều |\n| `std::generator` | Generator dựa trên coroutine |\n| `std::flat_map` | Container ánh xạ dựa trên lưu trữ tuần tự |\n| `std::flat_set` | Container tập hợp dựa trên lưu trữ tuần tự |\n| `std::ranges::to` | Chuyển range thành container |\n| Explicit object parameter | Khai báo tham số đối tượng tường minh |\n| `if consteval` | Phân biệt ngữ cảnh đánh giá tại compile time |\n\nKhông phải mọi tính năng trên đều có trong mọi phiên bản GCC, Clang hoặc MSVC đang được sử dụng.\n\n---\n\n## 12. std::expected trong C++23\n\n`std::expected<T, E>` biểu diễn một kết quả có thể là:\n\n- Giá trị thành công thuộc kiểu `T`.\n- Thông tin lỗi thuộc kiểu `E`.\n\nĐây là một công cụ hữu ích khi thiết kế API có khả năng thất bại theo những điều kiện thông thường.\n\n### 12.1. So sánh với std::optional\n\nTrong C++17:\n\n```cpp\nstd::optional<int>\n```\n\ncho biết có hoặc không có một giá trị `int`.\n\nTrong C++23:\n\n```cpp\nstd::expected<int, std::string>\n```\n\ncó thể biểu diễn giá trị `int` hoặc một chuỗi mô tả lỗi.\n\n### 12.2. Ví dụ hoàn chỉnh\n\n```cpp\n#include <expected>\n#include <iostream>\n#include <string>\n\nstd::expected<int, std::string> divide(\n    int a,\n    int b\n) {\n    if (b == 0) {\n        return std::unexpected(\n            std::string{\"Division by zero\"}\n        );\n    }\n\n    return a / b;\n}\n\nint main() {\n    auto result = divide(10, 2);\n\n    if (result.has_value()) {\n        std::cout << *result << '\\n';\n    } else {\n        std::cerr << result.error() << '\\n';\n    }\n}\n```\n\nKết quả:\n\n```text\n5\n```\n\nNếu gọi:\n\n```cpp\ndivide(10, 0);\n```\n\nhàm trả về thông tin lỗi thay vì thực hiện phép chia.\n\n### 12.3. Vì sao expected hữu ích?\n\nMột API có thể trả về nhiều nguyên nhân thất bại khác nhau.\n\nVí dụ:\n\n- Dữ liệu đầu vào không hợp lệ.\n- Không tìm thấy tài nguyên.\n- Người dùng không có quyền.\n- Kết nối đến dịch vụ thất bại.\n\n`std::expected` giúp mô tả kết quả và lỗi trực tiếp trong kiểu trả về.\n\nTuy nhiên, nó không phải công cụ thay thế exception trong mọi trường hợp.\n\nCần lựa chọn cơ chế xử lý lỗi theo hợp đồng API, khả năng phục hồi và tính chất của lỗi.\n\n**Lưu ý:** Hàm `divide()` ở trên là ví dụ minh họa cơ chế `expected`. Một API chia nguyên tổng quát còn cần xử lý các trường hợp tràn số có dấu như giá trị nhỏ nhất của `int` chia cho `-1`.\n\n---\n\n## 13. std::print và std::println\n\nC++23 bổ sung các công cụ xuất dữ liệu định dạng trong header `<print>`.\n\n### 13.1. Ví dụ\n\n```cpp\n#include <print>\n\nint main() {\n    std::print(\"Hello, {}!\", \"C++23\");\n    std::println();\n    std::println(\"Score: {}\", 95);\n}\n```\n\nKết quả:\n\n```text\nHello, C++23!\nScore: 95\n```\n\n### 13.2. So sánh với C++17\n\nC++17:\n\n```cpp\nstd::cout << \"Score: \" << score << '\\n';\n```\n\nC++23:\n\n```cpp\nstd::println(\"Score: {}\", score);\n```\n\n`std::print` và `std::println` sử dụng cú pháp định dạng hiện đại, phù hợp khi xuất nhiều dữ liệu với định dạng cụ thể.\n\n### 13.3. Hạn chế tương thích\n\n`<print>` là một header C++23.\n\nMột compiler có thể hỗ trợ cú pháp C++23 nhưng standard library đi kèm chưa có header này.\n\nKhi đó chương trình vẫn biên dịch thất bại.\n\nNếu dự án cần hỗ trợ nhiều toolchain, nên kiểm tra tính năng và cung cấp phương án thay thế phù hợp.\n\n---\n\n## 14. std::mdspan và dữ liệu nhiều chiều\n\nC++23 giới thiệu `std::mdspan`, một view cho dữ liệu nhiều chiều.\n\nNó đặc biệt hữu ích trong:\n\n- Tính toán khoa học.\n- Xử lý ma trận.\n- Mô phỏng.\n- Xử lý hình ảnh.\n- Các hệ thống cần kiểm soát layout dữ liệu.\n\n### 14.1. Ví dụ\n\n```cpp\n#include <array>\n#include <iostream>\n#include <mdspan>\n\nint main() {\n    std::array<int, 6> data{\n        1, 2, 3,\n        4, 5, 6\n    };\n\n    std::mdspan matrix(\n        data.data(),\n        2,\n        3\n    );\n\n    std::cout << matrix[1, 2] << '\\n';\n}\n```\n\nKết quả:\n\n```text\n6\n```\n\nVí dụ sử dụng `std::mdspan` của C++23 cùng cú pháp truy cập nhiều chiều.\n\n### 14.2. mdspan có sở hữu bộ nhớ không?\n\nKhông.\n\n`std::mdspan` không tự sở hữu vùng dữ liệu mà nó quan sát.\n\nTrong ví dụ trên, `std::array` sở hữu dữ liệu, còn `std::mdspan` cung cấp cách nhìn dữ liệu dưới dạng hai chiều.\n\nCần bảo đảm vùng nhớ nguồn còn sống và layout, extents phù hợp trong suốt thời gian sử dụng.\n\n### 14.3. Khi nào nên sử dụng?\n\n`std::mdspan` phù hợp nếu dự án đã có vùng dữ liệu liên tiếp và cần ánh xạ nó thành nhiều chiều mà không sao chép.\n\nNó không phải thay thế trực tiếp cho mọi cấu trúc ma trận có ownership.\n\nNgoài ra, mức hỗ trợ `<mdspan>` giữa các thư viện chuẩn có thể khác nhau.\n\n---\n\n## 15. Những cải tiến Ranges trong C++23\n\nC++23 mở rộng Ranges với nhiều công cụ mới.\n\nMột ví dụ là `std::ranges::to`, dùng để chuyển kết quả range thành container.\n\n### 15.1. Ví dụ\n\n```cpp\n#include <iostream>\n#include <ranges>\n#include <vector>\n\nint main() {\n    std::vector<int> numbers{1, 2, 3, 4, 5, 6};\n\n    auto result =\n        numbers\n        | std::views::filter([](int x) {\n            return x % 2 == 0;\n        })\n        | std::ranges::to<std::vector<int>>();\n\n    for (int value : result) {\n        std::cout << value << ' ';\n    }\n\n    std::cout << '\\n';\n}\n```\n\nKết quả:\n\n```text\n2 4 6\n```\n\nKhác với một view chỉ biểu diễn quá trình duyệt, kết quả ở đây là một `std::vector<int>` sở hữu các phần tử được tạo ra.\n\n### 15.2. Lựa chọn view hoặc container\n\nNên sử dụng view khi:\n\n- Chỉ cần duyệt dữ liệu.\n- Không cần lưu kết quả độc lập.\n- Muốn kết hợp nhiều phép biến đổi.\n- Lifetime của dữ liệu nguồn được quản lý rõ ràng.\n\nNên tạo container khi:\n\n- Cần lưu kết quả lâu dài.\n- Cần quyền sở hữu dữ liệu độc lập.\n- Phải truyền kết quả đến những thành phần khác.\n- Muốn tách kết quả khỏi những thay đổi của dữ liệu nguồn.\n\n**Không nên biến mọi pipeline thành vector nếu chương trình chỉ cần duyệt một lần.**\n\nNgược lại, cũng không nên giữ một view không sở hữu dữ liệu khi nguồn có thể bị hủy trước thời điểm sử dụng.\n\n---\n\n## 16. Explicit object parameter trong C++23\n\nC++23 bổ sung khả năng khai báo tường minh tham số đối tượng cho một số hàm thành viên, thường được gọi là *deducing this*.\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nstruct Counter {\n    int value{};\n\n    int get(this const Counter& self) {\n        return self.value;\n    }\n};\n\nint main() {\n    Counter counter{42};\n\n    std::cout << counter.get() << '\\n';\n}\n```\n\nKết quả:\n\n```text\n42\n```\n\nTrong hàm:\n\n```cpp\nint get(this const Counter& self)\n```\n\n`self` là tham số đối tượng tường minh.\n\nCơ chế này có ứng dụng trong generic programming, forwarding và thiết kế các API cần thao tác linh hoạt với kiểu của đối tượng.\n\nTuy nhiên, nó không phải cú pháp bắt buộc để viết class trong C++23.\n\nĐối với những hàm thành viên đơn giản, cú pháp truyền thống vẫn hoàn toàn phù hợp:\n\n```cpp\nint get() const {\n    return value;\n}\n```\n\n---\n\n## 17. Kiểm tra compiler và standard library\n\nĐây là một phần quan trọng khi sử dụng C++20 hoặc C++23 trong dự án thực tế.\n\n### 17.1. Ba lớp hỗ trợ cần phân biệt\n\nKhông nên chỉ kiểm tra compiler có chấp nhận cờ chuẩn hay không.\n\nCần phân biệt:\n\n| Thành phần | Câu hỏi |\n|---|---|\n| Language support | Compiler có hiểu cú pháp và quy tắc tính năng không? |\n| Library support | Standard library có cung cấp header và API không? |\n| Toolchain integration | Linker, build system và nền tảng đích có hỗ trợ không? |\n\nVí dụ:\n\nMột compiler có thể hiểu cú pháp:\n\n```cpp\ntemplate <std::integral T>\n```\n\nnhưng standard library cũ không có `<print>`.\n\nHoặc compiler hỗ trợ Modules, nhưng build system chưa được cấu hình để xử lý module dependency.\n\n### 17.2. Kiểm tra phiên bản compiler\n\nGCC:\n\n```sh\ng++ --version\n```\n\nClang:\n\n```sh\nclang++ --version\n```\n\nMSVC, trong Developer Command Prompt:\n\n```bat\ncl\n```\n\nNhững lệnh trên cho biết phiên bản compiler được sử dụng.\n\nTuy nhiên, số phiên bản compiler không phải bằng chứng đầy đủ về khả năng hỗ trợ từng tính năng.\n\n### 17.3. Các nguồn kiểm tra chính thức\n\nSử dụng những bảng hỗ trợ sau:\n\n- [GCC C++ Standards Support](https://gcc.gnu.org/projects/cxx-status.html)\n- [Clang C++ Status](https://clang.llvm.org/cxx_status.html)\n- [Microsoft C/C++ Language Conformance](https://learn.microsoft.com/en-us/cpp/visual-cpp-language-conformance)\n- [cppreference Compiler Support](https://en.cppreference.com/w/cpp/compiler_support)\n\nKhi kiểm tra một tính năng, cần xác định:\n\n1. Phiên bản compiler bắt đầu hỗ trợ.\n2. Tính năng đã được triển khai đầy đủ hay mới một phần.\n3. Header và standard library có sẵn không.\n4. Có yêu cầu cờ build riêng không.\n5. Có giới hạn nền tảng hoặc vấn đề tương thích nào không.\n\n### 17.4. Không hardcode số phiên bản compiler\n\nVí dụ, không nên chỉ dựa vào:\n\n```cpp\n#if __GNUC__ >= 12\n```\n\nđể kết luận tất cả tính năng C++23 đều sẵn sàng.\n\nPhiên bản compiler có thể không phản ánh đầy đủ phiên bản hoặc cấu hình standard library đang sử dụng.\n\nNgoài ra, các macro nhận dạng compiler đôi khi cũng được những compiler tương thích định nghĩa.\n\n**Giải pháp tốt hơn:** Kiểm tra trực tiếp tính năng bằng feature-test macros hoặc compile tests.\n\n---\n\n## 18. Feature-test macros\n\nC++ cung cấp các macro để kiểm tra mức hỗ trợ của nhiều tính năng ngôn ngữ và thư viện chuẩn.\n\n### 18.1. Macro kiểm tra phiên bản ngôn ngữ\n\nVí dụ:\n\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << __cplusplus << '\\n';\n}\n```\n\nCác giá trị tiêu biểu:\n\n| Phiên bản | Giá trị |\n|---|---|\n| C++17 | `201703L` |\n| C++20 | `202002L` |\n| C++23 | `202302L` |\n\nTrong MSVC, có thể cần bật `/Zc:__cplusplus` để macro phản ánh đúng chế độ ngôn ngữ.\n\n### 18.2. Kiểm tra tính năng ngôn ngữ\n\nVí dụ:\n\n```cpp\n#if defined(__cpp_concepts) && __cpp_concepts >= 202002L\n    #define HAS_CONCEPTS 1\n#else\n    #define HAS_CONCEPTS 0\n#endif\n```\n\nMacro `__cpp_concepts` cho biết mức hỗ trợ tương ứng của Concepts.\n\nCần lưu ý rằng các macro có thể có nhiều giá trị phiên bản khác nhau khi tiêu chuẩn hoặc các defect report làm thay đổi tính năng.\n\nVì vậy, kiểm tra ngưỡng phiên bản cần dựa trên đúng yêu cầu của code.\n\n### 18.3. Kiểm tra tính năng thư viện\n\nCác thư viện chuẩn cung cấp nhiều macro có tiền tố:\n\n```cpp\n__cpp_lib_\n```\n\nVí dụ:\n\n```cpp\n__cpp_lib_expected\n__cpp_lib_print\n__cpp_lib_ranges\n__cpp_lib_span\n```\n\nTrong C++20 trở lên, header `<version>` là một cách tiêu chuẩn để truy cập các library feature-test macros.\n\nVí dụ, trong mã yêu cầu tối thiểu C++20:\n\n```cpp\n#include <version>\n\n#if defined(__cpp_lib_ranges)\n    // Ranges library is advertised as supported\n#endif\n```\n\n### 18.4. Kiểm tra std::expected\n\nVí dụ một dự án cần hỗ trợ C++20 và tận dụng `std::expected` khi có C++23:\n\n```cpp\n#if defined(__has_include)\n    #if __has_include(<expected>)\n        #include <expected>\n    #endif\n#endif\n\n#if defined(__cpp_lib_expected) && \\\n    __cpp_lib_expected >= 202202L\n    #define HAS_EXPECTED 1\n#else\n    #define HAS_EXPECTED 0\n#endif\n```\n\nSau đó:\n\n```cpp\n#if HAS_EXPECTED\n    // C++23 implementation\n#else\n    // Compatible fallback\n#endif\n```\n\nHeader có tồn tại không đồng nghĩa tính năng đã được triển khai với đúng phiên bản cần sử dụng.\n\nVì thế cần kiểm tra macro sau khi include header phù hợp.\n\n### 18.5. Compile tests\n\nFeature-test macros rất hữu ích, nhưng không thay thế hoàn toàn việc biên dịch thử đoạn mã thực tế.\n\nMột tính năng có thể gặp:\n\n- Hỗ trợ chưa đầy đủ.\n- Lỗi implementation.\n- Giới hạn khi kết hợp với tính năng khác.\n- Vấn đề ABI hoặc linking.\n- Cấu hình build không phù hợp.\n\nVới hệ thống production, nên kết hợp feature-test macros, compile tests và CI.\n\n---\n\n## 19. Chọn chuẩn trong GCC, Clang và MSVC\n\n### 19.1. GCC\n\nC++17:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nC++20:\n\n```sh\ng++ -std=c++20 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nC++23:\n\n```sh\ng++ -std=c++23 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\n### 19.2. Clang\n\nC++17:\n\n```sh\nclang++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nC++20:\n\n```sh\nclang++ -std=c++20 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nC++23:\n\n```sh\nclang++ -std=c++23 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\n### 19.3. MSVC\n\nC++17:\n\n```bat\ncl /std:c++17 /EHsc /W4 main.cpp\n```\n\nC++20:\n\n```bat\ncl /std:c++20 /EHsc /W4 main.cpp\n```\n\nVới các phiên bản MSVC hiện có chế độ C++23 preview:\n\n```bat\ncl /std:c++23preview /EHsc /W4 main.cpp\n```\n\nMSVC cũng cung cấp:\n\n```bat\ncl /std:c++latest /EHsc /W4 main.cpp\n```\n\nTuy nhiên, `/std:c++latest` có thể bật thêm những tính năng thử nghiệm hoặc đang phát triển.\n\nKhông nên sử dụng chế độ này làm mặc định cho một dự án production yêu cầu build ổn định và tái lập được.\n\n**Lưu ý:** Các tùy chọn hỗ trợ C++23 của MSVC có thể thay đổi giữa những bản phát hành. Luôn kiểm tra tài liệu `/std` tương ứng với toolset đang sử dụng.\n\n---\n\n## 20. Quản lý chuẩn C++ bằng CMake\n\nTrong dự án có nhiều source file và nhiều nền tảng, không nên phải truyền thủ công cờ `-std=` ở mọi nơi.\n\nCMake cho phép mô tả yêu cầu chuẩn theo target.\n\n### 20.1. Cấu hình C++17\n\n```cmake\ncmake_minimum_required(VERSION 3.20)\n\nproject(ModernCpp LANGUAGES CXX)\n\nadd_executable(app main.cpp)\n\nset_target_properties(app PROPERTIES\n    CXX_STANDARD 17\n    CXX_STANDARD_REQUIRED YES\n    CXX_EXTENSIONS NO\n)\n```\n\n### 20.2. Cấu hình C++20\n\nThay:\n\n```cmake\nCXX_STANDARD 17\n```\n\nthành:\n\n```cmake\nCXX_STANDARD 20\n```\n\n### 20.3. Cấu hình C++23\n\n```cmake\ncmake_minimum_required(VERSION 3.20)\n\nproject(ModernCpp LANGUAGES CXX)\n\nadd_executable(app main.cpp)\n\nset_target_properties(app PROPERTIES\n    CXX_STANDARD 23\n    CXX_STANDARD_REQUIRED YES\n    CXX_EXTENSIONS NO\n)\n```\n\nCMake 3.20 bổ sung khả năng khai báo giá trị `23` cho thuộc tính `CXX_STANDARD`.\n\n### 20.4. Ý nghĩa các thuộc tính\n\n| Thuộc tính | Vai trò |\n|---|---|\n| `CXX_STANDARD` | Phiên bản chuẩn được yêu cầu |\n| `CXX_STANDARD_REQUIRED` | Không cho phép âm thầm hạ xuống chuẩn thấp hơn |\n| `CXX_EXTENSIONS` | Kiểm soát compiler-specific language extensions |\n\nVới:\n\n```cmake\nCXX_STANDARD_REQUIRED YES\n```\n\nCMake không được âm thầm chuyển yêu cầu C++23 thành C++20 chỉ vì toolchain thiếu khả năng chọn chuẩn tương ứng.\n\nTuy nhiên, cấu hình này không chứng minh mọi API C++23 đã được triển khai.\n\n### 20.5. Khi nào dùng target_compile_features?\n\nCMake cũng hỗ trợ:\n\n```cmake\ntarget_compile_features(app PRIVATE cxx_std_20)\n```\n\nCách này diễn đạt yêu cầu tính năng chuẩn tối thiểu của target.\n\nTuy nhiên, với dự án cần kiểm soát nghiêm ngặt chế độ chuẩn và hạn chế extensions, nên thiết lập rõ các thuộc tính liên quan.\n\n### 20.6. Không thay đổi chuẩn toàn bộ dự án nếu không cần thiết\n\nGiả sử dự án gồm:\n\n```text\nProject/\n├── core/\n├── app/\n└── tools/\n```\n\nTrong đó:\n\n- `core` cần hỗ trợ C++17.\n- `app` muốn sử dụng C++20.\n- `tools` là công cụ nội bộ sử dụng C++23.\n\nCó thể cân nhắc cấu hình riêng theo target nếu ranh giới API và dependency cho phép.\n\nKhông nên nâng yêu cầu chuẩn của toàn bộ thư viện công khai chỉ vì một công cụ nội bộ cần tính năng mới.\n\nTuy nhiên, cần kiểm tra rằng các target và thư viện được liên kết tương thích về compiler, ABI, runtime và những kiểu dữ liệu xuất hiện trong giao diện công khai.\n\n---\n\n## 21. Những thay đổi có thể ảnh hưởng mã nguồn cũ\n\nNâng chuẩn C++ không chỉ là thay đổi một cờ build.\n\nMột số thay đổi giữa các phiên bản có thể ảnh hưởng đến source compatibility.\n\n### 21.1. char8_t trong C++20\n\nTrong C++17:\n\n```cpp\nconst char* text = u8\"Hello\";\n```\n\nlà cú pháp hợp lệ.\n\nTrong C++20, UTF-8 string literal với tiền tố `u8` có kiểu mảng `const char8_t` thay vì mảng `const char`.\n\nVì vậy, đoạn gán trên không còn hợp lệ theo cùng cách.\n\nCách biểu diễn phù hợp với kiểu mới:\n\n```cpp\nconst char8_t* text = u8\"Hello\";\n```\n\nCần đặc biệt chú ý khi tích hợp với thư viện hoặc API vẫn yêu cầu `const char*`.\n\nKhông nên xử lý sự khác biệt bằng ép kiểu tùy tiện mà không xác định rõ encoding và hợp đồng API.\n\n### 21.2. Thay đổi quy tắc so sánh\n\nC++20 bổ sung three-way comparison và những thay đổi liên quan đến overload resolution của phép so sánh.\n\nMột số kiểu có overload toán tử phức tạp có thể bị ảnh hưởng khi nâng chuẩn.\n\n### 21.3. Thay đổi constexpr và template\n\nCác phiên bản mới nới rộng khả năng compile-time programming.\n\nĐồng thời, những thay đổi về language rules, constraints và defect reports có thể khiến một đoạn template trước đây hoạt động theo một cách nhưng được phân tích khác trong chuẩn mới.\n\n### 21.4. Thay đổi standard library\n\nMột số API có thể:\n\n- Được bổ sung overload.\n- Thay đổi ràng buộc template.\n- Được đánh dấu deprecated.\n- Được điều chỉnh do defect reports.\n- Có yêu cầu hoặc hành vi được làm rõ.\n\nĐiều đó có thể tác động đến overload resolution, khả năng biên dịch hoặc tính tương thích của mã nguồn.\n\n**Nguyên tắc:** Nâng chuẩn phải đi kèm kiểm tra thực tế, kể cả khi dự án không trực tiếp sử dụng tính năng mới.\n\n---\n\n## 22. Chiến lược nâng cấp C++17 lên C++20 hoặc C++23\n\nVới dự án có nhiều module, nên nâng chuẩn theo từng giai đoạn.\n\n### Giai đoạn 1. Kiểm tra toolchain\n\nXác định:\n\n- Compiler đang sử dụng.\n- Phiên bản standard library.\n- Hệ điều hành và kiến trúc mục tiêu.\n- Build system.\n- Dependency.\n- Những nền tảng cần hỗ trợ.\n\nKhông nâng chuẩn trước khi biết môi trường nào đang phụ thuộc vào phiên bản cũ.\n\n### Giai đoạn 2. Nâng chuẩn mà chưa refactor\n\nVí dụ chuyển CMake từ:\n\n```cmake\nCXX_STANDARD 17\n```\n\nsang:\n\n```cmake\nCXX_STANDARD 20\n```\n\nSau đó build lại dự án mà chưa thay đổi kiến trúc hoặc hàng loạt API.\n\nMục tiêu là xác định bản thân việc thay đổi chuẩn có gây lỗi hay không.\n\n### Giai đoạn 3. Kiểm tra compiler warnings\n\nNên bật các cảnh báo phù hợp.\n\nGCC/Clang:\n\n```sh\n-Wall -Wextra -Wpedantic\n```\n\nNếu dự án có chính sách kiểm soát cảnh báo, có thể nâng dần yêu cầu thành warning-free build.\n\nKhông nên bật một tập hợp cảnh báo nghiêm ngặt rồi bỏ qua hàng trăm cảnh báo chưa được phân loại.\n\n### Giai đoạn 4. Chạy kiểm thử\n\nCần chạy:\n\n- Unit tests.\n- Integration tests.\n- Regression tests.\n- Những bài kiểm thử liên quan đến lifetime.\n- Những bài kiểm thử serialization hoặc binary compatibility khi có liên quan.\n- Hiệu năng chuẩn nếu dự án nhạy cảm với performance.\n\nVới GCC/Clang trên môi trường phù hợp, có thể sử dụng sanitizer:\n\n```sh\ng++ -std=c++20 -g -O1 \\\n    -fsanitize=address,undefined \\\n    -fno-omit-frame-pointer \\\n    main.cpp -o app\n```\n\nSanitizer không chứng minh chương trình hoàn toàn an toàn, nhưng có thể phát hiện nhiều lỗi runtime quan trọng.\n\n### Giai đoạn 5. Sử dụng tính năng mới có chọn lọc\n\nSau khi build và test ổn định, mới cân nhắc:\n\n- Concepts cho generic APIs.\n- Ranges cho data pipelines.\n- `std::span` cho những API nhận vùng dữ liệu.\n- `std::expected` cho các API xử lý lỗi phù hợp.\n- Modules nếu build infrastructure sẵn sàng.\n\nKhông nên refactor toàn bộ codebase chỉ để thay thế những cấu trúc C++17 đang rõ ràng và hoạt động tốt.\n\n---\n\n## 23. Ba nhóm rủi ro cần đánh giá\n\n### 23.1. Trường hợp thành công\n\nDự án nâng chuẩn, build thành công và kiểm thử đạt yêu cầu.\n\nNhững tính năng mới được sử dụng ở đúng vị trí, giúp giảm code lặp hoặc cải thiện thiết kế mà không làm tăng độ phức tạp không cần thiết.\n\n### 23.2. Lỗi kỹ thuật hoặc tương thích\n\nCác tình huống thường gặp:\n\n- Compiler không hỗ trợ cú pháp.\n- Standard library thiếu header.\n- Linker không tìm thấy symbol.\n- Build system không hỗ trợ Modules.\n- Dependency không tương thích.\n- ABI không tương thích giữa các thành phần.\n- Mã nguồn bị ảnh hưởng bởi quy tắc chuẩn mới.\n\nCần xác định nguyên nhân thuộc lớp ngôn ngữ, thư viện, build system hay binary compatibility trước khi sửa.\n\n### 23.3. Sử dụng sai hoặc lạm dụng tính năng mới\n\nVí dụ:\n\n- Sử dụng Ranges pipeline phức tạp cho vòng lặp đơn giản.\n- Giữ view sau khi dữ liệu nguồn hết lifetime.\n- Dùng Coroutines nhưng không quản lý coroutine frame đúng cách.\n- Áp dụng `std::shared_ptr` cho mọi đối tượng.\n- Dùng Modules mà không kiểm soát build dependency.\n- Bật `/std:c++latest` trong production nhưng không khóa phiên bản toolchain.\n\nTính năng mới không loại bỏ trách nhiệm thiết kế phần mềm.\n\nMột số tính năng còn mang đến những quy tắc lifetime và dependency mới cần hiểu rõ.\n\n---\n\n## 24. Thiết kế CI cho nhiều phiên bản C++\n\nNếu một thư viện hoặc dự án cần hỗ trợ nhiều toolchain, nên xây dựng test matrix.\n\nVí dụ:\n\n| Môi trường | Compiler | Chuẩn | Mục tiêu |\n|---|---|---|---|\n| Linux | GCC | C++17 | Kiểm tra baseline |\n| Linux | GCC | C++20 | Kiểm tra nâng chuẩn |\n| Linux | Clang | C++20 | Kiểm tra compiler khác |\n| Windows | MSVC | C++17 | Tương thích Windows |\n| Windows | MSVC | C++20 | Kiểm tra chuẩn hiện đại |\n| Experimental | Toolchain được chọn | C++23 | Kiểm tra tính năng mới |\n\nĐây là mô hình đề xuất, không phải cam kết mọi tổ hợp đều được hỗ trợ.\n\nTrong CI thực tế, cần khóa phiên bản compiler và standard library tương ứng.\n\n### 24.1. Đừng nhầm build matrix với feature matrix\n\n**Build matrix** xác định những môi trường mà dự án thử nghiệm.\n\n**Feature matrix** xác định những tính năng có thể sử dụng trong từng môi trường.\n\nVí dụ, hai toolchain cùng chạy C++23 nhưng có thể khác nhau về hỗ trợ `<print>` hoặc `<mdspan>`.\n\nDo đó, một feature matrix có thể bao gồm:\n\n```text\nFeature           GCC    Clang    MSVC\n--------------------------------------\nConcepts          Test   Test     Test\nRanges            Test   Test     Test\nstd::expected     Test   Test     Test\nstd::print        Test   Test     Test\nModules           Test   Test     Test\n```\n\nCác ô `Test` có nghĩa cần chạy kiểm tra thực tế trên những phiên bản toolchain đã chọn, không phải khẳng định tính năng đang có hoặc không có.\n\n### 24.2. Chính sách tương thích\n\nVới thư viện công khai, nên công bố rõ:\n\n- Minimum C++ standard.\n- Supported compiler versions.\n- Supported platforms.\n- Required standard library features.\n- Những tính năng tùy chọn.\n- Các trường hợp không được hỗ trợ.\n\nKhông nên chỉ ghi chung chung:\n\n```text\nRequires Modern C++\n```\n\nThông tin đó không đủ để người dùng xác định môi trường build phù hợp.\n\n---\n\n## 25. Lựa chọn chuẩn C++ theo dự án\n\n| Loại dự án | Hướng lựa chọn |\n|---|---|\n| Học C++ căn bản | C++17 là baseline phù hợp |\n| Luyện thuật toán | Theo chuẩn online judge |\n| Ứng dụng desktop | C++17/20/23 tùy framework và toolchain |\n| Thư viện phân phối rộng | Ưu tiên chuẩn tối thiểu đáp ứng yêu cầu |\n| Generic library nâng cao | Cân nhắc C++20 Concepts |\n| Data processing pipelines | Cân nhắc C++20 Ranges |\n| Asynchronous framework | Cân nhắc Coroutines khi có hạ tầng phù hợp |\n| API trả kết quả/lỗi | Cân nhắc C++23 `std::expected` |\n| Công cụ nội bộ kiểm soát môi trường | Có thể nâng chuẩn nhanh hơn |\n| Hệ thống nhúng | Theo hỗ trợ thực tế của target toolchain |\n\n### 25.1. Có nên luôn chọn chuẩn mới nhất?\n\nKhông nhất thiết.\n\nVí dụ, nếu dự án hoạt động ổn định trên C++17 và không cần tính năng mới, nâng lên C++23 có thể không mang lại lợi ích tương xứng với chi phí.\n\nNgược lại, nếu phát triển generic libraries phức tạp, Concepts trong C++20 có thể giúp cải thiện API đáng kể.\n\nĐiều quan trọng không phải sử dụng phiên bản cao nhất mà là **chọn chuẩn đáp ứng nhu cầu với chi phí tương thích hợp lý**.\n\n### 25.2. Có nên giữ mã C++17 nhưng biên dịch bằng C++23?\n\nCó thể, nếu mã vẫn hợp lệ và toolchain hỗ trợ.\n\nTuy nhiên, cần hiểu rằng chế độ ngôn ngữ có thể ảnh hưởng đến quy tắc phân tích chương trình ngay cả khi bạn chưa sử dụng API mới.\n\nVì vậy, việc nâng mode vẫn cần được kiểm thử.\n\n### 25.3. Khi nào nên nâng chuẩn toàn bộ dự án?\n\nNên cân nhắc khi:\n\n- Có tính năng mới giải quyết được vấn đề kỹ thuật cụ thể.\n- Các nền tảng mục tiêu đều hỗ trợ.\n- Dependency tương thích.\n- CI có thể kiểm tra đầy đủ.\n- Đội ngũ có đủ kiến thức để bảo trì code mới.\n- Chi phí nâng cấp được đánh giá và chấp nhận.\n\nNếu chỉ một module cần tính năng mới, có thể cân nhắc tách ranh giới phù hợp thay vì nâng toàn bộ codebase.\n\nTuy nhiên, nếu các module chia sẻ nhiều template hoặc API phụ thuộc tính năng mới, việc duy trì nhiều chuẩn trong một dự án có thể làm tăng độ phức tạp.\n\n---\n\n## 26. Những lỗi thường gặp\n\n### 26.1. Bật C++23 nhưng thiếu header\n\nVí dụ:\n\n```cpp\n#include <print>\n```\n\nbị lỗi vì standard library chưa triển khai `<print>`.\n\nCần kiểm tra phiên bản standard library và tính năng cụ thể, không chỉ thay cờ compiler.\n\n### 26.2. Sử dụng cờ compiler không được hỗ trợ\n\nKhông mặc định tất cả compiler đều có cùng tên tùy chọn.\n\nGCC và Clang thường sử dụng:\n\n```sh\n-std=c++23\n```\n\nMSVC có hệ thống tùy chọn `/std:` riêng.\n\n### 26.3. Sử dụng GNU extensions\n\nVí dụ, Variable Length Arrays không phải tính năng chuẩn của C++17, C++20 hoặc C++23.\n\nMột compiler có thể chấp nhận chúng trong chế độ GNU extension.\n\nMuốn kiểm tra tính portable, nên dùng chế độ chuẩn nghiêm ngặt và cảnh báo phù hợp.\n\n### 26.4. Dùng Ranges nhưng bỏ qua lifetime\n\nView có thể tham chiếu dữ liệu nguồn.\n\nNếu dữ liệu nguồn bị hủy hoặc thay đổi làm mất hiệu lực các iterator, việc sử dụng view có thể không còn an toàn.\n\n### 26.5. Nâng chuẩn nhưng không kiểm tra dependency\n\nMột số thư viện hoặc framework có thể có giới hạn phiên bản compiler, ABI hoặc standard library.\n\nKhông nên giả định rằng chỉ cần sửa `CXX_STANDARD` là toàn bộ dependency sẽ tương thích.\n\n### 26.6. Dùng latest trong production\n\n`/std:c++latest` hoặc các chế độ experimental có thể thay đổi tính năng được bật sau khi cập nhật compiler.\n\nDự án yêu cầu reproducible builds nên kiểm soát chặt phiên bản toolchain và lựa chọn chuẩn.\n\n### 26.7. Refactor quá mức\n\nKhông cần đổi toàn bộ vòng lặp sang Ranges, toàn bộ header sang Modules hoặc toàn bộ hàm trả về sang `std::expected`.\n\nCần đánh giá từng thay đổi theo:\n\n- Tính rõ ràng.\n- Tính đúng đắn.\n- Hiệu năng.\n- Khả năng tương thích.\n- Chi phí bảo trì.\n\n---\n\n## 27. Bài tập tự luyện\n\n### Bài 1. So sánh C++17 và C++20\n\nViết chương trình nhận một `std::vector<int>`.\n\nYêu cầu:\n\n- Chọn các số chẵn.\n- Bình phương các số được chọn.\n- In kết quả.\n\nThực hiện hai phiên bản:\n\n1. C++17 sử dụng vòng lặp thông thường.\n2. C++20 sử dụng Ranges.\n\nSo sánh tính rõ ràng và những yêu cầu về lifetime.\n\n### Bài 2. Sử dụng Concepts\n\nViết template function:\n\n```cpp\nsquare(value)\n```\n\nYêu cầu hàm chỉ chấp nhận các kiểu số nguyên hoặc số thực theo các concept chuẩn tương ứng.\n\nThử biên dịch với:\n\n```cpp\nsquare(5);\nsquare(2.5);\nsquare(\"Hello\");\n```\n\nGiải thích vì sao trường hợp thứ ba không thỏa ràng buộc.\n\n### Bài 3. Sử dụng std::span\n\nViết hàm tính tổng các phần tử:\n\n```cpp\nlong long sum(std::span<const int> values);\n```\n\nGọi hàm bằng:\n\n- `std::array<int, N>`.\n- `std::vector<int>`.\n\nKhông tạo bản sao container chỉ để truyền vào hàm.\n\n### Bài 4. Thiết kế API với std::expected\n\nViết hàm chia hai số nguyên:\n\n```cpp\nstd::expected<int, std::string> divide(int a, int b);\n```\n\nXử lý:\n\n- Chia thành công.\n- Chia cho 0.\n- Trường hợp tràn số nguyên có dấu.\n\nGiải thích vì sao trả về giá trị lỗi tốt hơn việc tiếp tục thực hiện phép tính không hợp lệ.\n\n### Bài 5. Kiểm tra feature-test macros\n\nViết chương trình kiểm tra:\n\n```cpp\n__cpp_concepts\n__cpp_lib_ranges\n__cpp_lib_expected\n__cpp_lib_print\n```\n\nSử dụng các header phù hợp.\n\nThực hiện trên toolchain có sẵn và ghi lại:\n\n- Compiler.\n- Phiên bản compiler.\n- Standard library.\n- Chế độ C++.\n- Những tính năng được hỗ trợ.\n\n### Bài 6. Nâng chuẩn dự án CMake\n\nTạo một dự án nhỏ dùng CMake.\n\nYêu cầu:\n\n1. Ban đầu sử dụng C++17.\n2. Nâng lên C++20.\n3. Bật `CXX_STANDARD_REQUIRED`.\n4. Tắt compiler extensions không cần thiết.\n5. Build lại.\n6. Chạy toàn bộ bài kiểm thử hiện có.\n7. Ghi lại những khác biệt.\n\n### Bài 7. Thiết kế chính sách hỗ trợ compiler\n\nGiả sử bạn đang xây dựng thư viện C++ được sử dụng trên Windows và Linux.\n\nHãy lập một tài liệu ngắn quy định:\n\n- Minimum C++ standard.\n- Compiler versions.\n- Required library features.\n- Những cấu hình CI.\n- Chính sách nâng chuẩn.\n- Cách xử lý khi một toolchain thiếu tính năng.\n\nMục tiêu là đảm bảo dự án có thể phát triển lâu dài mà không phụ thuộc vào một compiler duy nhất.\n\n---\n\n## 28. Tổng kết kiến thức\n\n| Phiên bản | Những điểm quan trọng |\n|---|---|\n| C++17 | Structured bindings, `if constexpr`, optional, variant, filesystem |\n| C++20 | Concepts, Ranges, Coroutines, Modules, span, format, jthread |\n| C++23 | expected, print, mdspan, generator, Ranges improvements, explicit object parameter |\n\nSau bài học này, bạn cần nắm được:\n\n1. **C++17 là một nền tảng Modern C++ hoàn chỉnh cho nhiều nhu cầu phổ biến.**\n2. **C++20 là một bản nâng cấp lớn**, đặc biệt đối với generic programming, ranges và asynchronous programming.\n3. **C++23 tiếp tục mở rộng ngôn ngữ và thư viện**, giúp cải thiện nhiều trường hợp sử dụng thực tế.\n4. **Compiler support và standard library support không phải cùng một thứ.**\n5. **Bật chế độ C++23 không đảm bảo mọi tính năng C++23 đều hoạt động.**\n6. **Feature-test macros và compile tests giúp kiểm tra khả năng hỗ trợ chính xác hơn.**\n7. **Nâng chuẩn có thể ảnh hưởng source compatibility, ABI, dependency và build infrastructure.**\n8. **Các tính năng mới không tự bảo đảm code nhanh hơn hoặc an toàn hơn.**\n9. **Nên quản lý chuẩn theo yêu cầu của dự án và hỗ trợ của nền tảng triển khai.**\n10. **Một chiến lược nâng cấp tốt phải có kiểm thử, CI và chính sách tương thích rõ ràng.**\n\n**Nguyên tắc quan trọng nhất:** Sử dụng tính năng mới khi nó giải quyết được vấn đề thực tế, không phải chỉ vì phiên bản mới có cung cấp tính năng đó.\n\nMột codebase sử dụng C++17 đúng cách vẫn có thể dễ bảo trì hơn một codebase C++23 sử dụng quá nhiều kỹ thuật không cần thiết.\n\nNgược lại, những dự án thực sự hưởng lợi từ Concepts, Ranges hoặc `std::expected` cũng không nên bị giữ lại ở C++17 chỉ vì thói quen.\n\nMục tiêu là xây dựng phần mềm đúng đắn, ổn định, có khả năng mở rộng và phù hợp với vòng đời của sản phẩm.\n\n---\n\n## Tài liệu tham khảo\n\nCác nguồn nên sử dụng để kiểm tra tính năng và mức hỗ trợ theo phiên bản:\n\n- [C++17 Features - cppreference](https://en.cppreference.com/w/cpp/17)\n- [C++20 Features - cppreference](https://en.cppreference.com/w/cpp/20)\n- [C++23 Features - cppreference](https://en.cppreference.com/w/cpp/23)\n- [C++ Compiler Support](https://en.cppreference.com/w/cpp/compiler_support)\n- [C++ Feature-test Macros](https://en.cppreference.com/w/cpp/feature_test)\n- [GCC C++ Standards Support](https://gcc.gnu.org/projects/cxx-status.html)\n- [Clang C++ Status](https://clang.llvm.org/cxx_status.html)\n- [Microsoft C/C++ Language Conformance](https://learn.microsoft.com/en-us/cpp/visual-cpp-language-conformance)\n- [MSVC Language Standard Options](https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version)\n- [CMake CXX_STANDARD](https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html)\n\n**Lưu ý:** Bảng hỗ trợ compiler và standard library có thể thay đổi sau mỗi bản phát hành. Khi nâng chuẩn cho dự án production, cần kiểm tra thông tin tương ứng với phiên bản toolchain thực tế.\n\n## Đọc tiếp\n\n- [Lambda, auto và range-based for](/cpp/stl/lambda-auto-range): Tìm hiểu các công cụ hỗ trợ generic programming và xử lý dữ liệu.\n- [RAII và smart pointers](/cpp/stl/raii-smart-pointers): Quản lý ownership, lifetime và tài nguyên trong Modern C++.\n- [CMake và hệ thống build](/cpp/ky-thuat/cmake): Cấu hình chuẩn ngôn ngữ, target, dependency và quy trình build đa nền tảng.\n- [Lộ trình học C++](/cpp/bat-dau/lo-trinh-hoc): Xây dựng lộ trình từ nền tảng đến những kỹ thuật C++ hiện đại.",
     "sourcePath": "content/cpp/modern/cpp17-20-23.md",
     "headings": [
       {
-        "title": "Các tính năng tiêu biểu",
-        "id": "cac-tinh-nang-tieu-bieu"
+        "title": "C++17, C++20 và C++23: Những thay đổi quan trọng",
+        "id": "c17-c20-va-c23-nhung-thay-oi-quan-trong"
       },
       {
-        "title": "Chọn mode",
-        "id": "chon-mode"
+        "title": "1. Hiểu đúng về các phiên bản C++",
+        "id": "1-hieu-ung-ve-cac-phien-ban-c"
       },
       {
-        "title": "Hướng dẫn chọn chuẩn",
-        "id": "huong-dan-chon-chuan"
+        "title": "1.1. Phiên bản C++ là gì?",
+        "id": "11-phien-ban-c-la-gi"
       },
       {
-        "title": "Lỗi thường gặp",
-        "id": "loi-thuong-gap"
+        "title": "1.2. Chuẩn mới có thay thế hoàn toàn chuẩn cũ?",
+        "id": "12-chuan-moi-co-thay-the-hoan-toan-chuan-cu"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "2. Tổng quan C++17, C++20 và C++23",
+        "id": "2-tong-quan-c17-c20-va-c23"
+      },
+      {
+        "title": "3. C++17: Nền tảng Modern C++",
+        "id": "3-c17-nen-tang-modern-c"
+      },
+      {
+        "title": "3.1. Structured bindings",
+        "id": "31-structured-bindings"
+      },
+      {
+        "title": "3.2. if constexpr",
+        "id": "32-if-constexpr"
+      },
+      {
+        "title": "3.3. std::optional",
+        "id": "33-stdoptional"
+      },
+      {
+        "title": "3.4. std::variant",
+        "id": "34-stdvariant"
+      },
+      {
+        "title": "3.5. Những bổ sung khác của C++17",
+        "id": "35-nhung-bo-sung-khac-cua-c17"
+      },
+      {
+        "title": "4. C++20: Một bước nâng cấp lớn",
+        "id": "4-c20-mot-buoc-nang-cap-lon"
+      },
+      {
+        "title": "5. Concepts trong C++20",
+        "id": "5-concepts-trong-c20"
+      },
+      {
+        "title": "5.1. Vấn đề của template truyền thống",
+        "id": "51-van-e-cua-template-truyen-thong"
+      },
+      {
+        "title": "5.2. Giải pháp với Concepts",
+        "id": "52-giai-phap-voi-concepts"
+      },
+      {
+        "title": "5.3. Tự định nghĩa concept",
+        "id": "53-tu-inh-nghia-concept"
+      },
+      {
+        "title": "5.4. Khi nào nên sử dụng Concepts?",
+        "id": "54-khi-nao-nen-su-dung-concepts"
+      },
+      {
+        "title": "6. Ranges trong C++20",
+        "id": "6-ranges-trong-c20"
+      },
+      {
+        "title": "6.1. Cách làm với C++17",
+        "id": "61-cach-lam-voi-c17"
+      },
+      {
+        "title": "6.2. Cách làm với C++20 Ranges",
+        "id": "62-cach-lam-voi-c20-ranges"
+      },
+      {
+        "title": "6.3. Ranges hoạt động như thế nào?",
+        "id": "63-ranges-hoat-ong-nhu-the-nao"
+      },
+      {
+        "title": "6.4. View không đồng nghĩa với container sở hữu dữ liệu",
+        "id": "64-view-khong-ong-nghia-voi-container-so-huu-du-lieu"
+      },
+      {
+        "title": "6.5. Khi nào nên dùng Ranges?",
+        "id": "65-khi-nao-nen-dung-ranges"
+      },
+      {
+        "title": "7. std::span trong C++20",
+        "id": "7-stdspan-trong-c20"
+      },
+      {
+        "title": "7.1. Ví dụ",
+        "id": "71-vi-du"
+      },
+      {
+        "title": "7.2. Lợi ích",
+        "id": "72-loi-ich"
+      },
+      {
+        "title": "8. Coroutines trong C++20",
+        "id": "8-coroutines-trong-c20"
+      },
+      {
+        "title": "8.1. Coroutines không đồng nghĩa với đa luồng",
+        "id": "81-coroutines-khong-ong-nghia-voi-a-luong"
+      },
+      {
+        "title": "8.2. Coroutine cần hạ tầng phù hợp",
+        "id": "82-coroutine-can-ha-tang-phu-hop"
+      },
+      {
+        "title": "9. Modules trong C++20",
+        "id": "9-modules-trong-c20"
+      },
+      {
+        "title": "9.1. Cách tổ chức truyền thống",
+        "id": "91-cach-to-chuc-truyen-thong"
+      },
+      {
+        "title": "9.2. Module interface",
+        "id": "92-module-interface"
+      },
+      {
+        "title": "9.3. Modules có thay thế hoàn toàn headers?",
+        "id": "93-modules-co-thay-the-hoan-toan-headers"
+      },
+      {
+        "title": "9.4. Khi nào nên áp dụng Modules?",
+        "id": "94-khi-nao-nen-ap-dung-modules"
+      },
+      {
+        "title": "10. Những cải tiến C++20 khác",
+        "id": "10-nhung-cai-tien-c20-khac"
+      },
+      {
+        "title": "10.1. Three-way comparison",
+        "id": "101-three-way-comparison"
+      },
+      {
+        "title": "10.2. Designated initializers",
+        "id": "102-designated-initializers"
+      },
+      {
+        "title": "10.3. std::format",
+        "id": "103-stdformat"
+      },
+      {
+        "title": "10.4. std::jthread",
+        "id": "104-stdjthread"
+      },
+      {
+        "title": "11. C++23: Tập trung cải tiến khả năng sử dụng",
+        "id": "11-c23-tap-trung-cai-tien-kha-nang-su-dung"
+      },
+      {
+        "title": "12. std::expected trong C++23",
+        "id": "12-stdexpected-trong-c23"
+      },
+      {
+        "title": "12.1. So sánh với std::optional",
+        "id": "121-so-sanh-voi-stdoptional"
+      },
+      {
+        "title": "12.2. Ví dụ hoàn chỉnh",
+        "id": "122-vi-du-hoan-chinh"
+      },
+      {
+        "title": "12.3. Vì sao expected hữu ích?",
+        "id": "123-vi-sao-expected-huu-ich"
+      },
+      {
+        "title": "13. std::print và std::println",
+        "id": "13-stdprint-va-stdprintln"
+      },
+      {
+        "title": "13.1. Ví dụ",
+        "id": "131-vi-du"
+      },
+      {
+        "title": "13.2. So sánh với C++17",
+        "id": "132-so-sanh-voi-c17"
+      },
+      {
+        "title": "13.3. Hạn chế tương thích",
+        "id": "133-han-che-tuong-thich"
+      },
+      {
+        "title": "14. std::mdspan và dữ liệu nhiều chiều",
+        "id": "14-stdmdspan-va-du-lieu-nhieu-chieu"
+      },
+      {
+        "title": "14.1. Ví dụ",
+        "id": "141-vi-du"
+      },
+      {
+        "title": "14.2. mdspan có sở hữu bộ nhớ không?",
+        "id": "142-mdspan-co-so-huu-bo-nho-khong"
+      },
+      {
+        "title": "14.3. Khi nào nên sử dụng?",
+        "id": "143-khi-nao-nen-su-dung"
+      },
+      {
+        "title": "15. Những cải tiến Ranges trong C++23",
+        "id": "15-nhung-cai-tien-ranges-trong-c23"
+      },
+      {
+        "title": "15.1. Ví dụ",
+        "id": "151-vi-du"
+      },
+      {
+        "title": "15.2. Lựa chọn view hoặc container",
+        "id": "152-lua-chon-view-hoac-container"
+      },
+      {
+        "title": "16. Explicit object parameter trong C++23",
+        "id": "16-explicit-object-parameter-trong-c23"
+      },
+      {
+        "title": "17. Kiểm tra compiler và standard library",
+        "id": "17-kiem-tra-compiler-va-standard-library"
+      },
+      {
+        "title": "17.1. Ba lớp hỗ trợ cần phân biệt",
+        "id": "171-ba-lop-ho-tro-can-phan-biet"
+      },
+      {
+        "title": "17.2. Kiểm tra phiên bản compiler",
+        "id": "172-kiem-tra-phien-ban-compiler"
+      },
+      {
+        "title": "17.3. Các nguồn kiểm tra chính thức",
+        "id": "173-cac-nguon-kiem-tra-chinh-thuc"
+      },
+      {
+        "title": "17.4. Không hardcode số phiên bản compiler",
+        "id": "174-khong-hardcode-so-phien-ban-compiler"
+      },
+      {
+        "title": "18. Feature-test macros",
+        "id": "18-feature-test-macros"
+      },
+      {
+        "title": "18.1. Macro kiểm tra phiên bản ngôn ngữ",
+        "id": "181-macro-kiem-tra-phien-ban-ngon-ngu"
+      },
+      {
+        "title": "18.2. Kiểm tra tính năng ngôn ngữ",
+        "id": "182-kiem-tra-tinh-nang-ngon-ngu"
+      },
+      {
+        "title": "18.3. Kiểm tra tính năng thư viện",
+        "id": "183-kiem-tra-tinh-nang-thu-vien"
+      },
+      {
+        "title": "18.4. Kiểm tra std::expected",
+        "id": "184-kiem-tra-stdexpected"
+      },
+      {
+        "title": "18.5. Compile tests",
+        "id": "185-compile-tests"
+      },
+      {
+        "title": "19. Chọn chuẩn trong GCC, Clang và MSVC",
+        "id": "19-chon-chuan-trong-gcc-clang-va-msvc"
+      },
+      {
+        "title": "19.1. GCC",
+        "id": "191-gcc"
+      },
+      {
+        "title": "19.2. Clang",
+        "id": "192-clang"
+      },
+      {
+        "title": "19.3. MSVC",
+        "id": "193-msvc"
+      },
+      {
+        "title": "20. Quản lý chuẩn C++ bằng CMake",
+        "id": "20-quan-ly-chuan-c-bang-cmake"
+      },
+      {
+        "title": "20.1. Cấu hình C++17",
+        "id": "201-cau-hinh-c17"
+      },
+      {
+        "title": "20.2. Cấu hình C++20",
+        "id": "202-cau-hinh-c20"
+      },
+      {
+        "title": "20.3. Cấu hình C++23",
+        "id": "203-cau-hinh-c23"
+      },
+      {
+        "title": "20.4. Ý nghĩa các thuộc tính",
+        "id": "204-y-nghia-cac-thuoc-tinh"
+      },
+      {
+        "title": "20.5. Khi nào dùng target_compile_features?",
+        "id": "205-khi-nao-dung-targetcompilefeatures"
+      },
+      {
+        "title": "20.6. Không thay đổi chuẩn toàn bộ dự án nếu không cần thiết",
+        "id": "206-khong-thay-oi-chuan-toan-bo-du-an-neu-khong-can-thiet"
+      },
+      {
+        "title": "21. Những thay đổi có thể ảnh hưởng mã nguồn cũ",
+        "id": "21-nhung-thay-oi-co-the-anh-huong-ma-nguon-cu"
+      },
+      {
+        "title": "21.1. char8_t trong C++20",
+        "id": "211-char8t-trong-c20"
+      },
+      {
+        "title": "21.2. Thay đổi quy tắc so sánh",
+        "id": "212-thay-oi-quy-tac-so-sanh"
+      },
+      {
+        "title": "21.3. Thay đổi constexpr và template",
+        "id": "213-thay-oi-constexpr-va-template"
+      },
+      {
+        "title": "21.4. Thay đổi standard library",
+        "id": "214-thay-oi-standard-library"
+      },
+      {
+        "title": "22. Chiến lược nâng cấp C++17 lên C++20 hoặc C++23",
+        "id": "22-chien-luoc-nang-cap-c17-len-c20-hoac-c23"
+      },
+      {
+        "title": "Giai đoạn 1. Kiểm tra toolchain",
+        "id": "giai-oan-1-kiem-tra-toolchain"
+      },
+      {
+        "title": "Giai đoạn 2. Nâng chuẩn mà chưa refactor",
+        "id": "giai-oan-2-nang-chuan-ma-chua-refactor"
+      },
+      {
+        "title": "Giai đoạn 3. Kiểm tra compiler warnings",
+        "id": "giai-oan-3-kiem-tra-compiler-warnings"
+      },
+      {
+        "title": "Giai đoạn 4. Chạy kiểm thử",
+        "id": "giai-oan-4-chay-kiem-thu"
+      },
+      {
+        "title": "Giai đoạn 5. Sử dụng tính năng mới có chọn lọc",
+        "id": "giai-oan-5-su-dung-tinh-nang-moi-co-chon-loc"
+      },
+      {
+        "title": "23. Ba nhóm rủi ro cần đánh giá",
+        "id": "23-ba-nhom-rui-ro-can-anh-gia"
+      },
+      {
+        "title": "23.1. Trường hợp thành công",
+        "id": "231-truong-hop-thanh-cong"
+      },
+      {
+        "title": "23.2. Lỗi kỹ thuật hoặc tương thích",
+        "id": "232-loi-ky-thuat-hoac-tuong-thich"
+      },
+      {
+        "title": "23.3. Sử dụng sai hoặc lạm dụng tính năng mới",
+        "id": "233-su-dung-sai-hoac-lam-dung-tinh-nang-moi"
+      },
+      {
+        "title": "24. Thiết kế CI cho nhiều phiên bản C++",
+        "id": "24-thiet-ke-ci-cho-nhieu-phien-ban-c"
+      },
+      {
+        "title": "24.1. Đừng nhầm build matrix với feature matrix",
+        "id": "241-ung-nham-build-matrix-voi-feature-matrix"
+      },
+      {
+        "title": "24.2. Chính sách tương thích",
+        "id": "242-chinh-sach-tuong-thich"
+      },
+      {
+        "title": "25. Lựa chọn chuẩn C++ theo dự án",
+        "id": "25-lua-chon-chuan-c-theo-du-an"
+      },
+      {
+        "title": "25.1. Có nên luôn chọn chuẩn mới nhất?",
+        "id": "251-co-nen-luon-chon-chuan-moi-nhat"
+      },
+      {
+        "title": "25.2. Có nên giữ mã C++17 nhưng biên dịch bằng C++23?",
+        "id": "252-co-nen-giu-ma-c17-nhung-bien-dich-bang-c23"
+      },
+      {
+        "title": "25.3. Khi nào nên nâng chuẩn toàn bộ dự án?",
+        "id": "253-khi-nao-nen-nang-chuan-toan-bo-du-an"
+      },
+      {
+        "title": "26. Những lỗi thường gặp",
+        "id": "26-nhung-loi-thuong-gap"
+      },
+      {
+        "title": "26.1. Bật C++23 nhưng thiếu header",
+        "id": "261-bat-c23-nhung-thieu-header"
+      },
+      {
+        "title": "26.2. Sử dụng cờ compiler không được hỗ trợ",
+        "id": "262-su-dung-co-compiler-khong-uoc-ho-tro"
+      },
+      {
+        "title": "26.3. Sử dụng GNU extensions",
+        "id": "263-su-dung-gnu-extensions"
+      },
+      {
+        "title": "26.4. Dùng Ranges nhưng bỏ qua lifetime",
+        "id": "264-dung-ranges-nhung-bo-qua-lifetime"
+      },
+      {
+        "title": "26.5. Nâng chuẩn nhưng không kiểm tra dependency",
+        "id": "265-nang-chuan-nhung-khong-kiem-tra-dependency"
+      },
+      {
+        "title": "26.6. Dùng latest trong production",
+        "id": "266-dung-latest-trong-production"
+      },
+      {
+        "title": "26.7. Refactor quá mức",
+        "id": "267-refactor-qua-muc"
+      },
+      {
+        "title": "27. Bài tập tự luyện",
+        "id": "27-bai-tap-tu-luyen"
+      },
+      {
+        "title": "Bài 1. So sánh C++17 và C++20",
+        "id": "bai-1-so-sanh-c17-va-c20"
+      },
+      {
+        "title": "Bài 2. Sử dụng Concepts",
+        "id": "bai-2-su-dung-concepts"
+      },
+      {
+        "title": "Bài 3. Sử dụng std::span",
+        "id": "bai-3-su-dung-stdspan"
+      },
+      {
+        "title": "Bài 4. Thiết kế API với std::expected",
+        "id": "bai-4-thiet-ke-api-voi-stdexpected"
+      },
+      {
+        "title": "Bài 5. Kiểm tra feature-test macros",
+        "id": "bai-5-kiem-tra-feature-test-macros"
+      },
+      {
+        "title": "Bài 6. Nâng chuẩn dự án CMake",
+        "id": "bai-6-nang-chuan-du-an-cmake"
+      },
+      {
+        "title": "Bài 7. Thiết kế chính sách hỗ trợ compiler",
+        "id": "bai-7-thiet-ke-chinh-sach-ho-tro-compiler"
+      },
+      {
+        "title": "28. Tổng kết kiến thức",
+        "id": "28-tong-ket-kien-thuc"
+      },
+      {
+        "title": "Tài liệu tham khảo",
+        "id": "tai-lieu-tham-khao"
       },
       {
         "title": "Đọc tiếp",
@@ -7564,6 +9971,10 @@ export const articles = [
     "sourcePath": "content/cpp/reference/cu-phap.md",
     "headings": [
       {
+        "title": "C++17 Syntax Cheatsheet",
+        "id": "c17-syntax-cheatsheet"
+      },
+      {
         "title": "1. Cấu trúc chương trình C++",
         "id": "1-cau-truc-chuong-trinh-c"
       },
@@ -8206,8 +10617,8 @@ export const articles = [
     ]
   },
   {
-    "title": "C++ best practices và FAQ",
-    "description": "Checklist chọn kiểu, container, ownership, chuẩn ngôn ngữ và cách đọc tài liệu C++.",
+    "title": "C++ Best Practices và FAQ",
+    "description": "Tổng hợp những nguyên tắc lập trình C++ hiện đại, cách lựa chọn kiểu dữ liệu, container, ownership, xử lý lỗi, tối ưu hiệu năng và giải đáp các câu hỏi thường gặp.",
     "slug": "/cpp/tra-cuu/best-practices",
     "category": "reference",
     "categoryLabel": "Tra cứu và xử lý lỗi",
@@ -8215,11 +10626,19 @@ export const articles = [
     "difficulty": "beginner",
     "keywords": [
       "C++ best practices",
-      "FAQ",
+      "C++ FAQ",
+      "Modern C++",
+      "clean code",
       "const",
+      "constexpr",
+      "auto",
+      "RAII",
       "ownership",
+      "smart pointers",
       "bits/stdc++.h",
-      "using namespace std"
+      "using namespace std",
+      "compiler warnings",
+      "performance"
     ],
     "updated": "2026-10-20",
     "collection": "cpp",
@@ -8232,20 +10651,408 @@ export const articles = [
     ],
     "featured": false,
     "priority": 25060,
-    "body": "Trang này tóm tắt quyết định thường gặp; hãy đọc bài chi tiết khi quyết định ảnh hưởng ownership, compatibility hoặc performance.\n\n## Checklist\n\n- Dùng C++17 làm baseline hiện tại của bộ tài liệu; khai báo chuẩn trong build system.\n- Include header trực tiếp; dùng `std::` để định danh API chuẩn rõ ràng.\n- Khởi tạo object ngay; thêm `const` khi không cần sửa.\n- Ưu tiên `std::vector` cho dãy động; chọn container khác theo thao tác chính.\n- Dùng `std::string` cho chuỗi, RAII cho resource và `unique_ptr` cho ownership động đơn nhất.\n- Xác thực input, kiểm tra phép tính/chỉ số và nêu giả định.\n- Bật warning, dùng formatter/compiler hiện đại và kiểm tra trên toolchain mục tiêu.\n- Đo profile trước khi tối ưu vi mô.\n\n## FAQ\n\n**Có nên luôn viết `using namespace std;`?** Không trong header hoặc ví dụ phần mềm chung; qualified names rõ và tránh làm namespace caller ô nhiễm. Trong snippet thi đấu ngắn, lựa chọn đó là phong cách cá nhân nhưng không cần mặc định.\n\n**Có nên dùng `bits/stdc++.h`?** Đây là header tổng hợp riêng của một số GCC/libstdc++, không thuộc ISO C++; phù hợp môi trường thi đấu được kiểm soát, không portable cho phần mềm.\n\n**Có cần tự `new`/`delete`?** Thường không. Dùng value types, container và smart pointer để lifetime rõ.\n\n**Mọi `const` có làm code an toàn không?** Không, nhưng const correctness thể hiện phần nào được phép sửa; vẫn phải quản lý lifetime và aliasing.\n\n**Dùng C++23 được chưa?** Chỉ khi compiler và thư viện trên mọi target hỗ trợ feature cần dùng. Chuẩn mới không đồng nghĩa implementation đầy đủ.\n\n## Kiểm tra nhanh\n\nTrước khi review, build từ clean directory, chạy tests, xem warnings và đọc [debug checklist](/cpp/tra-cuu/debugging-errors).\n\n## Đọc tiếp\n\nChọn [lộ trình học](/cpp/bat-dau/lo-trinh-hoc), [C++17/20/23](/cpp/stl/cpp17-20-23) hoặc [Clean Code](/cpp/ky-thuat/clean-code).",
+    "body": "# C++ Best Practices và FAQ\n\nC++ cung cấp nhiều cách để giải quyết cùng một vấn đề. Hai chương trình có thể cho kết quả giống nhau nhưng khác biệt đáng kể về độ an toàn, khả năng bảo trì, hiệu năng và tính tương thích.\n\nVí dụ, một tập hợp số nguyên có thể được lưu bằng:\n\n- Mảng C truyền thống.\n- `std::array`.\n- `std::vector`.\n- Một cấu trúc dữ liệu được tự triển khai.\n\nKhông có lựa chọn nào luôn tốt nhất trong mọi trường hợp.\n\nĐiều quan trọng là hiểu yêu cầu của chương trình và lựa chọn công cụ phù hợp.\n\n**Best practices** là những nguyên tắc và thói quen được khuyến nghị dựa trên kinh nghiệm phát triển phần mềm. Chúng giúp giảm các lỗi thường gặp, nhưng không thay thế việc phân tích yêu cầu kỹ thuật.\n\nBài viết này tổng hợp:\n\n1. Checklist viết C++ hiện đại.\n2. Quy tắc lựa chọn kiểu dữ liệu và container.\n3. Cách quản lý ownership và lifetime.\n4. Thiết kế hàm và API.\n5. Xử lý lỗi và bảo vệ dữ liệu đầu vào.\n6. Biên dịch, kiểm thử và debug.\n7. Nguyên tắc tối ưu hiệu năng.\n8. Những câu hỏi thường gặp về C++.\n\n**Tiêu chuẩn mặc định:** C++17.\n\nNhững tính năng chỉ xuất hiện ở C++20 hoặc C++23 sẽ được ghi rõ khi đề cập.\n\n---\n\n## 1. Checklist C++ Best Practices\n\nBảng dưới đây là điểm bắt đầu để kiểm tra một chương trình C++.\n\n| Lĩnh vực | Khuyến nghị |\n|---|---|\n| Chuẩn ngôn ngữ | Chọn và khai báo phiên bản C++ tường minh |\n| Header | Include trực tiếp những header cần sử dụng |\n| Biến | Khởi tạo trước khi đọc giá trị |\n| Kiểu dữ liệu | Chọn kiểu theo phạm vi giá trị thực tế |\n| `const` | Sử dụng khi không cần sửa dữ liệu |\n| `constexpr` | Sử dụng cho giá trị hoặc phép tính hằng phù hợp |\n| `auto` | Sử dụng khi kiểu rõ ràng hoặc tránh khai báo dài dòng |\n| Container | Ưu tiên container chuẩn phù hợp với thao tác |\n| Chuỗi | Sử dụng `std::string` cho văn bản thông thường |\n| Hàm | Giữ trách nhiệm rõ ràng, hợp đồng dễ hiểu |\n| Ownership | Ưu tiên value semantics và RAII |\n| Pointer | Không dereference con trỏ không hợp lệ |\n| Reference | Bảo đảm đối tượng được tham chiếu còn sống |\n| Input | Kiểm tra dữ liệu từ nguồn không đáng tin cậy |\n| Số học | Kiểm tra chia cho 0, tràn số và chuyển kiểu |\n| Chỉ số | Không truy cập phần tử ngoài phạm vi |\n| Compiler | Bật các cảnh báo phù hợp |\n| Testing | Kiểm tra trường hợp bình thường và trường hợp biên |\n| Debugging | Sử dụng debugger, sanitizer khi được hỗ trợ |\n| Performance | Đo đạc trước khi tối ưu |\n\nĐây là checklist mặc định, không phải danh sách những quy tắc tuyệt đối.\n\nVí dụ, `std::vector` là lựa chọn tốt cho dữ liệu có kích thước linh hoạt, nhưng một mảng cố định hoặc cấu trúc dữ liệu chuyên dụng có thể phù hợp hơn trong hệ thống nhúng.\n\n---\n\n## 2. Chọn chuẩn C++ rõ ràng\n\n### 2.1. Không phụ thuộc vào mặc định của compiler\n\nMột compiler có thể sử dụng chuẩn mặc định khác nhau tùy phiên bản và cấu hình.\n\nDo đó, thay vì:\n\n```sh\ng++ main.cpp -o app\n```\n\nNên khai báo rõ:\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nViệc này giúp:\n\n- Xác định rõ chuẩn ngôn ngữ dự án yêu cầu.\n- Giảm khác biệt giữa môi trường phát triển.\n- Phát hiện việc sử dụng tính năng không thuộc chuẩn đã chọn.\n- Giúp CI và những lập trình viên khác tái tạo bản build.\n\n### 2.2. C++17 không phải giới hạn tối đa\n\nC++17 được sử dụng làm baseline trong bộ tài liệu này vì có khả năng tương thích rộng và cung cấp nhiều công cụ Modern C++.\n\nTuy nhiên, nếu dự án thực sự cần Concepts hoặc Ranges, C++20 có thể là lựa chọn hợp lý hơn.\n\nTương tự, C++23 bổ sung các công cụ như `std::expected` và `std::print`.\n\n**Nguyên tắc:** Chọn chuẩn thấp nhất đáp ứng đầy đủ yêu cầu và chính sách hỗ trợ của dự án, không phải chuẩn thấp nhất bằng mọi giá.\n\n### 2.3. Cấu hình CMake\n\nVí dụ:\n\n```cmake\ncmake_minimum_required(VERSION 3.20)\n\nproject(MyApp LANGUAGES CXX)\n\nadd_executable(app main.cpp)\n\nset_target_properties(app PROPERTIES\n    CXX_STANDARD 17\n    CXX_STANDARD_REQUIRED YES\n    CXX_EXTENSIONS NO\n)\n```\n\nTrong đó:\n\n- `CXX_STANDARD`: Phiên bản chuẩn mong muốn.\n- `CXX_STANDARD_REQUIRED`: Yêu cầu chuẩn được hỗ trợ, tránh tự hạ chuẩn.\n- `CXX_EXTENSIONS`: Kiểm soát việc sử dụng các compiler extensions.\n\n**Lưu ý:** Khai báo chuẩn trong CMake không có nghĩa standard library đã triển khai đầy đủ mọi tính năng thuộc chuẩn đó.\n\n---\n\n## 3. Include header đúng cách\n\n### 3.1. Include trực tiếp những gì cần dùng\n\nVí dụ:\n\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::vector<std::string> names{\n        \"An\",\n        \"Binh\",\n        \"Chi\"\n    };\n\n    std::cout << names.size() << '\\n';\n}\n```\n\nCác header được sử dụng:\n\n| Header | Thành phần |\n|---|---|\n| `<iostream>` | `std::cout` |\n| `<string>` | `std::string` |\n| `<vector>` | `std::vector` |\n\nKhông nên dựa vào việc một header khác tình cờ include hộ thành phần đang sử dụng.\n\nVí dụ, nếu dùng `std::sort`, hãy include `<algorithm>`.\n\n### 3.2. Tránh include không cần thiết\n\nKhông nên thêm hàng chục header vào mọi source file nếu chương trình chỉ sử dụng một vài thành phần.\n\nViệc include không cần thiết có thể:\n\n- Tăng chi phí biên dịch.\n- Tạo thêm dependency.\n- Khiến cấu trúc module khó kiểm soát.\n- Làm giảm tính rõ ràng của mã nguồn.\n\nĐối với dự án lớn, thiết kế header và dependency hợp lý có thể ảnh hưởng đáng kể đến thời gian build.\n\n### 3.3. Không sử dụng compiler-specific header như mặc định\n\nVí dụ:\n\n```cpp\n#include <bits/stdc++.h>\n```\n\nĐây không phải header thuộc tiêu chuẩn ISO C++.\n\nNó thường xuất hiện trong môi trường GCC sử dụng libstdc++, đặc biệt ở các bài lập trình thi đấu.\n\nKhông nên sử dụng làm mặc định trong tài liệu C++ portable hoặc phần mềm production.\n\n---\n\n## 4. Khởi tạo biến và sử dụng const\n\n### 4.1. Khởi tạo biến trước khi sử dụng\n\nKhông nên:\n\n```cpp\nint count;\n\nstd::cout << count;\n```\n\nVới biến `int` cục bộ thông thường chưa được khởi tạo, việc đọc giá trị bất định có thể gây undefined behavior.\n\nNên viết:\n\n```cpp\nint count{};\n```\n\nHoặc khởi tạo bằng giá trị thực tế:\n\n```cpp\nint count{10};\n```\n\n### 4.2. Ưu tiên khởi tạo bằng dấu ngoặc nhọn khi phù hợp\n\nVí dụ:\n\n```cpp\nint age{16};\ndouble score{8.5};\nbool active{true};\n```\n\nMột ưu điểm của list initialization là ngăn nhiều phép chuyển đổi thu hẹp không an toàn.\n\nVí dụ:\n\n```cpp\nint value{3.14};\n```\n\nCâu lệnh này không hợp lệ vì phép chuyển đổi từ `double` sang `int` làm mất phần thập phân.\n\nTuy nhiên, `{}` không phải lúc nào cũng tương đương `()` đối với class có constructor nhận `std::initializer_list`.\n\nVí dụ:\n\n```cpp\n#include <vector>\n\nstd::vector<int> a(3, 10);\nstd::vector<int> b{3, 10};\n```\n\nKết quả:\n\n```text\na = [10, 10, 10]\nb = [3, 10]\n```\n\nVì vậy, cần hiểu ngữ nghĩa khởi tạo thay vì áp dụng một phong cách máy móc.\n\n### 4.3. Sử dụng const khi dữ liệu không cần thay đổi\n\nVí dụ:\n\n```cpp\nconst int maxStudents{45};\n```\n\nHoặc:\n\n```cpp\nconst double average =\n    static_cast<double>(total) / count;\n```\n\n`const` thể hiện rằng đối tượng không được sửa đổi thông qua giao diện const tương ứng.\n\nLợi ích:\n\n- Giảm nguy cơ thay đổi dữ liệu ngoài ý muốn.\n- Làm rõ mục đích của biến.\n- Giúp người đọc hiểu những phần nào được phép thay đổi.\n- Hỗ trợ thiết kế giao diện hàm rõ ràng hơn.\n\nTuy nhiên, `const` không tự động giải quyết lifetime, aliasing, data races hoặc mọi vấn đề an toàn bộ nhớ.\n\n### 4.4. Phân biệt const và constexpr\n\n```cpp\nconst int limit{100};\n\nconstexpr int secondsPerMinute{60};\n```\n\n`const` biểu thị khả năng sửa đổi.\n\n`constexpr` yêu cầu đối tượng hoặc hàm đáp ứng những quy tắc liên quan đến constant expressions.\n\nKhông phải mọi biến `const` đều có giá trị được xác định trong quá trình biên dịch.\n\n---\n\n## 5. Sử dụng auto hợp lý\n\nC++11 giới thiệu `auto`, cho phép compiler suy luận kiểu từ biểu thức khởi tạo.\n\nVí dụ:\n\n```cpp\nauto age = 16;\nauto price = 19.99;\n```\n\nCác kiểu được suy luận tương ứng là `int` và `double`.\n\n### 5.1. Khi nào auto hữu ích?\n\nKhi kiểu dữ liệu dài:\n\n```cpp\nauto it = scores.find(\"An\");\n```\n\nKhi sử dụng structured bindings của C++17:\n\n```cpp\nfor (const auto& [name, score] : scores) {\n    std::cout << name << \": \" << score << '\\n';\n}\n```\n\nKhi kiểu đã rõ ràng từ biểu thức:\n\n```cpp\nauto player = std::make_unique<Player>();\n```\n\nVí dụ cuối giả định kiểu `Player` đã được định nghĩa.\n\n### 5.2. Khi nào nên khai báo tường minh?\n\nVới những kiểu đơn giản và có ý nghĩa quan trọng:\n\n```cpp\nint age{16};\ndouble average{8.5};\n```\n\nViệc ghi rõ kiểu có thể giúp người đọc hiểu hợp đồng dữ liệu ngay lập tức.\n\n### 5.3. auto không làm kiểu dữ liệu trở nên động\n\n```cpp\nauto value = 10;\n```\n\n`value` vẫn có kiểu `int` tĩnh.\n\nKhông thể tùy ý gán một đối tượng chuỗi cho biến này.\n\n**Khuyến nghị:** Dùng `auto` khi giúp code rõ hơn, không phải để thay thế mọi khai báo kiểu.\n\n---\n\n## 6. Lựa chọn kiểu dữ liệu an toàn\n\n### 6.1. Chọn kiểu theo phạm vi giá trị\n\nGiả sử cần lưu tổng số tiền:\n\n\\[\nTotal = Quantity \\times Price\n\\]\n\nNếu số lượng và đơn giá đều có thể lớn, kết quả có thể vượt giới hạn của `int`.\n\nMột lỗi thường gặp:\n\n```cpp\nint quantity{1'000'000};\nint price{1'000'000};\n\nlong long total = quantity * price;\n```\n\nTrong môi trường `int` 32 bit, phép nhân gây tràn số nguyên có dấu trước khi kết quả được gán cho `long long`.\n\nCách xử lý:\n\n```cpp\nlong long total =\n    static_cast<long long>(quantity) * price;\n```\n\nĐồng thời phải kiểm tra rằng kết quả nằm trong phạm vi của `long long`.\n\n### 6.2. Không mặc định unsigned luôn tốt hơn\n\n```cpp\nunsigned int count{0};\n\n--count;\n```\n\nKết quả không phải `-1`.\n\nSố nguyên không dấu sử dụng số học modulo, nên giá trị sẽ quay về giới hạn lớn của kiểu.\n\nUnsigned phù hợp khi cần biểu diễn những thao tác và miền giá trị cụ thể, nhưng không tự động ngăn mọi lỗi số học.\n\n### 6.3. Sử dụng kiểu độ rộng cố định khi thật sự cần\n\nVí dụ:\n\n```cpp\n#include <cstdint>\n\nstd::int32_t value{100};\nstd::uint64_t counter{1000};\n```\n\nCác kiểu này hữu ích khi làm việc với dữ liệu nhị phân, giao thức hoặc cấu trúc có yêu cầu độ rộng chính xác.\n\nKhông nhất thiết phải thay toàn bộ biến `int` bằng `std::int32_t`.\n\n### 6.4. Không dùng double cho tiền chính xác một cách tùy tiện\n\n```cpp\ndouble price{0.1};\n```\n\nTrong hệ biểu diễn số thực nhị phân thông dụng, nhiều số thập phân không được biểu diễn chính xác tuyệt đối.\n\nNếu hệ thống yêu cầu tính toán tiền chính xác, có thể sử dụng đơn vị nguyên nhỏ nhất hoặc một kiểu số thập phân phù hợp.\n\nLựa chọn còn phụ thuộc vào đơn vị tiền, quy tắc làm tròn và yêu cầu nghiệp vụ.\n\n---\n\n## 7. Chọn container phù hợp\n\nC++ Standard Library cung cấp nhiều container.\n\nKhông nên sử dụng một loại container cho mọi bài toán.\n\n### 7.1. Bảng lựa chọn nhanh\n\n| Yêu cầu | Container thường phù hợp |\n|---|---|\n| Dãy kích thước cố định | `std::array` |\n| Dãy kích thước linh hoạt | `std::vector` |\n| Thêm/xóa đầu và cuối thường xuyên | `std::deque` |\n| Ánh xạ khóa-giá trị có thứ tự | `std::map` |\n| Ánh xạ khóa-giá trị bằng hash | `std::unordered_map` |\n| Tập hợp phần tử duy nhất có thứ tự | `std::set` |\n| Tập hợp duy nhất bằng hash | `std::unordered_set` |\n| Hàng đợi FIFO | `std::queue` |\n| Ngăn xếp LIFO | `std::stack` |\n| Hàng đợi ưu tiên | `std::priority_queue` |\n\nĐây là các lựa chọn phổ biến, không phải kết luận rằng mỗi container luôn tối ưu nhất cho thao tác được liệt kê.\n\n### 7.2. Vì sao std::vector thường là lựa chọn mặc định?\n\n```cpp\n#include <vector>\n\nstd::vector<int> numbers{1, 2, 3};\n```\n\n`std::vector` có những ưu điểm:\n\n- Quản lý bộ nhớ tự động.\n- Lưu các phần tử liên tiếp.\n- Truy cập theo chỉ số trong thời gian hằng số.\n- Thêm phần tử ở cuối với chi phí khấu hao hằng số.\n- Tương thích với nhiều thuật toán STL.\n\nVới nhiều bài toán xử lý dãy dữ liệu, `std::vector` là điểm bắt đầu hợp lý.\n\n### 7.3. Không dùng map chỉ vì cần tìm kiếm nhanh\n\n`std::map` và `std::unordered_map` có những đặc điểm khác nhau.\n\n| Container | Đặc điểm chính | Tìm kiếm |\n|---|---|---|\n| `std::map` | Duy trì thứ tự khóa | `O(log n)` |\n| `std::unordered_map` | Dựa trên hash | Trung bình `O(1)`, trường hợp xấu có thể `O(n)` |\n\nNếu cần duyệt khóa theo thứ tự, `std::map` có thể phù hợp.\n\nNếu chủ yếu tìm kiếm theo khóa và không cần thứ tự, `std::unordered_map` đáng cân nhắc.\n\nTuy nhiên, hiệu năng thực tế còn phụ thuộc vào số lượng phần tử, chi phí hash, locality, allocator và đặc điểm dữ liệu.\n\n**Nguyên tắc:** Chọn container theo thao tác chính, yêu cầu dữ liệu và kết quả benchmark, không chỉ dựa vào độ phức tạp lý thuyết.\n\n---\n\n## 8. Quản lý ownership và lifetime\n\nTrong C++, ownership là trách nhiệm quản lý vòng đời tài nguyên.\n\nTài nguyên có thể là:\n\n- Bộ nhớ động.\n- File handle.\n- Socket.\n- Mutex.\n- Kết nối hoặc handle hệ thống.\n- Những đối tượng cần giải phóng theo quy trình cụ thể.\n\n### 8.1. Ưu tiên value semantics\n\nNếu chỉ cần lưu một số nguyên:\n\n```cpp\nint value{42};\n```\n\nKhông cần:\n\n```cpp\nint* value = new int{42};\n```\n\nVới tập hợp số nguyên:\n\n```cpp\nstd::vector<int> values{1, 2, 3};\n```\n\nthường đơn giản hơn tự cấp phát một mảng động.\n\n### 8.2. Sử dụng RAII\n\nRAII (Resource Acquisition Is Initialization) gắn việc quản lý tài nguyên với vòng đời của một đối tượng.\n\nKhi đối tượng quản lý tài nguyên được hủy, destructor thực hiện những thao tác giải phóng phù hợp.\n\nVí dụ, `std::vector` tự quản lý vùng nhớ của nó.\n\nMột ví dụ khác:\n\n```cpp\n#include <fstream>\n\nint main() {\n    std::ofstream file{\"output.txt\"};\n\n    if (!file) {\n        return 1;\n    }\n\n    file << \"Hello\\n\";\n\n    if (!file) {\n        return 1;\n    }\n}\n```\n\nĐối tượng `file` quản lý file handle theo cơ chế RAII.\n\nVới ứng dụng cần xác nhận chắc chắn dữ liệu đã được ghi thành công, cần kiểm tra thêm kết quả flush hoặc close và các yêu cầu liên quan đến độ bền dữ liệu.\n\n### 8.3. Ưu tiên unique_ptr khi cần ownership động độc quyền\n\nVí dụ:\n\n```cpp\n#include <memory>\n\nauto value = std::make_unique<int>(42);\n```\n\n`std::unique_ptr` quản lý đối tượng động thông qua quyền sở hữu độc quyền.\n\nKhi không còn cần thiết, đối tượng có thể được giải phóng tự động theo vòng đời của chủ sở hữu.\n\n### 8.4. Không lạm dụng shared_ptr\n\n`std::shared_ptr` hỗ trợ chia sẻ quyền sở hữu.\n\nTuy nhiên, nó có thêm chi phí quản lý và có thể tạo chu trình sở hữu khiến đối tượng không được giải phóng như mong muốn.\n\nKhông nên chuyển mọi pointer thành `shared_ptr` để tránh phải suy nghĩ về lifetime.\n\n**Thứ tự cân nhắc thường hợp lý:**\n\n1. Đối tượng thông thường.\n2. Container chuẩn.\n3. `std::unique_ptr` khi cần sở hữu động.\n4. `std::shared_ptr` khi thật sự cần quyền sở hữu chia sẻ.\n\nRaw pointer và reference vẫn hữu ích để truy cập đối tượng không sở hữu.\n\n---\n\n## 9. Truyền tham số đúng mục đích\n\nMột API tốt phải thể hiện rõ hàm cần gì và có thể làm gì với dữ liệu.\n\n### 9.1. Bảng lựa chọn\n\n| Tình huống | Kiểu tham số thường phù hợp |\n|---|---|\n| Truyền số nguyên nhỏ | `int` |\n| Truyền boolean | `bool` |\n| Đọc một chuỗi hiện có | `const std::string&` |\n| Đọc một vector lớn | `const std::vector<T>&` |\n| Sửa đối tượng của người gọi | `T&` |\n| Đối tượng có thể vắng mặt | `T*` |\n| Chuyển ownership động độc quyền | `std::unique_ptr<T>` |\n\n### 9.2. Ví dụ\n\nTruyền giá trị:\n\n```cpp\nint square(int value) {\n    return value * value;\n}\n```\n\nTruyền tham chiếu để sửa:\n\n```cpp\nvoid addBonus(int& score) {\n    score += 5;\n}\n```\n\nĐọc đối tượng mà không tạo bản sao:\n\n```cpp\n#include <iostream>\n#include <string>\n\nvoid printName(const std::string& name) {\n    std::cout << name << '\\n';\n}\n```\n\nTham số tùy chọn:\n\n```cpp\n#include <iostream>\n\nvoid printScore(const int* score) {\n    if (score == nullptr) {\n        std::cout << \"No score\\n\";\n        return;\n    }\n\n    std::cout << *score << '\\n';\n}\n```\n\n### 9.3. Không phải const T& luôn tốt hơn T\n\nVới một kiểu nhỏ như `int`, truyền bằng giá trị thường đơn giản hơn.\n\nVới những trường hợp hàm cần sở hữu một bản sao để lưu trữ lâu dài, truyền theo giá trị cũng có thể phù hợp.\n\nVí dụ:\n\n```cpp\n#include <string>\n#include <utility>\n\nclass User {\npublic:\n    explicit User(std::string name)\n        : name_{std::move(name)} {}\n\nprivate:\n    std::string name_;\n};\n```\n\nConstructor nhận `std::string` bằng giá trị, sau đó chuyển dữ liệu vào thành viên.\n\nCách này có trade-off về số lần sao chép hoặc di chuyển tùy đối số. Nó không phải phương án tối ưu tuyệt đối cho mọi API, nhưng có thể giúp thiết kế đơn giản hơn.\n\n---\n\n## 10. Xử lý dữ liệu đầu vào an toàn\n\nDữ liệu đầu vào không nên được mặc định là hợp lệ.\n\n### 10.1. Kiểm tra lỗi nhập liệu\n\nKhông nên:\n\n```cpp\nint age{};\n\nstd::cin >> age;\n```\n\nrồi giả định thao tác đọc đã thành công.\n\nNên kiểm tra:\n\n```cpp\nint age{};\n\nif (!(std::cin >> age)) {\n    std::cerr << \"Invalid input\\n\";\n    return 1;\n}\n```\n\n### 10.2. Kiểm tra phạm vi\n\nViệc đọc thành công không có nghĩa dữ liệu đáp ứng yêu cầu của bài toán.\n\nVí dụ:\n\n```cpp\nif (age < 0 || age > 150) {\n    std::cerr << \"Invalid age\\n\";\n    return 1;\n}\n```\n\nKhoảng `[0, 150]` là một quy tắc minh họa. Ứng dụng thực tế phải xác định phạm vi theo yêu cầu nghiệp vụ.\n\n### 10.3. Kiểm tra trước khi chia\n\n```cpp\nif (b == 0) {\n    std::cerr << \"Division by zero\\n\";\n    return 1;\n}\n\nconst int result = a / b;\n```\n\nNếu `a` và `b` là số nguyên có dấu, cần xét thêm trường hợp giá trị nhỏ nhất của kiểu chia cho `-1`, vì kết quả toán học có thể không biểu diễn được.\n\n### 10.4. Kiểm tra chỉ số\n\nNếu `index` là số nguyên có dấu:\n\n```cpp\nif (index >= 0 &&\n    static_cast<std::size_t>(index) < values.size()) {\n    std::cout << values[\n        static_cast<std::size_t>(index)\n    ] << '\\n';\n}\n```\n\nCần bảo đảm chỉ số không âm trước khi chuyển sang kiểu không dấu.\n\nCó thể sử dụng `.at()` khi muốn kiểm tra phạm vi và xử lý `std::out_of_range`.\n\n### 10.5. Không coi dữ liệu đã parse một phần là hợp lệ hoàn toàn\n\nVí dụ, khi đọc một số nguyên từ chuỗi `\"123abc\"`, một số API chuyển đổi có thể đọc được phần đầu là `123` mà không tự động xem toàn bộ chuỗi là không hợp lệ.\n\nNếu ứng dụng yêu cầu toàn bộ input phải khớp định dạng, cần kiểm tra phần dữ liệu còn lại sau chuyển đổi.\n\n**Nguyên tắc:** Phân biệt ba bước: đọc được dữ liệu, dữ liệu đúng định dạng và dữ liệu đáp ứng quy tắc nghiệp vụ.\n\n---\n\n## 11. Thiết kế hàm và API rõ ràng\n\n### 11.1. Mỗi hàm nên có trách nhiệm dễ hiểu\n\nKhông nên tạo một hàm vừa:\n\n- Nhập dữ liệu.\n- Kiểm tra tài khoản.\n- Tính toán.\n- Ghi file.\n- In kết quả.\n- Thay đổi trạng thái toàn cục.\n\ntrừ khi đó thật sự là một hàm điều phối cấp cao được thiết kế có chủ đích.\n\nThay vào đó, có thể phân chia:\n\n```cpp\nbool validateScore(int score);\ndouble calculateAverage(\n    const std::vector<int>& scores\n);\nvoid printReport(double average);\n```\n\nNhững khai báo trên giả định đã include `<vector>`.\n\nCách tổ chức này giúp:\n\n- Kiểm thử từng phần.\n- Tái sử dụng logic.\n- Dễ xác định lỗi.\n- Giảm phụ thuộc giữa các thành phần.\n\n### 11.2. Không tạo abstraction không cần thiết\n\nKhông phải chương trình nào cũng cần:\n\n- Abstract factory.\n- Interface nhiều tầng.\n- Dependency injection framework.\n- Template metaprogramming.\n- Class hierarchy phức tạp.\n\nĐối với một phép tính đơn giản:\n\n```cpp\nint add(int a, int b) {\n    return a + b;\n}\n```\n\nmột hàm thông thường có thể là lựa chọn rõ ràng nhất.\n\n**Nguyên tắc:** Kiến trúc tốt giải quyết độ phức tạp có thật, không tạo thêm độ phức tạp để chuẩn bị cho mọi khả năng tưởng tượng.\n\n### 11.3. Ghi rõ hợp đồng của API\n\nKhi thiết kế hàm, cần trả lời:\n\n- Đầu vào hợp lệ là gì?\n- Hàm có được sửa dữ liệu đầu vào không?\n- Ai quản lý lifetime của đối tượng?\n- Hàm có thể thất bại như thế nào?\n- Kết quả được trả về bằng giá trị, reference hay pointer?\n- Có bảo đảm nào về exception safety?\n\nKhông phải mọi câu trả lời đều phải ghi thành bình luận dài, nhưng chúng cần được thể hiện rõ trong thiết kế và tài liệu cần thiết.\n\n---\n\n## 12. Xử lý lỗi đúng mức\n\nC++ cung cấp nhiều cách biểu diễn lỗi.\n\n### 12.1. Giá trị trả về\n\nVí dụ:\n\n```cpp\nbool isValidScore(int score) {\n    return score >= 0 && score <= 10;\n}\n```\n\nPhù hợp với những điều kiện đơn giản có hai trạng thái rõ ràng.\n\n### 12.2. std::optional\n\nC++17 hỗ trợ `std::optional`.\n\nVí dụ:\n\n```cpp\n#include <optional>\n\nstd::optional<int> findPositive(int value) {\n    if (value <= 0) {\n        return std::nullopt;\n    }\n\n    return value;\n}\n```\n\n`std::optional` phù hợp khi kết quả có thể không tồn tại và không cần thông tin lỗi chi tiết.\n\n### 12.3. Exceptions\n\nVí dụ:\n\n```cpp\n#include <stdexcept>\n\nvoid validateScore(int score) {\n    if (score < 0 || score > 10) {\n        throw std::invalid_argument(\n            \"Score out of range\"\n        );\n    }\n}\n```\n\nException có thể phù hợp với các hợp đồng API và trường hợp lỗi nhất định.\n\nTuy nhiên, không phải mọi hệ thống đều cho phép sử dụng exception, đặc biệt trong những môi trường có ràng buộc runtime nghiêm ngặt.\n\n### 12.4. Không có một cơ chế xử lý lỗi tối ưu cho mọi trường hợp\n\n| Cơ chế | Phù hợp khi |\n|---|---|\n| `bool` | Chỉ cần biết thành công hoặc thất bại |\n| `std::optional<T>` | Giá trị có thể không tồn tại |\n| Error code hoặc status type | Cần biểu diễn lỗi rõ ràng |\n| Exception | Hợp đồng API sử dụng cơ chế ngoại lệ |\n| `std::expected<T, E>` | Muốn biểu diễn giá trị hoặc lỗi trong kiểu trả về, từ C++23 |\n\nKhông nên sử dụng exception cho mọi phép kiểm tra điều kiện thông thường.\n\nNgược lại, cũng không nên cấm exception trong mọi trường hợp mà không đánh giá yêu cầu hệ thống.\n\n---\n\n## 13. Bật compiler warnings\n\nMột chương trình biên dịch thành công chưa chắc không có lỗi.\n\nCompiler có thể phát hiện nhiều vấn đề thông qua warning.\n\n### 13.1. GCC và Clang\n\n```sh\ng++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o app\n```\n\nCác cờ:\n\n| Flag | Chức năng |\n|---|---|\n| `-std=c++17` | Chọn chuẩn C++17 |\n| `-Wall` | Bật nhiều cảnh báo |\n| `-Wextra` | Bổ sung cảnh báo |\n| `-Wpedantic` | Cảnh báo một số trường hợp sử dụng phần mở rộng ngoài chuẩn |\n\n`-Wall` không có nghĩa bật toàn bộ cảnh báo mà compiler cung cấp.\n\n`-Wpedantic` cũng không phải công cụ chứng minh một chương trình hoàn toàn portable.\n\n### 13.2. MSVC\n\n```bat\ncl /std:c++17 /EHsc /W4 main.cpp\n```\n\nCó thể cân nhắc thêm `/permissive-` theo yêu cầu tương thích và cấu hình dự án.\n\n### 13.3. Có nên bật warnings as errors?\n\nGCC/Clang:\n\n```sh\n-Werror\n```\n\nMSVC:\n\n```bat\n/WX\n```\n\nCác tùy chọn này biến warning thành lỗi build.\n\nChúng hữu ích khi dự án đã có chính sách kiểm soát cảnh báo tốt, đặc biệt trong CI.\n\nTuy nhiên, với codebase cũ hoặc dependency bên thứ ba, nên có lộ trình xử lý cảnh báo thay vì bật toàn bộ một cách đột ngột.\n\n---\n\n## 14. Sử dụng formatter, linter và debugger\n\n### 14.1. Formatter\n\n`clang-format` có thể tự động chuẩn hóa:\n\n- Thụt lề.\n- Khoảng trắng.\n- Dấu ngoặc.\n- Cách xuống dòng.\n- Một số quy tắc trình bày mã nguồn.\n\nFormatter giúp giảm tranh luận về phong cách và giữ codebase nhất quán.\n\n### 14.2. Static analysis\n\n`clang-tidy` có thể kiểm tra nhiều vấn đề liên quan đến:\n\n- Correctness.\n- Modernization.\n- Readability.\n- Performance.\n- Một số lỗi API và cấu trúc mã.\n\nStatic analysis là công cụ hỗ trợ, không thay thế code review hoặc testing.\n\n### 14.3. Debugger\n\nMột số debugger phổ biến:\n\n- GDB.\n- LLDB.\n- Visual Studio Debugger.\n\nDebugger giúp đặt breakpoint, theo dõi biến và phân tích call stack.\n\n### 14.4. Sanitizers\n\nTrên compiler và nền tảng hỗ trợ:\n\n```sh\ng++ -std=c++17 -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer main.cpp -o app\n```\n\nHai nhóm kiểm tra quan trọng:\n\n| Công cụ | Công dụng |\n|---|---|\n| AddressSanitizer | Phát hiện nhiều lỗi truy cập bộ nhớ |\n| UndefinedBehaviorSanitizer | Phát hiện nhiều trường hợp undefined behavior |\n\nSanitizers không phát hiện được mọi lỗi và có thể tạo thêm chi phí runtime.\n\nChúng thường phù hợp với môi trường kiểm thử, không nên tự động đưa runtime của sanitizer vào bản production nếu chưa đánh giá yêu cầu triển khai và bảo mật.\n\n---\n\n## 15. Kiểm thử các trường hợp biên\n\nKhông nên chỉ kiểm tra một input mẫu.\n\nVí dụ, một hàm tính trung bình cần được thử với:\n\n- Một phần tử.\n- Nhiều phần tử.\n- Dữ liệu rỗng.\n- Giá trị âm nếu được phép.\n- Giá trị lớn.\n- Tổng có nguy cơ tràn số.\n- Dữ liệu đầu vào không hợp lệ.\n\n### 15.1. Phân loại bài kiểm thử\n\n| Loại | Mục đích |\n|---|---|\n| Normal case | Trường hợp thông thường |\n| Boundary case | Giá trị sát giới hạn |\n| Invalid input | Dữ liệu không hợp lệ |\n| Empty case | Không có phần tử |\n| Regression test | Ngăn lỗi đã sửa xuất hiện lại |\n| Stress test | Kiểm tra lượng dữ liệu lớn |\n| Performance test | Đo hiệu năng |\n| Integration test | Kiểm tra các thành phần phối hợp |\n\n### 15.2. Test không chỉ để kiểm tra kết quả\n\nMột bài test tốt còn có thể xác nhận:\n\n- Không sửa dữ liệu đầu vào ngoài hợp đồng.\n- Không đọc vượt phạm vi.\n- Không làm mất dữ liệu khi thất bại.\n- Tài nguyên được giải phóng phù hợp.\n- Kết quả ổn định trong những trường hợp được hỗ trợ.\n\n**Nguyên tắc:** Mỗi lần sửa một bug quan trọng, nên bổ sung regression test nếu có thể tái hiện lỗi bằng kiểm thử.\n\n---\n\n## 16. Tối ưu hiệu năng đúng cách\n\n### 16.1. Ưu tiên thuật toán trước\n\nGiả sử cần tìm một giá trị trong tập hợp dữ liệu.\n\nViệc lựa chọn thuật toán và cấu trúc dữ liệu thường ảnh hưởng lớn hơn những thay đổi nhỏ về cú pháp.\n\nVí dụ:\n\n| Thuật toán | Độ phức tạp |\n|---|---|\n| Duyệt tuyến tính | `O(n)` |\n| Binary search trên dữ liệu đã sắp xếp | `O(log n)` |\n| Tìm kiếm trong `std::map` | `O(log n)` |\n| Tìm kiếm trong `std::unordered_map` | Trung bình `O(1)` |\n\nTuy nhiên, lựa chọn cuối cùng còn phụ thuộc vào chi phí xây dựng cấu trúc dữ liệu và đặc điểm workload.\n\n### 16.2. Không tối ưu khi chưa đo\n\nKhông nên giả định rằng:\n\n- Pointer luôn nhanh hơn reference.\n- Mảng C luôn nhanh hơn vector.\n- `++i` luôn nhanh hơn `i++`.\n- Viết ít dòng hơn nghĩa là chạy nhanh hơn.\n- C++23 tự động nhanh hơn C++17.\n\nNhững kết luận về hiệu năng cần được kiểm tra trong ngữ cảnh cụ thể.\n\n### 16.3. Benchmark có kiểm soát\n\nKhi đo hiệu năng, cần:\n\n1. Sử dụng dữ liệu đại diện.\n2. Build với cấu hình phù hợp.\n3. Đảm bảo compiler không loại bỏ công việc cần đo.\n4. Chạy nhiều lần.\n5. Kiểm soát những yếu tố gây nhiễu.\n6. Xem xét cả thời gian và bộ nhớ.\n7. So sánh với mục tiêu hiệu năng thực tế.\n\n### 16.4. Tránh tối ưu làm giảm tính đúng đắn\n\nVí dụ, không nên bỏ kiểm tra giới hạn chỉ vì muốn giảm vài thao tác nếu dữ liệu đầu vào có thể không đáng tin cậy.\n\nTương tự, không nên thay một container an toàn bằng cấp phát động thủ công mà không có bằng chứng về lợi ích cần thiết.\n\n**Thứ tự ưu tiên hợp lý:**\n\nCorrectness → Maintainability → Measurement → Optimization.\n\nCác yêu cầu real-time hoặc hệ thống chuyên dụng có thể khiến thứ tự cân nhắc được điều chỉnh, nhưng không nên đánh đổi tính đúng đắn một cách vô thức.\n\n---\n\n## 17. Ví dụ tổng hợp theo Best Practices\n\n### Bài toán\n\nViết chương trình nhập điểm số của `n` học sinh và tính:\n\n- Tổng điểm.\n- Điểm trung bình.\n- Điểm cao nhất.\n\nYêu cầu:\n\n- `n` nằm trong `[1, 100000]`.\n- Điểm nguyên nằm trong `[0, 10]`.\n- Kiểm tra mọi lần đọc dữ liệu.\n- Không truy cập container rỗng.\n- Sử dụng kiểu dữ liệu phù hợp.\n- Không cấp phát động thủ công.\n\n### Chương trình C++17\n\n```cpp\n#include <iostream>\n#include <vector>\n\nstruct Statistics {\n    long long total{};\n    double average{};\n    int maximum{};\n};\n\nStatistics calculateStatistics(\n    const std::vector<int>& scores\n) {\n    Statistics result{};\n\n    result.maximum = scores.front();\n\n    for (int score : scores) {\n        result.total += score;\n\n        if (score > result.maximum) {\n            result.maximum = score;\n        }\n    }\n\n    result.average =\n        static_cast<double>(result.total) / scores.size();\n\n    return result;\n}\n\nint main() {\n    int n{};\n\n    if (!(std::cin >> n) || n < 1 || n > 100000) {\n        std::cerr << \"Invalid count\\n\";\n        return 1;\n    }\n\n    std::vector<int> scores;\n    scores.reserve(static_cast<std::size_t>(n));\n\n    for (int i = 0; i < n; ++i) {\n        int score{};\n\n        if (!(std::cin >> score) ||\n            score < 0 ||\n            score > 10) {\n            std::cerr << \"Invalid score\\n\";\n            return 1;\n        }\n\n        scores.push_back(score);\n    }\n\n    const Statistics result =\n        calculateStatistics(scores);\n\n    std::cout << \"Total: \" << result.total << '\\n';\n    std::cout << \"Average: \" << result.average << '\\n';\n    std::cout << \"Maximum: \" << result.maximum << '\\n';\n\n    return 0;\n}\n```\n\nInput:\n\n```text\n5\n7 9 4 8 10\n```\n\nOutput:\n\n```text\nTotal: 38\nAverage: 7.6\nMaximum: 10\n```\n\n### Phân tích thiết kế\n\n| Quyết định | Lý do |\n|---|---|\n| `std::vector<int>` | Kích thước được xác định khi chạy |\n| `reserve()` | Dự trữ capacity phù hợp với số lượng đã kiểm tra |\n| `long long total` | Hỗ trợ phạm vi tổng lớn hơn |\n| `const std::vector<int>&` | Đọc dữ liệu không cần sao chép |\n| `Statistics` | Gom những kết quả liên quan |\n| Kiểm tra `n >= 1` | Bảo đảm vector có phần tử nếu đọc thành công |\n| `const Statistics result` | Kết quả không cần thay đổi sau khi tính |\n| `std::cerr` | Tách thông báo lỗi khỏi output thông thường |\n\nTrong ví dụ, `calculateStatistics()` yêu cầu vector không rỗng. Điều kiện này được bảo đảm bởi phần nhập liệu trong `main()`.\n\nNếu biến hàm thành API công khai có thể được gọi từ nhiều nơi, nên thể hiện hoặc kiểm tra tiền điều kiện đó trong hợp đồng của hàm.\n\nMột lựa chọn khác là thiết kế hàm trả `std::optional<Statistics>` khi nhận container có thể rỗng.\n\n### Độ phức tạp\n\nNhập dữ liệu:\n\n\\[\nO(n)\n\\]\n\nTính thống kê:\n\n\\[\nO(n)\n\\]\n\nTổng thời gian:\n\n\\[\nO(n)\n\\]\n\nBộ nhớ dành cho vector:\n\n\\[\nO(n)\n\\]\n\nNếu chương trình chỉ cần tính thống kê một lần và không cần lưu lại toàn bộ điểm, có thể xử lý trực tiếp từng giá trị ngay khi đọc, giảm bộ nhớ phụ xuống `O(1)`.\n\nĐây là ví dụ cho thấy best practice không phải lúc nào cũng đồng nghĩa với việc sử dụng nhiều abstraction hoặc container hơn.\n\n---\n\n# FAQ: Những câu hỏi thường gặp\n\n## 18. Có nên dùng `using namespace std;`?\n\n**Không nên sử dụng mặc định trong header hoặc các dự án phần mềm lớn.**\n\nVí dụ:\n\n```cpp\nusing namespace std;\n```\n\nlàm cho những tên từ namespace `std` tham gia vào quá trình tra cứu tên không cần viết tiền tố `std::`.\n\nĐiều này có thể gây xung đột hoặc khiến nguồn gốc của API khó nhận biết.\n\nThay vì:\n\n```cpp\nusing namespace std;\n\nvector<int> values;\ncout << \"Hello\\n\";\n```\n\nCó thể viết:\n\n```cpp\nstd::vector<int> values;\nstd::cout << \"Hello\\n\";\n```\n\n### Có ngoại lệ không?\n\nCó.\n\nTrong một bài giải thuật ngắn hoặc chương trình nhỏ, `using namespace std;` có thể là lựa chọn phong cách chấp nhận được nếu môi trường đã được kiểm soát.\n\nTuy nhiên, không nên đưa using-directive này vào header công khai vì nó ảnh hưởng tới những translation unit include header đó.\n\n**Khuyến nghị cho DevHubs Wiki:** Sử dụng `std::` tường minh trong các ví dụ.\n\n---\n\n## 19. Có nên dùng `#include <bits/stdc++.h>`?\n\nĐây là một header không thuộc ISO C++, thường được cung cấp bởi môi trường libstdc++.\n\nVí dụ:\n\n```cpp\n#include <bits/stdc++.h>\n```\n\nđược sử dụng phổ biến trong competitive programming.\n\n### Ưu điểm\n\nGiảm thời gian gõ tên header trong môi trường hỗ trợ.\n\n### Nhược điểm\n\n- Không portable theo tiêu chuẩn C++.\n- Không được bảo đảm có trên MSVC.\n- Có thể làm tăng chi phí compile.\n- Làm dependency kém rõ ràng.\n\nĐối với phần mềm portable:\n\n```cpp\n#include <algorithm>\n#include <iostream>\n#include <vector>\n```\n\nthường phù hợp hơn.\n\n**Kết luận:** Có thể sử dụng trong một môi trường thi đấu được kiểm soát, nhưng không nên là mặc định của codebase production.\n\n---\n\n## 20. Có cần tự dùng `new` và `delete` không?\n\nTrong đa số chương trình C++ hiện đại, **không cần sử dụng trực tiếp `new` và `delete` cho các trường hợp thông thường**.\n\nVí dụ:\n\n```cpp\nint value{42};\n```\n\nhoặc:\n\n```cpp\nstd::vector<int> values{1, 2, 3};\n```\n\nNếu cần ownership động độc quyền:\n\n```cpp\nauto value = std::make_unique<int>(42);\n```\n\nNhững trường hợp sử dụng `new`/`delete` trực tiếp vẫn tồn tại, chẳng hạn khi triển khai allocator, container hoặc cơ chế quản lý tài nguyên cấp thấp.\n\nNhưng những thao tác đó nên được đóng gói trong abstraction có hợp đồng ownership rõ ràng.\n\n---\n\n## 21. Mọi biến đều nên dùng `const`?\n\nKhông.\n\nSử dụng `const` khi biến không cần thay đổi sau khởi tạo.\n\nVí dụ:\n\n```cpp\nconst int maxScore{100};\n```\n\nNhưng nếu biến phải cập nhật:\n\n```cpp\nint count{};\n\n++count;\n```\n\nthì không thể khai báo `count` là `const`.\n\nNgoài ra, `const` không tự động bảo đảm thread safety hoặc bảo vệ mọi đối tượng có thể truy cập gián tiếp từ dữ liệu đó.\n\n**Kết luận:** Dùng `const` để diễn đạt ý định bất biến, không dùng chỉ để tăng số lượng từ khóa trong code.\n\n---\n\n## 22. Có nên luôn dùng `auto`?\n\nKhông.\n\n`auto` phù hợp khi kiểu dễ suy luận hoặc quá dài.\n\nVí dụ:\n\n```cpp\nauto it = values.begin();\n```\n\nNhưng:\n\n```cpp\nint studentCount{40};\n```\n\ncó thể dễ hiểu hơn trong những tình huống kiểu dữ liệu mang ý nghĩa quan trọng.\n\nNên cân nhắc khả năng đọc hiểu của người bảo trì mã nguồn.\n\n---\n\n## 23. `std::array` hay `std::vector` tốt hơn?\n\nPhụ thuộc vào yêu cầu.\n\n| Tiêu chí | std::array | std::vector |\n|---|---|---|\n| Kích thước | Cố định theo kiểu | Linh hoạt |\n| Thay đổi số phần tử | Không | Có |\n| Quản lý phần tử | Tích hợp trong đối tượng | Quản lý vùng lưu trữ động |\n| Truy cập theo chỉ số | Có | Có |\n| Phù hợp | Kích thước cố định | Kích thước biến đổi |\n\nVí dụ:\n\n```cpp\nstd::array<int, 3> rgb{255, 128, 0};\n```\n\nphù hợp khi số phần tử cố định.\n\nTrong khi:\n\n```cpp\nstd::vector<int> scores;\n```\n\nphù hợp khi số lượng điểm không biết trước.\n\n---\n\n## 24. `std::vector::reserve()` và `resize()` khác nhau thế nào?\n\nĐây là một điểm dễ nhầm.\n\n```cpp\nstd::vector<int> values;\n\nvalues.reserve(100);\n```\n\nDự trữ capacity đủ cho ít nhất 100 phần tử nhưng không tạo ra 100 phần tử có thể truy cập.\n\nSau câu lệnh:\n\n```text\nsize = 0\ncapacity >= 100\n```\n\nTrong khi:\n\n```cpp\nvalues.resize(100);\n```\n\nthay đổi kích thước logic của vector thành 100 phần tử.\n\nVới `int` được khởi tạo mặc định theo cách này, các phần tử mới nhận giá trị `0`.\n\n**Không được truy cập `values[0]` chỉ vì đã gọi `reserve(100)` khi `size()` vẫn bằng 0.**\n\n---\n\n## 25. Có nên luôn truyền `const T&` thay cho `T`?\n\nKhông.\n\nVới kiểu nhỏ như:\n\n```cpp\nint\nbool\ndouble\n```\n\ntruyền bằng giá trị thường rất phù hợp.\n\nVới đối tượng lớn, truyền `const T&` có thể tránh việc sao chép không cần thiết.\n\nNhưng nếu hàm cần lưu lại một bản sao hoặc sở hữu đối số, truyền giá trị đôi khi là thiết kế hợp lý hơn.\n\n**Nguyên tắc:** Lựa chọn theo ngữ nghĩa API và chi phí thật của kiểu dữ liệu.\n\n---\n\n## 26. Pointer có luôn nhanh hơn reference?\n\nKhông có bảo đảm như vậy.\n\nPointer và reference có ngữ nghĩa khác nhau, nhưng compiler có thể tối ưu nhiều trường hợp sử dụng chúng thành mã máy tương tự.\n\nKhông nên lựa chọn raw pointer chỉ vì cho rằng nó nhanh hơn.\n\nNên sử dụng:\n\n- `T&` khi bắt buộc có đối tượng và cần tham chiếu.\n- `const T&` khi muốn đọc mà không sao chép.\n- `T*` khi cần biểu diễn null hoặc thay đổi đối tượng đích.\n\nCác quyết định tối ưu hiệu năng phải dựa trên profiling.\n\n---\n\n## 27. Có nên dùng `std::endl` hay `'\\n'`?\n\n`std::endl` thực hiện hai thao tác:\n\n1. Xuống dòng.\n2. Flush luồng xuất.\n\nTrong khi:\n\n```cpp\nstd::cout << '\\n';\n```\n\nchỉ ghi ký tự xuống dòng.\n\nNếu không cần flush ngay, sử dụng `'\\n'` thường phù hợp hơn, đặc biệt trong chương trình xuất nhiều dữ liệu.\n\nTuy nhiên, `std::endl` không sai. Nó có ý nghĩa khi chủ động cần flush.\n\n---\n\n## 28. C++23 có tốt hơn C++17 không?\n\nC++23 bổ sung nhiều khả năng mới, nhưng không tự động tốt hơn cho mọi dự án.\n\nVí dụ:\n\n- Concepts và Ranges xuất hiện ở C++20.\n- `std::expected` xuất hiện ở C++23.\n- `std::print` xuất hiện ở C++23.\n\nNếu dự án cần những tính năng đó và toolchain hỗ trợ, việc nâng chuẩn có thể hợp lý.\n\nNgược lại, nếu sản phẩm cần tương thích với nhiều hệ thống cũ, C++17 vẫn có thể là một baseline phù hợp.\n\nViệc chọn chuẩn phải dựa trên yêu cầu thực tế, không phải chỉ dựa vào số phiên bản.\n\n---\n\n## 29. Compiler không báo lỗi có nghĩa chương trình an toàn?\n\nKhông.\n\nC++ có những trường hợp *undefined behavior*, trong đó tiêu chuẩn không quy định kết quả hoặc hành vi khi chương trình thực hiện thao tác không hợp lệ.\n\nVí dụ:\n\n```cpp\nint values[3]{1, 2, 3};\n\nstd::cout << values[5];\n```\n\nĐây là truy cập vượt phạm vi mảng.\n\nChương trình có thể vẫn biên dịch được.\n\nTương tự, compiler không nhất thiết phát hiện được:\n\n- Dangling pointer.\n- Use-after-free.\n- Một số trường hợp integer overflow.\n- Lỗi logic.\n- Data race.\n- Những sai sót về hợp đồng API.\n\nVì vậy, cần kết hợp compiler warnings, static analysis, testing và sanitizer.\n\n---\n\n## 30. Có nên tối ưu code ngay từ đầu?\n\nNên thiết kế thuật toán và cấu trúc dữ liệu hợp lý ngay từ đầu, nhưng không nên tối ưu vi mô quá sớm.\n\nVí dụ, chọn thuật toán `O(n log n)` thay cho `O(n²)` khi dữ liệu lớn có thể là quyết định quan trọng.\n\nNhưng thay đổi từng chi tiết cú pháp mà chưa đo hiệu năng thường không mang lại lợi ích rõ ràng.\n\n**Cách tiếp cận phù hợp:**\n\n- Viết chương trình đúng.\n- Xác định yêu cầu hiệu năng.\n- Đo trên workload đại diện.\n- Tìm bottleneck.\n- Tối ưu phần có ảnh hưởng lớn.\n- Kiểm thử lại sau thay đổi.\n\n---\n\n## 31. Có cần học toàn bộ STL không?\n\nKhông cần ghi nhớ toàn bộ Standard Library.\n\nNên bắt đầu với những thành phần thường gặp:\n\n| Nhóm | Thành phần |\n|---|---|\n| Container | `vector`, `array`, `map`, `set` |\n| Chuỗi | `string` |\n| Thuật toán | `sort`, `find`, `count` |\n| Tính toán | `accumulate` |\n| Tiện ích | `pair`, `optional` |\n| Bộ nhớ | `unique_ptr` |\n| Nhập xuất | `cin`, `cout`, `getline` |\n\nKhi gặp bài toán mới, tìm hiểu đúng thành phần cần thiết.\n\n**Mục tiêu:** Biết công cụ nào tồn tại và khi nào nên dùng, thay vì học thuộc mọi phương thức của từng container.\n\n---\n\n## 32. C++ Best Practices có phải quy tắc bắt buộc?\n\nKhông.\n\nBest practices là những nguyên tắc được đề xuất để cải thiện chất lượng phần mềm.\n\nMột nguyên tắc có thể có ngoại lệ hợp lý.\n\nVí dụ:\n\n- `bits/stdc++.h` có thể được chấp nhận trong competitive programming.\n- Raw pointers vẫn cần thiết trong một số API cấp thấp.\n- `new` và `delete` có thể xuất hiện trong những thành phần quản lý bộ nhớ chuyên dụng.\n- Compiler extensions có thể cần thiết khi làm việc với nền tảng đặc biệt.\n- Exceptions có thể không được sử dụng trong một số hệ thống real-time.\n\nTuy nhiên, ngoại lệ nên xuất phát từ **yêu cầu kỹ thuật được xác định rõ**, không phải vì không hiểu những công cụ thay thế.\n\n---\n\n# Checklist trước khi review hoặc phát hành\n\n## 33. Code correctness\n\n- [ ] Đầu vào được kiểm tra theo hợp đồng.\n- [ ] Biến được khởi tạo trước khi sử dụng.\n- [ ] Không có phép chia không hợp lệ.\n- [ ] Không có nguy cơ tràn số chưa được kiểm soát.\n- [ ] Chỉ số được kiểm tra trước khi truy cập.\n- [ ] Không sử dụng pointer hoặc reference sau lifetime.\n- [ ] Không có hành vi không xác định đã biết.\n- [ ] Những trường hợp biên được xử lý rõ ràng.\n\n## 34. Design và maintainability\n\n- [ ] Tên biến và hàm thể hiện ý nghĩa.\n- [ ] Hàm có trách nhiệm rõ ràng.\n- [ ] Không tạo abstraction không cần thiết.\n- [ ] Ownership được xác định.\n- [ ] Dependency không bị lặp hoặc chồng chéo tùy tiện.\n- [ ] Header không làm ô nhiễm namespace của người sử dụng.\n- [ ] Kiểu dữ liệu phản ánh miền giá trị.\n- [ ] Những giả định quan trọng được tài liệu hóa.\n\n## 35. Build và testing\n\n- [ ] Chuẩn C++ được khai báo tường minh.\n- [ ] Build thành công từ thư mục build sạch.\n- [ ] Không còn warning quan trọng chưa giải quyết.\n- [ ] Unit tests đạt yêu cầu.\n- [ ] Regression tests đạt yêu cầu.\n- [ ] Các trường hợp lỗi được kiểm tra.\n- [ ] Sanitizer và static analysis được sử dụng khi phù hợp.\n- [ ] Toolchain và dependency được kiểm tra tương thích.\n\n## 36. Performance và deployment\n\n- [ ] Độ phức tạp phù hợp với dữ liệu dự kiến.\n- [ ] Không sao chép dữ liệu lớn không cần thiết.\n- [ ] Không cấp phát động quá mức khi tránh được.\n- [ ] Không giữ container hoặc tài nguyên lâu hơn cần thiết.\n- [ ] Những phần hiệu năng quan trọng đã được benchmark.\n- [ ] Build production sử dụng cấu hình tối ưu phù hợp.\n- [ ] Môi trường triển khai được kiểm tra với toolchain mục tiêu.\n- [ ] Có khả năng chẩn đoán lỗi khi phần mềm gặp sự cố.\n\n---\n\n## 37. Tổng kết\n\nNhững best practices quan trọng trong C++ có thể được chia thành năm nguyên tắc.\n\n**1. Correctness trước tiên**\n\nMã nguồn phải có hành vi xác định trong phạm vi đầu vào được hỗ trợ. Kiểm soát lỗi bộ nhớ, chỉ số, chuyển kiểu và số học trước khi tối ưu.\n\n**2. Ownership phải rõ ràng**\n\nSử dụng value semantics, container và RAII khi phù hợp. Không để trách nhiệm quản lý tài nguyên trở nên mơ hồ.\n\n**3. Code phải dễ hiểu**\n\nTên biến rõ ràng, hàm có trách nhiệm cụ thể và các abstraction có lý do tồn tại. Không đánh đổi khả năng bảo trì chỉ để viết ngắn hơn.\n\n**4. Toolchain phải được kiểm soát**\n\nKhai báo chuẩn C++, bật warning, kiểm tra dependency và dùng test để xác nhận chương trình hoạt động trên nền tảng mục tiêu.\n\n**5. Tối ưu dựa trên bằng chứng**\n\nSử dụng thuật toán phù hợp và đo đạc hiệu năng. Không mặc định những thủ thuật cấp thấp luôn nhanh hơn các công cụ của C++ hiện đại.\n\n**Ghi nhớ:** Best practice tốt nhất không phải luôn sử dụng tính năng mới nhất, nhiều abstraction nhất hoặc ít dòng code nhất. Đó là lựa chọn giúp chương trình đúng đắn, rõ ràng, có thể kiểm thử và bảo trì trong điều kiện thực tế của dự án.\n\n---\n\n## Tài liệu tham khảo\n\nĐể tìm hiểu sâu hơn, nên tham khảo những nguồn sau:\n\n- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines): Các nguyên tắc về giao diện, tài nguyên, kiểu dữ liệu và lập trình C++ hiện đại.\n- [cppreference](https://en.cppreference.com/w/): Tra cứu quy tắc ngôn ngữ và Standard Library.\n- [GCC Warning Options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html): Cấu hình cảnh báo khi biên dịch.\n- [Clang AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html): Kiểm tra các lỗi truy cập bộ nhớ.\n- [Clang UndefinedBehaviorSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html): Phát hiện nhiều trường hợp undefined behavior.\n- [CMake Documentation](https://cmake.org/cmake/help/latest/): Cấu hình và quản lý build.\n- [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html): Một ví dụ về coding style và chính sách kỹ thuật của một tổ chức.\n\nCần phân biệt **quy tắc thuộc tiêu chuẩn C++** với **quy ước của một dự án hoặc tổ chức**. Các style guide có thể đưa ra lựa chọn khác nhau mà vẫn hợp lệ.\n\n## Đọc tiếp\n\n- [Lộ trình học C++](/cpp/bat-dau/lo-trinh-hoc): Xây dựng thứ tự học từ căn bản đến nâng cao.\n- [C++17, C++20 và C++23](/cpp/stl/cpp17-20-23): So sánh tính năng và khả năng tương thích giữa các phiên bản.\n- [Clean Code và thiết kế phần mềm C++](/cpp/ky-thuat/clean-code): Tìm hiểu sâu về cách tổ chức, bảo trì và phát triển codebase.\n- [Debugging và xử lý lỗi](/cpp/tra-cuu/debugging-errors): Chẩn đoán compile errors, linker errors, runtime errors và undefined behavior.",
     "sourcePath": "content/cpp/reference/best-practices.md",
     "headings": [
       {
-        "title": "Checklist",
-        "id": "checklist"
+        "title": "C++ Best Practices và FAQ",
+        "id": "c-best-practices-va-faq"
       },
       {
-        "title": "FAQ",
-        "id": "faq"
+        "title": "1. Checklist C++ Best Practices",
+        "id": "1-checklist-c-best-practices"
       },
       {
-        "title": "Kiểm tra nhanh",
-        "id": "kiem-tra-nhanh"
+        "title": "2. Chọn chuẩn C++ rõ ràng",
+        "id": "2-chon-chuan-c-ro-rang"
+      },
+      {
+        "title": "2.1. Không phụ thuộc vào mặc định của compiler",
+        "id": "21-khong-phu-thuoc-vao-mac-inh-cua-compiler"
+      },
+      {
+        "title": "2.2. C++17 không phải giới hạn tối đa",
+        "id": "22-c17-khong-phai-gioi-han-toi-a"
+      },
+      {
+        "title": "2.3. Cấu hình CMake",
+        "id": "23-cau-hinh-cmake"
+      },
+      {
+        "title": "3. Include header đúng cách",
+        "id": "3-include-header-ung-cach"
+      },
+      {
+        "title": "3.1. Include trực tiếp những gì cần dùng",
+        "id": "31-include-truc-tiep-nhung-gi-can-dung"
+      },
+      {
+        "title": "3.2. Tránh include không cần thiết",
+        "id": "32-tranh-include-khong-can-thiet"
+      },
+      {
+        "title": "3.3. Không sử dụng compiler-specific header như mặc định",
+        "id": "33-khong-su-dung-compiler-specific-header-nhu-mac-inh"
+      },
+      {
+        "title": "4. Khởi tạo biến và sử dụng const",
+        "id": "4-khoi-tao-bien-va-su-dung-const"
+      },
+      {
+        "title": "4.1. Khởi tạo biến trước khi sử dụng",
+        "id": "41-khoi-tao-bien-truoc-khi-su-dung"
+      },
+      {
+        "title": "4.2. Ưu tiên khởi tạo bằng dấu ngoặc nhọn khi phù hợp",
+        "id": "42-uu-tien-khoi-tao-bang-dau-ngoac-nhon-khi-phu-hop"
+      },
+      {
+        "title": "4.3. Sử dụng const khi dữ liệu không cần thay đổi",
+        "id": "43-su-dung-const-khi-du-lieu-khong-can-thay-oi"
+      },
+      {
+        "title": "4.4. Phân biệt const và constexpr",
+        "id": "44-phan-biet-const-va-constexpr"
+      },
+      {
+        "title": "5. Sử dụng auto hợp lý",
+        "id": "5-su-dung-auto-hop-ly"
+      },
+      {
+        "title": "5.1. Khi nào auto hữu ích?",
+        "id": "51-khi-nao-auto-huu-ich"
+      },
+      {
+        "title": "5.2. Khi nào nên khai báo tường minh?",
+        "id": "52-khi-nao-nen-khai-bao-tuong-minh"
+      },
+      {
+        "title": "5.3. auto không làm kiểu dữ liệu trở nên động",
+        "id": "53-auto-khong-lam-kieu-du-lieu-tro-nen-ong"
+      },
+      {
+        "title": "6. Lựa chọn kiểu dữ liệu an toàn",
+        "id": "6-lua-chon-kieu-du-lieu-an-toan"
+      },
+      {
+        "title": "6.1. Chọn kiểu theo phạm vi giá trị",
+        "id": "61-chon-kieu-theo-pham-vi-gia-tri"
+      },
+      {
+        "title": "6.2. Không mặc định unsigned luôn tốt hơn",
+        "id": "62-khong-mac-inh-unsigned-luon-tot-hon"
+      },
+      {
+        "title": "6.3. Sử dụng kiểu độ rộng cố định khi thật sự cần",
+        "id": "63-su-dung-kieu-o-rong-co-inh-khi-that-su-can"
+      },
+      {
+        "title": "6.4. Không dùng double cho tiền chính xác một cách tùy tiện",
+        "id": "64-khong-dung-double-cho-tien-chinh-xac-mot-cach-tuy-tien"
+      },
+      {
+        "title": "7. Chọn container phù hợp",
+        "id": "7-chon-container-phu-hop"
+      },
+      {
+        "title": "7.1. Bảng lựa chọn nhanh",
+        "id": "71-bang-lua-chon-nhanh"
+      },
+      {
+        "title": "7.2. Vì sao std::vector thường là lựa chọn mặc định?",
+        "id": "72-vi-sao-stdvector-thuong-la-lua-chon-mac-inh"
+      },
+      {
+        "title": "7.3. Không dùng map chỉ vì cần tìm kiếm nhanh",
+        "id": "73-khong-dung-map-chi-vi-can-tim-kiem-nhanh"
+      },
+      {
+        "title": "8. Quản lý ownership và lifetime",
+        "id": "8-quan-ly-ownership-va-lifetime"
+      },
+      {
+        "title": "8.1. Ưu tiên value semantics",
+        "id": "81-uu-tien-value-semantics"
+      },
+      {
+        "title": "8.2. Sử dụng RAII",
+        "id": "82-su-dung-raii"
+      },
+      {
+        "title": "8.3. Ưu tiên unique_ptr khi cần ownership động độc quyền",
+        "id": "83-uu-tien-uniqueptr-khi-can-ownership-ong-oc-quyen"
+      },
+      {
+        "title": "8.4. Không lạm dụng shared_ptr",
+        "id": "84-khong-lam-dung-sharedptr"
+      },
+      {
+        "title": "9. Truyền tham số đúng mục đích",
+        "id": "9-truyen-tham-so-ung-muc-ich"
+      },
+      {
+        "title": "9.1. Bảng lựa chọn",
+        "id": "91-bang-lua-chon"
+      },
+      {
+        "title": "9.2. Ví dụ",
+        "id": "92-vi-du"
+      },
+      {
+        "title": "9.3. Không phải const T& luôn tốt hơn T",
+        "id": "93-khong-phai-const-t-luon-tot-hon-t"
+      },
+      {
+        "title": "10. Xử lý dữ liệu đầu vào an toàn",
+        "id": "10-xu-ly-du-lieu-au-vao-an-toan"
+      },
+      {
+        "title": "10.1. Kiểm tra lỗi nhập liệu",
+        "id": "101-kiem-tra-loi-nhap-lieu"
+      },
+      {
+        "title": "10.2. Kiểm tra phạm vi",
+        "id": "102-kiem-tra-pham-vi"
+      },
+      {
+        "title": "10.3. Kiểm tra trước khi chia",
+        "id": "103-kiem-tra-truoc-khi-chia"
+      },
+      {
+        "title": "10.4. Kiểm tra chỉ số",
+        "id": "104-kiem-tra-chi-so"
+      },
+      {
+        "title": "10.5. Không coi dữ liệu đã parse một phần là hợp lệ hoàn toàn",
+        "id": "105-khong-coi-du-lieu-a-parse-mot-phan-la-hop-le-hoan-toan"
+      },
+      {
+        "title": "11. Thiết kế hàm và API rõ ràng",
+        "id": "11-thiet-ke-ham-va-api-ro-rang"
+      },
+      {
+        "title": "11.1. Mỗi hàm nên có trách nhiệm dễ hiểu",
+        "id": "111-moi-ham-nen-co-trach-nhiem-de-hieu"
+      },
+      {
+        "title": "11.2. Không tạo abstraction không cần thiết",
+        "id": "112-khong-tao-abstraction-khong-can-thiet"
+      },
+      {
+        "title": "11.3. Ghi rõ hợp đồng của API",
+        "id": "113-ghi-ro-hop-ong-cua-api"
+      },
+      {
+        "title": "12. Xử lý lỗi đúng mức",
+        "id": "12-xu-ly-loi-ung-muc"
+      },
+      {
+        "title": "12.1. Giá trị trả về",
+        "id": "121-gia-tri-tra-ve"
+      },
+      {
+        "title": "12.2. std::optional",
+        "id": "122-stdoptional"
+      },
+      {
+        "title": "12.3. Exceptions",
+        "id": "123-exceptions"
+      },
+      {
+        "title": "12.4. Không có một cơ chế xử lý lỗi tối ưu cho mọi trường hợp",
+        "id": "124-khong-co-mot-co-che-xu-ly-loi-toi-uu-cho-moi-truong-hop"
+      },
+      {
+        "title": "13. Bật compiler warnings",
+        "id": "13-bat-compiler-warnings"
+      },
+      {
+        "title": "13.1. GCC và Clang",
+        "id": "131-gcc-va-clang"
+      },
+      {
+        "title": "13.2. MSVC",
+        "id": "132-msvc"
+      },
+      {
+        "title": "13.3. Có nên bật warnings as errors?",
+        "id": "133-co-nen-bat-warnings-as-errors"
+      },
+      {
+        "title": "14. Sử dụng formatter, linter và debugger",
+        "id": "14-su-dung-formatter-linter-va-debugger"
+      },
+      {
+        "title": "14.1. Formatter",
+        "id": "141-formatter"
+      },
+      {
+        "title": "14.2. Static analysis",
+        "id": "142-static-analysis"
+      },
+      {
+        "title": "14.3. Debugger",
+        "id": "143-debugger"
+      },
+      {
+        "title": "14.4. Sanitizers",
+        "id": "144-sanitizers"
+      },
+      {
+        "title": "15. Kiểm thử các trường hợp biên",
+        "id": "15-kiem-thu-cac-truong-hop-bien"
+      },
+      {
+        "title": "15.1. Phân loại bài kiểm thử",
+        "id": "151-phan-loai-bai-kiem-thu"
+      },
+      {
+        "title": "15.2. Test không chỉ để kiểm tra kết quả",
+        "id": "152-test-khong-chi-e-kiem-tra-ket-qua"
+      },
+      {
+        "title": "16. Tối ưu hiệu năng đúng cách",
+        "id": "16-toi-uu-hieu-nang-ung-cach"
+      },
+      {
+        "title": "16.1. Ưu tiên thuật toán trước",
+        "id": "161-uu-tien-thuat-toan-truoc"
+      },
+      {
+        "title": "16.2. Không tối ưu khi chưa đo",
+        "id": "162-khong-toi-uu-khi-chua-o"
+      },
+      {
+        "title": "16.3. Benchmark có kiểm soát",
+        "id": "163-benchmark-co-kiem-soat"
+      },
+      {
+        "title": "16.4. Tránh tối ưu làm giảm tính đúng đắn",
+        "id": "164-tranh-toi-uu-lam-giam-tinh-ung-an"
+      },
+      {
+        "title": "17. Ví dụ tổng hợp theo Best Practices",
+        "id": "17-vi-du-tong-hop-theo-best-practices"
+      },
+      {
+        "title": "Bài toán",
+        "id": "bai-toan"
+      },
+      {
+        "title": "Chương trình C++17",
+        "id": "chuong-trinh-c17"
+      },
+      {
+        "title": "Phân tích thiết kế",
+        "id": "phan-tich-thiet-ke"
+      },
+      {
+        "title": "Độ phức tạp",
+        "id": "o-phuc-tap"
+      },
+      {
+        "title": "FAQ: Những câu hỏi thường gặp",
+        "id": "faq-nhung-cau-hoi-thuong-gap"
+      },
+      {
+        "title": "18. Có nên dùng `using namespace std;`?",
+        "id": "18-co-nen-dung-using-namespace-std"
+      },
+      {
+        "title": "Có ngoại lệ không?",
+        "id": "co-ngoai-le-khong"
+      },
+      {
+        "title": "19. Có nên dùng `#include <bits/stdc++.h>`?",
+        "id": "19-co-nen-dung-include-bitsstdch"
+      },
+      {
+        "title": "Ưu điểm",
+        "id": "uu-iem"
+      },
+      {
+        "title": "Nhược điểm",
+        "id": "nhuoc-iem"
+      },
+      {
+        "title": "20. Có cần tự dùng `new` và `delete` không?",
+        "id": "20-co-can-tu-dung-new-va-delete-khong"
+      },
+      {
+        "title": "21. Mọi biến đều nên dùng `const`?",
+        "id": "21-moi-bien-eu-nen-dung-const"
+      },
+      {
+        "title": "22. Có nên luôn dùng `auto`?",
+        "id": "22-co-nen-luon-dung-auto"
+      },
+      {
+        "title": "23. `std::array` hay `std::vector` tốt hơn?",
+        "id": "23-stdarray-hay-stdvector-tot-hon"
+      },
+      {
+        "title": "24. `std::vector::reserve()` và `resize()` khác nhau thế nào?",
+        "id": "24-stdvectorreserve-va-resize-khac-nhau-the-nao"
+      },
+      {
+        "title": "25. Có nên luôn truyền `const T&` thay cho `T`?",
+        "id": "25-co-nen-luon-truyen-const-t-thay-cho-t"
+      },
+      {
+        "title": "26. Pointer có luôn nhanh hơn reference?",
+        "id": "26-pointer-co-luon-nhanh-hon-reference"
+      },
+      {
+        "title": "27. Có nên dùng `std::endl` hay `'\\n'`?",
+        "id": "27-co-nen-dung-stdendl-hay-n"
+      },
+      {
+        "title": "28. C++23 có tốt hơn C++17 không?",
+        "id": "28-c23-co-tot-hon-c17-khong"
+      },
+      {
+        "title": "29. Compiler không báo lỗi có nghĩa chương trình an toàn?",
+        "id": "29-compiler-khong-bao-loi-co-nghia-chuong-trinh-an-toan"
+      },
+      {
+        "title": "30. Có nên tối ưu code ngay từ đầu?",
+        "id": "30-co-nen-toi-uu-code-ngay-tu-au"
+      },
+      {
+        "title": "31. Có cần học toàn bộ STL không?",
+        "id": "31-co-can-hoc-toan-bo-stl-khong"
+      },
+      {
+        "title": "32. C++ Best Practices có phải quy tắc bắt buộc?",
+        "id": "32-c-best-practices-co-phai-quy-tac-bat-buoc"
+      },
+      {
+        "title": "Checklist trước khi review hoặc phát hành",
+        "id": "checklist-truoc-khi-review-hoac-phat-hanh"
+      },
+      {
+        "title": "33. Code correctness",
+        "id": "33-code-correctness"
+      },
+      {
+        "title": "34. Design và maintainability",
+        "id": "34-design-va-maintainability"
+      },
+      {
+        "title": "35. Build và testing",
+        "id": "35-build-va-testing"
+      },
+      {
+        "title": "36. Performance và deployment",
+        "id": "36-performance-va-deployment"
+      },
+      {
+        "title": "37. Tổng kết",
+        "id": "37-tong-ket"
+      },
+      {
+        "title": "Tài liệu tham khảo",
+        "id": "tai-lieu-tham-khao"
       },
       {
         "title": "Đọc tiếp",
