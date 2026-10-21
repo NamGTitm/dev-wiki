@@ -1,6 +1,6 @@
 ---
 title: Nhập xuất, câu lệnh điều kiện và vòng lặp
-description: Hướng dẫn sử dụng cin, cout, if-else, switch, for, while và do-while trong C++17, kèm ví dụ thực tế, xử lý lỗi và bài tập.
+description: Tìm hiểu cách nhập xuất dữ liệu, kiểm soát luồng thực thi bằng if-else và switch, sử dụng các vòng lặp for, while, do-while và phân biệt chi tiết break, continue trong C++17.
 slug: /cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap
 category: fundamentals
 categoryLabel: C++ căn bản
@@ -17,119 +17,135 @@ related: ["/cpp/bat-dau/toan-tu", "/cpp/bat-dau/ham-pham-vi", "/cpp/thuat-toan/g
 
 # Nhập xuất, câu lệnh điều kiện và vòng lặp trong C++
 
-Một chương trình không chỉ thực hiện các phép tính. Nó còn cần tiếp nhận dữ liệu, đưa ra quyết định và thực hiện những công việc lặp lại.
+Một chương trình không chỉ thực hiện những phép tính được viết sẵn. Nó còn cần tiếp nhận dữ liệu, đưa ra quyết định và thực hiện các thao tác lặp lại tùy theo trạng thái của chương trình.
 
-Trong C++, ba nhóm kiến thức này đóng vai trò nền tảng:
+Trong C++, ba nhóm kiến thức quan trọng giúp thực hiện những công việc này là **nhập xuất dữ liệu, câu lệnh điều kiện và vòng lặp**.
 
-- **Nhập xuất (Input/Output):** Nhận dữ liệu đầu vào và hiển thị kết quả.
-- **Câu lệnh điều kiện (Conditional Statements):** Quyết định chương trình sẽ thực hiện công việc nào.
-- **Vòng lặp (Loops):** Thực hiện một công việc nhiều lần mà không cần viết lại cùng một đoạn mã.
+Nhập xuất cho phép chương trình giao tiếp với môi trường bên ngoài. Câu lệnh điều kiện xác định phần mã nào được thực thi, còn vòng lặp điều khiển việc thực hiện lặp lại một nhóm câu lệnh.
 
-Đây cũng là những kiến thức được sử dụng thường xuyên khi giải bài tập lập trình, xây dựng thuật toán và phát triển phần mềm.
+Bên cạnh đó, C++ cung cấp các câu lệnh như `break`, `continue` và `return` để thay đổi luồng thực thi trong những tình huống cụ thể.
 
-## 1. Nhập và xuất dữ liệu
+Điều quan trọng khi học các cấu trúc này không chỉ là ghi nhớ cú pháp, mà còn phải hiểu **thứ tự thực thi, điều kiện chuyển nhánh, thời điểm kiểm tra điều kiện và vị trí chương trình tiếp tục chạy**.
 
-### 1.1. Thư viện iostream
+Bài viết sử dụng chuẩn **C++17**.
 
-Để nhập xuất dữ liệu thông qua thiết bị đầu cuối (terminal), C++ cung cấp thư viện `<iostream>`.
+---
 
-Ba đối tượng thường gặp:
+## 1. Nhập xuất dữ liệu trong C++
 
-| Đối tượng | Chức năng |
+### 1.1. Nhập xuất là gì?
+
+Nhập xuất dữ liệu, hay *Input/Output (I/O)*, là quá trình trao đổi thông tin giữa chương trình và môi trường bên ngoài.
+
+**Input** là dữ liệu được đưa vào chương trình để xử lý. Dữ liệu có thể đến từ bàn phím, tệp, thiết bị hoặc chương trình khác.
+
+**Output** là dữ liệu chương trình tạo ra và gửi đến nơi nhận, chẳng hạn terminal, tệp hoặc một hệ thống khác.
+
+Đối với chương trình C++ chạy trong terminal, thư viện `<iostream>` cung cấp những đối tượng nhập xuất chuẩn thường dùng.
+
+| Đối tượng | Vai trò |
 |---|---|
-| `std::cin` | Đọc dữ liệu từ đầu vào chuẩn |
-| `std::cout` | Ghi dữ liệu ra đầu ra chuẩn |
-| `std::cerr` | Ghi thông báo lỗi ra luồng lỗi chuẩn |
+| `std::cin` | Đọc dữ liệu từ luồng nhập chuẩn |
+| `std::cout` | Ghi dữ liệu vào luồng xuất chuẩn |
+| `std::cerr` | Ghi thông báo vào luồng lỗi chuẩn |
 
-Ví dụ đầu tiên:
+Theo cấu hình thông thường, đầu vào chuẩn nhận dữ liệu từ bàn phím, còn đầu ra chuẩn và luồng lỗi chuẩn được hiển thị trong terminal.
 
-```cpp
-#include <iostream>
+Tuy nhiên, đây không phải đặc điểm bắt buộc. Người dùng có thể chuyển hướng các luồng đến tệp hoặc kết nối chúng với chương trình khác.
 
-int main() {
-    int age{};
+Chẳng hạn, khi chạy chương trình trên hệ thống chấm bài, `std::cin` có thể nhận dữ liệu từ bộ kiểm thử thay vì từ bàn phím.
 
-    std::cout << "Nhap tuoi cua ban: ";
-    std::cin >> age;
+### 1.2. Xuất dữ liệu với std::cout
 
-    std::cout << "Ban " << age << " tuoi.\n";
+`std::cout` là một đối tượng luồng xuất (*output stream*).
 
-    return 0;
-}
-```
+Toán tử `<<` được dùng để đưa dữ liệu vào luồng đó.
 
-Kết quả khi nhập `16`:
-
-```text
-Nhap tuoi cua ban: 16
-Ban 16 tuoi.
-```
-
-**Giải thích:**
-
-- `#include <iostream>`: Khai báo sử dụng thư viện nhập xuất.
-- `int age{}`: Tạo biến số nguyên `age`, khởi tạo giá trị bằng `0`.
-- `std::cout <<`: Gửi dữ liệu ra màn hình.
-- `std::cin >>`: Đọc dữ liệu vào biến.
-- `'\n'`: Xuống dòng.
-- `return 0`: Kết thúc chương trình và thông báo thực thi thành công.
-
-Cần phân biệt hai toán tử:
-
-- `<<`: Toán tử chèn dữ liệu vào luồng xuất.
-- `>>`: Toán tử trích xuất dữ liệu từ luồng nhập.
-
-### 1.2. Nhập nhiều giá trị
-
-Có thể đọc nhiều biến trong một câu lệnh:
+Ví dụ:
 
 ```cpp
-#include <iostream>
-
-int main() {
-    int a{};
-    int b{};
-
-    std::cin >> a >> b;
-
-    std::cout << "Tong: " << a + b << '\n';
-
-    return 0;
-}
+std::cout << "Diem: " << score << '\n';
 ```
 
-Dữ liệu đầu vào:
+Câu lệnh trên gửi lần lượt ba thành phần đến luồng xuất:
 
-```text
-5 8
+1. Chuỗi `"Diem: "`.
+2. Giá trị của biến `score`.
+3. Ký tự xuống dòng `'\n'`.
+
+Trong trường hợp thông thường, các thành phần được biểu diễn thành văn bản theo quy tắc định dạng của luồng.
+
+Có thể sử dụng nhiều toán tử `<<` trong cùng một biểu thức vì những phép chèn dữ liệu thường trả về tham chiếu đến luồng xuất, cho phép tiếp tục nối các thao tác.
+
+#### Xuống dòng và flush
+
+Hai cách viết thường gặp là:
+
+- `'\n'`: Ghi ký tự xuống dòng.
+- `std::endl`: Ghi ký tự xuống dòng và yêu cầu flush luồng xuất.
+
+*Flush* là thao tác yêu cầu đẩy dữ liệu đã được đệm của luồng đến thành phần xử lý bên dưới.
+
+Không nên sử dụng `std::endl` trong mọi trường hợp chỉ để xuống dòng, vì flush thường xuyên có thể làm tăng chi phí nhập xuất.
+
+Với những chương trình in lượng dữ liệu lớn, `'\n'` thường là lựa chọn phù hợp hơn.
+
+Ngược lại, khi thực sự cần flush tại một thời điểm cụ thể, có thể sử dụng `std::endl` hoặc `std::flush`.
+
+### 1.3. Nhập dữ liệu với std::cin
+
+`std::cin` là một đối tượng luồng nhập (*input stream*).
+
+Toán tử `>>` thực hiện thao tác trích xuất dữ liệu từ luồng và chuyển đổi sang kiểu phù hợp với đối tượng nhận.
+
+Ví dụ:
+
+```cpp
+int age{};
+std::cin >> age;
 ```
 
-Kết quả:
+Khi quá trình đọc thành công, giá trị được nhập sẽ được lưu vào biến `age`.
 
-```text
-Tong: 13
+Điều đáng chú ý là `std::cin` không đơn thuần sao chép toàn bộ dữ liệu đầu vào vào biến. Với các kiểu số, nó thực hiện quá trình phân tích và chuyển đổi văn bản sang giá trị thuộc kiểu tương ứng.
+
+Ví dụ, khi đầu vào là chuỗi ký tự `16`, phép trích xuất số nguyên có thể chuyển nó thành giá trị `int` bằng `16`.
+
+Nếu dữ liệu không thể được chuyển đổi phù hợp, luồng sẽ chuyển sang trạng thái lỗi.
+
+### 1.4. Nhập nhiều giá trị
+
+C++ cho phép nối các phép trích xuất:
+
+```cpp
+std::cin >> a >> b;
 ```
 
-Người dùng cũng có thể nhập:
+Về mặt xử lý, dữ liệu được trích xuất lần lượt vào `a` rồi `b`.
 
-```text
-5
-8
-```
+Đối với các phép nhập số thông thường, khoảng trắng đứng trước giá trị cần đọc sẽ được bỏ qua. Những khoảng trắng này có thể là dấu cách, tab hoặc ký tự xuống dòng.
 
-Kết quả vẫn giống nhau.
+Vì vậy, các cách nhập sau đều có thể cung cấp hai số nguyên giống nhau:
 
-**Vì sao?**
+| Cách nhập | Nội dung |
+|---|---|
+| Cùng một dòng | `5 8` |
+| Hai dòng | `5` và `8` trên hai dòng riêng |
+| Nhiều dấu cách | `5    8` |
 
-Với các kiểu dữ liệu số, `std::cin >>` tự động bỏ qua khoảng trắng, tab và ký tự xuống dòng ở đầu dữ liệu cần đọc.
+Đối với phép đọc số nguyên thông thường, `std::cin` không yêu cầu mỗi số phải nằm trên một dòng riêng.
 
-Điều này đặc biệt hữu ích trong các bài toán lập trình thi đấu, khi dữ liệu được cung cấp qua nhiều dòng.
+Tuy nhiên, nếu một phép đọc thất bại, không nên mặc định các phép đọc tiếp theo vẫn thành công.
 
-### 1.3. Đọc một dòng văn bản với getline
+### 1.5. Vì sao cin không đọc được họ tên có dấu cách?
 
-`std::cin >>` chỉ đọc một từ đối với kiểu `std::string`, vì quá trình đọc dừng tại khoảng trắng.
+Khi sử dụng toán tử `>>` với `std::string`, quá trình đọc thông thường dừng tại ký tự khoảng trắng phân tách.
 
-Ví dụ, nếu nhập `Nguyen Van A`, câu lệnh:
+Chẳng hạn, với đầu vào:
+
+`Nguyen Van An`
+
+phép đọc:
 
 ```cpp
 std::cin >> name;
@@ -137,125 +153,152 @@ std::cin >> name;
 
 chỉ lấy được `Nguyen`.
 
-Để đọc toàn bộ dòng, sử dụng `std::getline()`:
+Các ký tự còn lại tiếp tục nằm trong luồng nhập để những thao tác sau xử lý.
 
-```cpp
-#include <iostream>
-#include <string>
+Đây là hành vi phù hợp khi chương trình cần đọc từng từ, từng token hoặc những giá trị được phân cách bằng khoảng trắng.
 
-int main() {
-    std::string name;
+Nhưng nếu cần đọc một dòng văn bản có chứa khoảng trắng, nên sử dụng `std::getline()`.
 
-    std::cout << "Nhap ho ten: ";
-    std::getline(std::cin, name);
+### 1.6. Đọc cả dòng với std::getline
 
-    std::cout << "Xin chao, " << name << "!\n";
-
-    return 0;
-}
-```
-
-Kết quả:
-
-```text
-Nhap ho ten: Nguyen Van A
-Xin chao, Nguyen Van A!
-```
-
-**Lưu ý quan trọng:** Nếu sử dụng `std::getline()` ngay sau `std::cin >>`, ký tự xuống dòng còn lại trong bộ đệm có thể khiến `getline()` đọc một dòng rỗng.
-
-Có thể loại bỏ phần còn lại của dòng trước khi đọc:
-
-```cpp
-#include <iostream>
-#include <limits>
-#include <string>
-
-int main() {
-    int age{};
-    std::string name;
-
-    if (!(std::cin >> age)) {
-        return 1;
-    }
-
-    std::cin.ignore(
-        std::numeric_limits<std::streamsize>::max(),
-        '\n'
-    );
-
-    std::getline(std::cin, name);
-
-    std::cout << name << ": " << age << '\n';
-}
-```
-
-### 1.4. Kiểm tra dữ liệu đầu vào
-
-Không phải người dùng lúc nào cũng nhập đúng.
-
-Giả sử chương trình yêu cầu một số nguyên nhưng nhận được chữ cái, quá trình đọc có thể thất bại.
-
-Vì vậy, thay vì mặc định dữ liệu luôn hợp lệ, hãy kiểm tra kết quả:
-
-```cpp
-#include <iostream>
-
-int main() {
-    int age{};
-
-    std::cout << "Nhap tuoi: ";
-
-    if (!(std::cin >> age)) {
-        std::cerr << "Loi: Tuoi phai la so nguyen.\n";
-        return 1;
-    }
-
-    if (age < 0 || age > 150) {
-        std::cerr << "Loi: Tuoi khong hop le.\n";
-        return 1;
-    }
-
-    std::cout << "Tuoi hop le: " << age << '\n';
-
-    return 0;
-}
-```
-
-Ở đây có hai loại kiểm tra khác nhau:
-
-1. **Kiểm tra cú pháp dữ liệu:** Đầu vào có đọc được thành số nguyên hay không?
-2. **Kiểm tra tính hợp lệ:** Số nguyên đó có nằm trong phạm vi cho phép không?
-
-Chẳng hạn:
-
-| Dữ liệu nhập | Kết quả |
-|---|---|
-| `16` | Hợp lệ |
-| `-5` | Không hợp lệ |
-| `200` | Không hợp lệ |
-| `abc` | Đọc thất bại |
-
-Lưu ý rằng `std::cin >> age` có thể đọc thành công phần số của một chuỗi như `16abc` và để lại `abc` trong luồng nhập. Nếu cần xác thực toàn bộ dòng, phải xử lý thêm phần dữ liệu còn lại.
-
-Đây là một nguyên tắc quan trọng: **Đọc được dữ liệu không đồng nghĩa với dữ liệu hợp lệ.**
-
----
-
-## 2. Câu lệnh điều kiện
-
-Trong thực tế, chương trình thường cần đưa ra quyết định.
+`std::getline()` đọc dữ liệu đến khi gặp ký tự phân cách, thông thường là ký tự xuống dòng.
 
 Ví dụ:
 
-- Nếu điểm lớn hơn hoặc bằng 5, học sinh đạt yêu cầu.
-- Nếu mật khẩu không chính xác, từ chối đăng nhập.
-- Nếu số chia bằng 0, không thực hiện phép chia.
-- Nếu người dùng không có quyền, từ chối thao tác.
+```cpp
+std::getline(std::cin, name);
+```
 
-C++ cung cấp các câu lệnh điều kiện để xử lý những tình huống này.
+Nếu người dùng nhập `Nguyen Van An`, biến `name` sẽ chứa toàn bộ nội dung đó.
 
-### 2.1. Câu lệnh if
+Khác với phép trích xuất `>>`, `getline()` không tự bỏ qua khoảng trắng đầu dòng. Những dấu cách ở đầu và trong dòng vẫn là một phần của nội dung được đọc.
+
+Ký tự xuống dòng kết thúc việc đọc sẽ được lấy khỏi luồng nhưng không được đưa vào chuỗi kết quả.
+
+Khi không có ký tự nào trước dấu xuống dòng, `getline()` có thể trả về một chuỗi rỗng mà không nhất thiết coi đây là lỗi.
+
+Cần phân biệt **dòng rỗng hợp lệ** với **thao tác đọc thất bại**.
+
+### 1.7. Vì sao getline thường đọc ra chuỗi rỗng sau cin?
+
+Đây là một lỗi rất phổ biến khi mới học C++.
+
+Giả sử chương trình thực hiện hai thao tác liên tiếp:
+
+1. Đọc tuổi bằng `std::cin >> age`.
+2. Đọc họ tên bằng `std::getline(std::cin, name)`.
+
+Nếu người dùng nhập tuổi rồi nhấn Enter, phép trích xuất số nguyên thường chỉ lấy phần biểu diễn số. Ký tự xuống dòng có thể vẫn còn trong luồng.
+
+Khi `getline()` được gọi, nó gặp ngay ký tự xuống dòng đó và kết thúc việc đọc.
+
+Kết quả là chuỗi `name` rỗng, dù chương trình chưa thực sự nhận được họ tên mà người dùng dự định nhập.
+
+Để xử lý, sau khi phép đọc số thành công, có thể loại bỏ phần còn lại của dòng trước khi gọi `getline()`:
+
+```cpp
+std::cin.ignore(
+    std::numeric_limits<std::streamsize>::max(), '\n'
+);
+```
+
+Đoạn mã cần header `<limits>`.
+
+Lệnh `ignore()` ở đây bỏ qua dữ liệu cho đến khi gặp ký tự xuống dòng hoặc đạt điều kiện kết thúc tương ứng.
+
+Không nên mặc định chỉ cần gọi `ignore(1)` là luôn đủ, vì phần còn lại của dòng có thể chứa nhiều ký tự khác ngoài dấu xuống dòng.
+
+### 1.8. Kiểm tra trạng thái nhập liệu
+
+Không phải mọi dữ liệu đầu vào đều hợp lệ.
+
+Giả sử chương trình yêu cầu người dùng nhập một số nguyên nhưng nhận được nội dung không thể chuyển thành số.
+
+Khi đó, phép trích xuất có thể thất bại và luồng chuyển sang trạng thái lỗi.
+
+Cách kiểm tra thường dùng:
+
+```cpp
+if (!(std::cin >> age)) {
+    std::cerr << "Khong doc duoc tuoi.\n";
+}
+```
+
+Biểu thức `std::cin >> age` trả về luồng nhập. Luồng có thể được sử dụng trong điều kiện để xác định thao tác đọc có đang ở trạng thái thành công hay không.
+
+Nếu phép đọc thất bại, biểu thức phủ định `!` khiến nhánh xử lý lỗi được thực hiện.
+
+#### Các trạng thái quan trọng của luồng
+
+| Trạng thái | Ý nghĩa |
+|---|---|
+| `goodbit` | Không có cờ lỗi được bật |
+| `failbit` | Một thao tác nhập xuất thất bại theo quy tắc tương ứng |
+| `eofbit` | Đã gặp cuối luồng nhập |
+| `badbit` | Có lỗi nghiêm trọng liên quan đến hoạt động của luồng |
+
+Một luồng có thể đồng thời mang nhiều cờ trạng thái.
+
+Chẳng hạn, khi không còn dữ liệu để đọc, việc gặp cuối luồng có thể đi kèm trạng thái thất bại của một phép trích xuất.
+
+#### Phục hồi sau lỗi nhập liệu
+
+Nếu chương trình cần yêu cầu người dùng nhập lại, chỉ lặp lại lệnh đọc là chưa đủ.
+
+Khi `failbit` vẫn được bật, những lần đọc tiếp theo có thể tiếp tục thất bại.
+
+Cơ chế xử lý thường gồm:
+
+- Dùng `clear()` để xóa trạng thái lỗi khi thích hợp.
+- Dùng `ignore()` để loại bỏ dữ liệu gây lỗi còn nằm trong luồng.
+- Thực hiện lần đọc tiếp theo.
+
+Tuy nhiên, không nên liên tục xóa trạng thái lỗi và thử lại nếu đầu vào đã thực sự kết thúc hoặc luồng gặp lỗi không thể phục hồi.
+
+Đối với chương trình đọc input từ tệp hay online judge, việc gặp EOF thường là tín hiệu kết thúc dữ liệu, không phải lý do để liên tục yêu cầu nhập lại.
+
+### 1.9. Đọc thành công chưa chắc dữ liệu hợp lệ
+
+Giả sử chương trình đọc được số tuổi `200`.
+
+Về cú pháp, đây có thể là một số nguyên hợp lệ. Nhưng theo quy tắc nghiệp vụ của ứng dụng, giá trị đó có thể không được chấp nhận.
+
+Cần phân biệt:
+
+**Kiểm tra khả năng đọc:** Dữ liệu có thể chuyển đổi sang kiểu cần thiết hay không?
+
+**Kiểm tra định dạng:** Toàn bộ đầu vào có đáp ứng định dạng mong muốn không?
+
+**Kiểm tra nghiệp vụ:** Giá trị đã đọc có thuộc phạm vi và đáp ứng điều kiện ứng dụng không?
+
+Chẳng hạn, phép trích xuất số nguyên có thể chấp nhận phần số đầu tiên của `16abc`, sau đó để lại `abc` trong luồng. Nếu chương trình yêu cầu cả dòng chỉ được chứa một số nguyên, cần thực hiện kiểm tra bổ sung.
+
+**Nguyên tắc:** Không nên đồng nhất việc đọc được dữ liệu với việc dữ liệu đó phù hợp để xử lý.
+
+---
+
+## 2. Câu lệnh điều kiện trong C++
+
+### 2.1. Câu lệnh điều kiện là gì?
+
+Thông thường, các câu lệnh trong một khối được thực thi lần lượt theo luồng điều khiển của chương trình.
+
+Tuy nhiên, nhiều công việc chỉ được phép thực hiện nếu đáp ứng một điều kiện nhất định.
+
+Ví dụ:
+
+- Chỉ cho phép đăng nhập nếu thông tin xác thực hợp lệ.
+- Chỉ thực hiện phép chia khi mẫu số hợp lệ.
+- Chỉ chấp nhận điểm số thuộc phạm vi quy định.
+- Thực hiện một hành động khác tùy lựa chọn của người dùng.
+
+Câu lệnh điều kiện cho phép chương trình lựa chọn những nhánh thực thi khác nhau dựa trên kết quả đánh giá biểu thức.
+
+Trong C++, hai cấu trúc lựa chọn cơ bản là `if` và `switch`.
+
+### 2.2. Câu lệnh if
+
+`if` quyết định có thực hiện một câu lệnh hoặc một khối lệnh hay không dựa trên biểu thức điều kiện.
 
 Cú pháp:
 
@@ -265,812 +308,918 @@ if (condition) {
 }
 ```
 
-Phần thân chỉ được thực hiện khi biểu thức điều kiện có giá trị `true`.
+Khi chương trình gặp `if`, biểu thức điều kiện được đánh giá.
 
-Ví dụ:
+Nếu kết quả chuyển đổi thành `true`, câu lệnh hoặc khối lệnh đi kèm sẽ được thực hiện.
 
-```cpp
-#include <iostream>
+Nếu kết quả là `false`, chương trình bỏ qua phần thân của `if` và tiếp tục tại câu lệnh phía sau cấu trúc đó.
 
-int main() {
-    int age{};
+#### Điều kiện được hiểu như thế nào?
 
-    std::cin >> age;
+Trong C++, điều kiện không nhất thiết phải có kiểu `bool` ngay từ đầu.
 
-    if (age >= 18) {
-        std::cout << "Ban da du 18 tuoi.\n";
-    }
+Một biểu thức có thể được chuyển đổi theo ngữ cảnh thành `bool` nếu kiểu dữ liệu và phép chuyển đổi cho phép.
 
-    return 0;
-}
-```
+Ví dụ, với số nguyên:
 
-Nếu nhập `20`, thông báo được hiển thị.
+- `0` được hiểu là `false`.
+- Giá trị khác `0` được hiểu là `true`.
 
-Nếu nhập `15`, chương trình bỏ qua khối `if`.
+Tuy nhiên, đối với những điều kiện nghiệp vụ, nên viết phép so sánh rõ ràng thay vì dựa vào chuyển đổi ngầm khi cách viết đó dễ gây hiểu lầm.
 
-### 2.2. Câu lệnh if-else
+Ví dụ, `count > 0` diễn đạt mục đích rõ hơn nếu chương trình đang kiểm tra số lượng phần tử phải dương.
 
-Khi cần xử lý cả hai trường hợp đúng và sai, sử dụng `if-else`.
+### 2.3. Câu lệnh if-else
+
+`if-else` được sử dụng khi chương trình cần lựa chọn giữa hai hướng xử lý.
 
 Cú pháp:
 
 ```cpp
 if (condition) {
-    // Khi dieu kien dung
+    // Nhanh dung
 } else {
-    // Khi dieu kien sai
+    // Nhanh sai
 }
 ```
 
-Ví dụ kiểm tra số chẵn, lẻ:
+Quá trình thực thi gồm:
+
+1. Đánh giá điều kiện của `if`.
+2. Nếu đúng, thực hiện nhánh `if` và bỏ qua nhánh `else`.
+3. Nếu sai, bỏ qua nhánh `if` và thực hiện nhánh `else`.
+4. Tiếp tục thực thi câu lệnh sau toàn bộ cấu trúc.
+
+Trong trường hợp thông thường, chỉ một trong hai nhánh được thực hiện.
+
+Không nên hiểu `else` là một điều kiện mới được kiểm tra. Nó chính là nhánh được chọn khi điều kiện của `if` không thỏa mãn.
+
+### 2.4. Chuỗi else if
+
+Khi cần lựa chọn giữa nhiều trường hợp, có thể sử dụng `else if`.
+
+Ví dụ, giả sử một chương trình xếp loại điểm với các mốc:
+
+| Điều kiện | Xếp loại |
+|---|---|
+| Từ 8 trở lên | Giỏi |
+| Từ 6,5 đến dưới 8 | Khá |
+| Từ 5 đến dưới 6,5 | Trung bình |
+| Dưới 5 | Chưa đạt |
+
+Giả định điểm đầu vào đã được kiểm tra hợp lệ trong phạm vi `[0, 10]`.
+
+Có thể biểu diễn bằng một chuỗi:
 
 ```cpp
-#include <iostream>
-
-int main() {
-    int n{};
-
-    if (!(std::cin >> n)) {
-        return 1;
-    }
-
-    if (n % 2 == 0) {
-        std::cout << "So chan\n";
-    } else {
-        std::cout << "So le\n";
-    }
-
-    return 0;
-}
+if (score >= 8) { ... }
+else if (score >= 6.5) { ... }
+else if (score >= 5) { ... }
+else { ... }
 ```
 
-Toán tử `%` trả về phần dư của phép chia nguyên.
+Đây là mô tả cấu trúc; dấu `...` chỉ phần xử lý tương ứng, không phải mã có thể biên dịch nguyên dạng.
 
-- Nếu `n % 2 == 0`, số đó là số chẵn.
-- Ngược lại, số đó là số lẻ.
+#### Thứ tự kiểm tra có quan trọng không?
 
-**Phân biệt `=` và `==`:**
+Có.
+
+Trong một chuỗi `if-else if`, các điều kiện được xét lần lượt theo thứ tự xuất hiện.
+
+Ngay khi một điều kiện đúng, chương trình thực hiện nhánh tương ứng và không tiếp tục xét các nhánh còn lại của cùng chuỗi.
+
+Ví dụ, với `score = 9`:
+
+1. `score >= 8` đúng.
+2. Chương trình thực hiện nhánh Giỏi.
+3. Các nhánh Khá, Trung bình và Chưa đạt không được xét tiếp.
+
+Nếu đặt điều kiện `score >= 5` lên đầu, điểm `9` có thể bị xếp loại Trung bình do điều kiện này đã đúng trước.
+
+Vì vậy, trong những bài toán phân loại theo ngưỡng, thứ tự các điều kiện phải thể hiện đúng mức độ ưu tiên.
+
+#### else thuộc if nào?
+
+Khi có nhiều `if` lồng nhau mà không dùng dấu ngoặc nhọn, `else` được liên kết với `if` gần nhất chưa có `else` phù hợp theo quy tắc cú pháp.
+
+Điều này có thể khiến kết quả khác với ý định của người viết.
+
+Vì vậy, nên sử dụng dấu ngoặc nhọn `{}` để thể hiện rõ ranh giới của từng nhánh, kể cả khi hiện tại nhánh chỉ chứa một câu lệnh.
+
+### 2.5. Kết hợp nhiều điều kiện logic
+
+Các toán tử logic thường được sử dụng trong câu lệnh điều kiện:
 
 | Toán tử | Ý nghĩa |
 |---|---|
-| `=` | Gán giá trị |
-| `==` | So sánh bằng nhau |
-| `!=` | So sánh khác nhau |
-| `>` | Lớn hơn |
-| `<` | Nhỏ hơn |
-| `>=` | Lớn hơn hoặc bằng |
-| `<=` | Nhỏ hơn hoặc bằng |
+| `&&` | Logic AND |
+| `\|\|` | Logic OR |
+| `!` | Logic NOT |
 
-Một lỗi phổ biến là viết `if (a = 5)` thay vì `if (a == 5)`.
+Toán tử `&&` yêu cầu cả hai điều kiện đều đúng.
 
-Biểu thức đầu tiên thực hiện phép gán, sau đó chuyển giá trị được gán thành `bool` để kiểm tra. Với giá trị `5`, điều kiện luôn đúng.
+Toán tử `||` yêu cầu ít nhất một điều kiện đúng.
 
-### 2.3. Câu lệnh else if if-else
+Toán tử `!` đảo giá trị logic của biểu thức.
 
-Khi chương trình có nhiều trường hợp, sử dụng chuỗi `else if`.
+#### Short-circuit evaluation
 
-Ví dụ xếp loại điểm:
+Một đặc điểm rất quan trọng của `&&` và `||` trong C++ là khả năng đánh giá ngắn mạch.
+
+Với `&&`, nếu toán hạng bên trái đã sai, chương trình không cần và sẽ không đánh giá toán hạng bên phải.
+
+Với `||`, nếu toán hạng bên trái đã đúng, toán hạng bên phải sẽ không được đánh giá.
+
+Ví dụ:
 
 ```cpp
-#include <iostream>
-
-int main() {
-    double score{};
-
-    std::cout << "Nhap diem: ";
-
-    if (!(std::cin >> score)) {
-        std::cerr << "Diem khong hop le.\n";
-        return 1;
-    }
-
-    if (score < 0 || score > 10) {
-        std::cerr << "Diem phai nam trong [0, 10].\n";
-        return 1;
-    }
-
-    if (score >= 8) {
-        std::cout << "Gioi\n";
-    } else if (score >= 6.5) {
-        std::cout << "Kha\n";
-    } else if (score >= 5) {
-        std::cout << "Trung binh\n";
-    } else {
-        std::cout << "Chua dat\n";
-    }
-
-    return 0;
+if (b != 0 && a / b > 2) {
+    // Xu ly khi dieu kien thoa man
 }
 ```
 
-Ví dụ nhập:
+Nếu `b` bằng `0`, điều kiện bên trái sai nên phép chia ở bên phải không được thực hiện.
 
-```text
-7.5
-```
+Cơ chế này hữu ích khi một điều kiện phụ thuộc vào điều kiện bảo vệ trước đó.
 
-Kết quả:
+Tuy nhiên, cần đặt các điều kiện đúng thứ tự. Nếu thực hiện phép chia trước khi kiểm tra mẫu số, short-circuit sẽ không bảo vệ được phép tính.
 
-```text
-Kha
-```
+### 2.6. Những lỗi logic thường gặp với if
 
-**Cách chương trình hoạt động:**
+**Nhầm `=` với `==`:** `=` là phép gán, còn `==` là phép so sánh bằng nhau. Một phép gán có thể tạo ra giá trị được dùng trong điều kiện, khiến chương trình có hành vi khác mong đợi.
 
-1. Kiểm tra `score >= 8`, kết quả sai.
-2. Kiểm tra `score >= 6.5`, kết quả đúng.
-3. Thực hiện nhánh in `Kha`.
-4. Bỏ qua những nhánh còn lại.
+**Viết phép so sánh khoảng theo kiểu toán học:** Biểu thức `0 <= x <= 10` không kiểm tra đoạn `[0, 10]` theo cách nhiều người mới nghĩ. Các phép so sánh được đánh giá theo quy tắc của C++. Cần viết rõ `x >= 0 && x <= 10`.
 
-Điều quan trọng là **thứ tự kiểm tra ảnh hưởng trực tiếp đến kết quả**.
+**Bỏ qua đầu vào đặc biệt:** Khi sử dụng số thực, các giá trị như NaN có thể khiến phép so sánh cho kết quả bất ngờ. Nếu bài toán yêu cầu số hữu hạn, cần kiểm tra cả tính hữu hạn của dữ liệu.
 
-Nếu kiểm tra `score >= 5` trước `score >= 8`, điểm `9` có thể bị xếp vào nhóm trung bình.
-
-### 2.4. Câu lệnh switch
-
-`switch` phù hợp khi cần so sánh một biểu thức với nhiều giá trị rời rạc.
-
-Ví dụ xây dựng menu:
-
-```cpp
-#include <iostream>
-
-int main() {
-    int choice{};
-
-    std::cout << "1. Bat dau\n";
-    std::cout << "2. Cai dat\n";
-    std::cout << "3. Thoat\n";
-
-    if (!(std::cin >> choice)) {
-        return 1;
-    }
-
-    switch (choice) {
-        case 1:
-            std::cout << "Bat dau chuong trinh\n";
-            break;
-
-        case 2:
-            std::cout << "Mo cai dat\n";
-            break;
-
-        case 3:
-            std::cout << "Tam biet!\n";
-            break;
-
-        default:
-            std::cout << "Lua chon khong hop le\n";
-            break;
-    }
-
-    return 0;
-}
-```
-
-Các thành phần chính:
-
-- `switch`: Nhận biểu thức cần kiểm tra.
-- `case`: Định nghĩa một giá trị có thể xảy ra.
-- `break`: Thoát khỏi câu lệnh `switch`.
-- `default`: Xử lý khi không có `case` nào phù hợp.
-
-Nếu thiếu `break`, chương trình có thể tiếp tục chạy vào nhánh tiếp theo. Hành vi này được gọi là *fallthrough*.
-
-Trong C++17, có thể dùng `[[fallthrough]];` để thể hiện rõ trường hợp cố ý chạy xuyên nhánh.
-
-**Khi nào chọn if-else, khi nào chọn switch?**
-
-| Tình huống | Nên sử dụng |
-|---|---|
-| So sánh khoảng giá trị | `if-else` |
-| Kết hợp nhiều điều kiện logic | `if-else` |
-| Kiểm tra các giá trị nguyên cụ thể | `switch` |
-| Xử lý các giá trị enum | `switch` |
-
-`switch` không hỗ trợ trực tiếp so sánh khoảng như `score >= 8`, cũng không hỗ trợ `std::string` làm biểu thức lựa chọn trong C++17.
+**Quên dấu ngoặc nhọn:** Một `if` không có `{}` chỉ điều khiển một câu lệnh trực tiếp theo sau, không tự động bao gồm các câu lệnh cùng mức thụt lề.
 
 ---
 
-## 3. Vòng lặp trong C++
+## 3. Câu lệnh switch
 
-Giả sử cần in các số từ 1 đến 100.
+### 3.1. switch dùng để làm gì?
 
-Viết 100 câu lệnh `std::cout` là cách làm dài dòng, khó bảo trì và rất dễ sai.
+`switch` là một cấu trúc lựa chọn theo giá trị.
 
-Vòng lặp giải quyết vấn đề bằng cách thực hiện một khối lệnh nhiều lần.
+Nó phù hợp khi chương trình cần xử lý những trường hợp rời rạc của cùng một biểu thức, chẳng hạn trạng thái hoặc lựa chọn menu.
 
-C++ có ba dạng vòng lặp cơ bản:
+Cấu trúc cơ bản:
 
-- `for`
-- `while`
-- `do-while`
+```cpp
+switch (choice) {
+    case 1:
+        start();
+        break;
+    case 2:
+        openSettings();
+        break;
+    default:
+        handleUnknownChoice();
+}
+```
 
-### 3.1. Vòng lặp for
+Đoạn mã minh họa giả định các hàm `start()`, `openSettings()` và `handleUnknownChoice()` đã được khai báo.
 
-`for` thường được sử dụng khi có biến đếm hoặc khi biết trước số lần cần lặp.
+### 3.2. switch hoạt động như thế nào?
+
+Khi thực thi `switch`, chương trình:
+
+1. Đánh giá biểu thức điều khiển.
+2. Xác định `case` có giá trị phù hợp.
+3. Chuyển quyền điều khiển tới nhãn `case` đó.
+4. Tiếp tục thực thi những câu lệnh từ vị trí đã chọn, theo quy tắc luồng điều khiển thông thường.
+
+Nếu không có `case` phù hợp, chương trình chuyển đến `default` nếu nhãn này tồn tại.
+
+Nếu không có `case` phù hợp và không có `default`, phần thân `switch` sẽ không có nhánh nào được chọn để bắt đầu thực thi.
+
+### 3.3. case và default
+
+`case` là một nhãn gắn với giá trị hằng hợp lệ.
+
+Các giá trị `case` trong cùng `switch` phải phân biệt sau những phép chuyển đổi liên quan theo quy tắc ngôn ngữ.
+
+`default` là nhãn được chọn khi không có giá trị `case` phù hợp.
+
+Khác với `else` trong cấu trúc `if-else`, `default` không nhất thiết phải là nhãn cuối cùng về mặt vị trí trong source code.
+
+Tuy nhiên, thông thường nên đặt `default` cuối cấu trúc để dễ đọc và hạn chế nhầm lẫn về fallthrough.
+
+### 3.4. break trong switch
+
+Trong `switch`, `break` kết thúc câu lệnh `switch` gần nhất chứa nó.
+
+Sau `break`, chương trình tiếp tục thực thi tại câu lệnh phía sau toàn bộ cấu trúc `switch`.
+
+Điều này đặc biệt quan trọng vì nhãn `case` **không tự kết thúc một nhánh thực thi**.
+
+Nếu chương trình bắt đầu từ `case 1` và không gặp `break` hoặc một cơ chế chuyển điều khiển khác, nó có thể tiếp tục thực hiện các câu lệnh nằm dưới `case 2`.
+
+### 3.5. Fallthrough là gì?
+
+*Fallthrough* là việc luồng điều khiển tiếp tục đi từ một nhánh `case` sang những câu lệnh ở nhánh tiếp theo.
+
+Ví dụ, nếu chọn `case 1` nhưng không có `break`, chương trình có thể thực hiện cả những câu lệnh của `case 2`.
+
+Đây không nhất thiết là lỗi của ngôn ngữ. Nó là một hành vi hợp lệ và đôi khi được sử dụng có chủ đích.
+
+Tuy nhiên, nếu người viết quên `break`, kết quả có thể khác hoàn toàn với ý định.
+
+C++17 cung cấp thuộc tính:
+
+```cpp
+[[fallthrough]];
+```
+
+để đánh dấu một trường hợp cố ý cho phép luồng điều khiển tiếp tục sang nhãn `case` hoặc `default` tiếp theo, theo quy tắc áp dụng của thuộc tính này.
+
+Nó không tạo ra cơ chế nhảy mới mà giúp thể hiện ý định và hỗ trợ compiler chẩn đoán những tình huống fallthrough không chủ ý.
+
+### 3.6. Giới hạn của switch
+
+Trong C++17, biểu thức điều khiển của `switch` phải có kiểu phù hợp với cơ chế lựa chọn theo giá trị nguyên hoặc enum.
+
+Không thể trực tiếp sử dụng `std::string` như biểu thức điều khiển `switch` theo cách kiểm tra chuỗi thông thường.
+
+`switch` cũng không được thiết kế để kiểm tra những khoảng giá trị như:
+
+- Điểm từ 8 trở lên.
+- Tuổi từ 18 đến 60.
+- Nhiệt độ nằm trong một khoảng.
+
+Với những trường hợp này, `if-else` thường phù hợp hơn.
+
+### 3.7. Khi nào chọn if-else, khi nào chọn switch?
+
+| Trường hợp | Cấu trúc phù hợp |
+|---|---|
+| So sánh một khoảng giá trị | `if-else` |
+| Kết hợp nhiều biểu thức logic | `if-else` |
+| Kiểm tra một chuỗi văn bản | `if-else` hoặc cấu trúc xử lý khác |
+| Phân nhánh theo các giá trị nguyên cố định | `switch` |
+| Phân nhánh theo giá trị enum | `switch` |
+| Có nhiều điều kiện phụ thuộc nhau | Thường là `if-else` |
+
+Sự lựa chọn còn phụ thuộc vào độ rõ ràng, khả năng mở rộng và cách tổ chức chương trình.
+
+Không nên lựa chọn `switch` chỉ vì cho rằng nó luôn nhanh hơn `if-else`. Hiệu năng thực tế phụ thuộc vào compiler, dữ liệu và cấu trúc nhánh.
+
+---
+
+## 4. Vòng lặp trong C++
+
+### 4.1. Vòng lặp là gì?
+
+Vòng lặp là một cấu trúc điều khiển cho phép thực hiện một câu lệnh hoặc khối lệnh nhiều lần.
+
+Giả sử cần xử lý 1.000 phần tử trong một tập dữ liệu. Thay vì viết 1.000 câu lệnh riêng biệt, có thể dùng một vòng lặp để lần lượt xử lý từng phần tử.
+
+Một vòng lặp thường liên quan đến ba yếu tố:
+
+- **Điều kiện tiếp tục:** Xác định có được thực hiện thêm một lần lặp hay không.
+- **Thân vòng lặp:** Những thao tác cần thực hiện.
+- **Sự thay đổi trạng thái:** Giúp chương trình tiến tới trạng thái mới hoặc điều kiện kết thúc.
+
+C++ có ba cấu trúc vòng lặp cơ bản:
+
+- `for`.
+- `while`.
+- `do-while`.
+
+Ngoài ra còn có range-based `for`, được giới thiệu trong C++11.
+
+### 4.2. Vòng lặp for
+
+`for` thường được sử dụng khi quá trình lặp có phần khởi tạo, điều kiện và thao tác cập nhật rõ ràng.
 
 Cú pháp:
 
 ```cpp
-for (a; b; c) {
-    // Cong viec can lap
+for (initialization; condition; update) {
+    // Than vong lap
 }
 ```
 
-Trong đó:
+#### Thứ tự thực thi chính xác
 
-- `a`: Khởi tạo biến đếm.
-- `b`: Điều kiện tiếp tục vòng lặp.
-- `c`: Cập nhật biến đếm sau mỗi lần lặp.
+Khi gặp vòng lặp `for`, chương trình thực hiện theo trình tự:
 
-Ví dụ in các số từ 1 đến 5:
+1. Thực hiện phần khởi tạo một lần.
+2. Đánh giá điều kiện tiếp tục.
+3. Nếu điều kiện sai, kết thúc vòng lặp.
+4. Nếu điều kiện đúng, thực hiện thân vòng lặp.
+5. Khi thân kết thúc bình thường, thực hiện biểu thức cập nhật.
+6. Quay lại bước kiểm tra điều kiện.
 
-```cpp
-#include <iostream>
-
-int main() {
-    for (int i = 1; i <= 5; ++i) {
-        std::cout << i << ' ';
-    }
-
-    std::cout << '\n';
-
-    return 0;
-}
-```
-
-Kết quả:
-
-```text
-1 2 3 4 5
-```
-
-**Phân tích từng lần lặp:**
-
-| Lần lặp | Giá trị i | Điều kiện i <= 5 | Hành động |
-|---|---|---|---|
-| 1 | 1 | Đúng | In 1 |
-| 2 | 2 | Đúng | In 2 |
-| 3 | 3 | Đúng | In 3 |
-| 4 | 4 | Đúng | In 4 |
-| 5 | 5 | Đúng | In 5 |
-| 6 | 6 | Sai | Kết thúc |
-
-Câu lệnh `++i` tăng biến `i` lên một đơn vị.
-
-Trong ví dụ này, `i++` cũng cho kết quả tương đương.
-
-**Ví dụ: In số chẵn từ 2 đến 10**
+Ví dụ:
 
 ```cpp
-for (int i = 2; i <= 10; i += 2) {
+for (int i = 1; i <= 3; ++i) {
     std::cout << i << ' ';
 }
 ```
 
-Kết quả:
+Thứ tự diễn ra như sau:
 
-```text
-2 4 6 8 10
-```
+| Bước | Giá trị i | Hành động |
+|---|---|---|
+| Khởi tạo | 1 | Tạo biến đếm |
+| Kiểm tra | 1 | Điều kiện đúng |
+| Thân vòng lặp | 1 | In 1 |
+| Cập nhật | 2 | Tăng i |
+| Kiểm tra | 2 | Điều kiện đúng |
+| Thân vòng lặp | 2 | In 2 |
+| Cập nhật | 3 | Tăng i |
+| Kiểm tra | 3 | Điều kiện đúng |
+| Thân vòng lặp | 3 | In 3 |
+| Cập nhật | 4 | Tăng i |
+| Kiểm tra | 4 | Điều kiện sai, kết thúc |
 
-Không bắt buộc mỗi vòng lặp chỉ tăng một đơn vị. Biến đếm có thể tăng hoặc giảm theo bước phù hợp.
+Kết quả là `1 2 3`.
 
-### 3.2. Vòng lặp while
+#### Phần khởi tạo có chạy lại mỗi lần lặp không?
 
-`while` phù hợp khi số lần lặp phụ thuộc vào một điều kiện và chưa xác định trước.
+Không.
+
+Phần khởi tạo chỉ được thực hiện một lần khi bắt đầu câu lệnh `for`.
+
+Biểu thức điều kiện và phần cập nhật mới được sử dụng lặp lại theo trình tự điều khiển.
+
+#### Có bắt buộc phải tăng i không?
+
+Không.
+
+Phần cập nhật có thể giảm biến đếm, tăng theo bước lớn hơn hoặc thực hiện một thao tác phù hợp khác.
+
+Ví dụ, muốn đếm ngược có thể sử dụng `--i`, còn muốn tăng từng hai đơn vị có thể sử dụng `i += 2`.
+
+#### for có thể chạy 0 lần không?
+
+Có.
+
+Nếu điều kiện sai ngay lần kiểm tra đầu tiên, thân vòng lặp không được thực hiện lần nào.
+
+#### Vòng lặp for có thể không có điều kiện không?
+
+Có.
+
+Cú pháp `for (;;)` là một dạng vòng lặp không có điều kiện kết thúc được viết tường minh. Khi không có biểu thức điều kiện, nó được xem như điều kiện luôn đúng.
+
+Vòng lặp chỉ dừng khi có sự kiện chuyển quyền điều khiển phù hợp hoặc chương trình kết thúc theo cơ chế khác.
+
+Một vòng lặp như vậy không tự động là lỗi. Nó có thể được sử dụng trong event loop hoặc những chương trình cần chờ sự kiện, nhưng cần thiết kế cơ chế dừng rõ ràng.
+
+### 4.3. Vòng lặp while
+
+`while` phù hợp khi chương trình tiếp tục thực hiện một công việc miễn là một điều kiện còn đúng.
 
 Cú pháp:
 
 ```cpp
 while (condition) {
-    // Cong viec can lap
+    // Than vong lap
 }
 ```
 
-Điều kiện được kiểm tra **trước mỗi lần thực hiện thân vòng lặp**.
+#### Thứ tự thực thi
 
-Ví dụ đếm ngược:
+1. Đánh giá điều kiện.
+2. Nếu sai, bỏ qua thân và kết thúc vòng lặp.
+3. Nếu đúng, thực hiện thân.
+4. Khi thân kết thúc bình thường, quay lại đánh giá điều kiện.
+5. Lặp lại quy trình.
 
-```cpp
-#include <iostream>
+Điểm quan trọng nhất là **điều kiện được kiểm tra trước mỗi lần thực hiện thân vòng lặp**.
 
-int main() {
-    int count{5};
+Vì vậy, `while` có thể thực hiện thân 0 lần.
 
-    while (count > 0) {
-        std::cout << count << ' ';
-        --count;
-    }
+#### Khi nào sử dụng while?
 
-    std::cout << "Bat dau!\n";
+`while` phù hợp khi việc lặp phụ thuộc chủ yếu vào trạng thái hoặc điều kiện chưa biết trước số lần xảy ra.
 
-    return 0;
-}
-```
+Ví dụ:
 
-Kết quả:
+- Đọc dữ liệu cho đến khi không còn dữ liệu.
+- Tiếp tục xử lý khi một hàng đợi còn phần tử.
+- Thực hiện tác vụ khi một điều kiện nghiệp vụ còn đúng.
+- Chờ hoặc xử lý sự kiện cho đến khi nhận tín hiệu dừng.
 
-```text
-5 4 3 2 1 Bat dau!
-```
+Một vòng lặp `while` không nhất thiết phải có biến đếm. Điều kiện của nó có thể phụ thuộc vào dữ liệu, trạng thái hoặc kết quả thao tác bên trong vòng lặp.
 
-Chương trình thực hiện:
+#### Vòng lặp while vô hạn
 
-1. Kiểm tra `count > 0`.
-2. In giá trị hiện tại.
-3. Giảm `count` đi một.
-4. Quay lại kiểm tra điều kiện.
-5. Thoát khi `count` bằng `0`.
+Vòng lặp có thể không kết thúc nếu điều kiện luôn đúng và không có cơ chế thoát.
 
-Nếu điều kiện sai ngay từ đầu, thân vòng lặp sẽ không được thực hiện lần nào.
+Nguyên nhân thường gặp là:
 
-### 3.3. Vòng lặp do-while
+- Biến điều khiển không được cập nhật.
+- Giá trị cập nhật không thể khiến điều kiện sai.
+- Một nhánh điều kiện liên tục bỏ qua thao tác cập nhật.
+- Điều kiện phụ thuộc vào một sự kiện không bao giờ xảy ra.
 
-Khác với `while`, vòng lặp `do-while` kiểm tra điều kiện **sau khi thực hiện thân vòng lặp**.
+Tuy nhiên, vòng lặp chạy liên tục có thể là chủ đích trong server, chương trình nhúng hoặc event processing.
 
-Vì vậy, thân vòng lặp luôn được thực hiện ít nhất một lần.
+Khi đó, cần quản lý tài nguyên, xử lý lỗi và xây dựng cơ chế kết thúc phù hợp.
 
-Cú pháp:
+### 4.4. Vòng lặp do-while
+
+`do-while` có cú pháp:
 
 ```cpp
 do {
-    // Cong viec can lap
+    // Than vong lap
 } while (condition);
 ```
 
-Ví dụ yêu cầu người dùng nhập `0` để thoát:
+Khác với `while`, `do-while` kiểm tra điều kiện **sau khi thực hiện thân vòng lặp**.
+
+#### Trình tự thực thi
+
+1. Bắt đầu thực hiện thân vòng lặp.
+2. Khi thân kết thúc bình thường, đánh giá điều kiện.
+3. Nếu điều kiện đúng, quay lại thực hiện thân.
+4. Nếu điều kiện sai, kết thúc vòng lặp.
+
+Như vậy, khi quyền điều khiển đi vào `do-while`, thân vòng lặp bắt đầu được thực hiện ít nhất một lần.
+
+Tuy nhiên, điều này không có nghĩa mọi câu lệnh trong thân đều luôn hoàn thành. Những cấu trúc như `break`, `return` hoặc exception có thể làm luồng thực thi rời khỏi thân trước thời điểm thông thường.
+
+#### Khi nào nên sử dụng do-while?
+
+`do-while` phù hợp khi một thao tác cần được thực hiện trước, sau đó mới có đủ thông tin để quyết định có lặp lại hay không.
+
+Ví dụ:
+
+- Hiển thị menu ít nhất một lần.
+- Yêu cầu người dùng nhập dữ liệu rồi xác định có cần nhập lại.
+- Thực hiện một thao tác và kiểm tra trạng thái kết quả.
+- Tiếp tục xử lý cho đến khi xuất hiện điều kiện dừng.
+
+#### Vì sao do-while có dấu chấm phẩy?
+
+Cú pháp `do-while` kết thúc bằng:
 
 ```cpp
-#include <iostream>
-
-int main() {
-    int choice{};
-
-    do {
-        std::cout << "Nhap 0 de thoat: ";
-
-        if (!(std::cin >> choice)) {
-            std::cerr << "Du lieu khong hop le.\n";
-            return 1;
-        }
-    } while (choice != 0);
-
-    std::cout << "Da thoat chuong trinh.\n";
-
-    return 0;
-}
+while (condition);
 ```
 
-Ví dụ quá trình chạy:
+Dấu `;` cuối cùng là một phần bắt buộc của cú pháp câu lệnh `do-while`.
 
-```text
-Nhap 0 de thoat: 5
-Nhap 0 de thoat: 2
-Nhap 0 de thoat: 0
-Da thoat chuong trinh.
-```
+Đây là điểm khác với cách viết thông thường của `for` và `while`.
 
-Ở đây vòng lặp tiếp tục cho đến khi người dùng nhập `0`.
+### 4.5. So sánh for, while và do-while
 
-**Lưu ý:** Khác với `while` và `for`, cú pháp `do-while` bắt buộc có dấu `;` sau điều kiện.
-
-### 3.4. So sánh ba loại vòng lặp
-
-| Tiêu chí | for | while | do-while |
+| Đặc điểm | for | while | do-while |
 |---|---|---|---|
 | Kiểm tra điều kiện | Trước thân | Trước thân | Sau thân |
-| Có thể chạy 0 lần | Có | Có | Không |
-| Phù hợp với biến đếm | Rất tốt | Có thể | Có thể |
-| Phù hợp với nhập liệu lặp lại | Có thể | Tốt | Rất tốt |
-| Thường sử dụng | Duyệt, đếm | Lặp theo điều kiện | Menu, yêu cầu nhập lại |
+| Có thể không thực hiện thân | Có | Có | Không, nếu đã đi vào vòng lặp |
+| Phần khởi tạo riêng trong cú pháp | Có | Không | Không |
+| Phần cập nhật riêng trong cú pháp | Có | Không | Không |
+| Phù hợp với biến đếm | Rất phù hợp | Có thể | Có thể |
+| Phù hợp với lặp phụ thuộc trạng thái | Có thể | Phù hợp | Phù hợp |
+| Thường gặp | Duyệt dãy, lặp có biến đếm | Đọc dữ liệu, xử lý trạng thái | Menu, thao tác cần chạy trước |
 
-Không có vòng lặp nào tốt nhất cho mọi trường hợp. Hãy chọn kiểu giúp người đọc hiểu rõ ý định của chương trình.
+Không có cấu trúc vòng lặp nào tốt nhất cho mọi tình huống.
 
----
+Nếu số lần lặp được thể hiện rõ bằng biến đếm, `for` thường dễ hiểu.
 
-## 4. Điều khiển vòng lặp với break và continue
+Nếu việc tiếp tục phụ thuộc chủ yếu vào trạng thái, `while` có thể tự nhiên hơn.
 
-Ngoài điều kiện lặp, C++ cung cấp hai câu lệnh để thay đổi luồng thực thi.
+Nếu bắt buộc thực hiện thao tác trước lần kiểm tra đầu tiên, `do-while` thường thể hiện ý định chính xác hơn.
 
-### 4.1. break: Thoát khỏi vòng lặp
+### 4.6. Range-based for
 
-`break` lập tức kết thúc vòng lặp gần nhất bao quanh nó.
+C++11 giới thiệu range-based `for`, tiếp tục được hỗ trợ trong C++17.
 
-Ví dụ:
-
-```cpp
-for (int i = 1; i <= 10; ++i) {
-    if (i == 5) {
-        break;
-    }
-
-    std::cout << i << ' ';
-}
-```
-
-Kết quả:
-
-```text
-1 2 3 4
-```
-
-Khi `i` bằng `5`, vòng lặp kết thúc, không tiếp tục đến `10`.
-
-### 4.2. continue: Bỏ qua lần lặp hiện tại
-
-`continue` bỏ qua phần còn lại của thân vòng lặp hiện tại và chuyển sang bước lặp tiếp theo.
-
-Ví dụ chỉ in số lẻ:
-
-```cpp
-for (int i = 1; i <= 10; ++i) {
-    if (i % 2 == 0) {
-        continue;
-    }
-
-    std::cout << i << ' ';
-}
-```
-
-Kết quả:
-
-```text
-1 3 5 7 9
-```
-
-Khác biệt cần nhớ:
-
-- `break`: Kết thúc toàn bộ vòng lặp hiện tại.
-- `continue`: Chỉ bỏ qua phần còn lại của lần lặp hiện tại.
-
-Với vòng lặp lồng nhau, `break` chỉ thoát khỏi vòng lặp gần nhất, không tự động thoát khỏi tất cả các vòng.
-
----
-
-## 5. Bài toán thực hành: Tính tổng từ 1 đến n
-
-Hãy vận dụng kiến thức vừa học vào một bài toán hoàn chỉnh.
-
-**Đề bài**
-
-Nhập số nguyên dương `n`. Tính tổng:
-
-\[
-S = 1 + 2 + 3 + \cdots + n
-\]
+Cấu trúc này cho phép duyệt trực tiếp các phần tử của một range phù hợp mà không phải tự viết chỉ số.
 
 Ví dụ:
 
-**Input**
-
-```text
-5
-```
-
-**Output**
-
-```text
-15
-```
-
-Vì:
-
-\[
-1 + 2 + 3 + 4 + 5 = 15
-\]
-
-### 5.1. Phân tích thuật toán
-
-Các bước giải quyết:
-
-1. Đọc số nguyên `n`.
-2. Kiểm tra `n` có hợp lệ không.
-3. Khởi tạo biến `sum = 0`.
-4. Dùng vòng lặp chạy từ `1` đến `n`.
-5. Cộng giá trị hiện tại vào `sum`.
-6. In kết quả.
-
-### 5.2. Chương trình C++17
-
 ```cpp
-#include <iostream>
-
-int main() {
-    int n{};
-
-    if (!(std::cin >> n)) {
-        std::cerr << "Du lieu khong hop le.\n";
-        return 1;
-    }
-
-    if (n <= 0 || n > 1'000'000) {
-        std::cerr << "n phai nam trong [1, 1000000].\n";
-        return 1;
-    }
-
-    long long sum{};
-
-    for (int i = 1; i <= n; ++i) {
-        sum += i;
-    }
-
-    std::cout << sum << '\n';
-
-    return 0;
+for (const auto& value : values) {
+    std::cout << value << '\n';
 }
 ```
 
-### 5.3. Phân tích chương trình
+Cách viết này hữu ích khi chương trình chỉ cần xử lý lần lượt các phần tử.
 
-**Biến n**
+Tuy nhiên, cần chú ý cách khai báo biến nhận phần tử:
 
-Lưu số nguyên đầu vào. Chương trình giới hạn `n` trong đoạn `[1, 1000000]` để xác định rõ phạm vi được hỗ trợ.
+- `auto value`: Nhận giá trị của phần tử vào biến riêng.
+- `auto& value`: Tham chiếu đến phần tử, có thể cho phép thay đổi trực tiếp.
+- `const auto& value`: Tham chiếu để đọc mà không sửa qua tham chiếu đó.
 
-**Biến sum**
-
-Được khai báo dưới kiểu `long long`, có khả năng chứa các giá trị nguyên lớn hơn kiểu `int` thông thường.
-
-**Vòng lặp for**
-
-Thực hiện phép cộng lần lượt:
-
-| i | sum trước phép cộng | sum sau phép cộng |
-|---|---|---|
-| 1 | 0 | 1 |
-| 2 | 1 | 3 |
-| 3 | 3 | 6 |
-| 4 | 6 | 10 |
-| 5 | 10 | 15 |
-
-Khi `i` vượt quá `n`, vòng lặp kết thúc.
-
-### 5.4. Phân tích độ phức tạp
-
-Vòng lặp thực hiện `n` lần, mỗi lần chỉ có một phép cộng.
-
-Vì vậy:
-
-- **Độ phức tạp thời gian:** `O(n)`.
-- **Độ phức tạp bộ nhớ phụ:** `O(1)`.
-
-Chương trình không cần tạo mảng hoặc lưu toàn bộ các số từ `1` đến `n`.
-
-**Mở rộng:** Bài toán còn có thể giải bằng công thức:
-
-\[
-S = \frac{n(n+1)}{2}
-\]
-
-Công thức này cho phép tính tổng với `O(1)` thời gian. Tuy nhiên, cần chú ý đến khả năng tràn số khi thực hiện phép nhân. Việc chọn kiểu dữ liệu và kiểm tra phạm vi đầu vào vẫn cần thiết.
+Range-based `for` không tự động tránh được mọi lỗi lifetime. Khi làm việc với view, temporary hoặc container bị thay đổi trong lúc duyệt, vẫn phải tuân theo quy tắc tồn tại của đối tượng và tính hợp lệ của iterator.
 
 ---
 
-## 6. Những lỗi thường gặp
+## 5. Điều khiển luồng thực thi với break và continue
 
-### 6.1. Vòng lặp vô hạn
+`break` và `continue` là hai **câu lệnh điều khiển**, không phải hàm.
 
-Ví dụ:
+Chúng thay đổi cách chương trình tiếp tục thực thi khi gặp trong vòng lặp hoặc cấu trúc thích hợp.
+
+Đây là hai câu lệnh dễ bị hiểu sai nếu chỉ ghi nhớ định nghĩa ngắn.
+
+Điều cần nắm là chương trình **rời khỏi cấu trúc nào, bỏ qua những câu lệnh nào và sẽ thực hiện bước nào tiếp theo**.
+
+### 5.1. break hoạt động như thế nào?
+
+`break` làm chương trình kết thúc câu lệnh lặp hoặc `switch` gần nhất đang bao quanh nó.
+
+Khi gặp `break`, chương trình không tiếp tục thực hiện những câu lệnh còn lại trong cấu trúc đó.
+
+Thay vào đó, nó chuyển quyền điều khiển đến vị trí phía sau toàn bộ vòng lặp hoặc `switch` vừa bị kết thúc.
+
+#### break trong vòng lặp for
+
+Giả sử vòng lặp đang duyệt các giá trị từ 1 đến 10.
+
+Nếu chương trình gặp `break` tại giá trị 5, vòng lặp kết thúc ngay lúc đó.
+
+Điều này có nghĩa:
+
+- Những câu lệnh sau `break` trong thân vòng lặp không được thực hiện.
+- Phần cập nhật của vòng lặp `for` không được chạy thêm cho lần lặp đó.
+- Điều kiện tiếp tục của vòng lặp không được kiểm tra lại.
+- Các lần lặp với giá trị tiếp theo không xảy ra.
+- Chương trình tiếp tục ở câu lệnh sau vòng lặp.
+
+Vì vậy, không nên hiểu `break` là bỏ qua một phần tử. Nó chấm dứt toàn bộ vòng lặp liên quan.
+
+#### break trong while
+
+Khi `break` được thực hiện trong `while`, chương trình rời khỏi vòng lặp ngay lập tức.
+
+Nó không quay lại đánh giá điều kiện `while` thêm một lần.
+
+Điều này cho phép dừng vòng lặp ngay cả khi biểu thức điều kiện vẫn đang đúng.
+
+Ví dụ, một vòng lặp xử lý dữ liệu có thể dừng khi phát hiện lỗi không thể phục hồi, thay vì tiếp tục các lần xử lý còn lại.
+
+#### break trong do-while
+
+Trong `do-while`, `break` cũng làm chương trình rời khỏi vòng lặp ngay.
+
+Điều kiện đặt sau `while` không được đánh giá khi rời vòng lặp bằng `break`.
+
+#### break có kết thúc hàm không?
+
+Không.
+
+`break` kết thúc vòng lặp hoặc `switch` gần nhất tương ứng, không mặc định kết thúc hàm đang chứa nó.
+
+Nếu còn các câu lệnh phía sau vòng lặp trong cùng hàm, chương trình tiếp tục thực hiện các câu lệnh đó.
+
+Để kết thúc một lời gọi hàm thông thường, sử dụng `return` khi phù hợp.
+
+### 5.2. continue hoạt động như thế nào?
+
+`continue` không kết thúc toàn bộ vòng lặp.
+
+Thay vào đó, nó bỏ qua phần còn lại của thân vòng lặp hiện tại và chuyển quyền điều khiển tới bước tiếp tục tương ứng của vòng lặp gần nhất bao quanh nó.
+
+Cách chương trình tiếp tục phụ thuộc vào loại vòng lặp.
+
+Đây là điểm cần phân biệt kỹ.
+
+### 5.3. continue trong for
+
+Với `for`, khi gặp `continue`:
+
+1. Những câu lệnh còn lại trong thân vòng lặp hiện tại bị bỏ qua.
+2. Chương trình chuyển đến phần cập nhật của `for`.
+3. Sau khi cập nhật, điều kiện lặp được đánh giá lại.
+4. Nếu điều kiện đúng, bắt đầu lần lặp tiếp theo.
+5. Nếu điều kiện sai, vòng lặp kết thúc.
+
+Ví dụ, một vòng lặp tăng biến `i` từ 1 đến 10 và sử dụng `continue` khi `i` là số chẵn.
+
+Khi `i = 2`, những câu lệnh xử lý nằm sau `continue` bị bỏ qua.
+
+Tuy nhiên, phần cập nhật `++i` của `for` vẫn diễn ra, làm `i` tăng thành 3.
+
+Sau đó, điều kiện lặp được kiểm tra lại.
+
+Vì vậy, vòng lặp có thể tiếp tục với `i = 3`.
+
+**Điểm cần nhớ:** `continue` trong `for` không bỏ qua biểu thức cập nhật của vòng lặp.
+
+Đây là khác biệt quan trọng so với cách nhiều người mới hình dung.
+
+### 5.4. continue trong while
+
+Với `while`, khi gặp `continue`, chương trình:
+
+1. Bỏ qua những câu lệnh còn lại trong thân vòng lặp.
+2. Quay lại đánh giá điều kiện `while`.
+3. Nếu điều kiện đúng, thực hiện lần lặp tiếp theo.
+4. Nếu điều kiện sai, kết thúc vòng lặp.
+
+Khác với `for`, cú pháp `while` không có phần cập nhật riêng.
+
+Nếu chương trình đặt thao tác cập nhật ở cuối thân vòng lặp, `continue` có thể khiến thao tác đó bị bỏ qua.
+
+Xét ví dụ:
 
 ```cpp
-int i = 1;
+int i{0};
 
-while (i <= 5) {
-    std::cout << i << '\n';
-}
-```
-
-Biến `i` không bao giờ thay đổi.
-
-Vì thế, điều kiện `i <= 5` luôn đúng và chương trình liên tục in `1`.
-
-Cách sửa:
-
-```cpp
-int i = 1;
-
-while (i <= 5) {
-    std::cout << i << '\n';
+while (i < 5) {
+    if (i == 2) continue;
     ++i;
 }
 ```
 
-Lưu ý rằng vòng lặp vô hạn không phải lúc nào cũng là lỗi. Một số chương trình server hoặc vòng lặp xử lý sự kiện cố tình chạy liên tục, nhưng phải có cơ chế dừng phù hợp.
+Quá trình thực thi:
 
-### 6.2. Sai điều kiện biên
+- Ban đầu `i = 0`, chương trình tăng lên 1.
+- `i = 1`, chương trình tăng lên 2.
+- `i = 2`, điều kiện trong `if` đúng.
+- `continue` được thực hiện.
+- Câu lệnh `++i` bị bỏ qua.
+- Chương trình quay lại kiểm tra `i < 5`.
+- Vì `i` vẫn bằng 2, điều kiện tiếp tục đúng.
+- Vòng lặp lại gặp `continue`.
 
-Xét vòng lặp:
+Nếu không có tác động nào khác, vòng lặp mắc kẹt tại `i = 2`.
+
+Đây là ví dụ điển hình cho lỗi vòng lặp vô hạn do đặt `continue` trước thao tác cập nhật quan trọng.
+
+Để tránh lỗi, cần bảo đảm trạng thái liên quan đến điều kiện lặp được cập nhật trên mọi đường thực thi cần thiết, hoặc tổ chức lại vòng lặp bằng cấu trúc phù hợp hơn.
+
+### 5.5. continue trong do-while
+
+Với `do-while`, `continue` không quay thẳng về đầu thân vòng lặp.
+
+Thay vào đó:
+
+1. Bỏ qua phần còn lại của thân.
+2. Chuyển đến bước đánh giá điều kiện `while` ở cuối.
+3. Nếu điều kiện đúng, quay lại thân vòng lặp.
+4. Nếu điều kiện sai, kết thúc.
+
+Điều này khác với cách hoạt động trong `for`, nơi biểu thức cập nhật được thực hiện trước khi kiểm tra điều kiện.
+
+Vì vậy, khi sử dụng `continue`, phải xét loại vòng lặp cụ thể thay vì áp dụng một quy tắc đơn giản rằng chương trình luôn quay ngay về đầu vòng lặp.
+
+### 5.6. So sánh chi tiết break và continue
+
+| Đặc điểm | break | continue |
+|---|---|---|
+| Kết thúc toàn bộ vòng lặp gần nhất | Có | Không |
+| Bỏ qua phần còn lại của thân hiện tại | Có | Có |
+| Chạy phần cập nhật của `for` | Không | Có |
+| Kiểm tra lại điều kiện `while` | Không | Có |
+| Kiểm tra điều kiện cuối của `do-while` | Không | Có |
+| Sử dụng trong `switch` | Có | Chỉ khi nằm trong một vòng lặp bao quanh |
+| Mặc định kết thúc hàm | Không | Không |
+
+Một cách ghi nhớ chính xác hơn là:
+
+- `break` chuyển quyền điều khiển **ra ngoài** vòng lặp hoặc `switch` gần nhất.
+- `continue` chuyển quyền điều khiển tới **bước tiếp tục** của vòng lặp gần nhất.
+
+### 5.7. Ví dụ phân tích cả break và continue
+
+Xét đoạn mã:
 
 ```cpp
-for (int i = 0; i <= 5; ++i) {
+for (int i = 1; i <= 6; ++i) {
+    if (i == 2) continue;
+    if (i == 5) break;
     std::cout << i << ' ';
 }
 ```
 
-Vòng lặp này chạy **6 lần**, từ `0` đến `5`.
+Quá trình thực thi:
 
-Nếu muốn chạy đúng 5 lần, cần viết:
+| Giá trị i | Điều gì xảy ra? | Có in không? |
+|---|---|---|
+| 1 | Không gặp điều kiện đặc biệt | In 1 |
+| 2 | Gặp `continue`, chuyển đến `++i` | Không |
+| 3 | Thực hiện bình thường | In 3 |
+| 4 | Thực hiện bình thường | In 4 |
+| 5 | Gặp `break`, kết thúc vòng lặp | Không |
+| 6 | Không được xử lý vì vòng lặp đã kết thúc | Không |
 
-```cpp
-for (int i = 0; i < 5; ++i) {
-    std::cout << i << ' ';
-}
-```
+Kết quả:
 
-Lỗi này thường được gọi là *off-by-one error*.
+`1 3 4`
 
-Khi duyệt mảng có `n` phần tử với chỉ số bắt đầu từ `0`, chỉ số hợp lệ thông thường là `0` đến `n - 1`.
+Điểm khác biệt:
 
-### 6.3. Quên dấu ngoặc nhọn
+Ở `i = 2`, `continue` không chấm dứt vòng lặp, nên chương trình còn xử lý các giá trị 3 và 4.
 
-Ví dụ:
+Ở `i = 5`, `break` chấm dứt toàn bộ vòng lặp, nên giá trị 6 không còn được xét.
 
-```cpp
-if (score >= 5)
-    std::cout << "Dat\n";
-    std::cout << "Chuc mung!\n";
-```
+### 5.8. break trong vòng lặp lồng nhau
 
-Chỉ câu lệnh đầu tiên thuộc `if`.
+Giả sử chương trình có hai vòng lặp:
 
-Câu lệnh in `Chuc mung!` luôn thực hiện, bất kể điều kiện đúng hay sai.
+- Vòng ngoài duyệt từng hàng.
+- Vòng trong duyệt từng cột.
 
-Nên sử dụng `{}` ngay cả khi chỉ có một câu lệnh:
+Nếu `break` xuất hiện trong thân vòng lặp bên trong, nó chỉ kết thúc vòng lặp bên trong gần nhất.
 
-```cpp
-if (score >= 5) {
-    std::cout << "Dat\n";
-    std::cout << "Chuc mung!\n";
-}
-```
+Vòng ngoài không tự động kết thúc.
 
-Cách viết này rõ ràng và an toàn hơn khi mở rộng chương trình.
+Sau khi vòng trong kết thúc, chương trình tiếp tục tại câu lệnh tiếp theo của vòng ngoài.
 
-### 6.4. Không kiểm tra cin
+Điều này đặc biệt quan trọng khi xử lý ma trận hoặc tìm kiếm trong bảng hai chiều.
 
-Nếu dữ liệu đầu vào không khớp với kiểu cần đọc, `std::cin` có thể chuyển sang trạng thái lỗi.
+Nếu cần kết thúc cả hai vòng, có thể phải thiết kế thêm cơ chế như:
 
-Khi đó, các lần đọc tiếp theo cũng có thể thất bại cho đến khi trạng thái lỗi được xử lý.
+- Sử dụng một biến trạng thái.
+- Đưa thao tác tìm kiếm vào hàm riêng và dùng `return`.
+- Tổ chức lại vòng lặp để điều kiện dừng được kiểm soát từ bên ngoài.
 
-Với chương trình đơn giản, có thể thông báo và kết thúc.
+Không nên giả định một lệnh `break` sẽ thoát khỏi toàn bộ những vòng lặp đang lồng nhau.
 
-Với chương trình yêu cầu người dùng nhập lại, cần xóa trạng thái lỗi bằng `std::cin.clear()` và loại bỏ dữ liệu không hợp lệ bằng `std::cin.ignore()` trước khi đọc tiếp.
+### 5.9. continue trong vòng lặp lồng nhau
 
-### 6.5. Sử dụng sai switch
+Tương tự, `continue` áp dụng cho vòng lặp gần nhất đang bao quanh câu lệnh.
 
-Hai lỗi phổ biến:
+Nếu `continue` nằm trong vòng lặp cột, nó bỏ qua phần còn lại của lần duyệt cột hiện tại, sau đó chuyển đến bước tiếp tục của vòng cột.
 
-- Thiếu `break`, khiến chương trình chạy xuyên sang `case` tiếp theo.
-- Dùng `switch` để kiểm tra điều kiện dạng khoảng giá trị vốn phù hợp hơn với `if-else`.
+Nó không tự động chuyển sang hàng tiếp theo.
 
-Đừng cố sử dụng `switch` cho mọi vấn đề chỉ vì mã trông ngắn hơn.
+Muốn bỏ qua toàn bộ phần còn lại của một hàng, cần điều khiển rõ vòng lặp cột và vòng lặp hàng theo thiết kế của thuật toán.
+
+### 5.10. break và continue khi switch nằm trong vòng lặp
+
+Đây là một trường hợp rất dễ nhầm.
+
+Giả sử bên trong một vòng lặp có câu lệnh `switch`.
+
+Nếu thực hiện `break` trong một nhánh `case`, chương trình chỉ thoát khỏi `switch` gần nhất.
+
+Vòng lặp bao quanh vẫn tiếp tục theo luồng điều khiển bình thường.
+
+Ngược lại, `continue` không dùng để chuyển từ `case` này sang `case` khác.
+
+Nếu `switch` đang nằm trong một vòng lặp, một câu lệnh `continue` bên trong `switch` sẽ tác động đến vòng lặp gần nhất bao quanh, thay vì chỉ kết thúc nhánh `case`.
+
+Nếu `switch` không nằm trong vòng lặp, `continue` không hợp lệ ở đó.
+
+Đây là lý do cần phân biệt **cấu trúc lựa chọn** và **cấu trúc lặp** khi sử dụng các câu lệnh điều khiển.
+
+### 5.11. Phân biệt break, continue và return
+
+Cả ba câu lệnh đều có thể khiến những câu lệnh kế tiếp không được thực hiện, nhưng phạm vi tác động khác nhau.
+
+| Câu lệnh | Tác động |
+|---|---|
+| `break` | Kết thúc vòng lặp hoặc `switch` gần nhất |
+| `continue` | Chuyển đến bước tiếp tục của vòng lặp gần nhất |
+| `return` | Kết thúc lời gọi hàm hiện tại theo quy tắc tương ứng |
+
+Ví dụ, khi một hàm có vòng lặp:
+
+- `break` có thể làm chương trình rời vòng lặp rồi chạy phần còn lại của hàm.
+- `continue` giữ chương trình trong cơ chế lặp, nhưng bỏ qua một phần thân hiện tại.
+- `return` làm hàm kết thúc, nên vòng lặp bên trong cũng không tiếp tục.
+
+Trong thực tế, nên lựa chọn câu lệnh dựa trên phạm vi cần thay đổi luồng điều khiển, không chỉ dựa trên việc muốn bỏ qua vài dòng mã.
 
 ---
 
-## 7. Bài tập tự luyện
+## 6. Những vấn đề thường gặp khi sử dụng điều kiện và vòng lặp
 
-Hãy tự giải trước khi tham khảo lời giải hoặc sử dụng công cụ hỗ trợ.
+### 6.1. Vòng lặp vô hạn ngoài ý muốn
 
-### Bài 1. Kiểm tra số chẵn, lẻ
+Một vòng lặp có thể không kết thúc nếu điều kiện tiếp tục luôn đúng.
 
-**Yêu cầu:** Nhập số nguyên `n` và xác định số đó là chẵn hay lẻ.
+Nguyên nhân có thể là biến điều khiển không thay đổi, phép cập nhật không đạt được giá trị dừng hoặc một nhánh `continue` liên tục bỏ qua thao tác cập nhật.
 
-Ví dụ:
+Khi phân tích vòng lặp, cần hiểu điều gì khiến trạng thái tiến triển và khi nào điều kiện có thể trở thành sai.
 
-```text
-Input:
-7
+Không phải mọi vòng lặp vô hạn đều sai, nhưng vòng lặp vô hạn ngoài ý muốn thường gây treo chương trình hoặc tiêu tốn tài nguyên không cần thiết.
 
-Output:
-So le
-```
+### 6.2. Off-by-one error
 
-**Gợi ý:** Sử dụng toán tử `%` và câu lệnh `if-else`.
+*Off-by-one error* là lỗi lệch một đơn vị, thường xảy ra trong điều kiện biên của vòng lặp.
 
-### Bài 2. Tìm số lớn nhất
-
-**Yêu cầu:** Nhập ba số nguyên `a`, `b`, `c`. In giá trị lớn nhất.
-
-Ví dụ:
-
-```text
-Input:
-5 12 8
-
-Output:
-12
-```
-
-**Gợi ý:** Sử dụng `if-else` và phép so sánh. Cần xử lý cả trường hợp các số bằng nhau.
-
-### Bài 3. Tính tổng các số chẵn
-
-**Yêu cầu:** Nhập số nguyên dương `n`, tính tổng các số chẵn từ `1` đến `n`.
-
-Ví dụ:
-
-```text
-Input:
-10
-
-Output:
-30
-```
-
-Vì:
+Ví dụ, nếu muốn duyệt một tập hợp có `n` phần tử với chỉ số bắt đầu từ 0, phạm vi chỉ số thông thường là:
 
 \[
-2 + 4 + 6 + 8 + 10 = 30
+0 \le i < n
 \]
 
-**Gợi ý:** Kết hợp vòng lặp `for` với điều kiện `i % 2 == 0`.
+Sử dụng điều kiện `i <= n` sẽ khiến chương trình có thêm một lần lặp tại `i = n`.
 
-### Bài 4. Bảng cửu chương
+Nếu dùng chỉ số đó để truy cập mảng có đúng `n` phần tử, thao tác có thể vượt giới hạn.
 
-**Yêu cầu:** Nhập số nguyên `n` từ `1` đến `9`, in bảng nhân của số đó từ `1` đến `10`.
+Ngược lại, sử dụng điều kiện kết thúc quá sớm có thể khiến phần tử cuối không được xử lý.
 
-Ví dụ:
+Điều quan trọng là xác định rõ **giới hạn được bao gồm và giới hạn không được bao gồm**.
 
-```text
-Input:
-3
+### 6.3. Không kiểm tra đầu vào
 
-Output:
-3 x 1 = 3
-3 x 2 = 6
-3 x 3 = 9
-...
-3 x 10 = 30
-```
+Một vòng lặp đọc dữ liệu có thể thất bại khi:
 
-**Gợi ý:** Sử dụng vòng lặp `for`.
+- Đầu vào không đúng định dạng.
+- Đã đến cuối dữ liệu.
+- Giá trị nằm ngoài phạm vi kiểu.
+- Luồng gặp lỗi.
 
-### Bài 5. Đếm chữ số
+Nếu không kiểm tra trạng thái nhập, chương trình có thể xử lý dữ liệu sai hoặc mắc kẹt trong cơ chế yêu cầu nhập lại.
 
-**Yêu cầu:** Nhập số nguyên không âm `n`, xác định số chữ số thập phân của số đó.
+Cần phân biệt lỗi có thể phục hồi với việc đầu vào đã kết thúc.
 
-Ví dụ:
+### 6.4. Nhầm điều kiện dừng với điều kiện tiếp tục
 
-```text
-Input:
-12345
+Trong `for`, `while` và `do-while`, điều kiện được viết trong cú pháp là **điều kiện tiếp tục**.
 
-Output:
-5
-```
+Vòng lặp thông thường tiếp tục khi điều kiện đúng và dừng khi điều kiện sai.
 
-**Gợi ý:** Mỗi lần chia nguyên cho `10`, ta loại bỏ một chữ số cuối.
+Ví dụ, `while (count > 0)` có nghĩa là tiếp tục lặp khi `count` còn lớn hơn 0.
 
-Chú ý trường hợp đặc biệt `n = 0`, vì số `0` có một chữ số.
+Nó không có nghĩa là chỉ thoát khi điều kiện `count > 0` trở thành đúng.
+
+Nhầm lẫn này dễ xảy ra khi tên biến là `finished`, `stopped` hoặc `isComplete`.
+
+Nên đặt tên và viết biểu thức sao cho người đọc hiểu trực tiếp điều kiện tiếp tục của vòng lặp.
+
+### 6.5. Hiểu sai thứ tự thực thi
+
+Trong `for`, phần khởi tạo không chạy lại mỗi lần lặp.
+
+Trong `while`, điều kiện được kiểm tra trước thân.
+
+Trong `do-while`, thân được thực hiện trước khi điều kiện được đánh giá.
+
+`continue` trong `for` vẫn đưa luồng thực thi đến biểu thức cập nhật, nhưng `continue` trong `while` có thể bỏ qua phần cập nhật đặt trong thân.
+
+Hiểu sai những thứ tự này có thể dẫn đến các lỗi khó phát hiện, đặc biệt khi vòng lặp chứa nhiều nhánh điều kiện.
+
+### 6.6. Thiếu dấu ngoặc nhọn
+
+Trong C++, nhiều cấu trúc điều khiển có thể đi kèm một câu lệnh đơn mà không cần dấu ngoặc nhọn.
+
+Tuy nhiên, thụt lề không quyết định phạm vi điều khiển của `if` hoặc vòng lặp.
+
+Nếu không có `{}`, chỉ một câu lệnh trực tiếp theo sau thuộc phần thân điều khiển tương ứng.
+
+Việc thêm câu lệnh mới mà không bổ sung dấu ngoặc nhọn có thể khiến chương trình thực hiện thao tác ngoài ý muốn.
+
+Do đó, nên dùng dấu ngoặc nhọn để thể hiện rõ các khối điều khiển.
+
+### 6.7. Dùng break hoặc continue quá nhiều
+
+Hai câu lệnh này có vai trò hợp lệ và hữu ích.
+
+Tuy nhiên, nếu một vòng lặp chứa nhiều `break`, `continue` và những nhánh điều kiện lồng nhau, luồng thực thi có thể trở nên khó theo dõi.
+
+Trong những trường hợp đó, nên xem xét:
+
+- Đơn giản hóa điều kiện.
+- Tách phần xử lý thành hàm có trách nhiệm rõ ràng.
+- Sử dụng early return khi phù hợp.
+- Tổ chức lại vòng lặp để điều kiện tiếp tục dễ hiểu hơn.
+
+Không cần tránh hoàn toàn `break` và `continue`. Mục tiêu là làm rõ khi nào vòng lặp tiếp tục và khi nào nó kết thúc.
 
 ---
 
-## 8. Tổng kết kiến thức
+## 7. Tổng hợp và định hướng sử dụng
 
-| Thành phần | Vai trò |
+Ba nhóm kiến thức trong bài phối hợp với nhau để tạo nên luồng xử lý cơ bản của phần lớn chương trình.
+
+**Nhập xuất** giúp chương trình nhận và cung cấp thông tin. Khi làm việc với dữ liệu bên ngoài, cần kiểm tra trạng thái đọc và tính hợp lệ của dữ liệu.
+
+**Câu lệnh điều kiện** giúp lựa chọn những nhánh xử lý. Điều quan trọng là hiểu thứ tự đánh giá, điều kiện nào được chọn và những nhánh nào bị bỏ qua.
+
+**Vòng lặp** giúp thực hiện lại công việc. Cần hiểu thời điểm đánh giá điều kiện, cách cập nhật trạng thái và sự khác nhau giữa ba cấu trúc lặp cơ bản.
+
+**break và continue** giúp thay đổi luồng điều khiển bên trong các cấu trúc thích hợp. Chúng không thay thế cho việc thiết kế điều kiện dừng hợp lý.
+
+Bảng tra cứu ngắn:
+
+| Thành phần | Vai trò chính |
 |---|---|
-| `std::cin` | Nhận dữ liệu |
+| `std::cin` | Nhập dữ liệu từ luồng chuẩn |
 | `std::cout` | Xuất dữ liệu |
-| `std::cerr` | Thông báo lỗi |
-| `std::getline()` | Đọc một dòng |
-| `if` | Thực hiện khi điều kiện đúng |
-| `else if` | Kiểm tra điều kiện tiếp theo |
+| `std::cerr` | Xuất thông báo lỗi |
+| `std::getline()` | Đọc một dòng văn bản |
+| `if` | Chỉ thực hiện nhánh nếu điều kiện đúng |
+| `else if` | Xét điều kiện tiếp theo khi nhánh trước không được chọn |
 | `else` | Xử lý trường hợp còn lại |
-| `switch` | Lựa chọn theo giá trị rời rạc |
-| `for` | Lặp với biến đếm hoặc bước lặp rõ ràng |
-| `while` | Lặp khi điều kiện còn đúng |
-| `do-while` | Thực hiện ít nhất một lần rồi kiểm tra |
-| `break` | Thoát khỏi vòng lặp hoặc switch |
-| `continue` | Bỏ qua phần còn lại của lần lặp hiện tại |
+| `switch` | Lựa chọn theo các giá trị rời rạc phù hợp |
+| `for` | Lặp với các phần khởi tạo, điều kiện và cập nhật rõ ràng |
+| `while` | Kiểm tra điều kiện trước thân vòng lặp |
+| `do-while` | Kiểm tra điều kiện sau thân vòng lặp |
+| `break` | Rời khỏi vòng lặp hoặc `switch` gần nhất |
+| `continue` | Chuyển tới bước tiếp tục của vòng lặp gần nhất |
+| `return` | Kết thúc lời gọi hàm |
 
-Sau bài học này, bạn cần có khả năng tự viết một chương trình thực hiện ba công việc cơ bản: **nhận dữ liệu, xử lý bằng điều kiện hoặc vòng lặp, và xuất kết quả**.
+**Điểm cốt lõi:** Hiểu cú pháp giúp bạn viết được chương trình, nhưng hiểu luồng thực thi mới giúp bạn giải thích vì sao chương trình cho ra một kết quả cụ thể và tìm được nguyên nhân khi kết quả không đúng.
 
-Quan trọng hơn, hãy hình thành thói quen kiểm tra đầu vào, xác định rõ điều kiện dừng và thử nghiệm các trường hợp biên trước khi coi chương trình đã hoàn thành.
+---
 
 ## Đọc tiếp
 
-- [Toán tử trong C++](/cpp/bat-dau/toan-tu): Tìm hiểu biểu thức, toán tử logic và các phép so sánh.
-- [Hàm và phạm vi biến](/cpp/bat-dau/ham-pham-vi): Tổ chức chương trình thành những phần nhỏ, dễ tái sử dụng.
-- [Giải quyết bài toán bằng thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan): Học cách phân tích yêu cầu, thiết kế thuật toán và đánh giá độ phức tạp.
+- [Toán tử và biểu thức](/cpp/bat-dau/toan-tu): Tìm hiểu phép so sánh, toán tử logic và các quy tắc đánh giá biểu thức.
+- [Hàm, tham số và phạm vi biến](/cpp/bat-dau/ham-pham-vi): Hiểu cách tổ chức mã nguồn thành hàm và sử dụng `return`.
+- [Giải quyết bài toán bằng thuật toán](/cpp/thuat-toan/giai-quyet-bai-toan): Tìm hiểu cách xây dựng các bước xử lý và phân tích độ phức tạp.

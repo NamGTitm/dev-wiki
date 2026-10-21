@@ -418,12 +418,12 @@ function TableOfContents({ article, mobile = false }: { article: Article; mobile
   const menuClassName = mobile
     ? `mt-2 max-h-[min(55vh,22rem)] w-full overflow-y-auto overscroll-contain rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-xl ${open ? "block" : "hidden"}`
     : `absolute right-0 top-full z-40 mt-2 max-h-[min(60vh,26rem)] w-[min(320px,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-2xl ${open ? "block" : "hidden"}`;
-  const asideClassName = mobile ? "sticky top-14 z-30 mb-8 w-full xl:hidden" : "hidden w-[190px] shrink-0 xl:block";
+  const asideClassName = mobile ? `sticky top-14 ${open ? "z-50" : "z-30"} mb-8 w-full xl:hidden` : "hidden w-[190px] shrink-0 xl:block";
   const containerClassName = mobile
     ? collapsed
       ? "flex justify-end"
       : "rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-md sm:p-4"
-    : "sticky top-28 border-l border-[var(--border)] pl-5";
+    : `sticky top-28 ${open ? "z-50" : ""} border-l border-[var(--border)] pl-5`;
 
   return <aside className={asideClassName}>
     <div className={containerClassName}>
