@@ -315,7 +315,7 @@ function Markdown({ body, searchQuery = "", activeSearchIndex = 0 }: { body: str
     while (
       index < lines.length &&
       lines[index].trim() &&
-      !/^#{1,3} /.test(lines[index]) &&
+      !/^#{1,3}\s+/.test(lines[index]) &&
       !lines[index].startsWith("```") &&
       !lines[index].startsWith("> ") &&
       !lines[index].startsWith("- ") &&
@@ -344,7 +344,8 @@ function TableOfContents({ article, mobile = false }: { article: Article; mobile
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuId = useId();
-  const selectedHeading = article.headings.find((heading) => heading.id === selectedHeadingId) ?? article.headings[0];
+  const headings = article.headings as readonly { id: string; title: string }[];
+  const selectedHeading = headings.find((heading) => heading.id === selectedHeadingId) ?? headings[0];
 
   useEffect(() => {
     const scrollContainer = document.querySelector<HTMLElement>("[data-wiki-scroll-container]");
@@ -412,12 +413,12 @@ function TableOfContents({ article, mobile = false }: { article: Article; mobile
     };
   }, [open]);
 
-  if (article.headings.length === 0) return null;
+  if (headings.length === 0) return null;
 
   const menuClassName = mobile
     ? `mt-2 max-h-[min(55vh,22rem)] w-full overflow-y-auto overscroll-contain rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-xl ${open ? "block" : "hidden"}`
     : `absolute right-0 top-full z-40 mt-2 max-h-[min(60vh,26rem)] w-[min(320px,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-2xl ${open ? "block" : "hidden"}`;
-  const asideClassName = mobile ? "sticky top-0 z-30 mb-8 w-full xl:hidden" : "hidden w-[190px] shrink-0 xl:block";
+  const asideClassName = mobile ? "sticky top-14 z-30 mb-8 w-full xl:hidden" : "hidden w-[190px] shrink-0 xl:block";
   const containerClassName = mobile
     ? collapsed
       ? "flex justify-end"
@@ -461,7 +462,7 @@ function TableOfContents({ article, mobile = false }: { article: Article; mobile
               className="flex w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-left text-[13px] text-[var(--foreground)] shadow-sm transition hover:border-[var(--teal)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)]"
             >
               <span className="min-w-0 flex-1 truncate">{selectedHeading?.title ?? "Chọn mục trong bài"}</span>
-              <span className="shrink-0 font-mono text-[10px] text-[var(--muted)]">{article.headings.length}</span>
+              <span className="shrink-0 font-mono text-[10px] text-[var(--muted)]">{headings.length}</span>
               <ChevronDown aria-hidden="true" className={`size-4 shrink-0 text-[var(--muted)] transition-transform ${open ? "rotate-180" : ""}`} />
             </button>
             <div
@@ -469,7 +470,7 @@ function TableOfContents({ article, mobile = false }: { article: Article; mobile
               className={menuClassName}
             >
               <nav aria-label="Các tiêu đề trong bài">
-                {article.headings.map((heading) => <a
+                {headings.map((heading) => <a
                   key={heading.id}
                   href={`#${heading.id}`}
                   aria-current={heading.id === selectedHeading?.id ? "location" : undefined}
@@ -522,7 +523,7 @@ function ArticleSearch({
   const hasQuery = query.trim().length > 0;
   const hasResults = resultCount > 0;
 
-  return <div role="search" aria-label="Tìm trong tài liệu" className="mb-8 flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2.5 py-2 shadow-sm sm:gap-2 sm:px-3">
+  return <div role="search" aria-label="Tìm trong tài liệu" className="sticky top-0 z-40 mb-8 flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2.5 py-2 shadow-sm sm:gap-2 sm:px-3">
     <Search aria-hidden="true" className="ml-1 size-4 shrink-0 text-[var(--muted)]" />
     <input
       type="text"
@@ -587,23 +588,23 @@ function ArticlePage({ article }: { article: Article }) {
   return <main id="main-content" className="mx-auto flex w-full max-w-[1080px] gap-12 px-5 py-10 sm:px-8 lg:py-14">
     <article className="min-w-0 max-w-[780px] flex-1">
       <Breadcrumb article={article} />
-      <div className="mb-10">
+      <div className="mb-3">
         <ArticleMetadata article={article} />
         <h1 className="max-w-3xl text-4xl font-bold tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">{article.title}</h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{article.description}</p>
-        <ArticleSearch
-          query={searchQuery}
-          resultCount={searchMatchCount}
-          activeResultIndex={searchMatchIndex}
-          onQueryChange={(value) => {
-            setSearchQuery(value);
-            setSearchMatchIndex(-1);
-            setSearchMatchCount(0);
-          }}
-          onPrevious={() => setSearchMatchIndex((current) => searchMatchCount > 0 ? (current < 0 ? searchMatchCount - 1 : (current - 1 + searchMatchCount) % searchMatchCount) : -1)}
-          onNext={() => setSearchMatchIndex((current) => searchMatchCount > 0 ? (current + 1) % searchMatchCount : -1)}
-        />
       </div>
+      <ArticleSearch
+        query={searchQuery}
+        resultCount={searchMatchCount}
+        activeResultIndex={searchMatchIndex}
+        onQueryChange={(value) => {
+          setSearchQuery(value);
+          setSearchMatchIndex(-1);
+          setSearchMatchCount(0);
+        }}
+        onPrevious={() => setSearchMatchIndex((current) => searchMatchCount > 0 ? (current < 0 ? searchMatchCount - 1 : (current - 1 + searchMatchCount) % searchMatchCount) : -1)}
+        onNext={() => setSearchMatchIndex((current) => searchMatchCount > 0 ? (current + 1) % searchMatchCount : -1)}
+      />
       <TableOfContents key={`${article.slug}-mobile`} article={article} mobile />
       <div ref={articleContentRef}>
         <Markdown body={article.body} searchQuery={searchQuery} activeSearchIndex={searchMatchIndex} />
