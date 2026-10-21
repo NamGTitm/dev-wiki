@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { site } from "@/lib/site";
 
@@ -22,7 +23,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          enableColorScheme={false}
+          disableTransitionOnChange
+          storageKey="devhubs-theme"
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -2,41 +2,15 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronDown, ChevronRight, Copy, Layers3, Menu, Moon, Search, Sun, X } from "lucide-react";
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronDown, ChevronRight, ChevronUp, Copy, Layers3, Menu, Moon, Search, Sun, X } from "lucide-react";
+import { useTheme } from "next-themes";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { articleBadges, articles, collections, getCollectionGroups, getFeaturedArticles, type Article, type Collection } from "@/lib/content";
 import { getGithubEditUrl } from "@/lib/github";
 
-function useTheme() {
-  const theme = useSyncExternalStore(
-    (onChange) => {
-      window.addEventListener("devhubs-theme-change", onChange);
-      return () => window.removeEventListener("devhubs-theme-change", onChange);
-    },
-    () => document.documentElement.classList.contains("dark") ? "dark" : "light",
-    () => "light",
-  );
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem("devhubs-theme");
-    const next = saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
-    document.documentElement.classList.toggle("dark", next === "dark");
-    window.dispatchEvent(new Event("devhubs-theme-change"));
-  }, []);
-
-  const toggle = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    document.documentElement.classList.toggle("dark", next === "dark");
-    window.localStorage.setItem("devhubs-theme", next);
-    window.dispatchEvent(new Event("devhubs-theme-change"));
-  };
-
-  return { theme, toggle };
-}
-
 function Header({ onSearch, onMenu }: { onSearch: () => void; onMenu: () => void }) {
-  const { theme, toggle } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--background)_92%,transparent)] backdrop-blur-xl">
@@ -45,7 +19,7 @@ function Header({ onSearch, onMenu }: { onSearch: () => void; onMenu: () => void
         <Link href="/" className="group flex shrink-0 items-center gap-2.5" aria-label="DevHubs Wiki trang chủ"><span className="grid size-9 place-items-center rounded-xl bg-[var(--foreground)] font-mono text-sm font-bold text-[var(--background)] transition group-hover:bg-[var(--teal)]">&gt;_</span><span className="hidden text-sm font-bold tracking-tight sm:block">DevHubs <span className="text-[var(--teal)]">Wiki</span></span></Link>
         <nav className="hidden items-center gap-4 text-xs font-semibold text-[var(--muted)] md:flex" aria-label="Điều hướng chính"><Link href="/#collections" className="hover:text-[var(--teal)]">Collections</Link><Link href="/#popular" className="hover:text-[var(--teal)]">Topics</Link></nav>
         <div className="mx-auto flex min-w-0 flex-1 justify-center"><button onClick={onSearch} className="flex min-w-0 flex-1 items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-left text-sm text-[var(--muted)] transition hover:border-[var(--teal)] hover:text-[var(--foreground)] sm:max-w-[360px]" aria-label="Mở tìm kiếm"><Search className="size-4" /><span className="flex-1 truncate">Tìm kiếm trong DevHubs Wiki...</span><kbd className="hidden rounded border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 text-[11px] sm:inline">⌘ K</kbd></button></div>
-        <button onClick={toggle} className="rounded-lg p-2 text-[var(--muted)] hover:bg-[var(--surface-muted)]" aria-label={theme === "dark" ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối"}>{theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}</button><a href="https://github.com/NamGTitm/dev-wiki" className="hidden rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] transition hover:border-[var(--teal)] hover:text-[var(--teal)] md:block">GitHub</a>
+        <button onClick={() => setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark")} className="rounded-lg p-2 text-[var(--muted)] hover:bg-[var(--surface-muted)]" aria-label="Chuyển đổi giao diện sáng tối"><Sun className="hidden size-4 dark:block" /><Moon className="size-4 dark:hidden" /></button><a href="https://github.com/NamGTitm/dev-wiki" className="hidden rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] transition hover:border-[var(--teal)] hover:text-[var(--teal)] md:block">GitHub</a>
       </div>
     </header>
   );
@@ -320,11 +294,56 @@ function GithubEditLink({ sourcePath }: { sourcePath?: string }) {
 function Breadcrumb({ article }: { article: Article }) { return <div className="mb-7 flex flex-wrap items-center justify-between gap-4"><div className="flex min-w-0 flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)]"><Link href="/" className="hover:text-[var(--teal)]">DevHubs Wiki</Link><ChevronRight className="size-3" /><Link href={`/${article.collection}`} className="hover:text-[var(--teal)]">{article.collectionLabel}</Link><ChevronRight className="size-3" /><span>{article.categoryLabel}</span><ChevronRight className="size-3" /><span className="text-[var(--teal)]">{article.title}</span></div><GithubEditLink sourcePath={article.sourcePath} /></div>; }
 function TableOfContents({ article, mobile = false }: { article: Article; mobile?: boolean }) {
   const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const [selectedHeadingId, setSelectedHeadingId] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuId = useId();
   const selectedHeading = article.headings.find((heading) => heading.id === selectedHeadingId) ?? article.headings[0];
+
+  useEffect(() => {
+    const scrollContainer = document.querySelector<HTMLElement>("[data-wiki-scroll-container]");
+    if (!scrollContainer) return;
+
+    const headingElements = article.headings
+      .map(({ id }) => document.getElementById(id))
+      .filter((heading): heading is HTMLElement => heading instanceof HTMLElement);
+    if (headingElements.length === 0) return;
+
+    const scrollMarginTop = Number.parseFloat(window.getComputedStyle(headingElements[0]).scrollMarginTop);
+    const activationOffset = Number.isFinite(scrollMarginTop) ? scrollMarginTop + 1 : 96;
+    let animationFrame = 0;
+
+    const updateActiveHeading = () => {
+      animationFrame = 0;
+      const activationLine = scrollContainer.getBoundingClientRect().top + activationOffset;
+      let activeHeading = headingElements[0];
+
+      for (const heading of headingElements) {
+        if (heading.getBoundingClientRect().top > activationLine) break;
+        activeHeading = heading;
+      }
+
+      const reachedBottom = scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight - 2;
+      if (reachedBottom) activeHeading = headingElements[headingElements.length - 1];
+      setSelectedHeadingId(activeHeading.id);
+    };
+
+    const scheduleUpdate = () => {
+      if (animationFrame !== 0) return;
+      animationFrame = window.requestAnimationFrame(updateActiveHeading);
+    };
+
+    scrollContainer.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    scheduleUpdate();
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (animationFrame !== 0) window.cancelAnimationFrame(animationFrame);
+    };
+  }, [article.headings]);
 
   useEffect(() => {
     if (!open) return;
@@ -353,40 +372,73 @@ function TableOfContents({ article, mobile = false }: { article: Article; mobile
   const menuClassName = mobile
     ? `mt-2 max-h-[min(55vh,22rem)] w-full overflow-y-auto overscroll-contain rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-xl ${open ? "block" : "hidden"}`
     : `absolute right-0 top-full z-40 mt-2 max-h-[min(60vh,26rem)] w-[min(320px,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-2xl ${open ? "block" : "hidden"}`;
+  const asideClassName = mobile ? "sticky top-0 z-30 mb-8 w-full xl:hidden" : "hidden w-[190px] shrink-0 xl:block";
+  const containerClassName = mobile
+    ? collapsed
+      ? "flex justify-end"
+      : "rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-md sm:p-4"
+    : "sticky top-28 border-l border-[var(--border)] pl-5";
 
-  return <aside className={mobile ? "mb-8 w-full xl:hidden" : "hidden w-[190px] shrink-0 xl:block"}>
-    <div className={mobile ? "rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3 sm:p-4" : "sticky top-28 border-l border-[var(--border)] pl-5"}>
-      <p className={mobile ? "mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]" : "mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]"}>Trong bài này</p>
-      <div ref={dropdownRef} className="relative">
+  return <aside className={asideClassName}>
+    <div className={containerClassName}>
+      {mobile && collapsed ? (
         <button
-          ref={triggerRef}
           type="button"
-          aria-expanded={open}
-          aria-controls={menuId}
-          onClick={() => setOpen((isOpen) => !isOpen)}
-          className="flex w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-left text-[13px] text-[var(--foreground)] shadow-sm transition hover:border-[var(--teal)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)]"
+          onClick={() => setCollapsed(false)}
+          aria-label="Hiện mục lục Trong bài này"
+          className="grid size-9 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] shadow-sm hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)]"
         >
-          <span className="min-w-0 flex-1 truncate">{selectedHeading?.title ?? "Chọn mục trong bài"}</span>
-          <span className="shrink-0 font-mono text-[10px] text-[var(--muted)]">{article.headings.length}</span>
-          <ChevronDown aria-hidden="true" className={`size-4 shrink-0 text-[var(--muted)] transition-transform ${open ? "rotate-180" : ""}`} />
+          <ChevronDown aria-hidden="true" className="size-4" />
         </button>
-        <div
-          id={menuId}
-          className={menuClassName}
-        >
-          <nav aria-label="Các tiêu đề trong bài">
-            {article.headings.map((heading) => <a
-              key={heading.id}
-              href={`#${heading.id}`}
+      ) : (
+        <>
+          {mobile ? <div className="mb-2 flex items-center justify-between">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Trong bài này</p>
+            <button
+              type="button"
               onClick={() => {
-                setSelectedHeadingId(heading.id);
+                setCollapsed(true);
                 setOpen(false);
               }}
-              className={`block rounded-lg px-3 py-2 text-[13px] leading-5 transition ${heading.id === selectedHeading?.id ? "bg-[var(--accent-soft)] text-[var(--accent)]" : "text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--foreground)]"}`}
-            >{heading.title}</a>)}
-          </nav>
-        </div>
-      </div>
+              aria-label="Thu gọn mục lục"
+              className="grid size-8 place-items-center rounded-md text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)]"
+            >
+              <ChevronUp aria-hidden="true" className="size-4" />
+            </button>
+          </div> : <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">Trong bài này</p>}
+          <div ref={dropdownRef} className="relative">
+            <button
+              ref={triggerRef}
+              type="button"
+              aria-expanded={open}
+              aria-controls={menuId}
+              onClick={() => setOpen((isOpen) => !isOpen)}
+              className="flex w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-left text-[13px] text-[var(--foreground)] shadow-sm transition hover:border-[var(--teal)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--teal)]"
+            >
+              <span className="min-w-0 flex-1 truncate">{selectedHeading?.title ?? "Chọn mục trong bài"}</span>
+              <span className="shrink-0 font-mono text-[10px] text-[var(--muted)]">{article.headings.length}</span>
+              <ChevronDown aria-hidden="true" className={`size-4 shrink-0 text-[var(--muted)] transition-transform ${open ? "rotate-180" : ""}`} />
+            </button>
+            <div
+              id={menuId}
+              className={menuClassName}
+            >
+              <nav aria-label="Các tiêu đề trong bài">
+                {article.headings.map((heading) => <a
+                  key={heading.id}
+                  href={`#${heading.id}`}
+                  aria-current={heading.id === selectedHeading?.id ? "location" : undefined}
+                  onClick={() => {
+                    setSelectedHeadingId(heading.id);
+                    setOpen(false);
+                  }}
+                  className={`block rounded-lg px-3 py-2 text-[13px] leading-5 transition ${heading.id === selectedHeading?.id ? "bg-[var(--accent-soft)] text-[var(--accent)]" : "text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--foreground)]"}`}
+                >{heading.title}</a>)}
+              </nav>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   </aside>;
 }
@@ -471,7 +523,7 @@ export function WikiShell({ article, collection }: { article?: Article; collecti
     <Header onSearch={() => setSearchOpen(true)} onMenu={() => setMobileOpen(true)} />
     <div className="flex min-h-0 flex-1 overflow-hidden">
       <Sidebar activeCollectionSlug={activeCollectionSlug} />
-      <div className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-contain">
+      <div data-wiki-scroll-container className="min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-contain">
         {article ? <ArticlePage article={article} /> : collection ? <CollectionPage collection={collection} /> : <HomePage />}
         <footer className="border-t border-[var(--border)] px-5 py-8 text-center text-xs text-[var(--muted)]"><span className="font-semibold text-[var(--foreground)]">DevHubs Wiki</span> · Kiến thức kỹ thuật cho developer, được tổ chức từ metadata.</footer>
       </div>
