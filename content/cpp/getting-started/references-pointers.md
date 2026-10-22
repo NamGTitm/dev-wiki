@@ -7,7 +7,7 @@ categoryLabel: C++ căn bản
 order: 20090
 difficulty: beginner
 keywords: [reference C++, pointer C++, address, nullptr, dereference, const reference, pass by value, pass by reference, dangling pointer, dangling reference, lifetime]
-updated: 2026-10-21
+updated: 2026-10-22
 collection: cpp
 collectionLabel: C++
 collectionDescription: Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.
@@ -442,7 +442,7 @@ thay đổi trực tiếp biến `score` trong `main()`.
 |---|---|---|
 | Tham số là đối tượng riêng | Có | Không, tham số là tham chiếu |
 | Có thể thay đổi biến gốc qua tham số | Không | Có, với reference không const |
-| Phải sao chép đối tượng | Theo ngữ nghĩa truyền giá trị, có thể được tối ưu | Không |
+| Khởi tạo tham số | Tạo object tham số riêng từ đối số; copy, move hoặc khởi tạo trực tiếp tùy loại đối số và quy tắc của C++ | Không tạo object `T` mới; tham số tham chiếu tới object được truyền |
 | Phù hợp với kiểu nhỏ | Rất tốt | Tùy mục đích |
 | Phù hợp khi cần sửa đối tượng gốc | Không | Có |
 
@@ -1459,6 +1459,7 @@ Một vấn đề thực tế thường gặp là lưu địa chỉ của phần
 ### 14.1. Truy cập phần tử bằng reference
 
 ```cpp
+#include <cstddef>
 #include <iostream>
 #include <vector>
 
@@ -1486,6 +1487,7 @@ Reference `first` liên kết với phần tử đầu tiên của vector.
 ### 14.2. Truy cập phần tử bằng pointer
 
 ```cpp
+#include <cstddef>
 #include <iostream>
 #include <vector>
 
@@ -1539,6 +1541,7 @@ Nếu chỉ cần phần tử theo vị trí, có thể lưu chỉ số thay vì
 Ví dụ:
 
 ```cpp
+#include <cstddef>
 #include <iostream>
 #include <vector>
 
@@ -1804,7 +1807,7 @@ int main() {
 }
 ```
 
-Đối tượng được quản lý sẽ được hủy tự động khi `unique_ptr` sở hữu cuối cùng của nó kết thúc lifetime, theo cơ chế quản lý tương ứng.
+Với deleter mặc định, object đang được một `std::unique_ptr` sở hữu sẽ bị hủy khi owner đó bị hủy hoặc gọi `reset()`. Một `unique_ptr` đã được move khỏi thì rỗng và không hủy lại object. Vì `unique_ptr` có quyền sở hữu độc quyền, không có khái niệm “unique_ptr sở hữu cuối cùng” như reference count của `shared_ptr`.
 
 Trong ví dụ này, `unique_ptr` là chủ sở hữu duy nhất.
 
@@ -2171,161 +2174,7 @@ Tuy nhiên, trong bài học này, các hàm độc lập giúp làm rõ sự kh
 
 ---
 
-## 21. Bài tập tự luyện
-
-### Bài 1. Đổi chỗ hai số bằng reference
-
-**Yêu cầu:** Viết hàm:
-
-```cpp
-void swapValues(int& a, int& b);
-```
-
-Hàm phải hoán đổi giá trị hai biến được truyền vào.
-
-Ví dụ:
-
-```text
-Before:
-a = 10
-b = 20
-
-After:
-a = 20
-b = 10
-```
-
-**Gợi ý:** Sử dụng một biến tạm để lưu giá trị của `a`.
-
-### Bài 2. Tăng giá trị bằng pointer
-
-**Yêu cầu:** Viết hàm:
-
-```cpp
-bool increment(int* value);
-```
-
-Quy tắc:
-
-- Nếu pointer bằng `nullptr`, trả về `false`.
-- Nếu pointer hợp lệ và giá trị chưa đạt giới hạn `int`, tăng giá trị lên một.
-- Nếu giá trị đã đạt `std::numeric_limits<int>::max()`, trả về `false`.
-- Khi tăng thành công, trả về `true`.
-
-**Gợi ý:** Include `<limits>` và kiểm tra trước khi cộng.
-
-### Bài 3. Đọc độ dài chuỗi bằng const reference
-
-**Yêu cầu:** Viết hàm:
-
-```cpp
-std::size_t getLength(const std::string& text);
-```
-
-Hàm trả về số đơn vị `char` trong chuỗi.
-
-Ví dụ:
-
-```text
-Input:
-Hello
-
-Output:
-5
-```
-
-**Gợi ý:** Sử dụng `std::string::size()`.
-
-Chú ý rằng giá trị này không phải số ký tự Unicode hiển thị trong mọi trường hợp.
-
-### Bài 4. Tìm phần tử lớn nhất
-
-**Yêu cầu:** Viết hàm:
-
-```cpp
-bool findMax(
-    const std::vector<int>& values,
-    int& result
-);
-```
-
-Quy tắc:
-
-- Nếu vector rỗng, trả về `false`.
-- Nếu vector có dữ liệu, gán giá trị lớn nhất vào `result`.
-- Trả về `true` khi tìm thành công.
-
-**Gợi ý:** Sử dụng vòng lặp hoặc `std::max_element()`.
-
-### Bài 5. Phân biệt pointer và reference
-
-Cho chương trình:
-
-```cpp
-int a{10};
-int b{20};
-
-int& ref = a;
-int* ptr = &a;
-
-ref = b;
-ptr = &b;
-
-*ptr = 30;
-```
-
-**Yêu cầu:** Xác định giá trị cuối cùng của:
-
-```text
-a
-b
-ref
-*ptr
-```
-
-Giải thích tại sao phép gán cho `ref` và phép gán cho `ptr` có hành vi khác nhau.
-
-### Bài 6. Phân tích dangling pointer
-
-Xem đoạn mã:
-
-```cpp
-int* pointer{nullptr};
-
-{
-    int value{100};
-    pointer = &value;
-}
-```
-
-**Yêu cầu:**
-
-1. Giải thích tại sao pointer không còn hợp lệ để dereference.
-2. Kiểm tra `pointer != nullptr` có giải quyết vấn đề không?
-3. Đề xuất cách thiết kế lại để dữ liệu còn sống trong thời gian sử dụng.
-
-### Bài 7. Reference với vector
-
-**Yêu cầu:** Nhập `n` số nguyên vào `std::vector<int>`, sau đó tăng mỗi phần tử lên một đơn vị bằng reference.
-
-Điều kiện:
-
-- `n` nằm trong `[0, 100000]`.
-- Kiểm tra dữ liệu nhập.
-- Không tăng phần tử nếu phép cộng gây tràn `int`.
-- Không tạo một vector thứ hai chỉ để lưu kết quả.
-
-**Gợi ý:** Sử dụng:
-
-```cpp
-for (int& value : values) {
-    // Update value
-}
-```
-
----
-
-## 22. Tổng kết kiến thức
+## 21. Tổng kết kiến thức
 
 | Khái niệm | Ý nghĩa |
 |---|---|
@@ -2347,14 +2196,7 @@ for (int& value : values) {
 | Ownership | Trách nhiệm quản lý vòng đời tài nguyên |
 | RAII | Quản lý tài nguyên theo vòng đời đối tượng |
 
-Sau bài học này, bạn cần nắm vững những nguyên tắc:
-
-1. **Reference không tạo bản sao đối tượng được tham chiếu.** Nó cung cấp cách truy cập đối tượng đã tồn tại.
-2. **Pointer có thể đổi đối tượng đích hoặc mang giá trị null.** Reference thông thường không có hai khả năng này.
-3. **const thể hiện giới hạn thao tác.** Khi chỉ cần đọc dữ liệu, sử dụng const reference hoặc pointer đến const khi phù hợp.
-4. **Không được dereference pointer không hợp lệ.** Kiểm tra null là cần thiết trong nhiều API, nhưng không đủ để chứng minh lifetime.
-5. **Reference và raw pointer không tự quản lý ownership.** Cần bảo đảm đối tượng đích còn sống trong thời gian sử dụng.
-6. **Không lạm dụng cấp phát động.** Ưu tiên kiểu dữ liệu, container và công cụ quản lý tài nguyên phù hợp với yêu cầu thực tế.
+Reference thường biểu đạt đối tượng bắt buộc tồn tại; pointer có thể rỗng hoặc đổi đích. Cả hai đều không tự quản lý ownership. `const` giới hạn thao tác sửa dữ liệu qua tên truy cập, còn lifetime của object vẫn phải được bảo đảm riêng; kiểm tra `nullptr` không phát hiện dangling pointer.
 
 Quan trọng nhất, **reference và pointer không chỉ là hai cách viết khác nhau để truy cập bộ nhớ**. Chúng còn thể hiện những hợp đồng khác nhau về tính bắt buộc của đối tượng, khả năng thay đổi đích, quyền sửa dữ liệu và trách nhiệm quản lý vòng đời.
 

@@ -7,7 +7,7 @@ categoryLabel: C++ căn bản
 order: 20070
 difficulty: beginner
 keywords: [function C++, hàm C++, parameter, argument, return, void, function declaration, function definition, pass by value, pass by reference, scope, local variable, lifetime, dangling reference]
-updated: 2026-10-20
+updated: 2026-10-22
 collection: cpp
 collectionLabel: C++
 collectionDescription: Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.
@@ -599,6 +599,8 @@ Nếu hàm chỉ cần đọc đối tượng mà không sửa, có thể sử d
 Ví dụ:
 
 ```cpp
+#include <string>
+
 bool isNamed(const std::string& name) {
     return !name.empty();
 }
@@ -1113,6 +1115,8 @@ Có thể chia thành ba nhóm logic:
 Ví dụ:
 
 ```cpp
+#include <iostream>
+
 bool isValidScore(int score) {
     return score >= 0 && score <= 10;
 }

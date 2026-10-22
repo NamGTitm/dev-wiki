@@ -7,7 +7,7 @@ categoryLabel: C++ căn bản
 order: 20080
 difficulty: beginner
 keywords: [array C++, std::array, mảng một chiều, mảng hai chiều, std::string, char array, index, array bounds, getline, string manipulation]
-updated: 2026-10-21
+updated: 2026-10-22
 collection: cpp
 collectionLabel: C++
 collectionDescription: Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.
@@ -233,6 +233,7 @@ std::array<int, 5> scores{7, 9, 8, 6, 10};
 ### 3.1. Ví dụ hoàn chỉnh
 
 ```cpp
+#include <cstddef>
 #include <array>
 #include <iostream>
 
@@ -353,6 +354,7 @@ n - 1
 ### 4.2. Thay đổi phần tử
 
 ```cpp
+#include <cstddef>
 #include <array>
 #include <iostream>
 
@@ -491,6 +493,7 @@ Có nhiều cách thực hiện.
 ### 5.1. Vòng lặp for
 
 ```cpp
+#include <cstddef>
 #include <array>
 #include <iostream>
 
@@ -1032,6 +1035,7 @@ S = 1 + 5 + 9 = 15
 Chương trình:
 
 ```cpp
+#include <cstddef>
 #include <array>
 #include <iostream>
 
@@ -1087,6 +1091,7 @@ Header:
 Ví dụ:
 
 ```cpp
+#include <cstddef>
 #include <iostream>
 #include <vector>
 
@@ -2047,6 +2052,7 @@ Cách này tránh sao chép chuỗi khi hàm chỉ cần đọc.
 Xét:
 
 ```cpp
+#include <cstddef>
 void printValues(const int values[], std::size_t count);
 ```
 
@@ -2339,6 +2345,7 @@ Sử dụng `std::vector` vì số học sinh được nhập trong lúc chạy.
 ### 20.2. Chương trình C++17
 
 ```cpp
+#include <cstddef>
 #include <iostream>
 #include <vector>
 
@@ -2480,180 +2487,78 @@ Nếu bài toán cho phép `n = 0`, cần thiết kế lại cách xử lý maxi
 
 ---
 
-## 21. Bài tập tự luyện
+## 21. Hai cách xử lý phổ biến với chuỗi và dãy
 
-### Bài 1. Tính tổng mảng
+Một số bài toán nhỏ cho thấy cách chọn biểu diễn dữ liệu ảnh hưởng đến cả độ phức tạp lẫn trường hợp biên.
 
-**Yêu cầu:** Nhập `n` số nguyên và tính tổng các phần tử.
+### Kiểm tra chuỗi ASCII đối xứng
 
-Ví dụ:
+Dùng hai chỉ số bắt đầu ở hai đầu chuỗi rồi tiến dần vào giữa. Cách này không tạo bản sao và xử lý được chuỗi rỗng theo quy ước chuỗi rỗng là đối xứng:
 
-```text
-Input:
-5
-1 2 3 4 5
+```cpp
+#include <string>
 
-Output:
-15
+bool isAsciiPalindrome(const std::string& text) {
+    std::string::size_type first{0};
+    std::string::size_type afterLast{text.size()};
+
+    while (first < afterLast) {
+        --afterLast;
+        if (text[first] != text[afterLast]) {
+            return false;
+        }
+        ++first;
+    }
+
+    return true;
+}
 ```
 
-**Gợi ý:** Sử dụng vòng lặp và biến tích lũy `long long`.
+Hàm so sánh chính xác các byte/đơn vị `char` và không tự kiểm tra encoding; tiền điều kiện của ví dụ là đầu vào ASCII. Với UTF-8, một ký tự có thể gồm nhiều byte, nên phép so sánh này không kiểm tra palindrome theo code point. Nếu bài toán bỏ qua hoa thường, khoảng trắng hoặc dấu câu, phải chuẩn hóa theo quy tắc đó trước khi so sánh.
 
-### Bài 2. Tìm phần tử lớn nhất và nhỏ nhất
+Thời gian chạy là `O(n)` và bộ nhớ phụ trợ là `O(1)`. Điều kiện `first < afterLast` cũng tránh giảm chỉ số không dấu khi chuỗi rỗng.
 
-**Yêu cầu:** Nhập một mảng số nguyên, tìm giá trị lớn nhất và nhỏ nhất.
+### Tìm giá trị xuất hiện nhiều nhất
 
-Ví dụ:
+Có thể sao chép rồi sắp xếp dãy để các giá trị bằng nhau nằm cạnh nhau. Sau đó quét từng nhóm liên tiếp:
 
-```text
-Input:
-5
-7 2 9 1 4
+```cpp
+#include <algorithm>
+#include <cstddef>
+#include <optional>
+#include <vector>
 
-Output:
-Max: 9
-Min: 1
+std::optional<int> mostFrequent(const std::vector<int>& values) {
+    if (values.empty()) {
+        return std::nullopt;
+    }
+
+    std::vector<int> sorted = values;
+    std::sort(sorted.begin(), sorted.end());
+
+    int bestValue = sorted.front();
+    std::size_t bestCount{0};
+
+    for (std::size_t first = 0; first < sorted.size();) {
+        std::size_t afterLast{first + 1};
+        while (afterLast < sorted.size() &&
+               sorted[afterLast] == sorted[first]) {
+            ++afterLast;
+        }
+
+        const std::size_t count{afterLast - first};
+        if (count > bestCount) {
+            bestValue = sorted[first];
+            bestCount = count;
+        }
+        first = afterLast;
+    }
+
+    return bestValue;
+}
 ```
 
-**Gợi ý:** Khởi tạo maximum và minimum từ phần tử đầu tiên sau khi xác nhận mảng không rỗng.
-
-### Bài 3. Đếm số chẵn và số lẻ
-
-**Yêu cầu:** Nhập `n` số nguyên. Đếm số phần tử chẵn và số phần tử lẻ.
-
-Ví dụ:
-
-```text
-Input:
-6
-1 2 3 4 5 6
-
-Output:
-Chan: 3
-Le: 3
-```
-
-**Gợi ý:** Sử dụng toán tử `%`.
-
-### Bài 4. Đảo ngược mảng
-
-**Yêu cầu:** Nhập một mảng và in các phần tử theo thứ tự ngược lại.
-
-Ví dụ:
-
-```text
-Input:
-5
-1 2 3 4 5
-
-Output:
-5 4 3 2 1
-```
-
-**Gợi ý:** Có thể duyệt ngược bằng chỉ số hoặc sử dụng `std::reverse()`.
-
-Chú ý khi giảm chỉ số có kiểu không dấu.
-
-### Bài 5. Tổng đường chéo chính
-
-**Yêu cầu:** Nhập ma trận vuông kích thước `n × n`, tính tổng các phần tử trên đường chéo chính.
-
-Ví dụ:
-
-```text
-Input:
-3
-1 2 3
-4 5 6
-7 8 9
-
-Output:
-15
-```
-
-**Gợi ý:** Chỉ lấy phần tử có chỉ số hàng bằng chỉ số cột.
-
-### Bài 6. Tìm giá trị lớn nhất trong ma trận
-
-**Yêu cầu:** Nhập ma trận có `r` hàng và `c` cột, tìm phần tử lớn nhất.
-
-Ví dụ:
-
-```text
-Input:
-2 3
-1 9 3
-4 5 6
-
-Output:
-9
-```
-
-**Yêu cầu bổ sung:** Xác định rõ hành vi khi `r = 0` hoặc `c = 0`, không truy cập phần tử đầu của ma trận rỗng.
-
-### Bài 7. Đếm ký tự trong chuỗi
-
-**Yêu cầu:** Nhập một dòng văn bản ASCII và một ký tự, đếm số lần ký tự đó xuất hiện.
-
-Ví dụ:
-
-```text
-Input:
-banana
-a
-
-Output:
-3
-```
-
-**Gợi ý:** Sử dụng `std::getline()` và vòng lặp.
-
-### Bài 8. Kiểm tra chuỗi đối xứng
-
-Một chuỗi đối xứng (palindrome) là chuỗi đọc từ trái sang phải và từ phải sang trái giống nhau.
-
-Ví dụ:
-
-```text
-madam
-level
-radar
-```
-
-**Yêu cầu:** Viết chương trình kiểm tra chuỗi ASCII đầu vào có đối xứng hay không.
-
-Ví dụ:
-
-```text
-Input:
-level
-
-Output:
-YES
-```
-
-**Gợi ý:** So sánh hai đầu chuỗi và di chuyển dần vào giữa.
-
-Không cần tạo bản sao chuỗi nếu sử dụng hai chỉ số.
-
-### Bài 9. Tìm phần tử xuất hiện nhiều nhất
-
-**Yêu cầu:** Nhập một mảng số nguyên, tìm giá trị xuất hiện nhiều lần nhất.
-
-Ví dụ:
-
-```text
-Input:
-7
-1 2 2 3 3 3 4
-
-Output:
-3
-```
-
-**Gợi ý:** Có thể bắt đầu bằng cách sắp xếp mảng rồi đếm các nhóm giá trị liên tiếp.
-
-Nếu nhiều giá trị có cùng tần suất cao nhất, cần quy định rõ cách lựa chọn kết quả.
+Kết quả là `std::nullopt` khi dãy rỗng. Khi nhiều giá trị có cùng tần suất lớn nhất, hàm trả về giá trị nhỏ nhất: dãy đã sắp xếp tăng dần và chỉ cập nhật khi tìm thấy tần suất **lớn hơn**. Sắp xếp tốn `O(n log n)`, quét nhóm tốn `O(n)`, và bản sao dùng `O(n)` bộ nhớ. Nếu không cần giữ nguyên dãy đầu vào, có thể sắp xếp trực tiếp dãy đó để tránh bản sao.
 
 ---
 
@@ -2680,17 +2585,7 @@ Nếu nhiều giá trị có cùng tần suất cao nhất, cần quy định r�
 | `'\0'` | Ký tự kết thúc C-string |
 | `std::strlen()` | Đếm phần tử trước null terminator |
 
-Sau bài học này, bạn cần nắm được:
-
-1. **Mảng lưu nhiều phần tử cùng kiểu.** Mỗi phần tử được truy cập thông qua chỉ số.
-2. **Chỉ số hợp lệ bắt đầu từ 0.** Với `n` phần tử, phạm vi thông thường là `[0, n - 1]`.
-3. **std::array phù hợp với kích thước cố định.** Khi kích thước thay đổi trong runtime, có thể sử dụng `std::vector`.
-4. **Mảng hai chiều biểu diễn dữ liệu dạng hàng và cột.** Mỗi chiều cần được kiểm tra giới hạn riêng.
-5. **std::string cung cấp các thao tác chuỗi thuận tiện.** Không cần tự quản lý null terminator khi thực hiện các thao tác chuỗi thông thường.
-6. **size() không nhất thiết bằng số ký tự Unicode hiển thị.** Với văn bản UTF-8, cần phân biệt byte, code point và grapheme.
-7. **Không truy cập phần tử ngoài phạm vi.** Những lỗi này có thể gây undefined behavior.
-8. **Không đọc phần tử đầu của container rỗng.** Cần kiểm tra điều kiện trước khi truy cập.
-9. **Cần hiểu độ phức tạp khi xử lý dữ liệu lớn.** Duyệt một chiều thường có `O(n)`, còn ma trận hai chiều có `O(r × c)` nếu xử lý mỗi phần tử trong thời gian hằng số.
+Mảng C, `std::array`, `std::vector` và `std::string` phục vụ những cách tổ chức dữ liệu khác nhau. Hãy xác định kích thước, kiểm tra container rỗng và giữ mọi chỉ số trong phạm vi; với văn bản UTF-8, `size()` đếm đơn vị `char`/byte chứ không tự đếm ký tự hiển thị. Khi chọn cách xử lý, xét thêm độ phức tạp và các trường hợp biên như đầu vào rỗng.
 
 **Nguyên tắc quan trọng nhất:** Chọn cấu trúc dữ liệu theo yêu cầu thực tế, giữ phạm vi truy cập hợp lệ và không giả định chương trình an toàn chỉ vì nó biên dịch thành công.
 

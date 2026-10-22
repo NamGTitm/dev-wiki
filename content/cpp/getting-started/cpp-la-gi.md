@@ -1,5 +1,5 @@
 ---
-title: C++ là gì? 
+title: C++ là gì?
 description: Tìm hiểu ngôn ngữ C++, nguồn gốc, ứng dụng thực tế, compiler, thư viện chuẩn, quá trình biên dịch và sự khác biệt giữa C++11, C++14, C++17, C++20, C++23 và C++26.
 slug: /cpp/bat-dau/cpp-la-gi
 category: fundamentals
@@ -7,14 +7,14 @@ categoryLabel: C++ căn bản
 order: 20010
 difficulty: beginner
 keywords: [C++, C++17, C++20, C++23, C++26, compiler, standard library, GCC, Clang, MSVC, lập trình C++, Modern C++]
-updated: 2026-10-21
+updated: 2026-10-22
 collection: cpp
 collectionLabel: C++
 collectionDescription: Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.
 related: ["/cpp/bat-dau/cai-dat-moi-truong", "/cpp/bat-dau/lo-trinh-hoc", "/cpp/stl/cpp17-20-23"]
 ---
 
-# C++ là gì? 
+# C++ là gì?
 
 C++ là một trong những ngôn ngữ lập trình có ảnh hưởng lớn trong lĩnh vực phát triển phần mềm, đặc biệt ở những hệ thống yêu cầu hiệu năng cao, khả năng kiểm soát tài nguyên và tương tác trực tiếp với phần cứng.
 
@@ -187,21 +187,17 @@ C++ thường được lựa chọn cho những hệ thống cần hiệu năng,
 
 ### 3.1. Phát triển trò chơi
 
-<text weight="medium">Game Engine và đồ họa thời gian thực</text>
-
-<AsyncImageGroup query={["Unreal Engine editor game development interface screenshot","3D game engine C++ graphics rendering editor viewport"]} aspectRatio="5:3" layout="carousel"/>
+**Game engine và đồ họa thời gian thực**
 
 C++ được sử dụng rộng rãi trong việc phát triển game engine, hệ thống vật lý, đồ họa và những thành phần cần hiệu năng cao.
 
-Một ví dụ nổi bật là <Entity category="software" value="Unreal Engine" disambig="Công cụ phát triển game của Epic Games"/>.
+Một ví dụ nổi bật là [Unreal Engine](https://www.unrealengine.com/), một game engine có nhiều thành phần cốt lõi được viết bằng C++.
 
 C++ thường được sử dụng để triển khai những hệ thống cốt lõi, trong khi các công cụ scripting hoặc visual scripting giúp phát triển gameplay nhanh hơn.
 
 ### 3.2. Ứng dụng desktop
 
-<text weight="medium">Phần mềm chạy trên Windows, Linux và macOS</text>
-
-<AsyncImageGroup query={["Qt Creator IDE C++ desktop application interface screenshot","Blender 3D modeling desktop software screenshot interface"]} aspectRatio="5:3" layout="carousel"/>
+**Phần mềm chạy trên Windows, Linux và macOS**
 
 C++ có thể được sử dụng để xây dựng:
 
@@ -214,8 +210,6 @@ C++ có thể được sử dụng để xây dựng:
 Những công nghệ thường gặp gồm Qt, Win32 API và các thư viện giao diện đa nền tảng.
 
 ### 3.3. Hệ thống nhúng và robot
-
-<AsyncImageGroup query={["robot arm engineering electronics controller development laboratory","embedded systems microcontroller development board robotics engineering"]} aspectRatio="5:3" layout="carousel"/>
 
 C++ được sử dụng trong nhiều hệ thống điều khiển thiết bị và robot.
 
@@ -657,7 +651,7 @@ C++ đã trải qua nhiều lần thay đổi quan trọng.
 | C++17 | 2017 | Structured bindings, optional, filesystem |
 | C++20 | 2020 | Concepts, ranges, modules, coroutines |
 | C++23 | 2023 | expected, print, mdspan và cải tiến thư viện |
-| C++26 | 2026 | Thế hệ tiếp theo, hoàn tất kỹ thuật tại WG21 |
+| C++26 | 2026 | Thế hệ dự thảo tiếp theo; chưa được ISO công bố thành International Standard |
 
 **Lưu ý:** Tên phiên bản như C++23 phản ánh chu kỳ hoàn thiện tiêu chuẩn, không nhất thiết trùng năm công bố tài liệu ISO. Chẳng hạn, C++23 được công bố chính thức dưới mã ISO/IEC 14882:2024.
 
@@ -836,22 +830,20 @@ Nếu compiler chấp nhận chế độ C++23 nhưng header `<print>` chưa có
 
 ### 9.7. C++26: Thế hệ tiếp theo
 
-C++26 tiếp tục mở rộng C++ với nhiều tính năng về ngôn ngữ và thư viện.
+C++26 là tên thường dùng cho thế hệ tiêu chuẩn tiếp theo sau C++23. Tại thời điểm cập nhật bài viết, ISO liệt kê bản đang phát triển là **ISO/IEC DIS 14882** (Draft International Standard); chuẩn C++ được công bố hiện tại vẫn là **ISO/IEC 14882:2024**. Vì văn bản mới còn ở quy trình dự thảo, không nên trình bày mọi tính năng trong working draft như nội dung đã phát hành ổn định.
 
-Những hướng cải tiến nổi bật gồm:
+Một số nội dung nổi bật đã xuất hiện trong quá trình chuẩn hóa gồm:
 
-- Static reflection.
-- Contracts.
-- Cải tiến compile-time programming.
-- `std::inplace_vector`.
-- Một số công cụ mới phục vụ concurrency và dữ liệu.
-- Những cải tiến về an toàn và tính biểu đạt của ngôn ngữ.
+- **Static reflection:** truy vấn thông tin về cấu trúc chương trình trong quá trình biên dịch.
+- **Contracts:** biểu đạt điều kiện trước, điều kiện sau và assertion theo cơ chế của ngôn ngữ; thiết kế vẫn có tài liệu WG21 thảo luận, nên cần kiểm tra working draft mới nhất trước khi dựa vào chi tiết cụ thể.
+- **`std::inplace_vector`:** container có dung lượng cố định được lưu cùng object, phù hợp khi muốn giới hạn cấp phát động.
+- Các cải tiến khác về lập trình thời điểm biên dịch và thư viện chuẩn.
 
-WG21 đã hoàn tất công việc kỹ thuật trên C++26 vào tháng 3/2026. Quy trình phê duyệt, biên tập và công bố tài liệu ISO là những bước cần phân biệt với việc chốt nội dung kỹ thuật.
+Các tên gọi trên giúp nhận diện hướng phát triển, không thay thế văn bản chuẩn. Trạng thái thông qua của proposal, nội dung trong working draft và nội dung của ISO International Standard là những mốc khác nhau.
 
-Ngoài ra, mức hỗ trợ C++26 của compiler và thư viện chuẩn vẫn phụ thuộc vào từng phiên bản công cụ.
+Mức hỗ trợ các tính năng đang chuẩn hóa còn phụ thuộc vào compiler và thư viện chuẩn; một compiler có cờ chọn chế độ mới không đồng nghĩa đã triển khai đầy đủ mọi tính năng.
 
-**Không nên mặc định rằng bật chế độ C++26 đồng nghĩa tất cả tính năng C++26 đều đã được triển khai đầy đủ.**
+Theo dõi [trang trạng thái của ISO](https://www.iso.org/standard/83626.html) và [các tài liệu WG21 năm 2026](https://open-std.org/JTC1/SC22/WG21/docs/papers/2026/) khi cần xác nhận trạng thái mới nhất.
 
 ---
 
@@ -1195,83 +1187,7 @@ Việc sử dụng C++17 làm baseline không ngăn bạn học và sử dụng 
 
 ---
 
-## 15. Bài tập tự luyện
-
-### Bài 1. Giải thích C++ là gì
-
-Trình bày ngắn gọn:
-
-1. C++ thuộc nhóm ngôn ngữ lập trình nào?
-2. C++ được phát triển từ ngôn ngữ nào?
-3. C++ có thể được sử dụng trong những lĩnh vực nào?
-4. Vì sao không nên sử dụng C++ cho mọi dự án?
-
-### Bài 2. Phân biệt công cụ phát triển
-
-Cho các tên:
-
-```text
-C++17
-GCC
-Clang
-Visual Studio
-Visual Studio Code
-MSVC
-std::vector
-```
-
-Hãy phân loại chúng thành:
-
-- Chuẩn ngôn ngữ.
-- Compiler/toolchain.
-- IDE hoặc code editor.
-- Thành phần thư viện chuẩn.
-
-### Bài 3. Tìm hiểu compiler đang sử dụng
-
-Kiểm tra môi trường lập trình của bạn và ghi lại:
-
-- Tên compiler.
-- Phiên bản compiler.
-- Hệ điều hành.
-- Chuẩn C++ được cấu hình.
-- Tên standard library nếu xác định được.
-
-**Gợi ý:** Sử dụng `g++ --version`, `clang++ --version` hoặc `cl` tùy môi trường.
-
-### Bài 4. Kiểm tra macro __cplusplus
-
-Viết chương trình:
-
-```cpp
-#include <iostream>
-
-int main() {
-    std::cout << __cplusplus << '\n';
-}
-```
-
-Biên dịch với những chuẩn mà compiler hỗ trợ.
-
-So sánh giá trị nhận được và giải thích ý nghĩa của macro.
-
-### Bài 5. Chọn phiên bản C++ phù hợp
-
-Xét ba dự án:
-
-**Dự án A:** Chương trình giải thuật chạy trên online judge chỉ hỗ trợ C++17.
-
-**Dự án B:** Ứng dụng desktop cần sử dụng Concepts và Ranges của C++20.
-
-**Dự án C:** Thư viện được phân phối cho những hệ thống sử dụng nhiều phiên bản compiler khác nhau.
-
-Hãy chọn baseline phù hợp cho từng dự án và giải thích lý do.
-
-Không chỉ xem phiên bản mới nhất. Cần đánh giá cả tính tương thích, dependency và yêu cầu triển khai.
-
----
-
-## 16. Tổng kết kiến thức
+## 15. Tổng kết kiến thức
 
 | Khái niệm | Ý nghĩa |
 |---|---|
@@ -1290,18 +1206,9 @@ Không chỉ xem phiên bản mới nhất. Cần đánh giá cả tính tương
 | C++17 | Baseline của bộ tài liệu |
 | C++20 | Bổ sung Concepts, Ranges, Modules và Coroutines |
 | C++23 | Tiếp tục cải tiến ngôn ngữ và thư viện |
-| C++26 | Thế hệ tiêu chuẩn tiếp theo sau C++23 |
+| C++26 | Tên của thế hệ dự thảo tiếp theo; cần kiểm tra trạng thái ISO và compiler |
 
-Sau bài học này, bạn cần hiểu được:
-
-1. C++ là ngôn ngữ lập trình, không phải một compiler hoặc IDE.
-2. C++ có thể được sử dụng cho cả phần mềm ứng dụng và phần mềm hệ thống.
-3. Compiler và Standard Library là những thành phần khác nhau của toolchain.
-4. Phiên bản C++ xác định những quy tắc và tính năng được đặc tả.
-5. Phiên bản compiler không đồng nghĩa với phiên bản ngôn ngữ.
-6. Một chương trình có thể yêu cầu chuẩn mới hơn dù phần lớn mã nguồn vẫn sử dụng cú pháp cũ.
-7. C++17 được chọn làm baseline học tập, không phải giới hạn cho mọi dự án.
-8. Việc lựa chọn công nghệ phải dựa trên yêu cầu kỹ thuật và khả năng tương thích thực tế.
+Khi đọc tài liệu C++, hãy tách ngôn ngữ và tiêu chuẩn khỏi compiler, thư viện chuẩn, linker và IDE. Chương trình đi từ source qua quá trình biên dịch/liên kết đến executable; phiên bản compiler không xác định phiên bản C++ mà dự án yêu cầu. Bộ tài liệu lấy C++17 làm nền tảng chung, còn việc dùng chuẩn mới hơn cần dựa trên yêu cầu và mức hỗ trợ thực tế của toàn toolchain.
 
 **Ghi nhớ:** Học C++ không chỉ là ghi nhớ cú pháp. Mục tiêu lâu dài là hiểu cách chương trình xử lý dữ liệu, sử dụng tài nguyên và biến những yêu cầu của bài toán thành phần mềm hoạt động chính xác.
 
@@ -1313,6 +1220,7 @@ Sau bài học này, bạn cần hiểu được:
 
 - [Standard C++ Foundation](https://isocpp.org/): Thông tin về ngôn ngữ và tiêu chuẩn C++.
 - [WG21](https://www.open-std.org/jtc1/sc22/wg21/): Nhóm tiêu chuẩn hóa C++.
+- [ISO/IEC 14882 và phiên bản đang phát triển](https://www.iso.org/standard/83626.html): Trạng thái chuẩn C++ được công bố và bản DIS kế tiếp.
 - [cppreference](https://en.cppreference.com/): Tra cứu ngôn ngữ và thư viện chuẩn.
 - [GCC C++ Standards Support](https://gcc.gnu.org/projects/cxx-status.html): Mức hỗ trợ các phiên bản C++ trong GCC.
 - [Clang C++ Status](https://clang.llvm.org/cxx_status.html): Mức hỗ trợ tính năng trong Clang.

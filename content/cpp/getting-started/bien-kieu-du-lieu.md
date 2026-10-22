@@ -7,7 +7,7 @@ categoryLabel: C++ căn bản
 order: 20040
 difficulty: beginner
 keywords: [biến C++, kiểu dữ liệu C++, variable, data types, initialization, const, constexpr, auto, integer overflow, scope, compiler, translation unit, linker]
-updated: 2026-10-21
+updated: 2026-10-22
 collection: cpp
 collectionLabel: C++
 collectionDescription: Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.
@@ -631,9 +631,11 @@ Một số thành phần hữu ích:
 | `max()` | Giá trị hữu hạn lớn nhất |
 | `lowest()` | Giá trị hữu hạn thấp nhất |
 | `digits` | Số bit giá trị của kiểu nguyên hoặc số chữ số cơ số hai có nghĩa của kiểu số thực |
-| `digits10` | Số chữ số thập phân có thể biểu diễn mà không bị thay đổi khi chuyển đổi qua lại theo quy tắc tương ứng |
+| `digits10` | Số chữ số cơ số 10 có thể được biểu diễn chính xác; với số thực, đây là số chữ số được bảo đảm khi chuyển đổi qua lại |
+| `max_digits10` | Số chữ số cơ số 10 đủ để ghi một giá trị số thực ra văn bản rồi đọc lại mà khôi phục đúng giá trị |
 
 Đặc biệt với số thực, `min()` không phải giá trị âm nhỏ nhất. Khi cần giới hạn thấp nhất, sử dụng `lowest()`.
+`digits10` mô tả độ chính xác thập phân được bảo đảm; với số thực, `max_digits10` hữu ích khi cần round-trip qua văn bản mà không làm đổi giá trị.
 
 ### 5.3. Kiểu số nguyên có độ rộng cố định
 
@@ -1889,110 +1891,7 @@ Cần kiểm tra:
 
 ---
 
-## 17. Bài tập tự luyện
-
-### Bài 1. Thông tin học sinh
-
-**Yêu cầu:** Khai báo các biến lưu:
-
-- Họ và tên.
-- Tuổi.
-- Điểm trung bình.
-- Trạng thái đang học.
-
-In toàn bộ thông tin ra màn hình.
-
-**Gợi ý:** Sử dụng `std::string`, `int`, `double` và `bool`.
-
-### Bài 2. Tính diện tích hình chữ nhật
-
-**Yêu cầu:** Nhập chiều dài và chiều rộng, tính diện tích.
-
-Công thức:
-
-\[
-S = a \times b
-\]
-
-Ví dụ:
-
-```text
-Input:
-5 3
-
-Output:
-15
-```
-
-**Gợi ý:** Sử dụng `double` nếu kích thước có thể chứa phần thập phân. Kiểm tra hai kích thước phải dương và hữu hạn.
-
-### Bài 3. Tính tuổi sau n năm
-
-**Yêu cầu:** Nhập tuổi hiện tại và số năm cần cộng thêm.
-
-Ví dụ:
-
-```text
-Input:
-16 5
-
-Output:
-21
-```
-
-**Gợi ý:** Kiểm tra giá trị âm và cân nhắc tràn số khi tính tổng.
-
-### Bài 4. Tính tổng tiền
-
-**Yêu cầu:** Nhập số lượng và đơn giá của một sản phẩm. Tính tổng tiền.
-
-Ví dụ:
-
-```text
-Input:
-10 250000
-
-Output:
-2500000
-```
-
-**Gợi ý:** Chọn kiểu dữ liệu dựa trên giá trị lớn nhất có thể xảy ra.
-
-### Bài 5. Kiểm tra giới hạn kiểu dữ liệu
-
-**Yêu cầu:** Viết chương trình in:
-
-- Kích thước `int`.
-- Kích thước `long long`.
-- Giá trị lớn nhất của `int`.
-- Giá trị lớn nhất của `long long`.
-
-**Gợi ý:** Sử dụng `sizeof` và `std::numeric_limits`.
-
-### Bài 6. Tổ chức chương trình nhiều file
-
-**Yêu cầu:** Tạo dự án gồm:
-
-```text
-Project/
-├── main.cpp
-├── Calculator.cpp
-└── Calculator.h
-```
-
-Trong đó:
-
-- `Calculator.h` khai báo hàm `add`.
-- `Calculator.cpp` định nghĩa hàm `add`.
-- `main.cpp` đọc hai số và gọi hàm.
-
-Biên dịch đồng thời hai file `.cpp` bằng GCC hoặc MSVC.
-
-**Mục tiêu:** Phân biệt declaration, definition, translation unit và linking.
-
----
-
-## 18. Tổng kết kiến thức
+## 17. Tổng kết kiến thức
 
 | Khái niệm | Ý nghĩa |
 |---|---|
@@ -2015,12 +1914,7 @@ Biên dịch đồng thời hai file `.cpp` bằng GCC hoặc MSVC.
 | Linker | Liên kết object file và thư viện |
 | Executable | Sản phẩm có thể thực thi |
 
-Sau bài học này, bạn cần nắm được bốn nguyên tắc:
-
-1. **Khởi tạo trước khi sử dụng:** Không đọc giá trị bất định của biến.
-2. **Chọn kiểu theo miền giá trị:** Cần xét cả giá trị đầu vào và kết quả trung gian của phép tính.
-3. **Giữ phạm vi dữ liệu hợp lý:** Hạn chế trạng thái chia sẻ không cần thiết, tránh phụ thuộc vào đối tượng đã hết vòng đời.
-4. **Hiểu quy trình build:** Biết phân biệt lỗi compile, link và runtime để chẩn đoán đúng nguyên nhân.
+Khai báo tên và kiểu mới chỉ tạo một phần của mô hình dữ liệu; cần khởi tạo giá trị hợp lệ trước khi đọc, chọn kiểu đủ chứa cả đầu vào lẫn kết quả trung gian, và giữ object trong lifetime phù hợp. Khi chương trình chia thành nhiều translation unit, phân biệt compile với link giúp tìm đúng nguyên nhân lỗi build.
 
 Một chương trình C++ tốt không chỉ cần biên dịch thành công. Dữ liệu phải có ý nghĩa rõ ràng, kiểu dữ liệu phù hợp và hành vi được xác định trong những trường hợp mà chương trình cam kết hỗ trợ.
 
