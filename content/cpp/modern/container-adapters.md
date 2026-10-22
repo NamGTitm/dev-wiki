@@ -7,20 +7,26 @@ categoryLabel: STL và C++ hiện đại
 order: 22040
 difficulty: intermediate
 keywords: [stack, queue, priority_queue, container adapter, heap]
-updated: 2026-10-20
+updated: 2026-10-22
 collection: cpp
 collectionLabel: C++
 collectionDescription: Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.
 related: ["/cpp/stl/sequence-containers", "/cpp/stl/stl-algorithms", "/cpp/thuat-toan/do-thi"]
 ---
 
-Container adapter cung cấp một API nhỏ trên container bên dưới. Chọn nó khi quy tắc truy cập quan trọng hơn việc thao tác tùy ý lên mọi phần tử.
+Container adapter cung cấp một giao diện nhỏ trên một container bên dưới. Adapter không cho truy cập tùy ý vào mọi phần tử; nó mã hóa chính sách lấy phần tử phù hợp với cách dùng như ngăn xếp, hàng đợi hoặc hàng đợi ưu tiên.
 
-## Ba adapter
+## Ba adapter phổ biến
 
-- `std::stack<T>`: LIFO; `top`, `push`, `pop`.
-- `std::queue<T>`: FIFO; `front`, `back`, `push`, `pop`.
-- `std::priority_queue<T>`: lấy phần tử ưu tiên nhất bằng `top`; mặc định là max-heap.
+| Adapter | Chính sách | Đọc phần tử | Thêm | Xóa |
+|---|---|---|---|---|
+| `std::stack<T>` | LIFO: vào sau, ra trước | `top()` | `push()` / `emplace()` | `pop()` |
+| `std::queue<T>` | FIFO: vào trước, ra trước | `front()`, `back()` | `push()` / `emplace()` | `pop()` |
+| `std::priority_queue<T>` | Lấy phần tử ưu tiên nhất trước | `top()` | `push()` / `emplace()` | `pop()` |
+
+Mặc định, `stack` và `queue` dùng `deque` bên dưới; `priority_queue` dùng `vector`. Có thể chọn container nền tương thích khác khi thật sự cần, nhưng người dùng adapter vẫn chỉ truy cập qua API của adapter.
+
+## Ví dụ
 
 ```cpp
 #include <functional>
@@ -38,29 +44,62 @@ int main() {
     jobs.push(10);
     jobs.push(20);
 
-    std::priority_queue<int, std::vector<int>, std::greater<int>> smallest_first;
+    std::priority_queue<int, std::vector<int>, std::greater<int>>
+        smallest_first;
     smallest_first.push(8);
     smallest_first.push(3);
-    std::cout << history.top() << ' ' << jobs.front() << ' ' << smallest_first.top() << '\n';
+    smallest_first.push(5);
+
+    std::cout << history.top() << ' '
+              << jobs.front() << ' '
+              << smallest_first.top() << '\n';
 }
 ```
 
-`pop()` chỉ xóa phần tử, không trả về nó; đọc `top()`/`front()` trước khi pop và kiểm tra `empty()` trước khi truy cập. Priority queue với comparator `std::greater` đưa giá trị nhỏ nhất lên đầu.
+Kết quả là `2 10 3`: stack trả phần tử mới thêm cuối, queue trả phần tử chờ lâu nhất, còn priority queue với `std::greater<int>` đặt giá trị nhỏ nhất ở đầu.
 
-## Độ phức tạp
+## Độ phức tạp và cách lấy phần tử
 
-Stack/queue thao tác hai đầu thường O(1). Priority queue `top()` O(1), `push()`/`pop()` O(log n). Không thể duyệt priority queue theo thứ tự ưu tiên bằng iterator; nếu cần toàn bộ thứ tự, pop lần lượt hoặc sort một bản sao.
+Các thao tác đầu-cuối của `stack` và `queue` thường O(1). Với `priority_queue`, `top()` là O(1), còn `push()` và `pop()` là O(log n) do duy trì heap.
+
+`pop()` chỉ xóa phần tử; nó **không trả về** giá trị vừa xóa. Đọc trước rồi mới xóa:
+
+```cpp
+while (!jobs.empty()) {
+    const int job = jobs.front();
+    jobs.pop();
+    // Xử lý job tại đây.
+}
+```
+
+Luôn kiểm tra `empty()` trước khi gọi `top()`, `front()`, `back()` hoặc `pop()`. Gọi các thao tác này trên adapter rỗng không có kết quả hợp lệ.
+
+`priority_queue` không cung cấp iterator để duyệt toàn bộ phần tử theo thứ tự ưu tiên. Nếu cần xuất toàn bộ thứ tự, có thể pop lần lượt trên bản sao khi chấp nhận chi phí O(n log n), hoặc chọn một cấu trúc dữ liệu khác phù hợp hơn.
+
+## Hiểu comparator của priority_queue
+
+Mặc định, `std::priority_queue<T>` đưa phần tử lớn nhất lên `top()`. Khi truyền `std::greater<T>`, phần tử nhỏ nhất trở thành phần tử ở đầu.
+
+Với kiểu tự định nghĩa, comparator phải mô tả một strict weak ordering nhất quán. Đừng viết comparator theo cảm giác “ưu tiên cao hơn trả true” mà không kiểm tra kết quả thực tế ở `top()`; tên kiểu hoặc biểu thức comparator có thể khiến quy tắc ưu tiên trông ngược với mong đợi.
+
+Nếu nhiều phần tử có cùng mức ưu tiên, `priority_queue` không bảo đảm thứ tự ổn định giữa chúng. Nếu cần tie-break, đưa điều kiện phụ vào kiểu key/comparator, chẳng hạn ưu tiên theo điểm rồi theo thời điểm đến.
+
+## Khi nào dùng adapter?
+
+- Dùng `stack` cho undo history, DFS lặp hoặc xử lý theo thứ tự lồng nhau.
+- Dùng `queue` cho BFS, hàng đợi công việc FIFO hoặc mô phỏng phục vụ theo lượt.
+- Dùng `priority_queue` cho lịch sự kiện, tìm phần tử ưu tiên nhất hoặc thuật toán cần lấy cực trị lặp lại.
+
+Nếu cần duyệt mọi phần tử, truy cập theo chỉ số hoặc xóa một phần tử tùy ý, adapter không phải lựa chọn phù hợp; dùng container hoặc cấu trúc dữ liệu khác.
 
 ## Lỗi thường gặp
 
-- Gọi `top`, `front` hoặc `pop` trên adapter rỗng.
-- Mong `pop()` trả phần tử đã xóa.
-- Nhầm comparator min-heap/max-heap.
-
-## Tự luyện
-
-Mô phỏng hàng đợi phục vụ theo thứ tự đến bằng `queue`, rồi đổi sang `priority_queue` để phục vụ điểm ưu tiên cao nhất. Chọn tie-break rõ ràng.
+- Gọi `top()`, `front()` hoặc `pop()` khi adapter rỗng.
+- Mong `pop()` trả về phần tử vừa xóa.
+- Nhầm `priority_queue` mặc định là min-heap; mặc định nó đưa giá trị lớn nhất lên đầu.
+- Giả định các phần tử cùng ưu tiên được lấy theo thứ tự thêm vào.
+- Dùng adapter khi thuật toán cần truy cập mọi phần tử.
 
 ## Đọc tiếp
 
-Xem cách sử dụng adapter trong [BFS và đồ thị](/cpp/thuat-toan/do-thi) và [STL algorithms](/cpp/stl/stl-algorithms).
+Xem cách dùng queue trong [BFS và đồ thị](/cpp/thuat-toan/do-thi), tìm hiểu [sequence containers](/cpp/stl/sequence-containers) và đối chiếu với [STL algorithms](/cpp/stl/stl-algorithms).
