@@ -16,109 +16,58 @@ related: ["/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap", "/cpp/bat-dau/references-
 
 # Hàm, tham số và phạm vi biến trong C++
 
-Khi mới bắt đầu lập trình, chúng ta thường viết toàn bộ chương trình trong hàm `main()`.
+Khi bắt đầu học C++, chúng ta thường đặt toàn bộ câu lệnh bên trong hàm `main()`. Cách này đủ dùng cho những chương trình đơn giản, nhưng sẽ trở nên khó quản lý khi số lượng thao tác tăng lên.
 
-Cách này phù hợp với những bài tập đơn giản. Tuy nhiên, khi chương trình có nhiều chức năng, việc đặt tất cả câu lệnh trong một hàm sẽ khiến mã nguồn khó đọc, khó kiểm thử và khó bảo trì.
+Giả sử một chương trình cần quản lý điểm học sinh. Chương trình phải kiểm tra điểm hợp lệ, tính trung bình, xếp loại kết quả và hiển thị thông tin. Nếu tất cả công việc đều nằm trong một khối mã lớn, việc sửa đổi một chức năng có thể ảnh hưởng đến những phần không liên quan.
 
-Ví dụ, một chương trình quản lý điểm học sinh có thể cần thực hiện nhiều công việc:
+**Hàm (function)** giúp chia chương trình thành những đơn vị xử lý có mục đích rõ ràng. Mỗi hàm có thể nhận dữ liệu, thực hiện công việc và trả kết quả cho nơi gọi.
 
-- Nhập điểm.
-- Kiểm tra điểm hợp lệ.
-- Tính điểm trung bình.
-- Xếp loại kết quả.
-- Hiển thị thông tin.
+Bên cạnh hàm, hai khái niệm quan trọng cần hiểu là **scope (phạm vi)** và **lifetime (thời gian sống)**. Chúng quyết định một tên có thể được sử dụng ở đâu và đối tượng mà tên đó biểu thị tồn tại trong bao lâu.
 
-Thay vì viết mọi thao tác trong `main()`, chúng ta có thể chia chương trình thành những **hàm (functions)** có trách nhiệm rõ ràng.
-
-Hàm là một trong những thành phần quan trọng nhất của lập trình C++.
-
-Bài học này giúp bạn hiểu:
-
-1. Hàm là gì và tại sao cần sử dụng hàm.
-2. Cách khai báo, định nghĩa và gọi hàm.
-3. Sự khác nhau giữa tham số và đối số.
-4. Cách trả kết quả bằng `return`.
-5. Hàm `void` và hàm có giá trị trả về.
-6. Truyền tham số bằng giá trị và tham chiếu.
-7. Phạm vi biến (scope) và thời gian sống (lifetime).
-8. Cách tổ chức chương trình thành nhiều hàm.
-9. Những lỗi thường gặp và cách phòng tránh.
-
-**Tiêu chuẩn sử dụng:** C++17.
+Bài viết trình bày các quy tắc cơ bản theo tiêu chuẩn **C++17**, tập trung vào cơ chế hoạt động và những khác biệt dễ gây nhầm lẫn.
 
 ---
 
 ## 1. Hàm là gì?
 
-Hàm (function) là một đơn vị mã nguồn có tên, được định nghĩa để thực hiện một công việc cụ thể.
+Hàm là một thành phần của chương trình dùng để thực hiện một thao tác hoặc nhóm thao tác có liên quan.
 
-Một hàm có thể:
+Một hàm có thể nhận dữ liệu thông qua tham số, xử lý dữ liệu đó rồi trả về kết quả. Ngoài ra, hàm còn có thể thực hiện các tác động như xuất thông tin, ghi tệp hoặc thay đổi trạng thái đối tượng.
 
-- Nhận dữ liệu đầu vào thông qua tham số.
-- Xử lý dữ liệu.
-- Trả về kết quả.
-- Thực hiện những thao tác như in dữ liệu hoặc cập nhật đối tượng.
-
-Ví dụ, chúng ta thường xuyên cần tính tổng hai số.
-
-Nếu không sử dụng hàm:
+Ví dụ, một chương trình cần cộng điểm thưởng cho nhiều học sinh. Thay vì viết lại phép tính ở nhiều vị trí, có thể định nghĩa hàm:
 
 ```cpp
-int a{5};
-int b{3};
-
-int result1 = a + b;
-
-int c{10};
-int d{20};
-
-int result2 = c + d;
-```
-
-Khi phép tính phức tạp hơn, việc lặp lại logic ở nhiều nơi khiến chương trình khó bảo trì.
-
-Thay vào đó, có thể định nghĩa một hàm:
-
-```cpp
-int add(int a, int b) {
-    return a + b;
+int addBonus(int score, int bonus) {
+    return score + bonus;
 }
 ```
 
-Sau đó sử dụng:
+Sau khi định nghĩa, hàm có thể được gọi với những giá trị khác nhau:
 
 ```cpp
-int result1 = add(5, 3);
-int result2 = add(10, 20);
+int first = addBonus(70, 5);   // 75
+int second = addBonus(80, 10); // 90
 ```
 
-Kết quả:
+Hai lời gọi sử dụng cùng một phần triển khai nhưng cung cấp các dữ liệu khác nhau.
 
-```text
-result1 = 8
-result2 = 30
-```
+Trong ví dụ, phép cộng được giả định không vượt phạm vi của `int`.
 
-### 1.1. Lợi ích của hàm
+### 1.1. Tại sao nên sử dụng hàm?
 
-| Lợi ích | Giải thích |
-|---|---|
-| Tái sử dụng | Một hàm có thể được gọi nhiều lần |
-| Giảm lặp mã | Không cần viết lại cùng một logic |
-| Dễ đọc | Tên hàm cho biết thao tác cần thực hiện |
-| Dễ kiểm thử | Có thể kiểm tra từng hàm độc lập |
-| Dễ bảo trì | Sửa logic tại một vị trí |
-| Chia nhỏ vấn đề | Biến bài toán lớn thành nhiều phần nhỏ |
+Lợi ích đầu tiên là **tái sử dụng logic**. Nếu quy tắc cộng điểm thay đổi, người lập trình có thể điều chỉnh một hàm thay vì tìm tất cả những vị trí đang thực hiện phép tính đó.
 
-Tuy nhiên, không nên tách mọi phép toán đơn giản thành một hàm riêng.
+Hàm còn giúp **phân chia trách nhiệm**. Một hàm kiểm tra dữ liệu không nhất thiết phải biết cách hiển thị kết quả. Tương tự, một hàm tính toán không cần biết dữ liệu được nhập từ bàn phím hay đọc từ tệp.
 
-Mục tiêu là chia chương trình thành những phần **có ý nghĩa và trách nhiệm rõ ràng**, không phải tạo ra số lượng hàm nhiều nhất.
+Khi các chức năng được tách biệt hợp lý, chúng thường dễ kiểm thử, dễ sửa lỗi và dễ tái sử dụng hơn.
+
+Tuy nhiên, không phải câu lệnh nào cũng cần được đưa vào một hàm riêng. Việc chia nhỏ chỉ có ích khi giúp mã nguồn rõ ràng hơn hoặc tạo ra một đơn vị xử lý có ý nghĩa.
 
 ---
 
 ## 2. Cấu trúc của một hàm
 
-Cú pháp tổng quát:
+Một định nghĩa hàm C++ thông thường có dạng:
 
 ```cpp
 ReturnType functionName(ParameterList) {
@@ -126,118 +75,72 @@ ReturnType functionName(ParameterList) {
 }
 ```
 
-Trong đó:
+Các thành phần chính:
 
 | Thành phần | Ý nghĩa |
 |---|---|
-| `ReturnType` | Kiểu giá trị hàm trả về |
-| `functionName` | Tên hàm |
-| `ParameterList` | Danh sách tham số |
-| `{}` | Phần thân hàm |
-| `return` | Kết thúc lời gọi và có thể trả về giá trị |
+| `ReturnType` | Kiểu dữ liệu mà hàm trả về |
+| `functionName` | Tên dùng để nhận diện hàm |
+| `ParameterList` | Danh sách tham số của hàm |
+| `{}` | Phần thân chứa các câu lệnh |
+| `return` | Câu lệnh kết thúc lời gọi và có thể trả về giá trị |
+
+Xét lại hàm:
+
+```cpp
+int addBonus(int score, int bonus) {
+    return score + bonus;
+}
+```
+
+Từ khóa `int` phía trước tên cho biết hàm trả về một giá trị kiểu số nguyên `int`.
+
+`addBonus` là tên hàm.
+
+Hai khai báo `int score` và `int bonus` là các tham số. Mỗi tham số có kiểu dữ liệu riêng.
+
+Phần thân nằm trong dấu ngoặc nhọn, chứa phép cộng và câu lệnh `return`.
+
+### 2.1. Hàm được thực thi khi nào?
+
+Việc định nghĩa một hàm không có nghĩa phần thân của nó lập tức được thực hiện.
+
+Trong trường hợp thông thường, phần thân được thực hiện khi có một lời gọi hàm tương ứng trong quá trình chạy chương trình.
 
 Ví dụ:
 
 ```cpp
-int add(int left, int right) {
-    return left + right;
-}
+int result = addBonus(70, 5);
 ```
 
-Phân tích:
+Tại lời gọi này, chương trình thực hiện quá trình tương ứng:
 
-```cpp
-int
-```
+1. Đánh giá các đối số được cung cấp.
+2. Khởi tạo những tham số của hàm theo quy tắc truyền tham số.
+3. Bắt đầu thực hiện phần thân `addBonus()`.
+4. Tính biểu thức `score + bonus`.
+5. Thực hiện `return` và cung cấp kết quả cho lời gọi.
+6. Tiếp tục quá trình thực thi tại vị trí gọi.
 
-Là kiểu trả về.
+Kết quả của lời gọi là `75`, sau đó được dùng để khởi tạo biến `result`.
 
-```cpp
-add
-```
+Điều quan trọng là **hàm có thể được gọi nhiều lần**, và mỗi lời gọi có quá trình thực thi riêng.
 
-Là tên hàm.
-
-```cpp
-int left, int right
-```
-
-Là danh sách tham số.
-
-```cpp
-return left + right;
-```
-
-Trả về kết quả phép cộng.
-
-### 2.1. Ví dụ hoàn chỉnh
-
-```cpp
-#include <iostream>
-
-int add(int a, int b) {
-    return a + b;
-}
-
-int main() {
-    const int result{add(5, 3)};
-
-    std::cout << result << '\n';
-
-    return 0;
-}
-```
-
-Kết quả:
-
-```text
-8
-```
-
-Quá trình thực thi:
-
-1. Chương trình bắt đầu từ `main()`.
-2. Gặp lời gọi `add(5, 3)`.
-3. Hàm `add()` nhận hai giá trị.
-4. Thực hiện phép cộng.
-5. Trả về kết quả `8`.
-6. `main()` lưu kết quả vào `result`.
-7. Chương trình in `8`.
-
-### 2.2. Minh họa lời gọi hàm
-
-```text
-main()
-  |
-  | add(5, 3)
-  v
-add()
-  a = 5
-  b = 3
-  |
-  | return a + b
-  v
-main()
-  result = 8
-```
-
-Khi một hàm được gọi, chương trình chuyển quyền điều khiển sang hàm đó.
-
-Khi lời gọi kết thúc bình thường, quyền điều khiển quay về vị trí gọi và việc thực thi tiếp tục.
+Các biến cục bộ thông thường của một lời gọi không tự động được chia sẻ với lời gọi khác.
 
 ---
 
 ## 3. Khai báo, định nghĩa và gọi hàm
 
-Trong C++, cần phân biệt ba khái niệm:
+Ba khái niệm sau có liên quan nhưng không giống nhau:
 
-- Function declaration.
-- Function definition.
-- Function call.
+- *Function declaration*: Khai báo hàm.
+- *Function definition*: Định nghĩa hàm.
+- *Function call*: Gọi hàm.
 
-### 3.1. Function declaration
+### 3.1. Khai báo hàm (declaration)
 
-Khai báo hàm cho compiler biết một hàm tồn tại và cung cấp những thông tin cần thiết để kiểm tra lời gọi.
+Khai báo cung cấp thông tin cần thiết để compiler nhận biết một hàm.
 
 Ví dụ:
 
@@ -245,19 +148,23 @@ Ví dụ:
 int add(int a, int b);
 ```
 
-Đây là một function declaration, thường được gọi là *function prototype* trong ngữ cảnh nhập môn.
+Khai báo này cho biết có một hàm tên `add`, nhận hai tham số `int` và trả về `int`.
 
-Khai báo cho compiler biết:
+Nó chưa mô tả hàm thực hiện phép tính như thế nào.
 
-- Tên hàm: `add`.
-- Kiểu trả về: `int`.
-- Hai tham số kiểu `int`.
+Đối với khai báo ở trên, tên tham số `a` và `b` có thể được bỏ đi nếu không cần thiết:
 
-Khai báo này chưa chứa phần thân hàm.
+```cpp
+int add(int, int);
+```
 
-### 3.2. Function definition
+Kiểu tham số là thông tin quan trọng để compiler kiểm tra lời gọi. Tên tham số thường được giữ lại nhằm giúp khai báo dễ hiểu hơn.
 
-Định nghĩa hàm cung cấp phần thân và cách hàm hoạt động.
+Một khai báo hàm dạng này thường được gọi là **function prototype**.
+
+### 3.2. Định nghĩa hàm (definition)
+
+Định nghĩa cung cấp phần triển khai của hàm:
 
 ```cpp
 int add(int a, int b) {
@@ -265,335 +172,202 @@ int add(int a, int b) {
 }
 ```
 
-Định nghĩa hàm cũng là một dạng khai báo, nhưng có thêm phần triển khai.
+Định nghĩa cũng là một dạng khai báo, nhưng có thêm phần thân.
 
-### 3.3. Function call
+Một hàm thông thường phải có định nghĩa phù hợp nếu chương trình thực sự cần thực thi nó.
 
-Gọi hàm để thực hiện công việc:
+Đối với những hàm được định nghĩa trong nhiều translation unit, các quy tắc như One Definition Rule (ODR) trở nên quan trọng. Đây là phần kiến thức liên quan đến cách tổ chức chương trình nhiều tệp.
+
+### 3.3. Gọi hàm (call)
+
+Lời gọi yêu cầu chương trình thực hiện hàm:
 
 ```cpp
-int result = add(5, 3);
+int total = add(10, 20);
 ```
 
-Đây là một function call.
+Ở đây, `add(10, 20)` là biểu thức gọi hàm.
 
-### 3.4. Tại sao cần khai báo hàm trước khi gọi?
+Giá trị trả về được dùng để khởi tạo `total`, khiến biến này có giá trị `30`.
 
-Trong C++, một lời gọi hàm thông thường cần có khai báo phù hợp đã được compiler nhìn thấy tại vị trí gọi.
+### 3.4. Vì sao phải khai báo trước khi gọi?
+
+Trong C++, một lời gọi hàm thông thường cần có khai báo phù hợp mà compiler đã nhìn thấy tại vị trí gọi.
+
+Nếu định nghĩa hàm được đặt phía dưới mà chưa có khai báo trước đó, compiler có thể báo lỗi không tìm thấy tên hàm.
+
+Có hai cách tổ chức phổ biến.
+
+**Cách thứ nhất:** Đặt định nghĩa hàm trước vị trí gọi.
+
+**Cách thứ hai:** Đặt function prototype trước vị trí gọi, còn định nghĩa có thể nằm phía sau hoặc trong một source file khác.
 
 Ví dụ:
 
 ```cpp
-#include <iostream>
+int add(int a, int b);  // Declaration
 
 int main() {
-    std::cout << add(5, 3) << '\n';
+    return add(2, 3);
 }
 
-int add(int a, int b) {
+int add(int a, int b) { // Definition
     return a + b;
 }
 ```
 
-Chương trình trên không hợp lệ nếu trước lời gọi chưa có khai báo nào của `add()`.
+Đây là một ví dụ tối giản cho thấy khai báo giúp `main()` có thể gọi hàm được định nghĩa phía sau.
 
-Compiler không tự động xem phần định nghĩa phía dưới là một khai báo đã có ở vị trí gọi.
-
-### 3.5. Cách 1: Định nghĩa trước main()
-
-```cpp
-#include <iostream>
-
-int add(int a, int b) {
-    return a + b;
-}
-
-int main() {
-    std::cout << add(5, 3) << '\n';
-}
-```
-
-Đây là cách đơn giản, phù hợp với những chương trình nhỏ.
-
-### 3.6. Cách 2: Sử dụng function prototype
-
-```cpp
-#include <iostream>
-
-int add(int a, int b);
-
-int main() {
-    std::cout << add(5, 3) << '\n';
-}
-
-int add(int a, int b) {
-    return a + b;
-}
-```
-
-Chương trình hợp lệ vì `add()` đã được khai báo trước khi gọi.
-
-Cách tổ chức này cũng là nền tảng để tách mã nguồn thành header và source file.
+Lưu ý: `return add(2, 3)` trong `main()` trả về mã kết thúc chương trình. Nó không tự động in số `5` ra terminal.
 
 ---
 
-## 4. Tham số và đối số
+## 4. Tham số (parameter) và đối số (argument)
 
-Hai khái niệm thường bị nhầm lẫn là **parameter** và **argument**.
+Tham số và đối số thường xuất hiện cùng nhau nhưng thể hiện hai vai trò khác nhau.
 
-### 4.1. Parameter là gì?
+**Tham số (parameter)** là thành phần được khai báo trong danh sách tham số của hàm, cho phép phần thân hàm tiếp nhận dữ liệu tương ứng.
 
-Parameter (tham số) là tên hoặc khai báo được sử dụng trong danh sách tham số của hàm.
+**Đối số (argument)** là biểu thức được cung cấp tại vị trí gọi hàm.
 
-Ví dụ:
-
-```cpp
-int add(int a, int b) {
-    return a + b;
-}
-```
-
-Ở đây:
-
-```cpp
-a
-b
-```
-
-là các tham số.
-
-### 4.2. Argument là gì?
-
-Argument (đối số) là biểu thức được cung cấp khi gọi hàm.
-
-Ví dụ:
-
-```cpp
-add(10, 20);
-```
-
-Các giá trị `10` và `20` là đối số.
-
-### 4.3. Phân biệt parameter và argument
-
-| Khái niệm | Vị trí | Ví dụ |
-|---|---|---|
-| Parameter | Khai báo hàm | `int a`, `int b` |
-| Argument | Lời gọi hàm | `10`, `20` |
-
-Ví dụ:
+Xét ví dụ:
 
 ```cpp
 int multiply(int left, int right) {
     return left * right;
 }
-```
 
-Gọi:
-
-```cpp
 int result = multiply(4, 5);
 ```
 
-Ánh xạ:
+Trong định nghĩa, `left` và `right` là hai tham số.
 
-```text
-Argument 4  -> Parameter left
-Argument 5  -> Parameter right
-```
+Trong lời gọi, `4` và `5` là hai đối số.
 
-Kết quả:
+Diễn biến có thể hiểu như sau:
 
-```text
-20
-```
+| Thành phần | Giá trị |
+|---|---|
+| Đối số thứ nhất | `4` |
+| Tham số `left` | Nhận giá trị `4` |
+| Đối số thứ hai | `5` |
+| Tham số `right` | Nhận giá trị `5` |
+| Biểu thức trả về | `4 * 5` |
+| Kết quả | `20` |
 
-### 4.4. Hàm không có tham số
+Cần lưu ý rằng cơ chế khởi tạo tham số phụ thuộc vào kiểu tham số và tính chất đối số. Không phải mọi tham số đều tạo một bản sao độc lập.
 
-Không phải hàm nào cũng cần nhận dữ liệu.
+Đây là điểm khác biệt giữa truyền theo giá trị và truyền theo tham chiếu, được giải thích ở phần sau.
 
-Ví dụ:
+### 4.1. Hàm có bắt buộc phải nhận tham số?
+
+Không.
+
+Một hàm có thể không có tham số:
 
 ```cpp
-#include <iostream>
-
 void printWelcome() {
     std::cout << "Welcome to DevHubs Wiki!\n";
 }
-
-int main() {
-    printWelcome();
-}
 ```
 
-Kết quả:
+Hàm được gọi bằng:
 
-```text
-Welcome to DevHubs Wiki!
+```cpp
+printWelcome();
 ```
 
-Dấu ngoặc `()` trong lời gọi vẫn cần thiết, ngay cả khi hàm không có tham số.
+Dấu ngoặc tròn `()` vẫn cần thiết trong cú pháp lời gọi, ngay cả khi không truyền đối số.
+
+### 4.2. Có bắt buộc phải truyền đúng số lượng đối số?
+
+Đối với một lời gọi thông thường, compiler cần tìm được một hàm phù hợp với số lượng và kiểu đối số.
+
+Nếu khai báo yêu cầu hai tham số nhưng chỉ cung cấp một đối số, lời gọi không hợp lệ trừ khi có cơ chế phù hợp như tham số mặc định hoặc một overload khác.
+
+Ngoài số lượng, **kiểu đối số cũng quan trọng**.
+
+Compiler có thể thực hiện một số phép chuyển đổi kiểu khi khởi tạo tham số. Tuy nhiên, không phải mọi phép chuyển đổi đều hợp lệ hoặc an toàn.
+
+Vì vậy, cần thiết kế kiểu tham số phản ánh đúng dữ liệu mà hàm mong đợi.
 
 ---
 
-## 5. return và giá trị trả về
+## 5. Giá trị trả về và câu lệnh return
 
-Một hàm có thể trả kết quả cho nơi gọi thông qua `return`.
-
-### 5.1. Hàm trả về số nguyên
-
-```cpp
-int square(int value) {
-    return value * value;
-}
-```
-
-Sử dụng:
-
-```cpp
-int result = square(5);
-```
-
-Kết quả:
-
-```text
-25
-```
-
-Kiểu trả về `int` phải phù hợp với giá trị mà hàm trả về.
-
-Ở đây, ví dụ giả định phép nhân nằm trong phạm vi biểu diễn của `int`.
-
-### 5.2. Hàm trả về bool
-
-Ví dụ kiểm tra số chẵn:
-
-```cpp
-bool isEven(int value) {
-    return value % 2 == 0;
-}
-```
-
-Sử dụng:
-
-```cpp
-#include <iostream>
-
-bool isEven(int value) {
-    return value % 2 == 0;
-}
-
-int main() {
-    std::cout << std::boolalpha;
-
-    std::cout << isEven(4) << '\n';
-    std::cout << isEven(5) << '\n';
-    std::cout << isEven(-4) << '\n';
-
-    return 0;
-}
-```
-
-Kết quả:
-
-```text
-true
-false
-true
-```
-
-**Tại sao `isEven(-4)` bằng `true`?**
-
-Vì:
-
-```cpp
--4 % 2 == 0
-```
-
-là điều kiện đúng.
-
-Số nguyên âm vẫn có thể là số chẵn.
-
-### 5.3. Hàm trả về double
-
-Ví dụ tính trung bình cộng:
-
-```cpp
-double average(int a, int b) {
-    return (static_cast<double>(a) + b) / 2;
-}
-```
-
-Sử dụng:
-
-```cpp
-double result = average(7, 8);
-```
-
-Kết quả:
-
-```text
-7.5
-```
-
-Việc chuyển sang `double` trước khi cộng giúp tránh phép cộng trực tiếp trên kiểu `int` trong biểu thức này.
-
-Tuy nhiên, với các giá trị nguyên rất lớn, việc chuyển sang `double` vẫn có thể gây mất độ chính xác biểu diễn.
-
-### 5.4. return kết thúc lời gọi hàm
+`return` là câu lệnh dùng để kết thúc một lời gọi hàm và, khi phù hợp, cung cấp giá trị kết quả.
 
 Ví dụ:
 
 ```cpp
-#include <iostream>
-
-int calculate() {
-    return 10;
-
-    std::cout << "Hello\n";
-}
-
-int main() {
-    std::cout << calculate() << '\n';
+bool isEven(int number) {
+    return number % 2 == 0;
 }
 ```
 
-Kết quả:
+Hàm trả về giá trị kiểu `bool`.
 
-```text
-10
-```
+Nếu số chia hết cho 2, biểu thức trả về `true`. Ngược lại, kết quả là `false`.
 
-Câu lệnh sau `return` trong cùng đường thực thi không được chạy.
+Điều này vẫn đúng với số âm. Chẳng hạn, `isEven(-4)` trả về `true` vì phần dư của phép chia `-4` cho `2` bằng `0`.
 
-Compiler có thể cảnh báo về unreachable code.
+### 5.1. Điều gì xảy ra khi gặp return?
 
-### 5.5. Hàm có nhiều nhánh return
+Khi một câu lệnh `return` được thực hiện:
+
+1. Biểu thức trả về được đánh giá nếu có.
+2. Giá trị kết quả được tạo theo quy tắc của kiểu trả về.
+3. Những đối tượng cục bộ cần hủy được xử lý theo quy tắc lifetime.
+4. Lời gọi hàm kết thúc.
+5. Chương trình tiếp tục quá trình thực thi tại nơi gọi, trừ những trường hợp đặc biệt liên quan đến ngoại lệ hoặc kết thúc chương trình.
+
+Các câu lệnh nằm sau `return` trên cùng đường thực thi sẽ không được thực hiện.
+
+### 5.2. Một hàm có thể có nhiều return không?
+
+Có.
+
+Một hàm có thể trả kết quả tại nhiều vị trí khác nhau, tùy điều kiện.
 
 Ví dụ:
 
 ```cpp
-int absoluteValue(int value) {
-    if (value >= 0) {
-        return value;
+bool isValidScore(int score) {
+    if (score < 0) {
+        return false;
     }
 
-    return -value;
+    if (score > 10) {
+        return false;
+    }
+
+    return true;
 }
 ```
 
-Hàm trả về:
+Hàm kiểm tra lần lượt:
 
-- `value` nếu không âm.
-- `-value` nếu âm.
+- Nếu điểm âm, lập tức trả `false`.
+- Nếu điểm lớn hơn 10, lập tức trả `false`.
+- Nếu không rơi vào hai trường hợp trên, trả `true`.
 
-Tuy nhiên, với giá trị nhỏ nhất của kiểu `int` có dấu, phép đổi dấu có thể gây tràn số nguyên.
+Việc sử dụng nhiều câu lệnh `return` ở đây giúp thể hiện rõ những điều kiện từ chối.
 
-Một triển khai tổng quát cần xử lý trường hợp biên đó hoặc định nghĩa rõ phạm vi đầu vào được hỗ trợ.
+Không có quy tắc C++ bắt buộc mọi hàm chỉ được có một `return`.
 
-### 5.6. Mọi đường thực thi phải trả kết quả phù hợp
+### 5.3. Có nhất thiết phải trả về đúng kiểu?
 
-Không nên viết:
+Giá trị được trả về phải có khả năng khởi tạo kết quả thuộc kiểu trả về theo quy tắc ngôn ngữ.
+
+Ví dụ, nếu hàm trả về `double`, một giá trị `int` có thể được chuyển đổi thành `double` trong trường hợp phù hợp.
+
+Tuy nhiên, chuyển đổi kiểu có thể làm mất thông tin hoặc độ chính xác.
+
+Vì vậy, không nên dựa vào chuyển đổi ngầm khi kiểu kết quả có ý nghĩa quan trọng đối với thuật toán.
+
+### 5.4. Thiếu return gây ra điều gì?
+
+Xét:
 
 ```cpp
 int getScore(bool valid) {
@@ -603,60 +377,23 @@ int getScore(bool valid) {
 }
 ```
 
-Nếu `valid` bằng `false`, chương trình có thể đi đến cuối một hàm trả về `int` mà không trả giá trị.
+Nếu `valid` là `true`, hàm trả về `100`.
 
-Trong C++17, điều này gây undefined behavior khi luồng thực thi đi tới cuối một hàm trả giá trị thông thường.
+Nhưng nếu `valid` là `false`, quá trình thực thi đi đến cuối hàm mà không trả giá trị.
 
-Cách sửa:
+Trong C++17, đi tới cuối một hàm trả giá trị thông thường như vậy gây **undefined behavior**.
 
-```cpp
-int getScore(bool valid) {
-    if (valid) {
-        return 100;
-    }
+Compiler có thể đưa ra cảnh báo, nhưng không nên mặc định nó sẽ phát hiện và ngăn mọi trường hợp.
 
-    return 0;
-}
-```
+Riêng `main()` có quy tắc đặc biệt: khi quá trình thực thi đi đến cuối hàm `main`, chương trình được xử lý như trả về `0` trong trường hợp kết thúc bình thường.
 
-Hoặc thiết kế một cơ chế biểu diễn lỗi phù hợp nếu `0` không phải giá trị thay thế hợp lệ.
+Quy tắc đặc biệt này không áp dụng cho mọi hàm khác.
 
 ---
 
-## 6. Hàm void
+## 6. Hàm void và sự khác biệt giữa in kết quả với trả kết quả
 
-Kiểu trả về `void` biểu thị hàm không trả về một giá trị cho nơi gọi.
-
-Ví dụ:
-
-```cpp
-#include <iostream>
-
-void printMessage() {
-    std::cout << "Hello C++!\n";
-}
-
-int main() {
-    printMessage();
-}
-```
-
-Kết quả:
-
-```text
-Hello C++!
-```
-
-### 6.1. Khi nào nên dùng void?
-
-Hàm `void` phù hợp khi nhiệm vụ chính là thực hiện một thao tác.
-
-Ví dụ:
-
-- In thông tin.
-- Ghi dữ liệu.
-- Cập nhật một đối tượng.
-- Thực hiện thao tác điều khiển.
+Từ khóa `void` trong vị trí kiểu trả về cho biết hàm không trả về một giá trị thông thường cho nơi gọi.
 
 Ví dụ:
 
@@ -666,9 +403,15 @@ void printScore(int score) {
 }
 ```
 
-### 6.2. return trong hàm void
+Hàm thực hiện thao tác xuất dữ liệu.
 
-Hàm `void` có thể sử dụng:
+Nơi gọi không nhận một giá trị `int` hay `double` từ `printScore()`.
+
+### 6.1. Hàm void có được dùng return không?
+
+Có.
+
+Một hàm trả về `void` có thể sử dụng:
 
 ```cpp
 return;
@@ -679,513 +422,255 @@ return;
 Ví dụ:
 
 ```cpp
-#include <iostream>
-
-void printPositive(int value) {
-    if (value <= 0) {
+void printPositive(int number) {
+    if (number <= 0) {
         return;
     }
 
-    std::cout << value << '\n';
+    std::cout << number << '\n';
 }
 ```
 
-Nếu `value <= 0`, hàm kết thúc mà không in dữ liệu.
+Khi `number <= 0`, hàm kết thúc ngay và không thực hiện câu lệnh in phía sau.
 
-### 6.3. Phân biệt in kết quả và trả kết quả
+Khi `number > 0`, chương trình bỏ qua nhánh `if` và tiếp tục in số.
 
-Hai hàm sau có mục đích khác nhau.
+Khác với hàm trả về `int`, câu lệnh `return;` trong hàm `void` không cung cấp một giá trị kết quả.
 
-**Hàm in kết quả:**
+### 6.2. In ra màn hình không đồng nghĩa với return
+
+Hai hàm sau có mục đích khác nhau:
 
 ```cpp
+int square(int value) {
+    return value * value;
+}
+
 void printSquare(int value) {
     std::cout << value * value << '\n';
 }
 ```
 
-**Hàm trả kết quả:**
+`square()` cung cấp một giá trị để nơi gọi có thể sử dụng tiếp.
 
-```cpp
-int square(int value) {
-    return value * value;
-}
-```
+`printSquare()` trực tiếp ghi dữ liệu ra luồng xuất.
 
-Hàm `printSquare()` trực tiếp thực hiện output.
+Ví dụ, kết quả `square(5)` có thể được đem cộng, so sánh hoặc lưu vào biến khác.
 
-Hàm `square()` trả về giá trị để nơi gọi tiếp tục xử lý.
+Ngược lại, `printSquare(5)` không tạo một giá trị số nguyên để sử dụng trong biểu thức như vậy.
 
-Ví dụ:
+Đây là khác biệt giữa **kết quả trả về** và **tác động của hàm lên môi trường bên ngoài**.
 
-```cpp
-int result = square(5);
+### 6.3. Khi nào nên sử dụng void?
 
-std::cout << result + 10 << '\n';
-```
-
-Kết quả:
-
-```text
-35
-```
-
-Không thể sử dụng kết quả của một lời gọi hàm `void` như thể đó là một giá trị `int`.
-
-### 6.4. Khi nào nên tách tính toán và nhập xuất?
-
-Trong nhiều trường hợp, nên tách logic tính toán khỏi việc in dữ liệu.
+`void` phù hợp khi mục đích của hàm là thực hiện một thao tác thay vì cung cấp một giá trị.
 
 Ví dụ:
 
-```cpp
-int square(int value) {
-    return value * value;
-}
+- Hiển thị thông tin.
+- Ghi dữ liệu vào tệp.
+- Thay đổi đối tượng thông qua tham chiếu.
+- Thực hiện một thao tác điều khiển.
 
-void printResult(int value) {
-    std::cout << value << '\n';
-}
-```
+Tuy nhiên, việc một hàm có tác động không có nghĩa nó bắt buộc phải trả về `void`.
 
-Sử dụng:
+Nhiều API vừa thực hiện thao tác vừa trả về trạng thái thành công, mã lỗi hoặc thông tin kết quả.
 
-```cpp
-printResult(square(5));
-```
-
-Thiết kế này giúp hàm tính toán dễ tái sử dụng và kiểm thử hơn.
-
-Tuy nhiên, không cần tạo thêm hàm chỉ để bọc một câu lệnh `std::cout` nếu việc đó không mang lại lợi ích thực tế cho chương trình.
+**Nguyên tắc:** Kiểu trả về nên thể hiện đúng hợp đồng của hàm.
 
 ---
 
-## 7. Truyền tham số theo giá trị
+## 7. Truyền tham số theo giá trị (pass by value)
 
-C++ hỗ trợ nhiều hình thức truyền tham số.
+Khi một tham số được khai báo bằng kiểu giá trị thông thường như `int`, hàm có một đối tượng tham số riêng được khởi tạo từ đối số.
 
-Hình thức đơn giản nhất là **pass by value**.
+Đây là cơ chế **pass by value**.
 
-### 7.1. Cách hoạt động
-
-Ví dụ:
+Xét hàm:
 
 ```cpp
-#include <iostream>
-
-void increase(int value) {
-    value += 10;
-}
-
-int main() {
-    int number{5};
-
-    increase(number);
-
-    std::cout << number << '\n';
+void addBonus(int score) {
+    score += 5;
 }
 ```
 
-Kết quả:
-
-```text
-5
-```
-
-Tại sao kết quả vẫn bằng `5`?
-
-Vì hàm:
+Giả sử trong hàm gọi có:
 
 ```cpp
-void increase(int value)
+int score{10};
+addBonus(score);
 ```
 
-nhận một tham số riêng được khởi tạo từ giá trị của `number`.
+Sau lời gọi, biến `score` của người gọi vẫn bằng `10`.
 
-Thay đổi tham số `value` không làm thay đổi đối tượng `number` của người gọi.
+### 7.1. Tại sao giá trị không thay đổi?
 
-### 7.2. Minh họa
+Tham số `score` trong `addBonus()` là một đối tượng riêng.
 
-```text
-main()
-  number = 5
-      |
-      | increase(number)
-      v
-increase()
-  value = 5
-  value += 10
-  value = 15
-      |
-      v
-main()
-  number = 5
-```
+Khi hàm được gọi, tham số nhận giá trị ban đầu từ đối số.
 
-### 7.3. Khi nào nên truyền theo giá trị?
+Sau đó, phép cộng được thực hiện trên tham số bên trong hàm, không phải biến gốc ở nơi gọi.
 
-Pass by value thường phù hợp khi:
+Diễn biến:
 
-- Kiểu dữ liệu nhỏ.
-- Hàm chỉ cần đọc giá trị.
-- Hàm cần một bản sao độc lập.
-- Hàm cần nhận quyền sở hữu một giá trị theo thiết kế API.
+| Thời điểm | Biến trong hàm gọi | Tham số trong addBonus |
+|---|---:|---:|
+| Trước lời gọi | 10 | Chưa tồn tại cho lời gọi này |
+| Bắt đầu hàm | 10 | 10 |
+| Sau `score += 5` | 10 | 15 |
+| Kết thúc hàm | 10 | Hết lifetime |
 
-Ví dụ:
+Như vậy, **thay đổi tham số được truyền theo giá trị không trực tiếp thay đổi đối tượng gốc**.
 
-```cpp
-bool isAdult(int age) {
-    return age >= 18;
-}
-```
+### 7.2. Khi nào truyền theo giá trị là phù hợp?
 
-Đối với các kiểu như `int`, `bool` và `double`, truyền theo giá trị thường là lựa chọn đơn giản và hợp lý.
+Đối với các kiểu nhỏ như `int`, `bool` hoặc `double`, truyền theo giá trị thường đơn giản và hiệu quả.
+
+Nó cũng phù hợp khi hàm cần làm việc với một giá trị độc lập mà không ảnh hưởng đến dữ liệu của người gọi.
+
+Với các đối tượng lớn hơn, việc tạo một bản sao có thể tốn tài nguyên. Trong những tình huống đó, có thể cân nhắc truyền bằng reference.
+
+Tuy nhiên, không nên mặc định truyền giá trị luôn chậm. Chi phí phụ thuộc vào kiểu đối tượng và cách hàm sử dụng dữ liệu.
 
 ---
 
-## 8. Truyền tham số bằng reference
+## 8. Truyền tham số bằng reference (pass by reference)
 
-Nếu muốn hàm thay đổi trực tiếp đối tượng được truyền vào, có thể sử dụng reference.
+Reference cho phép tham số liên kết với một đối tượng đã tồn tại thay vì tạo một đối tượng giá trị riêng.
 
-### 8.1. Cú pháp
-
-```cpp
-void functionName(Type& parameter);
-```
+Trong trường hợp cơ bản, khai báo `T&` tạo một **lvalue reference**.
 
 Ví dụ:
 
 ```cpp
-#include <iostream>
-
-void increase(int& value) {
-    value += 10;
-}
-
-int main() {
-    int number{5};
-
-    increase(number);
-
-    std::cout << number << '\n';
+void addBonus(int& score) {
+    score += 5;
 }
 ```
 
-Kết quả:
-
-```text
-15
-```
-
-### 8.2. Tại sao giá trị thay đổi?
-
-Hàm:
+Nếu trong hàm gọi có:
 
 ```cpp
-void increase(int& value)
+int score{10};
+addBonus(score);
 ```
 
-nhận một reference đến đối tượng của người gọi.
+sau lời gọi, `score` bằng `15`.
 
-Tham số `value` không phải là một đối tượng `int` độc lập.
+### 8.1. Vì sao reference thay đổi được biến gốc?
 
-Do đó:
+Khác với ví dụ truyền giá trị, tham số `score` trong hàm không biểu diễn một đối tượng `int` độc lập.
+
+Nó là tham chiếu đến chính đối tượng được người gọi cung cấp.
+
+Do đó, khi thực hiện:
 
 ```cpp
-value += 10;
+score += 5;
 ```
 
-thay đổi trực tiếp `number`.
+chương trình sửa đối tượng gốc.
 
-### 8.3. Bảng so sánh
+| Thời điểm | Giá trị đối tượng gốc |
+|---|---:|
+| Trước lời gọi | 10 |
+| Bắt đầu lời gọi | 10 |
+| Sau phép cộng qua reference | 15 |
+| Sau khi hàm kết thúc | 15 |
 
-| Đặc điểm | Pass by value | Pass by reference |
+Điều này rất hữu ích khi mục đích của hàm là cập nhật dữ liệu bên ngoài.
+
+### 8.2. Reference không phải một con trỏ có thể đổi đích
+
+Một reference thông thường phải được liên kết với đối tượng phù hợp khi khởi tạo.
+
+Sau đó, reference không thể được liên kết lại với một đối tượng khác bằng phép gán thông thường.
+
+Câu lệnh gán cho reference sẽ gán vào đối tượng mà reference đang tham chiếu.
+
+Reference cũng không có trạng thái null hợp lệ như pointer.
+
+Tuy nhiên, một reference vẫn có thể trở thành không an toàn để sử dụng nếu đối tượng được tham chiếu đã hết lifetime.
+
+### 8.3. const reference
+
+Nếu hàm chỉ cần đọc đối tượng mà không sửa, có thể sử dụng `const T&`.
+
+Ví dụ:
+
+```cpp
+bool isNamed(const std::string& name) {
+    return !name.empty();
+}
+```
+
+Hàm nhận một reference đến chuỗi và kiểm tra chuỗi có rỗng hay không.
+
+Khai báo `const std::string&` có hai lợi ích chính:
+
+- Không yêu cầu tạo một bản sao chuỗi chỉ để đọc.
+- Không cho phép sửa chuỗi thông qua tham chiếu `name`.
+
+Cần phân biệt: `const` ở đây giới hạn những thao tác qua tham chiếu. Nó không nhất thiết biến đối tượng gốc thành bất biến trong mọi ngữ cảnh.
+
+### 8.4. So sánh các cách truyền tham số
+
+| Cách truyền | Ví dụ | Mục đích thường gặp |
 |---|---|---|
-| Cú pháp | `T` | `T&` |
-| Tạo tham số giá trị riêng | Có | Không |
-| Có thể sửa đối tượng gốc qua tham số | Không | Có |
-| Phù hợp với kiểu nhỏ | Thường tốt | Tùy mục đích |
-| Phù hợp khi cần cập nhật dữ liệu gốc | Không | Có |
+| Theo giá trị | `int value` | Nhận giá trị độc lập |
+| Theo reference | `int& value` | Sửa đối tượng gốc |
+| Theo const reference | `const std::string& text` | Đọc đối tượng mà không sao chép |
+| Theo pointer | `int* value` | Truy cập qua địa chỉ, có thể biểu diễn null |
 
-### 8.4. Ví dụ hoán đổi hai số
+Đối với những đối tượng nhỏ, truyền giá trị thường là lựa chọn mặc định hợp lý.
 
-```cpp
-#include <iostream>
+Với đối tượng có chi phí sao chép lớn, `const T&` có thể phù hợp khi chỉ cần đọc.
 
-void swapValues(int& a, int& b) {
-    int temp{a};
+Khi hàm cần sửa trực tiếp đối tượng của người gọi, `T&` thể hiện rõ ý định.
 
-    a = b;
-    b = temp;
-}
+Nếu đối tượng có thể vắng mặt, pointer thường phù hợp hơn reference thông thường.
 
-int main() {
-    int x{10};
-    int y{20};
-
-    swapValues(x, y);
-
-    std::cout << x << ' ' << y << '\n';
-}
-```
-
-Kết quả:
-
-```text
-20 10
-```
-
-Trong mã C++ thực tế, thư viện chuẩn có sẵn `std::swap()` trong `<utility>`.
-
-Ví dụ này được sử dụng để giải thích cơ chế truyền tham số bằng reference.
+Các quy tắc về pointer, `nullptr`, ownership và lifetime được giải thích trong bài [References và pointers](/cpp/bat-dau/references-pointers).
 
 ---
 
-## 9. const reference
+## 9. Phạm vi biến (scope)
 
-Đôi khi hàm cần truy cập một đối tượng lớn nhưng không cần thay đổi nội dung.
+**Scope** là phạm vi trong mã nguồn mà một tên được khai báo có thể được tìm thấy và sử dụng theo các quy tắc tra cứu tên của C++.
 
-Trong trường hợp đó, `const T&` thường là lựa chọn phù hợp.
+Scope không phải là phạm vi giá trị của biến và cũng không đồng nghĩa với thời gian sống của đối tượng.
 
-### 9.1. Ví dụ với std::string
+### 9.1. Block scope
 
-```cpp
-#include <iostream>
-#include <string>
+Một khối lệnh được đặt giữa `{` và `}`.
 
-void printName(const std::string& name) {
-    std::cout << name << '\n';
-}
-
-int main() {
-    std::string name{"Nguyen Van An"};
-
-    printName(name);
-
-    return 0;
-}
-```
-
-Kết quả:
-
-```text
-Nguyen Van An
-```
-
-### 9.2. Lợi ích của const T&
-
-Khai báo:
-
-```cpp
-const std::string& name
-```
-
-có hai đặc điểm quan trọng:
-
-1. Không yêu cầu sao chép đối tượng chuỗi chỉ để đọc nó.
-2. Không cho phép hàm thay đổi chuỗi thông qua tham chiếu `name`.
-
-Ví dụ không hợp lệ:
-
-```cpp
-void update(const std::string& name) {
-    name += "!";
-}
-```
-
-Vì `name` là tham chiếu đến đối tượng const, phép sửa đổi thông qua tham chiếu đó không được phép.
-
-### 9.3. Khi nào nên sử dụng?
-
-| Tình huống | Kiểu tham số thường phù hợp |
-|---|---|
-| Chỉ đọc một số nguyên | `int` |
-| Chỉ đọc một bool | `bool` |
-| Chỉ đọc chuỗi lớn | `const std::string&` |
-| Chỉ đọc vector | `const std::vector<T>&` |
-| Cần sửa đối tượng gốc | `T&` |
-| Tham số có thể không có đối tượng | `T*` |
-
-**Lưu ý:** `const T&` không có nghĩa đối tượng gốc nhất thiết là bất biến. Nếu đối tượng không phải `const`, nó vẫn có thể được sửa thông qua tên hoặc tham chiếu khác có quyền phù hợp.
-
-Ngoài ra, reference không tự động quản lý lifetime của đối tượng được tham chiếu.
-
-Phần này được giải thích sâu hơn trong bài [References và pointers](/cpp/bat-dau/references-pointers).
-
----
-
-## 10. Trả về nhiều kết quả
-
-Một hàm có kiểu trả về thông thường chỉ trả về một đối tượng hoặc giá trị.
-
-Tuy nhiên, đối tượng đó có thể chứa nhiều thông tin.
-
-### 10.1. Sử dụng struct
-
-Giả sử cần tính tổng và hiệu của hai số.
-
-```cpp
-#include <iostream>
-
-struct Result {
-    int sum{};
-    int difference{};
-};
-
-Result calculate(int a, int b) {
-    return Result{a + b, a - b};
-}
-
-int main() {
-    const Result result = calculate(10, 3);
-
-    std::cout << result.sum << '\n';
-    std::cout << result.difference << '\n';
-}
-```
-
-Kết quả:
-
-```text
-13
-7
-```
-
-Hàm `calculate()` trả về một đối tượng `Result` chứa hai trường.
-
-Ví dụ này giả định các phép cộng và trừ nằm trong phạm vi biểu diễn của `int`.
-
-### 10.2. Structured bindings trong C++17
-
-Có thể sử dụng:
-
-```cpp
-const auto [sum, difference] = calculate(10, 3);
-```
-
-Sau đó:
-
-```cpp
-std::cout << sum << ' ' << difference << '\n';
-```
-
-Kết quả:
-
-```text
-13 7
-```
-
-Structured bindings là tính năng được giới thiệu trong C++17.
-
-### 10.3. Tại sao nên trả về struct?
-
-Sử dụng `struct` giúp:
-
-- Gom các kết quả liên quan.
-- Đặt tên rõ ràng cho từng giá trị.
-- Giảm nhu cầu sử dụng nhiều output parameters.
-- Làm giao diện hàm dễ hiểu hơn.
-
-Trong những trường hợp đơn giản, `std::pair` cũng có thể phù hợp.
-
-Tuy nhiên, nếu mỗi trường mang ý nghĩa nghiệp vụ riêng, một `struct` có tên và các thành viên có tên thường dễ bảo trì hơn.
-
----
-
-## 11. Scope là gì?
-
-**Scope (phạm vi)** xác định những vị trí trong mã nguồn mà một tên có thể được sử dụng để tham chiếu đến thực thể đã khai báo.
+Biến được khai báo trong một khối thông thường chỉ có tên nằm trong phạm vi tương ứng của khối đó.
 
 Ví dụ:
 
 ```cpp
-#include <iostream>
+int score{10};
 
-int main() {
-    int age{16};
-
-    std::cout << age << '\n';
-}
-```
-
-Biến `age` có phạm vi cục bộ trong thân hàm `main()`, bắt đầu từ vị trí khai báo theo các quy tắc của ngôn ngữ.
-
-Không thể tùy ý sử dụng tên `age` ở những hàm khác mà không truyền dữ liệu hoặc thiết lập cơ chế truy cập phù hợp.
-
-### 11.1. Block scope
-
-Một khối lệnh được biểu diễn bằng cặp dấu ngoặc nhọn:
-
-```cpp
 {
-    // Statements
+    int bonus{5};
+    score += bonus;
 }
+
+// score = 15
+// bonus khong con trong scope
 ```
 
-Ví dụ:
+Trong khối bên trong, chương trình có thể sử dụng cả `score` và `bonus`.
 
-```cpp
-#include <iostream>
+Sau khi rời khối, tên `bonus` không còn được truy cập từ vị trí đó.
 
-int main() {
-    int a{10};
+Tên `score` vẫn tồn tại trong phạm vi bên ngoài của nó.
 
-    if (a > 5) {
-        int b{20};
+Điều này cho phép người lập trình giới hạn các biến tạm vào đúng khu vực cần sử dụng.
 
-        std::cout << a << '\n';
-        std::cout << b << '\n';
-    }
+### 9.2. Scope của tham số hàm
 
-    std::cout << a << '\n';
-
-    return 0;
-}
-```
-
-Kết quả:
-
-```text
-10
-20
-10
-```
-
-Biến `a` được khai báo trong thân hàm.
-
-Biến `b` được khai báo trong khối `if`.
-
-Vì vậy, câu lệnh sau không hợp lệ nếu đặt bên ngoài khối `if`:
-
-```cpp
-std::cout << b;
-```
-
-Tên `b` không còn nằm trong phạm vi có thể sử dụng.
-
-### 11.2. Scope trong vòng lặp
-
-Ví dụ:
-
-```cpp
-for (int i = 0; i < 5; ++i) {
-    std::cout << i << '\n';
-}
-```
-
-Biến `i` được khai báo trong phần khởi tạo của vòng lặp `for`.
-
-Phạm vi của tên `i` gắn với câu lệnh `for`, bao gồm điều kiện, phần cập nhật và thân vòng lặp.
-
-Sau vòng lặp, không thể sử dụng `i` theo cách:
-
-```cpp
-std::cout << i;
-```
-
-nếu không có khai báo phù hợp khác.
-
-### 11.3. Scope của tham số hàm
+Tham số được khai báo trong danh sách tham số của hàm có phạm vi phù hợp với định nghĩa hàm đó.
 
 Ví dụ:
 
@@ -1195,133 +680,57 @@ int square(int value) {
 }
 ```
 
-Tên tham số `value` được sử dụng trong định nghĩa hàm `square()`.
+Tên `value` được sử dụng trong phần thân `square()`.
 
-Một hàm khác không thể tự động truy cập tham số đó.
+Một hàm khác không thể tự động truy cập tham số `value` của lời gọi `square()`.
 
-Ví dụ không hợp lệ:
+Mỗi lần gọi hàm còn có những đối tượng tham số và trạng thái thực thi riêng theo cơ chế tương ứng.
+
+Vì vậy, nếu `square()` được gọi với hai giá trị khác nhau, các lời gọi không phải chia sẻ một biến tham số tự động duy nhất.
+
+### 9.3. Scope của biến trong vòng lặp for
+
+Xét:
 
 ```cpp
-void printValue() {
-    std::cout << value;
+for (int i = 0; i < 3; ++i) {
+    std::cout << i << ' ';
 }
 ```
 
-Nếu `value` chưa được khai báo trong phạm vi phù hợp, compiler sẽ báo lỗi.
+Biến `i` được khai báo trong phần khởi tạo của `for`.
+
+Tên `i` có thể được sử dụng trong điều kiện, phần cập nhật và thân vòng lặp theo phạm vi tương ứng.
+
+Nhưng sau khi câu lệnh `for` kết thúc, tên này không còn nằm trong phạm vi có thể truy cập từ câu lệnh tiếp theo.
+
+Đây là lý do việc khai báo biến đếm ngay trong `for` thường giúp giới hạn phạm vi sử dụng của nó.
+
+### 9.4. Vì sao nên giới hạn scope?
+
+Giữ scope nhỏ giúp giảm số vị trí có thể sử dụng hoặc sửa một biến.
+
+Chẳng hạn, một biến tạm chỉ phục vụ một phép tính không cần phải tồn tại ở phạm vi của cả hàm nếu có thể được khai báo trong khối xử lý thích hợp.
+
+Điều này làm cho trạng thái chương trình dễ theo dõi hơn, đồng thời giảm nguy cơ sử dụng nhầm biến ở một phần xử lý không liên quan.
 
 ---
 
-## 12. Biến cục bộ và biến toàn cục
+## 10. Shadowing: Khi biến bị che khuất
 
-### 12.1. Biến cục bộ
-
-Biến cục bộ thường được khai báo trong hàm hoặc một khối lệnh.
+Shadowing xảy ra khi một khai báo bên trong che khuất một tên cùng định danh đã được khai báo ở phạm vi bên ngoài.
 
 Ví dụ:
 
 ```cpp
-void calculate() {
-    int result{100};
-}
-```
+int score{10};
 
-Biến `result` chỉ được truy cập trong phạm vi phù hợp của khối khai báo.
-
-Ưu điểm của biến cục bộ:
-
-- Giới hạn nơi có thể sử dụng tên.
-- Giảm phụ thuộc giữa các hàm.
-- Dễ theo dõi trạng thái.
-- Giúp chương trình dễ kiểm thử.
-
-### 12.2. Biến toàn cục
-
-Biến khai báo ở namespace scope có thể được sử dụng từ các vị trí phù hợp theo quy tắc phạm vi và linkage.
-
-Ví dụ:
-
-```cpp
-#include <iostream>
-
-int total{100};
-
-void printTotal() {
-    std::cout << total << '\n';
+{
+    int score{20};
+    std::cout << score << '\n';
 }
 
-int main() {
-    printTotal();
-}
-```
-
-Kết quả:
-
-```text
-100
-```
-
-Biến `total` trong ví dụ có static storage duration.
-
-### 12.3. Có nên dùng biến toàn cục?
-
-Biến toàn cục không phải lúc nào cũng sai.
-
-Tuy nhiên, một chương trình có nhiều biến toàn cục có thể gặp những vấn đề như:
-
-- Nhiều hàm cùng thay đổi trạng thái.
-- Khó xác định nguồn gốc của thay đổi.
-- Tăng sự phụ thuộc giữa các thành phần.
-- Khó kiểm thử độc lập.
-- Phát sinh vấn đề đồng bộ trong chương trình đa luồng.
-
-Đối với dữ liệu không cần chia sẻ toàn chương trình, nên ưu tiên biến cục bộ và truyền tham số.
-
-Ví dụ:
-
-```cpp
-int calculateTotal(int price, int quantity) {
-    return price * quantity;
-}
-```
-
-thường rõ ràng hơn một hàm âm thầm đọc hai biến toàn cục.
-
-### 12.4. Trường hợp hợp lý của hằng ở namespace scope
-
-Ví dụ:
-
-```cpp
-namespace Config {
-    inline constexpr int maxPlayers{100};
-}
-```
-
-Đây là cách định nghĩa hằng trong C++17 bằng inline variable.
-
-Hằng có tên và phạm vi rõ ràng thường dễ kiểm soát hơn trạng thái toàn cục có thể sửa đổi tùy ý.
-
----
-
-## 13. Shadowing: Biến che khuất biến khác
-
-**Shadowing** xảy ra khi một khai báo trong phạm vi bên trong che khuất tên cùng định danh ở phạm vi bên ngoài.
-
-Ví dụ:
-
-```cpp
-#include <iostream>
-
-int main() {
-    int value{10};
-
-    {
-        int value{20};
-
-        std::cout << value << '\n';
-    }
-
-    std::cout << value << '\n';
-}
+std::cout << score << '\n';
 ```
 
 Kết quả:
@@ -1331,25 +740,23 @@ Kết quả:
 10
 ```
 
-Trong khối bên trong:
+Có hai đối tượng riêng biệt cùng được đặt tên `score`.
 
-```cpp
-int value{20};
-```
+Trong khối bên trong, khai báo mới che khuất tên ở phạm vi ngoài.
 
-che khuất tên `value` ở phạm vi ngoài.
+Do đó, câu lệnh in đầu tiên truy cập đối tượng có giá trị `20`.
 
-Khi rời khối, tên `value` bên ngoài lại được sử dụng.
+Khi ra khỏi khối, khai báo bên trong không còn nằm trong phạm vi tra cứu tên. Câu lệnh in thứ hai sử dụng biến ngoài, có giá trị `10`.
 
-### 13.1. Shadowing có phải lỗi biên dịch?
+### 10.1. Shadowing có phải lỗi không?
 
 Không nhất thiết.
 
-Ví dụ trên là C++ hợp lệ.
+C++ cho phép nhiều trường hợp shadowing hợp lệ.
 
-Tuy nhiên, shadowing có thể gây nhầm lẫn khi mã nguồn phức tạp hơn.
+Tuy nhiên, shadowing có thể gây lỗi logic nếu người lập trình nhầm giữa việc khai báo một biến mới và thay đổi biến đã tồn tại.
 
-### 13.2. Ví dụ dễ gây lỗi logic
+Ví dụ:
 
 ```cpp
 int score{10};
@@ -1359,32 +766,27 @@ if (score > 0) {
 }
 ```
 
-Lập trình viên có thể tưởng rằng đang thay đổi biến `score` ban đầu.
+Câu lệnh trong khối `if` tạo một biến mới chứ không cập nhật biến `score` bên ngoài.
 
-Thực tế, câu lệnh trong khối `if` khai báo một biến mới.
+Nếu mục đích thực sự là thay đổi biến gốc, cần sử dụng phép gán thay vì khai báo lại.
 
-### 13.3. Cách phòng tránh
-
-Nên:
-
-- Chọn tên biến rõ ràng.
-- Hạn chế sử dụng lại tên trong những scope lồng nhau.
-- Giữ scope nhỏ.
-- Sử dụng các cảnh báo liên quan đến shadowing khi phù hợp với compiler.
-
-Một số compiler hỗ trợ những cảnh báo như `-Wshadow`, nhưng cần cân nhắc chính sách cảnh báo của dự án.
+Trong dự án lớn, các cảnh báo liên quan đến shadowing có thể giúp phát hiện những trường hợp đáng ngờ.
 
 ---
 
-## 14. Scope và lifetime khác nhau thế nào?
+## 11. Lifetime: Thời gian sống của đối tượng
 
-Scope và lifetime là hai khái niệm liên quan nhưng không giống nhau.
+**Lifetime** là khoảng thời gian một đối tượng tồn tại theo các quy tắc của C++.
 
-**Scope** nói về nơi một tên có thể được sử dụng.
+Khái niệm này khác với scope.
 
-**Lifetime** nói về khoảng thời gian một đối tượng tồn tại.
+Scope quyết định nơi một tên có thể được sử dụng.
 
-### 14.1. Ví dụ biến cục bộ thông thường
+Lifetime quyết định khi nào đối tượng bắt đầu và kết thúc sự tồn tại của nó.
+
+### 11.1. Biến cục bộ thông thường
+
+Xét:
 
 ```cpp
 void calculate() {
@@ -1392,155 +794,203 @@ void calculate() {
 }
 ```
 
-Đối tượng `result` có automatic storage duration.
+Biến `result` có *automatic storage duration*.
 
-Trong ví dụ này, lifetime của đối tượng kết thúc khi rời khỏi khối chứa khai báo.
+Trong ví dụ này, đối tượng được khởi tạo khi chương trình đi đến khai báo và kết thúc lifetime khi rời khỏi khối chứa nó.
 
-Tên `result` cũng chỉ có phạm vi bên trong khối đó.
+Ở mỗi lần gọi `calculate()`, một đối tượng `result` riêng được tạo trong quá trình thực thi lời gọi tương ứng.
 
-### 14.2. Biến static cục bộ
+Giá trị của biến cục bộ thông thường không tự động được giữ lại để sử dụng ở lần gọi tiếp theo.
 
-Xét ví dụ:
+### 11.2. Biến static cục bộ
+
+C++ cho phép khai báo biến `static` bên trong hàm.
+
+Ví dụ:
 
 ```cpp
-#include <iostream>
-
-void countCalls() {
+int countCalls() {
     static int count{0};
-
-    ++count;
-
-    std::cout << count << '\n';
-}
-
-int main() {
-    countCalls();
-    countCalls();
-    countCalls();
+    return ++count;
 }
 ```
 
-Kết quả:
+Nếu gọi liên tiếp:
 
-```text
-1
-2
-3
+```cpp
+countCalls(); // 1
+countCalls(); // 2
+countCalls(); // 3
 ```
 
-Biến `count` có:
+ta nhận được ba giá trị khác nhau.
 
-- Phạm vi tên cục bộ trong hàm.
-- Static storage duration.
-- Giá trị được giữ lại qua nhiều lần gọi hàm.
+Tại sao?
 
-### 14.3. Bảng so sánh
+Vì `count` là biến cục bộ có **static storage duration**.
 
-| Khái niệm | Câu hỏi |
+Tên `count` vẫn chỉ được sử dụng trong phạm vi thích hợp của hàm, nhưng đối tượng không bị hủy khi mỗi lời gọi kết thúc.
+
+Nó giữ trạng thái qua các lần gọi.
+
+Với biến `static` cục bộ được khởi tạo động, C++ có quy tắc khởi tạo khi luồng điều khiển đi qua khai báo lần đầu và bỏ qua việc khởi tạo lại ở những lần tiếp theo, cùng các quy tắc cụ thể về lỗi khởi tạo và đồng thời.
+
+Trong ví dụ, biến được khởi tạo bằng hằng `0`, sau đó tăng theo từng lời gọi.
+
+### 11.3. So sánh scope, lifetime và storage duration
+
+| Khái niệm | Câu hỏi được trả lời |
 |---|---|
-| Scope | Tôi có thể sử dụng tên này ở đâu? |
-| Lifetime | Đối tượng tồn tại trong bao lâu? |
-| Storage duration | Vùng lưu trữ của đối tượng được quản lý trong khoảng thời gian nào? |
+| Scope | Tên có thể được sử dụng ở đâu trong mã nguồn? |
+| Lifetime | Đối tượng tồn tại trong khoảng thời gian nào? |
+| Storage duration | Vùng lưu trữ của đối tượng được quản lý theo cơ chế nào và trong bao lâu? |
 
-Trong nhiều ví dụ nhập môn, lifetime và phạm vi của biến cục bộ thông thường dường như kết thúc cùng lúc.
+Với biến cục bộ thông thường, scope và lifetime có thể trông như gắn liền với nhau.
 
-Nhưng điều đó không đúng cho mọi loại đối tượng, chẳng hạn biến `static`, đối tượng cấp phát động hoặc một số đối tượng tạm thời.
+Nhưng với biến `static`, tên vẫn có scope cục bộ trong khi đối tượng tồn tại lâu hơn nhiều so với một lần gọi hàm.
+
+Đó là một ví dụ cho thấy **không thể dùng scope để suy ra lifetime trong mọi trường hợp**.
 
 ---
 
-## 15. Không trả reference hoặc pointer đến biến local đã hết lifetime
+## 12. Biến toàn cục và biến cục bộ
 
-Đây là một lỗi nghiêm trọng trong C++.
+Biến cục bộ được khai báo trong một phạm vi giới hạn, chẳng hạn thân hàm hoặc khối lệnh.
 
-### 15.1. Ví dụ sai với reference
+Biến được khai báo ở namespace scope có thể được sử dụng từ những vị trí phù hợp theo quy tắc tra cứu tên và linkage.
+
+Ví dụ:
+
+```cpp
+int total{100};
+
+int getTotal() {
+    return total;
+}
+```
+
+Trong ví dụ này, `total` là biến ở namespace scope và có static storage duration.
+
+Hàm `getTotal()` có thể truy cập biến đó mà không cần nhận một tham số tương ứng.
+
+### 12.1. Tại sao không nên lạm dụng biến toàn cục?
+
+Vấn đề lớn nhất không nằm ở cú pháp mà ở sự phụ thuộc trạng thái.
+
+Nếu nhiều hàm cùng đọc và thay đổi một biến toàn cục, rất khó xác định thao tác nào đã khiến giá trị của nó thay đổi.
+
+Hàm cũng trở nên khó kiểm thử độc lập hơn vì kết quả không chỉ phụ thuộc vào đối số mà còn có thể phụ thuộc vào trạng thái bên ngoài.
+
+Trong chương trình đa luồng, việc truy cập trạng thái chia sẻ còn phải tuân theo những quy tắc đồng bộ để tránh data race.
+
+Vì vậy, với dữ liệu không cần chia sẻ toàn chương trình, nên ưu tiên biến cục bộ và truyền dữ liệu qua tham số.
+
+### 12.2. Khi nào biến ở namespace scope phù hợp?
+
+Một số giá trị cấu hình hoặc hằng số dùng chung có thể được đặt trong namespace thích hợp.
+
+C++17 hỗ trợ inline variables, cho phép tổ chức những định nghĩa phù hợp trong header.
+
+Ví dụ:
+
+```cpp
+namespace Config {
+    inline constexpr int maxPlayers{100};
+}
+```
+
+Điều này khác với trạng thái toàn cục có thể bị thay đổi tùy ý.
+
+Tuy nhiên, ngay cả với hằng số dùng chung, vẫn nên xác định phạm vi sử dụng và cách tổ chức dependency cho phù hợp.
+
+---
+
+## 13. Dangling reference và dangling pointer
+
+Một vấn đề nghiêm trọng trong C++ là sử dụng pointer hoặc reference khi đối tượng mà chúng truy cập đã hết lifetime.
+
+Trạng thái này thường được gọi là *dangling*.
+
+### 13.1. Trả reference đến biến local
+
+Xét:
 
 ```cpp
 int& getValue() {
     int value{10};
-
     return value;
 }
 ```
 
-Biến `value` là đối tượng cục bộ có automatic storage duration.
+Hàm trả về một reference đến biến cục bộ `value`.
 
-Khi hàm kết thúc, lifetime của đối tượng cũng kết thúc.
+Tuy nhiên, `value` có automatic storage duration và hết lifetime khi hàm kết thúc.
 
-Reference trả về không còn hợp lệ để truy cập đối tượng đó.
+Reference trả về không giúp đối tượng đó tiếp tục tồn tại.
 
-Việc sử dụng reference như vậy để đọc hoặc sửa đối tượng đã hết lifetime gây undefined behavior.
+Do đó, người gọi không thể sử dụng reference ấy để truy cập `value` một cách hợp lệ sau khi lifetime của đối tượng đã kết thúc.
 
-### 15.2. Ví dụ sai với pointer
+Việc truy cập đối tượng hết lifetime theo cách như vậy gây undefined behavior.
+
+### 13.2. Trả pointer đến biến local
+
+Tương tự:
 
 ```cpp
 int* getValue() {
     int value{10};
-
     return &value;
 }
 ```
 
-Hàm trả về địa chỉ của biến cục bộ.
+Pointer được trả về chứa địa chỉ của biến cục bộ, nhưng đối tượng không còn tồn tại sau khi lời gọi kết thúc.
 
-Khi hàm kết thúc, biến `value` bị hủy.
+Một pointer không null chưa chắc trỏ đến một đối tượng còn sống.
 
-Pointer không còn hợp lệ để dereference.
+Vì vậy, chỉ kiểm tra `pointer != nullptr` không đủ để chứng minh thao tác dereference là an toàn.
 
-### 15.3. Cách viết đúng
+### 13.3. Cách trả kết quả an toàn hơn
 
-Đối với một giá trị đơn giản, trả về bằng giá trị:
+Nếu hàm chỉ cần cung cấp một giá trị độc lập, nên trả về bằng giá trị:
 
 ```cpp
 int getValue() {
-    return 10;
+    int value{10};
+    return value;
 }
 ```
 
-Hoặc:
+Trong trường hợp này, kết quả được trả về theo cơ chế của kiểu `int`, không phải reference đến biến local.
 
-```cpp
-int calculate() {
-    int result{5 + 3};
+C++ hiện đại có nhiều cơ chế giúp tối ưu việc trả về đối tượng bằng giá trị, gồm copy elision và move semantics khi áp dụng.
 
-    return result;
-}
-```
+Không nên mặc định trả về reference luôn nhanh hơn.
 
-Trong C++ hiện đại, trả về đối tượng bằng giá trị thường là lựa chọn an toàn và hiệu quả nhờ copy elision, move semantics và các cơ chế tối ưu hóa của compiler.
+### 13.4. Có khi nào được trả reference?
 
-Không nên trả về reference chỉ vì cho rằng như vậy luôn nhanh hơn.
+Có.
 
-### 15.4. Có được trả reference trong C++ không?
+Hàm có thể trả reference đến một đối tượng còn sống nếu hợp đồng sử dụng bảo đảm đối tượng đó tồn tại trong thời gian reference được dùng.
 
-Có, nếu hợp đồng bảo đảm đối tượng được tham chiếu vẫn còn sống trong thời gian sử dụng.
+Ví dụ, một hàm có thể nhận một mảng bằng reference rồi trả reference đến phần tử đầu.
 
-Ví dụ:
+Trong trường hợp đó, trách nhiệm quản lý lifetime của mảng vẫn thuộc về nơi sở hữu mảng.
 
-```cpp
-int& getFirst(int (&values)[3]) {
-    return values[0];
-}
-```
+Điều cần tránh không phải là mọi kiểu trả về reference, mà là **trả reference đến đối tượng không còn hợp lệ để truy cập**.
 
-Hàm trả về reference đến phần tử đầu tiên của mảng được truyền vào.
-
-Tuy nhiên, người gọi phải bảo đảm mảng còn sống trong thời gian sử dụng reference trả về.
-
-Vấn đề không nằm ở bản thân kiểu reference mà ở **lifetime của đối tượng đích**.
-
-Đọc thêm tại [References và pointers](/cpp/bat-dau/references-pointers).
+Nội dung này được trình bày sâu hơn trong bài [References và pointers](/cpp/bat-dau/references-pointers).
 
 ---
 
-## 16. Một hàm gọi một hàm khác
+## 14. Một hàm có thể gọi hàm khác
 
-Hàm có thể gọi những hàm khác.
+C++ cho phép một hàm gọi những hàm đã được khai báo phù hợp.
+
+Nhờ đó, có thể xây dựng các thao tác lớn từ những thao tác nhỏ hơn.
 
 Ví dụ:
 
 ```cpp
-#include <iostream>
-
 int square(int value) {
     return value * value;
 }
@@ -1548,148 +998,61 @@ int square(int value) {
 int sumOfSquares(int a, int b) {
     return square(a) + square(b);
 }
-
-int main() {
-    std::cout << sumOfSquares(3, 4) << '\n';
-}
 ```
 
-Kết quả:
+Nếu gọi `sumOfSquares(3, 4)`, hàm cần tính tổng bình phương của hai số.
 
-```text
-25
-```
+Diễn biến:
 
-Vì:
+| Bước | Thao tác | Kết quả |
+|---|---|---|
+| 1 | Gọi `sumOfSquares(3, 4)` | Bắt đầu xử lý |
+| 2 | Gọi `square(3)` | 9 |
+| 3 | Gọi `square(4)` | 16 |
+| 4 | Cộng hai kết quả | 25 |
+| 5 | Trả về | 25 |
 
-\[
-3^2 + 4^2 = 9 + 16 = 25
-\]
+Trong ví dụ này, thứ tự thực thi hai lời gọi `square()` không cần được giả định là từ trái sang phải. Điều quan trọng là cả hai kết quả được tính để thực hiện phép cộng.
 
-Ví dụ này giả định các phép tính nằm trong phạm vi của `int`.
+### 14.1. Điều gì xảy ra với lời gọi đang chờ?
 
-### 16.1. Luồng thực thi
+Khi `sumOfSquares()` gọi `square()`, lời gọi `sumOfSquares()` chưa kết thúc.
 
-```text
-main()
-  |
-  | sumOfSquares(3, 4)
-  v
-sumOfSquares()
-  |
-  | square(3)
-  v
-square()
-  return 9
-  |
-  v
-sumOfSquares()
-  |
-  | square(4)
-  v
-square()
-  return 16
-  |
-  v
-sumOfSquares()
-  return 25
-  |
-  v
-main()
-  print 25
-```
+Nó cần nhận kết quả từ `square()` để hoàn thành phép cộng.
 
-Trong chương trình này, `sumOfSquares()` tái sử dụng `square()` để thực hiện một công việc lớn hơn.
+Trong các implementation thông dụng, trạng thái của những lời gọi hàm được quản lý thông qua cơ chế như call stack.
 
-### 16.2. Có nên tạo nhiều tầng gọi hàm?
+Mỗi lời gọi có thể có thông tin phục vụ việc tiếp tục thực thi, tham số và các đối tượng cục bộ.
 
-Có thể, nếu các tầng đó giúp phân chia trách nhiệm rõ ràng.
+Tuy nhiên, C++ không yêu cầu mọi compiler phải triển khai lời gọi hàm bằng một cấu trúc stack vật lý giống hệt nhau. Compiler có thể thực hiện những tối ưu hóa phù hợp.
 
-Tuy nhiên, không nên tạo những hàm trung gian chỉ để gọi tiếp một hàm khác mà không bổ sung ý nghĩa hoặc abstraction hữu ích.
+### 14.2. Hàm đệ quy
 
-Một cấu trúc hàm tốt phải giúp code dễ hiểu hơn, không chỉ khiến code bị chia thành nhiều tệp hoặc nhiều lớp.
+Một hàm có thể gọi lại chính nó. Cơ chế này gọi là **recursion (đệ quy)**.
+
+Đệ quy thường được dùng cho những bài toán có thể chia thành các bài toán con cùng dạng.
+
+Để quá trình đệ quy kết thúc, thuật toán cần có điều kiện dừng phù hợp.
+
+Nếu hàm liên tục gọi lại chính nó mà không tiến tới điều kiện dừng, chương trình có thể tiêu tốn tài nguyên thực thi cho đến khi gặp giới hạn môi trường.
+
+Ngoài ra, đệ quy không tự động hiệu quả hơn vòng lặp. Chi phí và khả năng tối ưu phụ thuộc vào thuật toán cụ thể.
+
+Chi tiết về cơ chế gọi đệ quy và call stack nằm trong bài [Đệ quy và call stack](/cpp/trung-cap/de-quy-call-stack).
 
 ---
 
-## 17. Hàm đệ quy: Giới thiệu
+## 15. Function overloading và default arguments
 
-Một hàm có thể gọi lại chính nó. Cơ chế này được gọi là **recursion (đệ quy)**.
+Đây là hai cơ chế giúp thiết kế giao diện hàm linh hoạt hơn.
 
-Ví dụ tính giai thừa:
+### 15.1. Function overloading
 
-\[
-n! = n \times (n-1)!
-\]
-
-Với:
-
-\[
-0! = 1
-\]
-
-Chương trình:
-
-```cpp
-#include <iostream>
-
-long long factorial(int n) {
-    if (n <= 1) {
-        return 1;
-    }
-
-    return n * factorial(n - 1);
-}
-
-int main() {
-    std::cout << factorial(5) << '\n';
-}
-```
-
-Kết quả:
-
-```text
-120
-```
-
-### 17.1. Điều kiện dừng
-
-Hàm đệ quy cần có điều kiện dừng.
-
-Trong ví dụ:
-
-```cpp
-if (n <= 1) {
-    return 1;
-}
-```
-
-giúp kết thúc quá trình gọi đệ quy.
-
-### 17.2. Giới hạn của ví dụ
-
-Hàm trên chỉ có ý nghĩa như một ví dụ học thuật cho đầu vào nguyên không âm và cần giới hạn để tránh tràn số.
-
-Với kiểu `long long` tối thiểu 64 bit theo tiêu chuẩn, giai thừa từ `0!` đến `20!` nằm trong phạm vi biểu diễn.
-
-Không nên gọi hàm với số âm hoặc giá trị quá lớn mà không kiểm tra.
-
-Mỗi lần gọi đệ quy cũng sử dụng tài nguyên thực thi. Đệ quy quá sâu có thể vượt giới hạn stack của môi trường.
-
-Nội dung chi tiết sẽ được trình bày trong bài [Đệ quy và call stack](/cpp/trung-cap/de-quy-call-stack).
-
----
-
-## 18. Function overloading: Giới thiệu
-
-C++ cho phép nhiều hàm cùng tên nếu có danh sách tham số phù hợp để phân biệt.
-
-Cơ chế này gọi là **function overloading**.
+C++ cho phép nhiều hàm cùng tên nếu có những danh sách tham số phù hợp để phân biệt.
 
 Ví dụ:
 
 ```cpp
-#include <iostream>
-
 int add(int a, int b) {
     return a + b;
 }
@@ -1697,43 +1060,19 @@ int add(int a, int b) {
 double add(double a, double b) {
     return a + b;
 }
-
-int main() {
-    std::cout << add(2, 3) << '\n';
-    std::cout << add(2.5, 3.5) << '\n';
-}
 ```
 
-Kết quả:
+Khi gọi `add(2, 3)`, overload nhận hai `int` là lựa chọn phù hợp.
 
-```text
-5
-6
-```
+Khi gọi `add(2.5, 3.5)`, overload nhận hai `double` là lựa chọn phù hợp.
 
-Compiler lựa chọn overload phù hợp dựa trên đối số và các quy tắc overload resolution.
+Compiler thực hiện quá trình *overload resolution* để lựa chọn hàm dựa trên tập hợp các overload và những quy tắc chuyển đổi, ràng buộc liên quan.
 
-### 18.1. Không thể overload chỉ bằng kiểu trả về
+Không thể tạo hai overload chỉ bằng việc thay đổi kiểu trả về trong khi giữ nguyên danh sách tham số.
 
-Ví dụ không hợp lệ:
+### 15.2. Default arguments
 
-```cpp
-int getValue() {
-    return 10;
-}
-
-double getValue() {
-    return 10.5;
-}
-```
-
-Hai hàm có cùng tên và cùng danh sách tham số nhưng chỉ khác kiểu trả về.
-
-Điều này không tạo thành overload hợp lệ.
-
-### 18.2. Default arguments
-
-C++ còn cho phép cung cấp giá trị mặc định cho tham số.
+Default argument cho phép một tham số có giá trị mặc định khi lời gọi không cung cấp đối số tương ứng.
 
 Ví dụ:
 
@@ -1743,151 +1082,119 @@ int multiply(int a, int b = 2) {
 }
 ```
 
-Có thể gọi:
+Khi gọi `multiply(5)`, đối số cho `b` được lấy từ giá trị mặc định `2`, nên kết quả là `10`.
 
-```cpp
-multiply(5);
-multiply(5, 3);
-```
+Khi gọi `multiply(5, 3)`, giá trị cung cấp tường minh được sử dụng, nên kết quả là `15`.
 
-Kết quả tương ứng:
+Default arguments không tạo ra một hàm riêng biệt như function overloading.
 
-```text
-10
-15
-```
+Chúng ảnh hưởng đến cách lời gọi được xử lý dựa trên những khai báo khả dụng.
 
-Default arguments và overloading có nhiều quy tắc liên quan đến khai báo, overload resolution và tính mơ hồ.
+Hai cơ chế này có thể kết hợp với nhau nhưng cũng có thể tạo ra lời gọi mơ hồ nếu thiết kế không cẩn thận.
 
-Phần nâng cao nằm trong bài [Function overloading và default arguments](/cpp/trung-cap/overloading-default-arguments).
+Các quy tắc chi tiết nằm trong bài [Function overloading và default arguments](/cpp/trung-cap/overloading-default-arguments).
 
 ---
 
-## 19. Tổ chức chương trình thành nhiều hàm
+## 16. Tổ chức chương trình thành nhiều hàm
 
-Giả sử cần viết chương trình:
+Một trong những ứng dụng thực tế của hàm là tách các công việc có trách nhiệm khác nhau.
 
-- Nhập hai số nguyên.
-- Tính tổng.
-- Tính hiệu.
-- In kết quả.
+Giả sử chương trình cần xử lý điểm số.
 
-Có thể viết tất cả trong `main()`.
+Có thể chia thành ba nhóm logic:
 
-Tuy nhiên, chúng ta sẽ chia logic thành những hàm phù hợp.
+**Kiểm tra dữ liệu:** Xác định điểm có thuộc phạm vi được phép hay không.
 
-### 19.1. Chương trình
+**Tính toán:** Xử lý những điểm hợp lệ để tạo kết quả.
 
-```cpp
-#include <iostream>
-
-int add(int a, int b) {
-    return a + b;
-}
-
-int subtract(int a, int b) {
-    return a - b;
-}
-
-void printResult(int sum, int difference) {
-    std::cout << "Tong: " << sum << '\n';
-    std::cout << "Hieu: " << difference << '\n';
-}
-
-int main() {
-    int a{};
-    int b{};
-
-    if (!(std::cin >> a >> b)) {
-        std::cerr << "Du lieu khong hop le.\n";
-        return 1;
-    }
-
-    const int sum = add(a, b);
-    const int difference = subtract(a, b);
-
-    printResult(sum, difference);
-
-    return 0;
-}
-```
-
-Input:
-
-```text
-10 3
-```
-
-Output:
-
-```text
-Tong: 13
-Hieu: 7
-```
-
-### 19.2. Vai trò từng hàm
-
-| Hàm | Trách nhiệm |
-|---|---|
-| `add()` | Tính tổng |
-| `subtract()` | Tính hiệu |
-| `printResult()` | Xuất kết quả |
-| `main()` | Điều phối luồng chương trình |
-
-Đây là một ví dụ đơn giản về phân chia trách nhiệm.
-
-Trong ví dụ này, hai phép tính được thực hiện bằng `int`. Chương trình giả định kết quả phép cộng và trừ không vượt phạm vi của kiểu.
-
-Nếu xử lý dữ liệu lớn, cần bổ sung kiểm tra tràn hoặc thay đổi kiểu dữ liệu phù hợp.
-
-### 19.3. main() nên làm gì?
-
-Trong chương trình nhỏ, `main()` có thể chứa toàn bộ logic.
-
-Nhưng với ứng dụng lớn, `main()` thường phù hợp với vai trò:
-
-- Khởi tạo chương trình.
-- Đọc cấu hình cần thiết.
-- Tạo những đối tượng hoặc dịch vụ chính.
-- Điều phối các thành phần.
-- Xử lý mã kết thúc chương trình.
-
-Không có yêu cầu bắt buộc `main()` phải ngắn hơn một số dòng cụ thể.
-
-Điều quan trọng là khả năng đọc hiểu và cấu trúc trách nhiệm.
-
----
-
-## 20. Tách hàm sang nhiều file
-
-Khi dự án phát triển, những hàm liên quan có thể được tổ chức vào header và source file riêng.
+**Hiển thị:** Chuyển kết quả thành nội dung phù hợp để người dùng xem.
 
 Ví dụ:
+
+```cpp
+bool isValidScore(int score) {
+    return score >= 0 && score <= 10;
+}
+
+double average(int a, int b) {
+    return (static_cast<double>(a) + b) / 2;
+}
+
+void printAverage(double value) {
+    std::cout << "Average: " << value << '\n';
+}
+```
+
+Những hàm này có trách nhiệm khác nhau.
+
+`isValidScore()` trả về kết quả kiểm tra.
+
+`average()` thực hiện phép tính và trả về giá trị.
+
+`printAverage()` xuất thông tin ra luồng chuẩn.
+
+Điểm đáng chú ý là `average()` không trực tiếp in dữ liệu. Nó có thể được sử dụng trong những ngữ cảnh khác như tính toán tiếp, lưu kết quả hoặc truyền cho một API khác.
+
+### 16.1. Hàm có nên tự kiểm tra dữ liệu không?
+
+Điều này phụ thuộc vào hợp đồng của hàm.
+
+Ví dụ trên chỉ minh họa việc phân chia trách nhiệm. `average()` tự nó không giới hạn tham số trong đoạn `[0, 10]`.
+
+Nếu ứng dụng yêu cầu điểm phải hợp lệ, cần bảo đảm điều kiện đó được kiểm tra ở ranh giới thích hợp.
+
+Có hai cách tiếp cận phổ biến:
+
+**Kiểm tra tại nơi gọi:** Phù hợp nếu hàm được thiết kế với tiền điều kiện rõ ràng, và người gọi có trách nhiệm bảo đảm dữ liệu hợp lệ.
+
+**Kiểm tra trong hàm:** Phù hợp khi hàm là ranh giới API cần tự bảo vệ trước đầu vào không hợp lệ hoặc khi muốn trả về lỗi cụ thể.
+
+Không có quy tắc bắt buộc mọi hàm đều phải kiểm tra lại toàn bộ điều kiện đã được bảo đảm ở tầng khác.
+
+Tuy nhiên, những giả định quan trọng phải được thể hiện rõ trong hợp đồng hoặc thiết kế.
+
+### 16.2. Hàm càng ngắn càng tốt?
+
+Không nhất thiết.
+
+Một hàm ngắn nhưng có tên khó hiểu, phụ thuộc nhiều trạng thái toàn cục hoặc chỉ chuyển tiếp sang nhiều hàm khác có thể khó bảo trì hơn một hàm dài hơn nhưng có luồng xử lý rõ ràng.
+
+Nên chia nhỏ khi một nhóm thao tác có trách nhiệm độc lập, cần tái sử dụng hoặc có thể được kiểm thử riêng một cách có ý nghĩa.
+
+Ngược lại, không cần tạo một hàm chỉ để bọc một phép cộng nếu điều đó không giúp giải thích hoặc tổ chức logic.
+
+**Mục tiêu là giảm độ phức tạp mà người đọc phải theo dõi**, không phải giảm số dòng của từng hàm bằng mọi cách.
+
+---
+
+## 17. Tách khai báo và định nghĩa sang nhiều tệp
+
+Khi dự án phát triển, mã nguồn thường được chia thành nhiều tệp để quản lý dễ dàng hơn.
+
+Một cách tổ chức phổ biến:
 
 ```text
 Project/
 ├── main.cpp
-├── Calculator.cpp
-└── Calculator.h
+├── Calculator.h
+└── Calculator.cpp
 ```
 
-### 20.1. Calculator.h
+Trong đó:
+
+**`Calculator.h`** chứa những khai báo cần được sử dụng từ các tệp khác:
 
 ```cpp
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
 int add(int a, int b);
-int subtract(int a, int b);
 
 #endif
 ```
 
-Header chứa những khai báo cần thiết.
-
-Include guard tránh việc nội dung header bị xử lý lặp lại trong cùng một translation unit.
-
-### 20.2. Calculator.cpp
+**`Calculator.cpp`** chứa định nghĩa tương ứng:
 
 ```cpp
 #include "Calculator.h"
@@ -1895,777 +1202,122 @@ Include guard tránh việc nội dung header bị xử lý lặp lại trong c�
 int add(int a, int b) {
     return a + b;
 }
-
-int subtract(int a, int b) {
-    return a - b;
-}
 ```
 
-Source file chứa định nghĩa.
+Còn `main.cpp` có thể include `Calculator.h` để sử dụng `add()`.
 
-### 20.3. main.cpp
+### 17.1. Vì sao cần header?
 
-```cpp
-#include <iostream>
-#include "Calculator.h"
+Header cho phép những translation unit khác nhìn thấy khai báo cần thiết mà không phải sao chép thủ công phần triển khai.
 
-int main() {
-    const int a{10};
-    const int b{3};
+`#include` trong mô hình header truyền thống đưa nội dung header vào quá trình tiền xử lý.
 
-    std::cout << add(a, b) << '\n';
-    std::cout << subtract(a, b) << '\n';
-}
-```
+Include guard như `CALCULATOR_H` giúp tránh việc cùng một header bị xử lý nhiều lần trong một translation unit do include lặp.
 
-### 20.4. Biên dịch
+### 17.2. Vì sao vẫn cần source file?
 
-Với GCC:
+Khai báo chỉ cho compiler biết giao diện của hàm.
 
-```sh
-g++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp Calculator.cpp -o app
-```
+Nếu chương trình thực sự gọi một hàm nhưng linker không tìm được định nghĩa phù hợp, quá trình liên kết thường thất bại.
 
-Trên hệ Unix-like, chạy:
-
-```sh
-./app
-```
-
-Trên Windows PowerShell, nếu sản phẩm là `app.exe`:
-
-```powershell
-.\app.exe
-```
-
-Kết quả:
-
-```text
-13
-7
-```
-
-### 20.5. Điều gì xảy ra nếu quên Calculator.cpp?
-
-Nếu chỉ biên dịch và liên kết `main.cpp`:
-
-```sh
-g++ -std=c++17 main.cpp -o app
-```
-
-linker thường không tìm được định nghĩa phù hợp của `add()` và `subtract()`.
-
-Có thể xuất hiện lỗi như:
+Ví dụ, nếu chỉ liên kết `main.cpp` mà bỏ qua `Calculator.cpp`, chương trình có thể gặp lỗi kiểu:
 
 ```text
 undefined reference to `add(int, int)`
 ```
 
-Đây là lỗi ở giai đoạn liên kết, không phải lỗi do cú pháp gọi hàm trong `main()`.
+Thông báo cụ thể phụ thuộc vào compiler và linker.
 
-Phần tổ chức mã nguồn, translation unit và linker sẽ được giải thích sâu hơn trong bài [Header, source và modules](/cpp/ky-thuat/header-source-modules).
+Đây là lỗi liên quan đến liên kết định nghĩa, không phải vì cú pháp khai báo của hàm nhất thiết bị sai.
+
+Những quy tắc về header, source file, translation unit và linker được giải thích sâu hơn trong bài [Header, source và modules](/cpp/ky-thuat/header-source-modules).
 
 ---
 
-## 21. Ví dụ thực hành tổng hợp
-
-### Bài toán: Thống kê điểm học sinh
-
-Viết chương trình:
-
-1. Nhập số lượng học sinh.
-2. Nhập điểm của từng học sinh.
-3. Kiểm tra điểm hợp lệ.
-4. Tính tổng điểm.
-5. Tính điểm trung bình.
-6. Tìm điểm lớn nhất.
-7. In báo cáo kết quả.
-
-Yêu cầu tổ chức thành những hàm riêng thay vì đặt toàn bộ logic trong `main()`.
-
-### 21.1. Phân tích
-
-Giả sử:
-
-\[
-1 \le n \le 100000
-\]
-
-Mỗi điểm là số nguyên:
-
-\[
-0 \le score \le 10
-\]
-
-Có thể chia chương trình thành:
+## 18. Những lỗi thường gặp
 
-| Hàm | Trách nhiệm |
-|---|---|
-| `isValidScore()` | Kiểm tra điểm |
-| `calculateTotal()` | Tính tổng |
-| `findMaximum()` | Tìm điểm lớn nhất |
-| `calculateAverage()` | Tính trung bình |
-| `printReport()` | In kết quả |
-| `main()` | Nhập liệu và điều phối |
+### 18.1. Nhầm in kết quả với trả kết quả
 
-### 21.2. Chương trình C++17
+Một hàm ghi dữ liệu bằng `std::cout` không đồng nghĩa với việc nó cung cấp giá trị cho nơi gọi.
 
-```cpp
-#include <iostream>
-#include <vector>
+Nếu kết quả còn phải được sử dụng trong phép tính khác, nên xem xét trả về giá trị thay vì gắn chặt logic với output.
 
-bool isValidScore(int score) {
-    return score >= 0 && score <= 10;
-}
+### 18.2. Truyền giá trị nhưng mong sửa biến gốc
 
-long long calculateTotal(
-    const std::vector<int>& scores
-) {
-    long long total{};
+Tham số truyền theo giá trị có đối tượng riêng. Sửa tham số đó không trực tiếp sửa biến của người gọi.
 
-    for (int score : scores) {
-        total += score;
-    }
+Nếu cần sửa đối tượng gốc, lựa chọn cách truyền phù hợp và thể hiện rõ ý định trong giao diện hàm.
 
-    return total;
-}
+### 18.3. Thiếu return
 
-int findMaximum(
-    const std::vector<int>& scores
-) {
-    int maximum = scores.front();
+Một hàm trả giá trị thông thường phải bảo đảm những đường thực thi có thể hoàn thành bình thường đều trả về kết quả phù hợp.
 
-    for (int score : scores) {
-        if (score > maximum) {
-            maximum = score;
-        }
-    }
+Không nên dựa vào giá trị ngẫu nhiên hoặc giả định compiler sẽ tự tạo kết quả.
 
-    return maximum;
-}
+### 18.4. Gọi hàm chưa được khai báo
 
-double calculateAverage(
-    long long total,
-    std::size_t count
-) {
-    return static_cast<double>(total) / count;
-}
+Một lời gọi cần có khai báo phù hợp ở vị trí gọi.
 
-void printReport(
-    long long total,
-    double average,
-    int maximum
-) {
-    std::cout << "Tong: " << total << '\n';
-    std::cout << "Trung binh: " << average << '\n';
-    std::cout << "Cao nhat: " << maximum << '\n';
-}
+Nếu hàm được định nghĩa phía sau hoặc trong tệp khác, cần sử dụng declaration hoặc header thích hợp.
 
-int main() {
-    int n{};
+### 18.5. Nhầm tên biến do shadowing
 
-    if (!(std::cin >> n) || n < 1 || n > 100000) {
-        std::cerr << "So luong khong hop le.\n";
-        return 1;
-    }
+Khai báo một biến mới cùng tên trong scope bên trong không phải là phép gán vào biến bên ngoài.
 
-    std::vector<int> scores;
-    scores.reserve(static_cast<std::size_t>(n));
+Cần chú ý dấu ngoặc nhọn và những khai báo có tên trùng nhau.
 
-    for (int i = 0; i < n; ++i) {
-        int score{};
+### 18.6. Nhầm scope với lifetime
 
-        if (!(std::cin >> score) ||
-            !isValidScore(score)) {
-            std::cerr << "Diem khong hop le.\n";
-            return 1;
-        }
+Một tên có thể hết phạm vi sử dụng trong khi đối tượng vẫn tồn tại, chẳng hạn đối với biến `static` cục bộ.
 
-        scores.push_back(score);
-    }
+Ngược lại, có thể vẫn giữ một pointer hoặc reference sau khi đối tượng đích đã hết lifetime.
 
-    const long long total = calculateTotal(scores);
-    const int maximum = findMaximum(scores);
+Không nên sử dụng phạm vi tên làm tiêu chí duy nhất để đánh giá sự an toàn khi truy cập đối tượng.
 
-    const double average = calculateAverage(
-        total,
-        scores.size()
-    );
+### 18.7. Trả reference hoặc pointer đến biến local
 
-    printReport(total, average, maximum);
+Một biến cục bộ có automatic storage duration thông thường sẽ hết lifetime khi rời khỏi khối.
 
-    return 0;
-}
-```
+Reference hoặc pointer đến đối tượng đó không tự động kéo dài lifetime.
 
-### 21.3. Input
+Trong trường hợp chỉ cần cung cấp dữ liệu độc lập, trả về bằng giá trị thường là lựa chọn phù hợp hơn.
 
-```text
-5
-7 9 4 8 10
-```
+### 18.8. Lạm dụng biến toàn cục
 
-### 21.4. Output
+Hàm phụ thuộc quá nhiều vào trạng thái bên ngoài thường khó kiểm thử và khó xác định nguyên nhân khi kết quả thay đổi.
 
-```text
-Tong: 38
-Trung binh: 7.6
-Cao nhat: 10
-```
+Nên truyền dữ liệu cần thiết thông qua tham số nếu điều đó làm hợp đồng hàm rõ ràng hơn.
 
-### 21.5. Giải thích
+### 18.9. Tạo quá nhiều hàm không cần thiết
 
-**Hàm kiểm tra điểm:**
+Không nên tách một thao tác thành nhiều lớp hàm chỉ vì muốn mỗi hàm có thật ít dòng.
 
-```cpp
-bool isValidScore(int score)
-```
-
-Nhận một số nguyên và trả về `true` hoặc `false`.
-
-**Hàm tính tổng:**
-
-```cpp
-long long calculateTotal(
-    const std::vector<int>& scores
-)
-```
-
-Chỉ đọc dữ liệu và trả về tổng.
-
-Sử dụng `const reference` giúp tránh sao chép toàn bộ vector.
-
-**Hàm tìm giá trị lớn nhất:**
-
-```cpp
-int findMaximum(
-    const std::vector<int>& scores
-)
-```
-
-Sử dụng `scores.front()` để khởi tạo maximum.
-
-Hàm này yêu cầu vector không rỗng. Trong chương trình trên, điều kiện đó được bảo đảm vì `n >= 1` và tất cả phần tử phải được đọc thành công trước khi gọi.
-
-Nếu đây là API công khai có thể nhận vector rỗng, cần quy định hoặc triển khai thêm cách xử lý phù hợp.
-
-**Hàm tính trung bình:**
-
-```cpp
-double calculateAverage(
-    long long total,
-    std::size_t count
-)
-```
-
-Sử dụng phép chia số thực.
-
-Hàm yêu cầu `count > 0`. Điều kiện đó được bảo đảm tại vị trí gọi trong ví dụ.
-
-**Hàm in báo cáo:**
-
-```cpp
-void printReport(...)
-```
-
-Chỉ chịu trách nhiệm hiển thị kết quả.
-
-### 21.6. Trường hợp kiểm thử
-
-| Trường hợp | Kết quả mong đợi |
-|---|---|
-| Một học sinh, điểm 0 | Hợp lệ |
-| Một học sinh, điểm 10 | Hợp lệ |
-| Nhiều học sinh cùng điểm | Hợp lệ |
-| `n = 0` | Từ chối |
-| `n < 0` | Từ chối |
-| `n > 100000` | Từ chối |
-| Điểm âm | Từ chối |
-| Điểm lớn hơn 10 | Từ chối |
-| Input không phải số | Từ chối |
-| Thiếu điểm | Từ chối |
-
-### 21.7. Độ phức tạp
-
-Nhập dữ liệu:
-
-\[
-O(n)
-\]
-
-Tính tổng:
-
-\[
-O(n)
-\]
-
-Tìm maximum:
-
-\[
-O(n)
-\]
-
-Tổng thời gian:
-
-\[
-O(n)
-\]
-
-Bộ nhớ lưu điểm:
-
-\[
-O(n)
-\]
-
-Việc chia chương trình thành nhiều hàm không tự động thay đổi bậc độ phức tạp của thuật toán.
-
-### 21.8. Có thể cải thiện thiết kế không?
-
-Có.
-
-Ví dụ hiện tại duyệt vector hai lần để tính tổng và maximum.
-
-Nếu chương trình cần xử lý tập dữ liệu lớn hoặc muốn giảm số lần duyệt, có thể kết hợp hai công việc trong một hàm trả về một `struct`.
-
-Tuy nhiên, đối với bài nhập môn, việc tách hàm theo từng phép tính giúp người học thấy rõ trách nhiệm và cơ chế gọi hàm.
-
-**Bài học:** Chia nhỏ chương trình phải phục vụ tính rõ ràng và khả năng tái sử dụng. Không nên tách hoặc gộp hàm một cách máy móc.
+Sự phân chia phải phục vụ mục tiêu giảm phụ thuộc, tăng khả năng hiểu và tạo ra những đơn vị xử lý có ý nghĩa.
 
 ---
 
-## 22. Những lỗi thường gặp
+## 19. Tổng kết
 
-### 22.1. Quên return trong hàm có giá trị trả về
+Hàm là một trong những công cụ nền tảng để tổ chức chương trình C++.
 
-Sai:
+Thông qua **khai báo và định nghĩa**, compiler biết hàm có giao diện như thế nào và chương trình có thể thực hiện công việc gì khi hàm được gọi.
 
-```cpp
-int add(int a, int b) {
-    int result = a + b;
-}
-```
+**Tham số và đối số** xác định cách dữ liệu được cung cấp cho một lời gọi. Tùy cách khai báo, hàm có thể nhận giá trị độc lập, tham chiếu đến đối tượng đã tồn tại hoặc một kiểu dữ liệu biểu diễn những hợp đồng phức tạp hơn.
 
-Nếu hàm đi tới cuối mà không trả về giá trị, chương trình có undefined behavior trong trường hợp thông thường.
+**`return`** kết thúc lời gọi và có thể cung cấp kết quả. Với hàm `void`, mục đích thường là thực hiện thao tác thay vì trả về một giá trị thông thường.
 
-Đúng:
+**Scope** quyết định nơi một tên có thể được truy cập, trong khi **lifetime** quyết định đối tượng tồn tại trong bao lâu. Hai khái niệm này không đồng nhất.
 
-```cpp
-int add(int a, int b) {
-    return a + b;
-}
-```
+Khi chương trình phát triển, việc chia logic thành các hàm có trách nhiệm rõ ràng giúp giảm sự phụ thuộc, hạn chế mã lặp và cải thiện khả năng bảo trì.
 
-### 22.2. Nhầm in kết quả với return
-
-Sai nếu mục tiêu là nhận giá trị:
-
-```cpp
-void add(int a, int b) {
-    std::cout << a + b << '\n';
-}
-```
-
-Câu lệnh trên in kết quả nhưng không trả về một giá trị cho người gọi.
-
-Nếu cần sử dụng tiếp kết quả:
-
-```cpp
-int add(int a, int b) {
-    return a + b;
-}
-```
-
-### 22.3. Tưởng pass by value có thể sửa biến gốc
-
-Ví dụ:
-
-```cpp
-void increase(int value) {
-    ++value;
-}
-```
-
-Lời gọi:
-
-```cpp
-int number{10};
-
-increase(number);
-```
-
-không thay đổi `number`.
-
-Nếu cần sửa trực tiếp:
-
-```cpp
-void increase(int& value) {
-    ++value;
-}
-```
-
-### 22.4. Gọi sai số lượng tham số
-
-Ví dụ:
-
-```cpp
-int add(int a, int b) {
-    return a + b;
-}
-```
-
-Lời gọi:
-
-```cpp
-add(10);
-```
-
-không hợp lệ nếu không có overload hoặc default argument phù hợp.
-
-### 22.5. Gọi hàm trước khi khai báo
-
-Không nên gọi một hàm chưa có khai báo phù hợp tại vị trí gọi.
-
-Có thể giải quyết bằng cách:
-
-- Đặt định nghĩa lên trước.
-- Viết function prototype.
-- Include header chứa khai báo.
-
-### 22.6. Nhầm phạm vi biến
-
-Ví dụ:
-
-```cpp
-if (true) {
-    int value{10};
-}
-
-std::cout << value;
-```
-
-Tên `value` không nằm trong phạm vi của câu lệnh `std::cout`.
-
-### 22.7. Trả reference đến biến local
-
-Sai:
-
-```cpp
-int& getValue() {
-    int value{10};
-
-    return value;
-}
-```
-
-Reference trả về không còn hợp lệ để truy cập đối tượng sau khi `value` hết lifetime.
-
-Nếu chỉ cần trả giá trị:
-
-```cpp
-int getValue() {
-    return 10;
-}
-```
-
-### 22.8. Chia cho 0 trong hàm
-
-Ví dụ:
-
-```cpp
-double divide(double a, double b) {
-    return a / b;
-}
-```
-
-Nếu API yêu cầu từ chối mẫu số bằng 0, cần kiểm tra điều kiện đó.
-
-Đặc biệt, với phép chia số nguyên, chia cho 0 gây undefined behavior.
-
-Không nên để người gọi phải đoán những điều kiện đầu vào quan trọng.
-
-### 22.9. Đặt quá nhiều trách nhiệm trong một hàm
-
-Một hàm quá dài, xử lý nhiều công việc không liên quan thường khó kiểm thử và bảo trì.
-
-Nên xem xét tách hàm khi một nhóm câu lệnh thực hiện một nhiệm vụ có ý nghĩa độc lập.
-
-Tuy nhiên, không cần tạo hàm cho từng phép cộng hoặc từng câu lệnh nếu điều đó làm mã nguồn trở nên khó theo dõi hơn.
-
----
-
-## 23. Bài tập tự luyện
-
-### Bài 1. Tính bình phương
-
-Viết hàm:
-
-```cpp
-int square(int value);
-```
-
-Hàm trả về bình phương của `value`.
-
-Ví dụ:
-
-```text
-Input:
-5
-
-Output:
-25
-```
-
-**Gợi ý:** Sử dụng toán tử nhân.
-
-**Yêu cầu bổ sung:** Xác định phạm vi đầu vào để phép nhân không tràn `int`.
-
-### Bài 2. Kiểm tra số chẵn
-
-Viết hàm:
-
-```cpp
-bool isEven(int value);
-```
-
-Hàm trả về `true` nếu số chẵn, ngược lại trả về `false`.
-
-Kiểm thử với:
-
-```text
--4
--3
-0
-3
-4
-```
-
-Dự đoán kết quả trước khi chạy chương trình.
-
-### Bài 3. Tìm số lớn nhất
-
-Viết hàm:
-
-```cpp
-int maximum(int a, int b);
-```
-
-Hàm trả về số lớn hơn trong hai số.
-
-Ví dụ:
-
-```text
-Input:
-10 20
-
-Output:
-20
-```
-
-**Yêu cầu:** Không thực hiện nhập xuất trực tiếp bên trong hàm `maximum()`.
-
-### Bài 4. Hoán đổi hai số
-
-Viết hàm:
-
-```cpp
-void swapValues(int& a, int& b);
-```
-
-Yêu cầu:
-
-- Không trả về giá trị.
-- Thay đổi trực tiếp hai biến được truyền vào.
-- Sử dụng biến tạm.
-
-Ví dụ:
-
-```text
-Before:
-10 20
-
-After:
-20 10
-```
-
-### Bài 5. Kiểm tra điểm hợp lệ
-
-Viết hàm:
-
-```cpp
-bool isValidScore(double score);
-```
-
-Điểm hợp lệ phải hữu hạn và nằm trong đoạn `[0, 10]`.
-
-**Gợi ý:** Sử dụng `std::isfinite()` trong `<cmath>` để từ chối NaN và infinity.
-
-Kiểm thử các trường hợp biên như `0`, `10`, `-1` và `11`.
-
-### Bài 6. Tính tổng mảng
-
-Viết hàm:
-
-```cpp
-long long calculateTotal(
-    const std::vector<int>& values
-);
-```
-
-Hàm tính tổng các phần tử mà không thay đổi vector đầu vào.
-
-**Yêu cầu bổ sung:** Xác định giới hạn dữ liệu hoặc bổ sung kiểm tra để tránh tràn `long long`.
-
-### Bài 7. Phân tích scope
-
-Dự đoán kết quả chương trình:
-
-```cpp
-#include <iostream>
-
-int main() {
-    int x{10};
-
-    {
-        int x{20};
-
-        std::cout << x << '\n';
-    }
-
-    std::cout << x << '\n';
-}
-```
-
-Giải thích:
-
-- Có bao nhiêu biến tên `x`?
-- Vì sao hai lệnh in có kết quả khác nhau?
-- Khai báo nào che khuất khai báo nào?
-
-### Bài 8. Phân tích lifetime
-
-Xem hàm:
-
-```cpp
-const int& getNumber() {
-    int number{100};
-
-    return number;
-}
-```
-
-Trả lời:
-
-1. Hàm có thể được khai báo với kiểu trả về như vậy không?
-2. Vì sao reference trả về không hợp lệ để đọc?
-3. Lifetime của `number` kết thúc khi nào?
-4. Nên thay đổi kiểu trả về như thế nào?
-
-### Bài 9. Tổ chức chương trình
-
-Viết chương trình nhập chiều dài và chiều rộng hình chữ nhật.
-
-Tạo ba hàm:
-
-```cpp
-bool isValidRectangle(double width, double height);
-
-double calculateArea(double width, double height);
-
-double calculatePerimeter(double width, double height);
-```
-
-Yêu cầu:
-
-- Hai kích thước phải dương và hữu hạn.
-- Kiểm tra input.
-- Không thực hiện phép tính nếu dữ liệu không hợp lệ.
-- Hàm tính toán không trực tiếp in kết quả.
-- Kiểm tra kết quả số thực vẫn hữu hạn nếu có nguy cơ vượt phạm vi.
-
-### Bài 10. Chia chương trình lớn thành hàm
-
-Cho một chương trình quản lý điểm học sinh đang chứa toàn bộ logic trong `main()`.
-
-Hãy tách thành các hàm:
-
-```cpp
-bool isValidScore(int score);
-
-long long calculateTotal(
-    const std::vector<int>& scores
-);
-
-int findMaximum(
-    const std::vector<int>& scores
-);
-
-void printReport(
-    long long total,
-    double average,
-    int maximum
-);
-```
-
-Sau đó đánh giá:
-
-- Hàm nào nên trả giá trị?
-- Hàm nào nên dùng `void`?
-- Hàm nào nên nhận `const reference`?
-- Những hàm nào cần tiền điều kiện?
-- Hàm nào có thể kiểm thử mà không cần nhập xuất?
-
----
-
-## 24. Tổng kết kiến thức
-
-| Khái niệm | Ý nghĩa |
-|---|---|
-| Function | Đơn vị mã nguồn thực hiện một nhiệm vụ |
-| Function declaration | Khai báo giao diện hàm |
-| Function definition | Cung cấp phần triển khai của hàm |
-| Function call | Gọi hàm để thực thi |
-| Parameter | Tham số trong khai báo/định nghĩa hàm |
-| Argument | Đối số tại lời gọi |
-| Return type | Kiểu kết quả trả về |
-| `return` | Kết thúc lời gọi và có thể trả giá trị |
-| `void` | Kiểu không có giá trị trả về |
-| Pass by value | Truyền bằng giá trị |
-| Pass by reference | Truyền bằng tham chiếu |
-| `const T&` | Tham chiếu chỉ đọc thông qua tham số |
-| Scope | Phạm vi tên có thể được sử dụng |
-| Lifetime | Thời gian tồn tại của đối tượng |
-| Local variable | Biến cục bộ |
-| Global variable | Biến ở phạm vi toàn cục/namespace phù hợp |
-| Shadowing | Khai báo bên trong che khuất tên bên ngoài |
-| Static local variable | Biến cục bộ có static storage duration |
-| Function overloading | Nhiều hàm cùng tên với danh sách tham số phân biệt phù hợp |
-| Recursion | Hàm gọi lại chính nó |
-
-Sau bài học này, bạn cần nắm vững:
-
-1. **Sử dụng hàm để chia nhỏ chương trình thành các phần có trách nhiệm rõ ràng.**
-2. **Phân biệt declaration, definition và function call.**
-3. **Hiểu rõ sự khác nhau giữa parameter và argument.**
-4. **Sử dụng `return` khi cần trả kết quả và `void` khi hàm không trả giá trị.**
-5. **Phân biệt truyền tham số theo giá trị và tham chiếu.**
-6. **Sử dụng `const T&` khi cần đọc đối tượng lớn mà không sao chép.**
-7. **Không nhầm scope với lifetime.**
-8. **Không trả pointer hoặc reference đến biến local đã hết lifetime.**
-9. **Ưu tiên truyền dữ liệu qua tham số thay vì phụ thuộc không cần thiết vào biến toàn cục.**
-10. **Thiết kế hàm dễ đọc, dễ kiểm thử và phù hợp với yêu cầu thực tế.**
-
-**Nguyên tắc quan trọng nhất:** Một hàm tốt phải có mục đích rõ ràng, hợp đồng dễ hiểu và cách xử lý dữ liệu phù hợp.
-
-Không phải hàm càng ngắn càng tốt, cũng không phải chương trình có càng nhiều hàm càng dễ bảo trì.
-
-Mục tiêu là tạo ra cấu trúc mã nguồn giúp người đọc hiểu chương trình hoạt động như thế nào mà không phải theo dõi quá nhiều trạng thái hoặc phụ thuộc không cần thiết.
+Điều quan trọng không phải tạo ra thật nhiều hàm, mà là **thiết kế mỗi hàm với mục đích, dữ liệu đầu vào, kết quả và những điều kiện sử dụng dễ hiểu**.
 
 ---
 
 ## Đọc tiếp
 
-- [Nhập xuất, điều kiện và vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap): Sử dụng điều kiện và vòng lặp trong thân hàm.
-- [References và pointers](/cpp/bat-dau/references-pointers): Tìm hiểu sâu hơn về truyền tham chiếu, địa chỉ bộ nhớ, pointer và lifetime.
-- [Function overloading và default arguments](/cpp/trung-cap/overloading-default-arguments): Phân biệt overload, tham số mặc định và quy tắc lựa chọn hàm.
-- [Đệ quy và call stack](/cpp/trung-cap/de-quy-call-stack): Hiểu cơ chế hàm tự gọi và cách quản lý trạng thái trong quá trình thực thi.
-- [Header, source và modules](/cpp/ky-thuat/header-source-modules): Tổ chức mã nguồn nhiều file và tìm hiểu quá trình compile/link.
+- [Nhập xuất, điều kiện và vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap): Tìm hiểu cách kiểm soát luồng thực thi bên trong hàm.
+- [References và pointers](/cpp/bat-dau/references-pointers): Hiểu sâu hơn về tham chiếu, địa chỉ bộ nhớ và lifetime.
+- [Function overloading và default arguments](/cpp/trung-cap/overloading-default-arguments): Nghiên cứu những quy tắc khai báo và lựa chọn hàm nâng cao.
+- [Đệ quy và call stack](/cpp/trung-cap/de-quy-call-stack): Tìm hiểu cơ chế gọi hàm lồng nhau và đệ quy.
+- [Header, source và modules](/cpp/ky-thuat/header-source-modules): Tổ chức mã nguồn nhiều tệp và hiểu quá trình biên dịch, liên kết.

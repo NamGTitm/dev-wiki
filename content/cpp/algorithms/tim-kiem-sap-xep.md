@@ -7,14 +7,14 @@ categoryLabel: Thuật toán và Competitive Programming
 order: 23020
 difficulty: beginner
 keywords: [linear search, binary search, sorting, std::sort, std::lower_bound]
-updated: 2026-10-20
+updated: 2026-10-22
 collection: cpp
 collectionLabel: C++
 collectionDescription: Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.
 related: ["/cpp/stl/stl-algorithms", "/cpp/thuat-toan/binary-search-answer", "/cpp/thuat-toan/do-phuc-tap"]
 ---
 
-Searching tìm phần tử đáp ứng điều kiện; sorting sắp dữ liệu theo thứ tự để hỗ trợ truy vấn hoặc output. Hãy chọn cách dựa trên số truy vấn và trạng thái ban đầu của dữ liệu.
+Searching tìm phần tử thỏa điều kiện; sorting sắp dữ liệu để hỗ trợ truy vấn hoặc tạo output có thứ tự. Khi chọn thuật toán, cần xét dữ liệu đã sort chưa, có bao nhiêu truy vấn và kết quả cần là một giá trị, iterator hay cả đoạn trùng lặp.
 
 ## Linear search
 
@@ -33,13 +33,24 @@ int main() {
     std::vector<int> values{8, 2, 5, 2, 9};
     std::sort(values.begin(), values.end());
     const auto found{std::lower_bound(values.begin(), values.end(), 5)};
-    std::cout << (found != values.end() && *found == 5) << '\n';
+    const auto after{std::upper_bound(values.begin(), values.end(), 5)};
+    std::cout << std::boolalpha
+              << (found != values.end() && *found == 5) << ' '
+              << (after - found) << '\n';
 }
 ```
 
+Khi dãy đã sort, ví dụ trên trở thành {2, 2, 5, 8, 9}. lower_bound trỏ đến 5, còn upper_bound trỏ đến phần tử đầu tiên lớn hơn 5; hiệu hai iterator là 1, nên chương trình in true 1. Nếu tìm 2, hiệu hai biên là 2 vì giá trị đó xuất hiện hai lần. Cả hai hàm cần range được sắp xếp theo thứ tự tương thích với phép so sánh mà chúng dùng.
+
+Với vector hoặc array, iterator truy cập ngẫu nhiên nên binary search cần O(log n) bước di chuyển. Với iterator chỉ hỗ trợ đi tới phần tử kế tiếp, số phép so sánh vẫn logarithmic nhưng tổng số bước iterator có thể là O(n).
+
 ## Sorting
 
-`std::sort` thường dùng introsort với O(n log n) so sánh ở worst case trong standard library hiện đại; hợp đồng chuẩn đặt giới hạn O(n log n). Nó không ổn định. Dùng `std::stable_sort` nếu thứ tự tương đối các phần tử tương đương là yêu cầu.
+`std::sort` bảo đảm O(n log n) phép so sánh theo yêu cầu của thư viện chuẩn và không giữ thứ tự tương đối của các phần tử tương đương. Dùng `std::stable_sort` khi thứ tự cũ giữa các phần tử tương đương mang ý nghĩa; thuật toán này có thể cần thêm bộ nhớ.
+
+Khi có q truy vấn trên cùng một dãy, sort một lần rồi binary search tốn khoảng O(n log n + q log n) trên vector; quét lại từ đầu cho từng truy vấn tốn tới O(qn). Nếu chỉ có một truy vấn, so sánh chi phí này với một lần quét tuyến tính trước khi sort.
+
+Comparator tùy chỉnh phải tạo strict weak ordering. Không dùng phép so sánh <= vì khi so một giá trị với chính nó, comparator trả true. Nếu sort theo thứ tự tùy chỉnh, lower_bound và upper_bound cũng phải nhận comparator tương thích; không thể tìm theo thứ tự tăng mặc định trên range đã sort giảm dần.
 
 ## Lỗi thường gặp
 
@@ -47,10 +58,6 @@ int main() {
 - Không kiểm tra iterator bằng `end()` trước khi dereference.
 - Comparator không tạo strict weak ordering.
 - Sắp xếp rồi quên chi phí O(n log n) khi chỉ có một truy vấn nhỏ.
-
-## Tự luyện
-
-Tìm vị trí xuất hiện đầu tiên và cuối cùng của `x` trong dãy đã sort bằng hai lần `lower_bound`/`upper_bound`. Thử khi `x` không tồn tại và khi dãy rỗng.
 
 ## Đọc tiếp
 

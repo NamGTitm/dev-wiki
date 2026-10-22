@@ -7,7 +7,7 @@ categoryLabel: Tra cứu và xử lý lỗi
 order: 25000
 difficulty: beginner
 keywords: [C++ syntax, C++17, cheatsheet, declaration, control flow, functions, classes, STL, compiler, g++, clang++, MSVC]
-updated: 2026-10-20
+updated: 2026-10-22
 collection: cpp
 collectionLabel: C++
 collectionDescription: Bảng tra cú pháp, container, thuật toán, lỗi thường gặp và best practices C++.
@@ -65,10 +65,12 @@ Trong C++17, có thể bỏ qua `return 0;` ở cuối hàm `main`. Chương tr�
 | Header | Công dụng |
 |---|---|
 | `<iostream>` | Nhập xuất chuẩn |
+| `<cstddef>` | `std::size_t` và các kiểu/tiện ích liên quan |
 | `<string>` | Chuỗi `std::string` |
 | `<vector>` | Mảng động |
 | `<array>` | Mảng cố định |
 | `<algorithm>` | Sắp xếp, tìm kiếm, đếm |
+| `<functional>` | `std::greater`, `std::less` và các tiện ích hàm |
 | `<numeric>` | Các thuật toán tính toán |
 | `<cmath>` | Hàm toán học |
 | `<limits>` | Giới hạn kiểu dữ liệu |
@@ -78,6 +80,7 @@ Trong C++17, có thể bỏ qua `return 0;` ở cuối hàm `main`. Chương tr�
 | `<memory>` | Smart pointer |
 | `<optional>` | Giá trị có thể không tồn tại |
 | `<stdexcept>` | Các loại ngoại lệ |
+| `<new>` | `std::bad_alloc` và các tiện ích cấp phát |
 | `<utility>` | `std::pair`, `std::move` |
 | `<fstream>` | Đọc ghi tệp |
 
@@ -463,8 +466,10 @@ Kết quả:
 1 3 5 7
 ```
 
-- `break`: Kết thúc vòng lặp gần nhất.
-- `continue`: Bỏ qua phần còn lại của lần lặp hiện tại.
+- `break`: Kết thúc vòng lặp hoặc `switch` gần nhất. Nếu `switch` nằm trong vòng lặp, `break` chỉ thoát khỏi `switch`.
+- `continue`: Bỏ phần còn lại của lần lặp hiện tại và chuyển tới bước tiếp tục của vòng lặp gần nhất. Trong vòng `for` thông thường, biểu thức cập nhật vẫn chạy rồi điều kiện được kiểm tra lại; `while` quay lại kiểm tra điều kiện; `do-while` đi tới bước kiểm tra điều kiện sau thân vòng lặp.
+
+Trong các vòng lặp lồng nhau, `break` và `continue` tác động tới vòng lặp gần nhất. `continue` bên trong `switch` lồng trong vòng lặp vẫn tác động tới vòng lặp đó. Nếu lệnh cập nhật đặt sau `continue` trong thân `while` hoặc `do-while`, lệnh ấy bị bỏ qua và điều kiện có thể tiếp tục đúng, gây lặp vô hạn. `return` thoát khỏi hàm hiện tại.
 
 ---
 
@@ -1185,7 +1190,7 @@ std::ios::sync_with_stdio(false);
 std::cin.tie(nullptr);
 ```
 
-Thường dùng trong chương trình xử lý lượng input lớn.
+Gọi các lệnh này trước khi thực hiện bất kỳ thao tác nhập xuất nào. Cách thiết lập này thường được dùng trong chương trình xử lý lượng input lớn.
 
 Nếu tắt đồng bộ giữa C++ streams và C stdio, cần tránh trộn nhập xuất C và C++ một cách tùy tiện.
 
@@ -1369,7 +1374,16 @@ Không nên mặc định rằng một chương trình chạy thành công nghĩ
 
 ### 16.1. Các lỗi logic cần chú ý
 
-**Nhầm gán với so sánh:**
+**Nhầm gán với so sánh:** Khi muốn so sánh, dùng `==`. Biểu thức `a = b` gán `b` cho `a` rồi cho giá trị vừa gán làm kết quả biểu thức; trong điều kiện, giá trị khác `0` được xem là đúng.
+
+Sai khi muốn so sánh:
+
+```cpp
+if (a = b) {
+}
+```
+
+Đúng:
 
 ```cpp
 if (a == b) {
@@ -1436,6 +1450,7 @@ Chương trình sau kết hợp các kiến thức thường gặp:
 
 ```cpp
 #include <algorithm>
+#include <cstddef>
 #include <iostream>
 #include <numeric>
 #include <vector>
@@ -1555,24 +1570,9 @@ Các dòng trong bảng là mẫu cú pháp. Những tên như `condition`, `ite
 
 ---
 
-## 19. Checklist trước khi biên dịch
+## 19. Trước khi biên dịch
 
-Trước khi kết luận chương trình đã hoàn thành, hãy kiểm tra:
-
-- [ ] Đã include đầy đủ các header cần thiết.
-- [ ] Các biến được khởi tạo phù hợp trước khi sử dụng.
-- [ ] Dữ liệu đầu vào được kiểm tra khi cần.
-- [ ] Không chia hoặc lấy dư cho `0`.
-- [ ] Không truy cập mảng, vector ngoài phạm vi.
-- [ ] Không giải tham chiếu con trỏ không hợp lệ.
-- [ ] Không sử dụng reference hoặc iterator đã mất hiệu lực.
-- [ ] Không để phép tính số nguyên có dấu bị tràn.
-- [ ] Vòng lặp có điều kiện dừng phù hợp.
-- [ ] Các hàm trả về giá trị đúng kiểu và đúng lifetime.
-- [ ] Đã thử các trường hợp biên.
-- [ ] Biên dịch với cảnh báo phù hợp và xử lý các cảnh báo quan trọng.
-
-Một chương trình biên dịch thành công chưa chắc đúng về mặt logic hoặc an toàn khi chạy.
+Compiler kiểm tra cú pháp và quy tắc kiểu nhưng không chứng minh chương trình xử lý đúng dữ liệu đầu vào, điều kiện dừng, giới hạn số học hay vòng đời đối tượng. Hãy thử các trường hợp biên và biên dịch với cảnh báo phù hợp; biên dịch thành công vẫn chưa chứng minh chương trình đúng logic hoặc an toàn khi chạy.
 
 ## Đọc tiếp
 
