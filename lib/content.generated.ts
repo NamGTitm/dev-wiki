@@ -6881,7 +6881,7 @@ export const articles = [
   },
   {
     "title": "std::vector, struct và enum",
-    "description": "Lưu danh sách có kích thước thay đổi và mô hình hóa dữ liệu bằng struct, enum class.",
+    "description": "Quản lý danh sách động và biểu diễn dữ liệu có cấu trúc bằng struct, enum class.",
     "slug": "/cpp/trung-cap/vector-struct-enum",
     "category": "intermediate",
     "categoryLabel": "C++ trung cấp",
@@ -6894,7 +6894,7 @@ export const articles = [
       "enum class",
       "vector push_back"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-22",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -6905,28 +6905,32 @@ export const articles = [
     ],
     "featured": false,
     "priority": 21000,
-    "body": "`std::vector<T>` là dãy phần tử cùng kiểu, lưu liên tiếp trong bộ nhớ và có thể tăng kích thước. Dùng nó thay mảng cố định khi số phần tử chỉ biết lúc chạy; cần include `<vector>`.\n\n## Tạo và dùng vector\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> scores{8, 9, 7};\n    scores.push_back(10);\n    int total{};\n    for (int score : scores) total += score;\n    std::cout << total << '\\n';\n}\n```\n\n`size()` trả số phần tử; `empty()` kiểm tra rỗng; `push_back()` thêm phần tử; `at(i)` kiểm tra chỉ số và `operator[]` không kiểm tra. `reserve(n)` cấp trước capacity nhưng không thay đổi `size()`.\n\n## Dữ liệu tự định nghĩa\n\n```cpp\n#include <iostream>\n\nenum class Status { waiting, active, done };\n\nstruct Task {\n    int id{};\n    Status status{Status::waiting};\n};\n\nint main() {\n    const Task task{1, Status::active};\n    std::cout << task.id << '\\n';\n}\n```\n\n`struct` gom dữ liệu có liên hệ. Thành viên `struct` mặc định public; `class` mặc định private. `enum class` tạo tập trạng thái có tên và không tự chuyển thành số nguyên, giúp tránh nhập nhằng.\n\n## Chọn cấu trúc\n\n`std::vector` phù hợp đa số danh sách vì truy cập theo chỉ số O(1) và cache locality tốt. Nếu kích thước cố định tại compile time, dùng `std::array`. Nếu cần map/set hoặc hàng đợi, xem [các container STL](/cpp/stl/sequence-containers).\n\n## Lỗi thường gặp\n\n- Truy cập `v[0]` khi vector rỗng.\n- Nhầm `capacity()` với `size()`.\n- Giữ pointer/reference/iterator đến phần tử sau khi thêm làm vector reallocate; xem [iterator invalidation](/cpp/stl/iterators-invalidation).\n- Dùng enum không có tên rõ hoặc `enum` không scoped khiến tên rò ra scope ngoài.\n\n## Tự luyện\n\nTạo `struct Product` gồm tên và giá, lưu nhiều sản phẩm trong vector, rồi tính tổng giá. Quyết định cách xử lý vector rỗng và giá trị âm không hợp lệ.\n\n## Đọc tiếp\n\nXem [sequence containers](/cpp/stl/sequence-containers), rồi học [class và encapsulation](/cpp/trung-cap/classes-constructors).",
+    "body": "`std::vector<T>` là dãy phần tử cùng kiểu được lưu liên tiếp trong bộ nhớ. Vector tự quản lý vùng nhớ và có thể tăng kích thước khi thêm phần tử, nên thường là lựa chọn mặc định cho một danh sách mà số phần tử chỉ biết lúc chạy. Khai báo nó bằng header `<vector>`.\n\n## Tạo, đọc và cập nhật vector\n\n```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> scores{8, 9, 7};\n    scores.push_back(10);\n\n    int total{};\n    for (const int score : scores) {\n        total += score;\n    }\n\n    std::cout << \"So diem: \" << scores.size() << '\\n';\n    std::cout << \"Tong: \" << total << '\\n';\n}\n```\n\n`size()` là số phần tử đang có; `capacity()` là số phần tử vector có thể chứa trước khi cần xin vùng nhớ mới. Hai giá trị này khác nhau: `reserve(n)` có thể tăng `capacity()` nhưng không tạo thêm phần tử và không đổi `size()`. Nếu cần tạo sẵn `n` phần tử, dùng constructor phù hợp, chẳng hạn `std::vector<int> values(3, 5)`.\n\nLưu ý cách khởi tạo bằng ngoặc nhọn: `std::vector<int> values{3, 5}` tạo vector có hai phần tử `3` và `5`, còn `std::vector<int> values(3, 5)` tạo ba phần tử, mỗi phần tử bằng `5`. Dạng ngoặc tròn cũng có thể dùng để chỉ kích thước mà chưa chỉ giá trị: `std::vector<int> values(3)` tạo ba số nguyên được khởi tạo bằng `0`.\n\n## Truy cập và duyệt\n\n- `v[i]` truy cập nhanh nhưng không kiểm tra chỉ số. Chỉ dùng khi chương trình đã bảo đảm `i < v.size()`; truy cập ngoài phạm vi là hành vi không xác định.\n- `v.at(i)` kiểm tra phạm vi và ném `std::out_of_range` nếu chỉ số sai.\n- `v.empty()` kiểm tra danh sách có phần tử hay không. Không gọi `front()` hoặc `back()` khi vector rỗng.\n- Duyệt bằng range-based `for` giúp tránh tự quản lý chỉ số. Dùng `const auto&` khi phần tử lớn và chỉ cần đọc; dùng `auto&` khi cần sửa phần tử.\n\n```cpp\nfor (const auto& score : scores) {\n    std::cout << score << '\\n';\n}\n```\n\n`std::vector<bool>` là trường hợp đặc biệt của thư viện chuẩn: nó có thể đóng gói bit và không trả về tham chiếu `bool` thông thường. Nếu cần tham chiếu hoặc địa chỉ của từng phần tử boolean, hãy cân nhắc `std::vector<char>` hoặc một kiểu lưu trữ khác.\n\n## Khi thêm và xóa phần tử\n\n`push_back(value)` thêm một phần tử đã có; `emplace_back(args...)` dựng phần tử tại vị trí cuối từ các đối số constructor. Với kiểu đơn giản như `int`, `push_back` thường rõ ràng và đủ dùng. `insert` thêm vào vị trí bất kỳ, còn `erase` xóa phần tử hoặc một đoạn; các thao tác ở giữa dãy phải dịch chuyển phần tử phía sau nên thường tốn O(n).\n\nVector giữ các phần tử liên tiếp. Khi không còn đủ `capacity()`, vector có thể cấp vùng nhớ mới và chuyển các phần tử sang đó. Khi việc này xảy ra, mọi pointer, reference và iterator đang trỏ vào phần tử cũ đều mất hiệu lực. Ngay cả khi không cấp lại vùng nhớ, chèn hoặc xóa ở giữa cũng làm mất hiệu lực các iterator và reference từ vị trí thay đổi trở về sau. Vì vậy, đừng giữ reference tới một phần tử rồi tiếp tục thêm/xóa mà không xem quy tắc invalidation. Xem thêm [iterator invalidation](/cpp/stl/iterators-invalidation).\n\n`reserve` hữu ích khi đã ước lượng được số phần tử để giảm số lần cấp lại bộ nhớ, nhưng không nên phụ thuộc vào mức tăng `capacity()` cụ thể vì chính sách tăng là chi tiết triển khai. Gọi `reserve` cũng có thể làm mọi iterator và reference mất hiệu lực nếu cần cấp vùng nhớ mới.\n\n## Mô hình hóa dữ liệu bằng `struct` và `enum class`\n\n```cpp\n#include <string>\n\nenum class Status {\n    waiting,\n    active,\n    done\n};\n\nstruct Task {\n    int id{};\n    std::string title;\n    Status status{Status::waiting};\n};\n```\n\n`struct` gom các giá trị có quan hệ thành một kiểu có ý nghĩa. Trong C++, `struct` vẫn có thể có constructor, hàm thành viên, kế thừa và kiểm soát truy cập; điểm khác mặc định so với `class` là thành viên của `struct` là `public`, còn của `class` là `private`. Dùng `struct` thường hợp với bản ghi dữ liệu công khai, còn `class` thường hợp khi kiểu cần bảo vệ invariant.\n\nCác dấu `{}` khởi tạo thành viên mặc định để `Task task{};` không để `id` ở trạng thái chưa xác định. Khi dữ liệu cần giữ một invariant phức tạp, không nên để caller tùy ý sửa mọi trường; đóng gói dữ liệu trong class và cung cấp thao tác có kiểm tra.\n\n`enum class` đặt tên trạng thái trong một phạm vi riêng, vì vậy phải viết `Status::active`. Nó không tự chuyển thành số nguyên như `enum` không scoped, giúp tránh nhầm lẫn giữa các loại trạng thái. Dùng `switch` để xử lý các trạng thái và quyết định rõ cách xử lý giá trị không mong đợi nếu dữ liệu đến từ file, mạng hoặc phép ép kiểu. Nếu giá trị enum được lưu thành định dạng lâu dài, hãy định nghĩa quy ước số và khả năng tương thích thay vì dựa vào thứ tự khai báo.\n\n## Chọn cấu trúc phù hợp\n\nVector phù hợp khi cần danh sách có thứ tự, truy cập theo chỉ số O(1), duyệt tuần tự hiệu quả và thêm phần tử ở cuối thường xuyên. Nếu số phần tử cố định tại compile time, cân nhắc `std::array`; nếu cần tìm theo khóa, tập hợp duy nhất hoặc hàng đợi, xem [các container STL](/cpp/stl/sequence-containers) và [container kết hợp](/cpp/stl/associative-containers).\n\n## Lỗi thường gặp\n\n- Đọc `v[0]`, `front()` hoặc `back()` khi vector rỗng.\n- Nhầm `capacity()` với số phần tử thực tế `size()`.\n- Giữ pointer, reference hoặc iterator qua thao tác có thể cấp lại vùng nhớ hoặc dịch chuyển phần tử.\n- Dùng `reserve(n)` với kỳ vọng nó tạo ra `n` phần tử.\n- Dùng enum không scoped khiến tên trạng thái rò ra scope ngoài hoặc dễ bị chuyển nhầm thành số.\n\n## Đọc tiếp\n\nXem [sequence containers](/cpp/stl/sequence-containers), [container kết hợp](/cpp/stl/associative-containers), rồi học [class và encapsulation](/cpp/trung-cap/classes-constructors).",
     "sourcePath": "content/cpp/intermediate/vector-struct-enum.md",
     "headings": [
       {
-        "title": "Tạo và dùng vector",
-        "id": "tao-va-dung-vector"
+        "title": "Tạo, đọc và cập nhật vector",
+        "id": "tao-oc-va-cap-nhat-vector"
       },
       {
-        "title": "Dữ liệu tự định nghĩa",
-        "id": "du-lieu-tu-inh-nghia"
+        "title": "Truy cập và duyệt",
+        "id": "truy-cap-va-duyet"
       },
       {
-        "title": "Chọn cấu trúc",
-        "id": "chon-cau-truc"
+        "title": "Khi thêm và xóa phần tử",
+        "id": "khi-them-va-xoa-phan-tu"
+      },
+      {
+        "title": "Mô hình hóa dữ liệu bằng `struct` và `enum class`",
+        "id": "mo-hinh-hoa-du-lieu-bang-struct-va-enum-class"
+      },
+      {
+        "title": "Chọn cấu trúc phù hợp",
+        "id": "chon-cau-truc-phu-hop"
       },
       {
         "title": "Lỗi thường gặp",
         "id": "loi-thuong-gap"
-      },
-      {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
       },
       {
         "title": "Đọc tiếp",
@@ -6936,7 +6940,7 @@ export const articles = [
   },
   {
     "title": "Function overloading và default arguments",
-    "description": "Tạo các hàm cùng tên với chữ ký khác nhau và khai báo giá trị tham số mặc định.",
+    "description": "Thiết kế overload dễ dự đoán và dùng tham số mặc định đúng trong API C++.",
     "slug": "/cpp/trung-cap/overloading-default-arguments",
     "category": "intermediate",
     "categoryLabel": "C++ trung cấp",
@@ -6948,7 +6952,7 @@ export const articles = [
       "overload resolution",
       "function signature"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-22",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -6959,24 +6963,28 @@ export const articles = [
     ],
     "featured": false,
     "priority": 21010,
-    "body": "Overloading cho phép dùng một tên hàm cho nhiều thao tác liên quan; compiler chọn hàm dựa trên số lượng và kiểu đối số. Default argument đặt giá trị dùng khi caller bỏ qua tham số cuối.\n\n## Overloading\n\n```cpp\n#include <cstddef>\n#include <iostream>\n#include <string>\n\nint length_of(int value) { return value; }\nstd::size_t length_of(const std::string& value) { return value.size(); }\n\nint main() {\n    const int number{length_of(7)};\n    const std::size_t letters{length_of(std::string{\"C++\"})};\n    std::cout << number << ' ' << letters << '\\n';\n}\n```\n\nChữ ký overload được phân biệt bằng danh sách tham số; chỉ khác kiểu trả về là không đủ. Overload có thể gây mơ hồ nếu nhiều phép chuyển đổi đều hợp lệ, nên tránh các tập overload khó đoán.\n\n## Default argument\n\n```cpp\n#include <iostream>\n#include <string>\n\nstd::string greet(const std::string& name, const std::string& prefix = \"Xin chao\") {\n    return prefix + \", \" + name;\n}\n\nint main() {\n    std::cout << greet(\"An\") << '\\n';\n}\n```\n\nTham số mặc định thường đặt ở khai báo mà caller nhìn thấy, chẳng hạn header; chỉ khai báo một lần cho cùng scope. Tham số có default phải đứng sau các tham số bắt buộc.\n\n## Lỗi thường gặp\n\n- Khai báo overload chỉ khác kiểu trả về.\n- Viết default argument lặp lại cả trong header lẫn định nghĩa.\n- Dùng nhiều default khiến một lời gọi khớp nhiều overload.\n- Cho rằng overload được chọn theo kiểu trả về dự định của caller.\n\n## Tự luyện\n\nViết `area` cho hình vuông và hình chữ nhật sao cho lời gọi không mơ hồ. Thêm default tên đơn vị vào hàm format; đặt default ở đúng một declaration.\n\n## Đọc tiếp\n\nTìm hiểu [templates và namespace](/cpp/trung-cap/templates-namespaces) và [đệ quy, call stack](/cpp/trung-cap/de-quy-call-stack).",
+    "body": "Function overloading cho phép nhiều hàm cùng tên thực hiện các thao tác liên quan trên các kiểu đối số khác nhau. Khi biên dịch, compiler chọn một overload dựa trên lời gọi và các phép chuyển đổi cần thiết. Default argument cho phép caller bỏ qua một số tham số cuối khi cách dùng mặc định đã rõ ràng.\n\n## Overload theo danh sách tham số\n\n```cpp\n#include <cstddef>\n#include <iostream>\n#include <string>\n\nstd::size_t length_of(int value) { return std::to_string(value).size(); }\nstd::size_t length_of(const std::string& value) { return value.size(); }\n\nint main() {\n    const std::size_t digits{length_of(7)};\n    const std::size_t letters{length_of(std::string{\"C++\"})};\n    std::cout << digits << ' ' << letters << '\\n';\n}\n```\n\nCác overload phải khác nhau ở danh sách kiểu tham số sau những điều chỉnh của ngôn ngữ. Chỉ đổi kiểu trả về không tạo overload mới: lời gọi thông thường không dùng kiểu trả về mong muốn để chọn hàm. Cũng không thể overload hai tham số truyền theo giá trị chỉ khác `const` cấp cao nhất, như `f(int)` và `f(const int)`.\n\nCompiler ưu tiên overload có chuyển đổi tốt nhất. Một phép khớp chính xác thường tốt hơn chuyển đổi chuẩn; khi hai ứng viên cần những chuyển đổi có cùng thứ hạng, lời gọi có thể mơ hồ:\n\n```cpp\nvoid print(long value);\nvoid print(double value);\n\n// print(0); // Mơ hồ: int có thể chuyển đổi sang cả long và double.\n```\n\nHãy thiết kế overload theo cách caller có thể đoán được hàm nào được chọn. Khi các kiểu đầu vào không biểu đạt những thao tác khác nhau, một hàm có tham số rõ ràng hoặc một tên khác nhau thường dễ đọc hơn một tập overload khó phân giải.\n\n## Giá trị tham số mặc định\n\n```cpp\n#include <iostream>\n#include <string>\n\nstd::string greet(const std::string& name,\n                  const std::string& prefix = \"Xin chao\") {\n    return prefix + \", \" + name;\n}\n\nint main() {\n    std::cout << greet(\"An\") << '\\n';\n    std::cout << greet(\"Binh\", \"Chao mung\") << '\\n';\n}\n```\n\nKhi gọi `greet(\"An\")`, compiler dùng giá trị mặc định cho tham số `prefix`. Tham số có default phải nằm sau các tham số bắt buộc. Giá trị mặc định thường đặt trong khai báo ở header mà caller nhìn thấy; không lặp lại default cho cùng tham số trong định nghĩa hoặc khai báo khác thuộc cùng scope. Các khai báo có thể bổ sung default cho tham số cuối chưa có default, nhưng cần giữ một nơi dễ tìm để tránh API khó đọc.\n\nDefault argument được xét theo khai báo hiện thấy tại vị trí gọi. Vì vậy, nếu caller chỉ thấy forward declaration không có default, caller đó không thể bỏ tham số dù định nghĩa hàm ở nơi khác có default.\n\n## Overload kết hợp với default argument\n\nDefault argument không tạo thêm một overload; nó chỉ giúp một hàm có thể được gọi với ít đối số hơn. Hai cơ chế đặt cạnh nhau có thể khiến cùng một lời gọi khớp nhiều hàm:\n\n```cpp\nvoid write(int value);\nvoid write(int value, int retries = 3);\n\n// write(5); // Mơ hồ vì cả hai hàm đều có thể nhận một đối số.\n```\n\nNếu các cách gọi mang ý nghĩa khác nhau, dùng overload với tên hoặc tham số rõ ràng. Tránh thêm default argument vào API vốn đã có overload nhận cùng số đối số.\n\nMột chi tiết quan trọng của hàm ảo: phần default argument được chọn theo kiểu tĩnh của biểu thức gọi, còn implementation ảo được dispatch theo kiểu động của object. Sự kết hợp đó dễ gây bất ngờ, nên thường tránh default argument trên hàm virtual.\n\n## Lỗi thường gặp\n\n- Khai báo overload chỉ khác kiểu trả về.\n- Nghĩ rằng compiler chọn overload theo kiểu biến nhận kết quả.\n- Thêm quá nhiều phép chuyển đổi ngầm khiến lời gọi mơ hồ hoặc chọn overload ngoài dự kiến.\n- Lặp default argument trong header và định nghĩa.\n- Kết hợp overload với default sao cho cùng một lời gọi khớp nhiều hàm.\n- Đặt default trong một declaration mà caller không nhìn thấy.\n\n## Chọn giữa overload và default\n\nDùng overload khi mỗi dạng đầu vào cần một cách xử lý phù hợp riêng, chẳng hạn xử lý `std::string` khác với số nguyên. Dùng default argument khi tham số tùy chọn có một giá trị mặc định tự nhiên và không làm thay đổi ý nghĩa bất ngờ. Nếu tùy chọn có tên hoặc nhiều tổ hợp, một cấu trúc options hay các hàm có tên rõ có thể dễ bảo trì hơn.\n\n## Đọc tiếp\n\nXem cách tổ chức [template và namespace](/cpp/trung-cap/templates-namespaces), rồi ôn [khai báo hàm và phạm vi tên](/cpp/bat-dau/ham-pham-vi).",
     "sourcePath": "content/cpp/intermediate/overloading-default-arguments.md",
     "headings": [
       {
-        "title": "Overloading",
-        "id": "overloading"
+        "title": "Overload theo danh sách tham số",
+        "id": "overload-theo-danh-sach-tham-so"
       },
       {
-        "title": "Default argument",
-        "id": "default-argument"
+        "title": "Giá trị tham số mặc định",
+        "id": "gia-tri-tham-so-mac-inh"
+      },
+      {
+        "title": "Overload kết hợp với default argument",
+        "id": "overload-ket-hop-voi-default-argument"
       },
       {
         "title": "Lỗi thường gặp",
         "id": "loi-thuong-gap"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "Chọn giữa overload và default",
+        "id": "chon-giua-overload-va-default"
       },
       {
         "title": "Đọc tiếp",
@@ -6986,7 +6994,7 @@ export const articles = [
   },
   {
     "title": "Đệ quy và call stack",
-    "description": "Hiểu lời gọi đệ quy, điều kiện dừng, trạng thái lời gọi và giới hạn độ sâu.",
+    "description": "Thiết kế lời gọi đệ quy có điểm dừng, tiến triển rõ ràng và giới hạn tài nguyên.",
     "slug": "/cpp/trung-cap/de-quy-call-stack",
     "category": "intermediate",
     "categoryLabel": "C++ trung cấp",
@@ -6999,7 +7007,7 @@ export const articles = [
       "base case",
       "stack overflow"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-22",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -7010,20 +7018,28 @@ export const articles = [
     ],
     "featured": false,
     "priority": 21020,
-    "body": "Đệ quy là cách một hàm giải bài toán bằng cách gọi lại chính nó trên dữ liệu nhỏ hơn. Dùng khi bài toán có cấu trúc tự đồng dạng, như cây hoặc quay lui; lặp thường dễ kiểm soát hơn với phép tính tuyến tính đơn giản.\n\n## Hai phần bắt buộc\n\n- **Base case**: trả kết quả trực tiếp và dừng.\n- **Recursive case**: biến đổi input để tiến gần base case.\n\n```cpp\n#include <iostream>\n\nlong long factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}\n\nint main() {\n    int n{};\n    if (!(std::cin >> n) || n < 0 || n > 20) return 1;\n    std::cout << factorial(n) << '\\n';\n}\n```\n\nMỗi lần gọi giữ tham số và trạng thái riêng trên call stack. Với đoạn code trên, thời gian O(n), stack O(n). Giới hạn `n <= 20` giúp kết quả không vượt `long long`; độ sâu đệ quy còn bị giới hạn bởi stack runtime.\n\n## Lỗi thường gặp\n\n- Thiếu base case hoặc input không tiến tới base case gây đệ quy vô hạn.\n- Độ sâu quá lớn gây stack overflow; cân nhắc vòng lặp hoặc cấu trúc dữ liệu tường minh.\n- Tính lại cùng bài toán con nhiều lần như Fibonacci đệ quy thuần; dùng memoization/DP.\n- Phân tích chỉ thời gian mà quên bộ nhớ stack.\n\n## Tự luyện\n\nViết hàm đệ quy tính tổng chữ số của số nguyên không âm. Base case là số nhỏ hơn 10; recursive case bỏ chữ số cuối. Sau đó thử input 0 và số có một chữ số.\n\n## Đọc tiếp\n\nỨng dụng đệ quy vào [backtracking](/cpp/thuat-toan/de-quy-quay-lui) và [quy hoạch động](/cpp/thuat-toan/quy-hoach-dong).",
+    "body": "Đệ quy là cách giải bài toán bằng cách chia nó thành một hoặc nhiều bài toán nhỏ cùng dạng. Một hàm đệ quy gọi lại chính nó, trực tiếp hoặc qua hàm khác. Cách này tự nhiên với cây, đồ thị theo cấu trúc đệ quy, chia để trị và quay lui; một phép tính tuyến tính đơn giản thường dễ viết bằng vòng lặp hơn.\n\n## Điều kiện dừng và tiến triển\n\nMột thiết kế đệ quy cần có:\n\n- **Base case** trả lời trực tiếp cho trường hợp nhỏ nhất và không gọi đệ quy tiếp.\n- **Recursive case** biến đổi input sao cho tiến gần một base case.\n- **Phép ghép kết quả** kết hợp lời giải bài toán con thành lời giải ban đầu.\n\nVí dụ giai thừa với số nguyên không âm có base case `0! = 1` và `1! = 1`. Mỗi bước giảm `n`, vì vậy chắc chắn tiến tới trường hợp dừng:\n\n```cpp\n#include <iostream>\n#include <stdexcept>\n\nlong long factorial(unsigned int n) {\n    if (n > 20) {\n        throw std::out_of_range(\"n is too large for long long factorial\");\n    }\n    if (n <= 1) {\n        return 1;\n    }\n    return static_cast<long long>(n) * factorial(n - 1);\n}\n\nint main() {\n    int input{};\n    if (!(std::cin >> input) || input < 0 || input > 20) {\n        return 1;\n    }\n\n    std::cout << factorial(static_cast<unsigned int>(input)) << '\\n';\n}\n```\n\nGiới hạn `20` bảo đảm kết quả giai thừa không vượt phạm vi `long long`. Hàm vẫn kiểm tra giới hạn của chính nó để hợp đồng không chỉ phụ thuộc vào cách gọi hiện tại. Với bài toán khác, cần kiểm tra riêng giới hạn kiểu số, độ sâu và dữ liệu đầu vào.\n\n## Call stack và truy vết lời gọi\n\nMỗi lời gọi hàm có một activation record riêng, lưu tham số, biến cục bộ và vị trí cần quay lại. Với `factorial(4)`, chương trình đi xuống `factorial(4)`, `factorial(3)`, `factorial(2)`, `factorial(1)`, rồi trả kết quả ngược lên. Vì mỗi lời gọi chờ lời gọi bên trong hoàn tất, các frame trước đó vẫn còn trên call stack.\n\nVới hàm giai thừa, thời gian là O(n) và bộ nhớ call stack là O(n). Đệ quy trên cây có thể có độ sâu O(h), trong đó `h` là chiều cao cây; số lời gọi tổng cộng còn tùy vào việc mỗi node được thăm bao nhiêu lần. Hãy phân tích cả số lời gọi lẫn độ sâu lớn nhất, không chỉ nhìn số dòng code.\n\n## Khi nào dùng đệ quy\n\nĐệ quy giúp mô tả trực tiếp bài toán nếu cấu trúc dữ liệu hoặc phép chia nhỏ có cấu trúc tự đồng dạng. Chẳng hạn, duyệt cây có thể xử lý node hiện tại rồi gọi lại trên các cây con. Quay lui thử một lựa chọn, đệ quy giải phần còn lại rồi hoàn tác lựa chọn để thử nhánh khác; xem [đệ quy và quay lui](/cpp/thuat-toan/de-quy-quay-lui).\n\nNếu nhiều nhánh tính lặp lại cùng một bài toán con, thời gian có thể tăng theo cấp số nhân. Fibonacci đệ quy thuần là ví dụ điển hình; memoization hoặc [quy hoạch động](/cpp/thuat-toan/quy-hoach-dong) lưu kết quả đã tính để tránh lặp.\n\n## Đệ quy và vòng lặp\n\nVòng lặp thường dùng bộ nhớ O(1) cho trạng thái lặp đơn giản và không phụ thuộc độ sâu call stack. Đệ quy có thể dễ đọc hơn khi bài toán vốn có nhiều nhánh hoặc cấu trúc phân cấp. C++ không yêu cầu compiler tối ưu tail recursion, nên không được giả định một hàm đệ quy đuôi sẽ dùng bộ nhớ hằng định. Với input lớn hoặc độ sâu không kiểm soát, hãy dùng vòng lặp hay stack tường minh.\n\n## Lỗi thường gặp\n\n- Thiếu base case hoặc không xử lý một nhóm input khiến hàm tiếp tục gọi vô hạn.\n- Recursive case không tiến gần base case, ví dụ gọi lại với cùng `n`.\n- Chỉ kiểm tra input trong `main` nhưng hàm đệ quy còn được gọi từ nơi khác không bảo đảm precondition.\n- Không phân tích overflow số học, độ sâu call stack hoặc số lượng lời gọi.\n- Tính lặp lại cùng bài toán con mà không dùng memoization/DP.\n- Dựa vào giả định compiler luôn tối ưu tail call.\n\n## Đọc tiếp\n\nỨng dụng đệ quy trong [backtracking](/cpp/thuat-toan/de-quy-quay-lui) và [quy hoạch động](/cpp/thuat-toan/quy-hoach-dong), rồi ôn [khai báo hàm và phạm vi tên](/cpp/bat-dau/ham-pham-vi).",
     "sourcePath": "content/cpp/intermediate/de-quy-call-stack.md",
     "headings": [
       {
-        "title": "Hai phần bắt buộc",
-        "id": "hai-phan-bat-buoc"
+        "title": "Điều kiện dừng và tiến triển",
+        "id": "ieu-kien-dung-va-tien-trien"
+      },
+      {
+        "title": "Call stack và truy vết lời gọi",
+        "id": "call-stack-va-truy-vet-loi-goi"
+      },
+      {
+        "title": "Khi nào dùng đệ quy",
+        "id": "khi-nao-dung-e-quy"
+      },
+      {
+        "title": "Đệ quy và vòng lặp",
+        "id": "e-quy-va-vong-lap"
       },
       {
         "title": "Lỗi thường gặp",
         "id": "loi-thuong-gap"
-      },
-      {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
       },
       {
         "title": "Đọc tiếp",
@@ -7033,7 +7049,7 @@ export const articles = [
   },
   {
     "title": "Stack, heap và object lifetime",
-    "description": "Phân biệt vùng lưu trữ tự động và động, hiểu lifetime, ownership và dangling reference.",
+    "description": "Phân biệt storage duration, lifetime, ownership và các lỗi dangling trong C++.",
     "slug": "/cpp/trung-cap/stack-heap-lifetime",
     "category": "intermediate",
     "categoryLabel": "C++ trung cấp",
@@ -7047,7 +7063,7 @@ export const articles = [
       "dangling pointer",
       "RAII"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-22",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -7058,24 +7074,32 @@ export const articles = [
     ],
     "featured": false,
     "priority": 21030,
-    "body": "Object có lifetime từ khi bắt đầu được tạo đến khi bị hủy. Hiểu lifetime quan trọng hơn việc ghi nhớ một sơ đồ stack/heap: truy cập object sau khi lifetime kết thúc là lỗi nghiêm trọng.\n\n## Lưu trữ tự động và động\n\nLocal variable thông thường có automatic storage duration và tự hủy khi rời scope. Dynamic allocation như `new` tạo object cần ownership rõ ràng; trong code hiện đại, để smart pointer quản lý:\n\n```cpp\n#include <memory>\n#include <string>\n\nstd::string make_message() {\n    return \"hello\"; // Trả về theo giá trị an toàn.\n}\n\nint main() {\n    auto text{make_message()};\n    auto count{std::make_unique<int>(3)};\n}\n```\n\nCompiler có thể tối ưu phép trả về object; không cần trả pointer tới biến local để “tránh copy”. `std::vector` và `std::string` tự quản lý bộ nhớ nội bộ.\n\n## Heap không đồng nghĩa an toàn\n\nDynamic object vẫn cần biết ai sở hữu, ai được mượn và lúc nào bị hủy. Đừng `delete` pointer không sở hữu; đừng dùng pointer sau khi object bị hủy hoặc container reallocate. Xem [RAII và smart pointers](/cpp/stl/raii-smart-pointers).\n\n## Lỗi thường gặp\n\n- Trả địa chỉ của local variable.\n- Lưu reference tới phần tử rồi thêm vào vector, khiến vector reallocate.\n- Dùng `new` nhưng quên `delete`, tạo leak; `delete` hai lần gây lỗi nghiêm trọng.\n- Dùng `std::move` như thao tác giải phóng bộ nhớ. Nó chỉ cho phép chuyển trạng thái khi type hỗ trợ.\n\n## Tự luyện\n\nViết hàm tạo `std::vector<int>` và trả vector theo giá trị. Vì sao cách này an toàn và thường hiệu quả hơn trả pointer trỏ tới mảng local?\n\n## Đọc tiếp\n\nHọc [class và destructor](/cpp/trung-cap/classes-constructors) và cách [RAII quản lý resource](/cpp/stl/raii-smart-pointers).",
+    "body": "Object có **lifetime** từ khi việc khởi tạo hoàn tất đến khi nó bị hủy. Mọi truy cập phải xảy ra trong lifetime đó. Dùng pointer hoặc reference sau khi object đã bị hủy tạo ra dangling access và thường dẫn đến hành vi không xác định.\n\n“Stack” và “heap” là tên gọi quen thuộc để mô tả cách chương trình thường lưu dữ liệu, nhưng không phải mọi object đều được ngôn ngữ C++ quy định nằm ở một vùng vật lý có tên như vậy. Khi cần suy luận vòng đời, dùng các khái niệm chuẩn hơn là **storage duration** và lifetime.\n\n## Các storage duration thường gặp\n\n- **Automatic**: thường là biến cục bộ không có `static`; việc hủy gắn với việc rời khỏi scope.\n- **Static**: biến ở namespace scope, biến `static` cục bộ và một số object khác tồn tại trong suốt thời gian chương trình. Biến `static` cục bộ được khởi tạo khi lần đầu đi qua khai báo.\n- **Thread**: biến `thread_local` có một object riêng cho mỗi thread và tồn tại trong lifetime của thread đó.\n- **Dynamic**: object được tạo trong vùng lưu trữ động, thường qua `std::make_unique`, `std::make_shared` hoặc cơ chế cấp phát tương ứng. Object còn sống cho đến khi owner kết thúc quyền sở hữu và hủy nó.\n\nMột biến cục bộ thường được lưu trên stack và `new` thường dùng heap, nhưng compiler có thể tối ưu cách hiện thực khi vẫn bảo toàn hành vi quan sát được. Vùng lưu trữ động cũng không đồng nghĩa với “an toàn hơn”; điều quan trọng là object còn sống hay không và ai chịu trách nhiệm hủy nó.\n\n## Trả object theo giá trị\n\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nstd::string make_message() {\n    return \"hello\";\n}\n\nstd::vector<int> make_values() {\n    return {2, 4, 6};\n}\n\nint main() {\n    const std::string message{make_message()};\n    const std::vector<int> values{make_values()};\n    std::cout << message << ' ' << values.size() << '\\n';\n}\n```\n\nTrả về giá trị tạo ra object kết quả với lifetime độc lập trong caller. Compiler có thể áp dụng copy elision hoặc move; tính đúng đắn của chương trình không phụ thuộc vào việc địa chỉ biến local được giữ lại. Không trả pointer hoặc reference tới biến local vì biến đó bị hủy khi hàm kết thúc.\n\n## Ownership và mượn dữ liệu\n\nPointer và reference thường chỉ quan sát hoặc mượn object, không tự biểu đạt quyền sở hữu. Trước khi lưu chúng lâu dài, xác định owner nào bảo đảm object vẫn sống. Nếu một object cần lifetime riêng, dùng kiểu RAII:\n\n```cpp\n#include <iostream>\n#include <memory>\n\nint main() {\n    auto count{std::make_unique<int>(3)};\n    *count += 1;\n    std::cout << *count << '\\n';\n}\n```\n\nKhi `count` rời scope, `std::unique_ptr` hủy object được sở hữu. `unique_ptr` biểu đạt một owner duy nhất; dùng `std::shared_ptr` khi thật sự có nhiều owner cùng chia sẻ lifetime. Một vòng sở hữu chỉ gồm `shared_ptr` có thể giữ các object sống mãi; `weak_ptr` thường được dùng cho liên kết không sở hữu để tránh chu kỳ. `std::weak_ptr` quan sát object do `shared_ptr` quản lý mà không kéo dài lifetime. Các con trỏ thô hoặc reference có thể dùng làm tham số mượn khi API đã nói rõ chúng không được giữ lại quá lifetime của owner.\n\nRAII cũng áp dụng cho file, lock, socket và các resource khác; không chỉ bộ nhớ. Xem [RAII và smart pointers](/cpp/stl/raii-smart-pointers).\n\n## Container và invalidation\n\nContainer thường sở hữu các phần tử của nó. Nếu giữ pointer, reference hoặc iterator tới một phần tử của `std::vector`, thao tác làm vector cấp lại bộ nhớ sẽ làm mọi handle đó mất hiệu lực. Chèn hoặc xóa giữa vector cũng có thể làm handle tới phần tử phía sau vị trí thay đổi mất hiệu lực. Hãy dựa vào quy tắc invalidation của thao tác container; riêng việc gọi `std::move` trên một object đang sống không tự kết thúc lifetime hay làm reference tới object đó mất hiệu lực. Xem [quy tắc iterator invalidation](/cpp/stl/iterators-invalidation).\n\n## Lỗi thường gặp\n\n- Trả địa chỉ hoặc reference tới biến cục bộ.\n- Xóa object trong khi một phần khác của chương trình vẫn đang dùng pointer hoặc reference tới nó.\n- Giữ handle tới phần tử container qua thao tác có thể invalidated handle đó.\n- Dùng `new` mà không có owner RAII, dẫn đến leak hoặc giải phóng trùng.\n- Nghĩ rằng `std::move` giải phóng resource. `std::move` chỉ cho phép overload move phù hợp được chọn; resource được chuyển thế nào phụ thuộc vào kiểu.\n- Dùng `shared_ptr` cho mọi object dù chỉ có một owner, làm ownership và lifetime khó lần theo.\n\n## Cách suy luận lifetime\n\nVới mỗi pointer hoặc reference, lần theo ba câu hỏi: object được tạo ở đâu, owner nào giữ nó sống, và thao tác nào có thể hủy hoặc di chuyển object đó? Khi câu trả lời không rõ, đơn giản hóa API bằng cách truyền theo giá trị hoặc dùng một kiểu sở hữu RAII phù hợp. Xem thêm [pointer và reference](/cpp/bat-dau/references-pointers) cùng [memory safety](/cpp/ky-thuat/ub-memory-safety).\n\n## Đọc tiếp\n\nHọc cách [class và destructor](/cpp/trung-cap/classes-constructors) gắn lifetime với resource, rồi xem [RAII và smart pointers](/cpp/stl/raii-smart-pointers).",
     "sourcePath": "content/cpp/intermediate/stack-heap-lifetime.md",
     "headings": [
       {
-        "title": "Lưu trữ tự động và động",
-        "id": "luu-tru-tu-ong-va-ong"
+        "title": "Các storage duration thường gặp",
+        "id": "cac-storage-duration-thuong-gap"
       },
       {
-        "title": "Heap không đồng nghĩa an toàn",
-        "id": "heap-khong-ong-nghia-an-toan"
+        "title": "Trả object theo giá trị",
+        "id": "tra-object-theo-gia-tri"
+      },
+      {
+        "title": "Ownership và mượn dữ liệu",
+        "id": "ownership-va-muon-du-lieu"
+      },
+      {
+        "title": "Container và invalidation",
+        "id": "container-va-invalidation"
       },
       {
         "title": "Lỗi thường gặp",
         "id": "loi-thuong-gap"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "Cách suy luận lifetime",
+        "id": "cach-suy-luan-lifetime"
       },
       {
         "title": "Đọc tiếp",
@@ -7085,7 +7109,7 @@ export const articles = [
   },
   {
     "title": "Class, constructors và encapsulation",
-    "description": "Thiết kế class giữ invariant, khởi tạo object hợp lệ và đóng gói trạng thái.",
+    "description": "Thiết kế class giữ invariant, khởi tạo object hợp lệ và quản lý tài nguyên theo RAII.",
     "slug": "/cpp/trung-cap/classes-constructors",
     "category": "intermediate",
     "categoryLabel": "C++ trung cấp",
@@ -7099,7 +7123,7 @@ export const articles = [
       "invariant",
       "access control"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-22",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -7110,7 +7134,7 @@ export const articles = [
     ],
     "featured": false,
     "priority": 21040,
-    "body": "Class gom dữ liệu và thao tác có liên quan. Encapsulation giữ trạng thái bên trong một invariant để caller không thể vô tình tạo object sai.\n\n## Constructor và access control\n\n```cpp\n#include <stdexcept>\n\nclass Counter {\npublic:\n    explicit Counter(int initial = 0) : value_{initial} {\n        if (initial < 0) throw std::invalid_argument(\"initial must be non-negative\");\n    }\n\n    void increment() { ++value_; }\n    int value() const { return value_; }\n\nprivate:\n    int value_{};\n};\n\nint main() {\n    Counter counter{2};\n    counter.increment();\n    return counter.value() == 3 ? 0 : 1;\n}\n```\n\nConstructor khởi tạo object; member initializer list đặt thành viên trực tiếp và chạy theo thứ tự khai báo thành viên. `private` bảo vệ trạng thái; `public` là API. Hàm `const` hứa không sửa trạng thái quan sát được. `explicit` ngăn implicit conversion ngoài ý muốn.\n\n## Destructor và resource\n\nDestructor chạy khi object kết thúc lifetime. Nếu class giữ file handle, lock hoặc resource khác, dùng RAII để giải phóng đúng một lần. Thành viên STL và smart pointer thường đã tự quản lý resource; đừng tự viết destructor nếu không sở hữu resource đặc biệt. Xem [Rule of Zero](/cpp/stl/raii-smart-pointers).\n\n## Lỗi thường gặp\n\n- Để mọi thành viên public rồi invariant bị phá từ bên ngoài.\n- Không khởi tạo thành viên hoặc khởi tạo sai thứ tự tưởng tượng.\n- Tự viết destructor nhưng quên định nghĩa/cấm copy đúng cách, dẫn đến double-free.\n- Constructor để object ở trạng thái nửa hợp lệ sau lỗi.\n\n## Tự luyện\n\nThiết kế class `Temperature` chỉ cho nhận giá trị trong miền hợp lệ của bài toán. Giữ dữ liệu private và cung cấp thao tác đổi đơn vị; xác định cách báo input sai.\n\n## Đọc tiếp\n\nTìm hiểu [kế thừa và đa hình](/cpp/trung-cap/inheritance-polymorphism), rồi xem [RAII](/cpp/stl/raii-smart-pointers).",
+    "body": "Class kết hợp dữ liệu và các thao tác trên dữ liệu đó thành một kiểu mới. Encapsulation giới hạn cách caller thay đổi trạng thái, nhờ vậy class có thể giữ **invariant**: điều kiện phải đúng trong suốt thời gian object còn hợp lệ. Thiết kế class tốt tập trung vào hợp đồng công khai và để chi tiết lưu trữ ở bên trong.\n\n## Constructor và access control\n\n```cpp\n#include <limits>\n#include <stdexcept>\n\nclass Counter {\npublic:\n    explicit Counter(int initial = 0) : value_{checked_initial(initial)} {}\n\n    void increment() {\n        if (value_ == std::numeric_limits<int>::max()) {\n            throw std::overflow_error(\"counter is full\");\n        }\n        ++value_;\n    }\n\n    int value() const noexcept { return value_; }\n\nprivate:\n    static int checked_initial(int initial) {\n        if (initial < 0) {\n            throw std::invalid_argument(\"initial must be non-negative\");\n        }\n        return initial;\n    }\n\n    int value_;\n};\n\nint main() {\n    Counter counter{2};\n    counter.increment();\n    return counter.value() == 3 ? 0 : 1;\n}\n```\n\n`public` là phần caller được phép dùng; `private` giữ chi tiết triển khai và ngăn sửa trực tiếp `value_`. Hàm `value() const` cho phép đọc trạng thái qua cả object `const`, đồng thời cam kết không sửa thành viên thông thường. `noexcept` thể hiện hàm này không ném exception.\n\nConstructor thiết lập trạng thái ban đầu. `explicit` ngăn một số implicit conversion không chủ ý, chẳng hạn biến số nguyên thành `Counter` trong lúc truyền đối số. Giá trị mặc định của `initial` cho phép tạo `Counter{}` hoặc `Counter{2}`; nên cung cấp default argument chỉ khi trạng thái mặc định thực sự có ý nghĩa.\n\nInitializer list dựng trực tiếp các thành viên. Thứ tự khởi tạo luôn theo **thứ tự thành viên được khai báo trong class**, không theo thứ tự viết trong initializer list. Vì vậy nên viết initializer list cùng thứ tự với khai báo để tránh lỗi phụ thuộc và cảnh báo compiler. Thành viên `const` và reference phải được khởi tạo tại đây; chúng không thể được gán giá trị lần đầu trong thân constructor.\n\nMột constructor có thể gọi constructor khác của cùng class bằng delegating constructor, giúp gom logic kiểm tra ở một nơi. Constructor cũng có thể thất bại bằng exception; nếu điều đó xảy ra, các thành viên đã được khởi tạo sẽ tự hủy theo thứ tự ngược, còn object chưa được tạo hoàn chỉnh nên caller không thể dùng nó.\n\n## Khởi tạo, copy và move\n\nNếu class chỉ gồm các kiểu giá trị và thành viên STL tự quản lý tài nguyên, compiler-generated constructor, destructor, copy và move thường đã đúng. Đây là **Rule of Zero**: để thành viên RAII đảm nhận công việc quản lý tài nguyên.\n\nCopy mặc định thường sao chép từng thành viên; điều này phù hợp với `std::string`, `std::vector` và các kiểu giá trị. Nếu class tự sở hữu một tài nguyên thông qua raw pointer hoặc handle, copy memberwise có thể khiến hai object cùng giải phóng một tài nguyên. Trước khi tự viết destructor, cần quyết định rõ class có cho copy không, copy nghĩa là gì, và có cần move không. C++ gọi nhóm destructor, copy constructor, copy assignment, move constructor và move assignment là Rule of Five khi phải tự quản lý các thao tác đó.\n\n```cpp\n#include <string>\n#include <utility>\n\nclass User {\npublic:\n    explicit User(std::string name) : name_{std::move(name)} {}\n\n    const std::string& name() const noexcept { return name_; }\n\nprivate:\n    std::string name_;\n};\n```\n\n`std::move` chỉ chuyển biểu thức sang dạng có thể được move; nó không tự giải phóng hay chuyển tài nguyên. Cần include `<utility>` cho `std::move`. Trong ví dụ này, có thể truyền tham số theo giá trị rồi move vào thành viên; cách đó xử lý được cả đối số tạm lẫn lvalue mà vẫn giữ logic đơn giản. Với kiểu thành viên tự quản lý tài nguyên như `std::string`, không cần tự viết destructor.\n\n## Destructor và tài nguyên\n\nDestructor chạy khi lifetime của object kết thúc: ví dụ object cục bộ rời scope hoặc owner smart pointer bị hủy. RAII gắn vòng đời tài nguyên với vòng đời object để file, lock và bộ nhớ được giải phóng đúng lúc. `std::vector`, `std::string`, `std::unique_ptr` và các kiểu thư viện khác thường đã làm việc này.\n\nChỉ tự viết destructor khi class thật sự trực tiếp sở hữu một resource mà thành viên hiện có không quản lý. Nếu destructor được khai báo thủ công, các thao tác copy/move sinh tự động có thể không còn phù hợp với ownership. Việc thêm destructor trống cũng có thể làm mất một số thao tác move ngầm định; hãy ưu tiên thành viên RAII và xem [Rule of Zero cùng smart pointer](/cpp/stl/raii-smart-pointers).\n\n## Lỗi thường gặp\n\n- Để trạng thái public khiến caller có thể phá invariant.\n- Khởi tạo thành viên sai thứ tự khai báo hoặc dùng thành viên chưa được khởi tạo.\n- Cho constructor ném exception sau khi tự cấp tài nguyên bằng raw pointer nhưng không có owner RAII bảo vệ.\n- Tự viết destructor cho resource nhưng quên ngăn copy hoặc định nghĩa quy tắc copy, dẫn đến giải phóng trùng.\n- Dùng `std::move` rồi tiếp tục giả định object nguồn giữ nguyên giá trị cũ; object nguồn vẫn hợp lệ nhưng trạng thái cụ thể phụ thuộc kiểu.\n- Dùng `const` cho accessor một cách máy móc trong khi hàm thật sự cần thay đổi trạng thái logic như cache hoặc bộ đếm mutable.\n\n## Thiết kế API của class\n\nGiữ giao diện nhỏ và đặt tên theo hành động hoặc câu hỏi mà caller cần. Hàm sửa đổi nên giữ invariant sau mỗi lần gọi; hàm đọc nên có thể gọi qua object `const`. Báo lỗi bằng exception, kiểu kết quả hoặc quy ước rõ ràng tùy hợp đồng của module; không để object âm thầm chuyển sang trạng thái mà mọi hàm khác không xử lý được.\n\nNếu kiểu chỉ gom dữ liệu công khai và không cần kiểm soát invariant, `struct` có thể phù hợp hơn. Nếu cần kiểm soát ownership, tính hợp lệ hoặc bất biến qua nhiều trường, `class` thường làm ý định rõ hơn. Xem phần [struct và enum](/cpp/trung-cap/vector-struct-enum), sau đó tìm hiểu [kế thừa và đa hình](/cpp/trung-cap/inheritance-polymorphism).\n\n## Đọc tiếp\n\nXem [RAII và smart pointers](/cpp/stl/raii-smart-pointers) để quản lý tài nguyên, rồi học [kế thừa và đa hình](/cpp/trung-cap/inheritance-polymorphism) khi cần interface chung.",
     "sourcePath": "content/cpp/intermediate/classes-constructors.md",
     "headings": [
       {
@@ -7118,16 +7142,20 @@ export const articles = [
         "id": "constructor-va-access-control"
       },
       {
-        "title": "Destructor và resource",
-        "id": "destructor-va-resource"
+        "title": "Khởi tạo, copy và move",
+        "id": "khoi-tao-copy-va-move"
+      },
+      {
+        "title": "Destructor và tài nguyên",
+        "id": "destructor-va-tai-nguyen"
       },
       {
         "title": "Lỗi thường gặp",
         "id": "loi-thuong-gap"
       },
       {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
+        "title": "Thiết kế API của class",
+        "id": "thiet-ke-api-cua-class"
       },
       {
         "title": "Đọc tiếp",
@@ -7137,7 +7165,7 @@ export const articles = [
   },
   {
     "title": "Inheritance và polymorphism",
-    "description": "Dùng kế thừa khi có quan hệ is-a và gọi hành vi ảo an toàn qua base class.",
+    "description": "Thiết kế quan hệ is-a và gọi hành vi ảo an toàn qua interface base class.",
     "slug": "/cpp/trung-cap/inheritance-polymorphism",
     "category": "intermediate",
     "categoryLabel": "C++ trung cấp",
@@ -7150,7 +7178,7 @@ export const articles = [
       "override",
       "virtual destructor"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-22",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -7161,24 +7189,32 @@ export const articles = [
     ],
     "featured": false,
     "priority": 21050,
-    "body": "Kế thừa tạo quan hệ giữa lớp dẫn xuất và lớp cơ sở. Đa hình runtime cho phép gọi implementation phù hợp với kiểu thực tế qua interface chung. Dùng khi subtype thật sự thỏa hợp đồng base; composition thường linh hoạt hơn cho “has-a”.\n\n## Hàm ảo\n\n```cpp\n#include <iostream>\n#include <memory>\n#include <vector>\n\nclass Shape {\npublic:\n    virtual ~Shape() = default;\n    virtual double area() const = 0;\n};\n\nclass Square final : public Shape {\npublic:\n    explicit Square(double side) : side_{side} {}\n    double area() const override { return side_ * side_; }\nprivate:\n    double side_;\n};\n\nint main() {\n    std::vector<std::unique_ptr<Shape>> shapes;\n    shapes.push_back(std::make_unique<Square>(3.0));\n    std::cout << shapes.front()->area() << '\\n';\n}\n```\n\n`virtual` cho phép dispatch động; `= 0` tạo hàm thuần ảo và class abstract; `override` yêu cầu compiler xác nhận override đúng. Base polymorphic cần virtual destructor để hủy object derived qua pointer base.\n\n## Nguyên tắc thiết kế\n\nBase class định nghĩa hợp đồng dùng được bởi mọi subtype. Không gọi virtual function trong constructor/destructor để mong dispatch như object derived đã hoàn chỉnh. Tránh lạm dụng kế thừa chỉ để tái sử dụng vài dòng code.\n\n## Lỗi thường gặp\n\n- Quên `virtual` destructor rồi `delete` derived qua base pointer.\n- Dùng `override` sai chữ ký, hoặc overload vô ý thay vì override.\n- Slicing: copy object derived vào biến base theo giá trị làm mất phần derived.\n- Base destructor non-public nhưng thiết kế lại cho phép hủy qua base.\n\n## Tự luyện\n\nTạo interface `Notifier` với hàm `send`, rồi hai implementation email và console. Viết caller chỉ phụ thuộc interface; cân nhắc lỗi gửi và ownership.\n\n## Đọc tiếp\n\nSo sánh đa hình runtime với [templates](/cpp/trung-cap/templates-namespaces) và quản lý ownership bằng [smart pointers](/cpp/stl/raii-smart-pointers).",
+    "body": "Kế thừa tạo quan hệ giữa class dẫn xuất (derived) và class cơ sở (base). Với **public inheritance**, derived phải có thể thay thế base ở những nơi caller dựa trên hợp đồng của base. Khi cần đa hình runtime, chương trình gọi hàm qua pointer hoặc reference base; implementation tương ứng với kiểu động của object được chọn lúc chạy.\n\n## Interface ảo và virtual destructor\n\n```cpp\n#include <cmath>\n#include <iostream>\n#include <memory>\n#include <stdexcept>\n#include <vector>\n\nclass Shape {\npublic:\n    virtual ~Shape() = default;\n    virtual double area() const = 0;\n};\n\nclass Square final : public Shape {\npublic:\n    explicit Square(double side) : side_{side} {\n        if (!std::isfinite(side_) || side_ <= 0.0 ||\n            !std::isfinite(side_ * side_)) {\n            throw std::invalid_argument(\"side must be finite and positive\");\n        }\n    }\n\n    double area() const override { return side_ * side_; }\n\nprivate:\n    double side_;\n};\n\nint main() {\n    std::vector<std::unique_ptr<Shape>> shapes;\n    shapes.push_back(std::make_unique<Square>(3.0));\n    std::cout << shapes.front()->area() << '\\n';\n}\n```\n\n`= 0` khai báo pure virtual function và khiến `Shape` thành abstract class; caller không thể tạo trực tiếp object `Shape`. `override` yêu cầu compiler xác nhận chữ ký thật sự override một hàm virtual ở base. Nếu viết sai kiểu trả về, tham số hoặc cv-qualifier, compiler báo lỗi thay vì âm thầm tạo hàm khác tên.\n\nBase polymorphic có destructor `virtual` nếu object derived có thể bị hủy qua pointer base. Nếu `delete` một object derived qua pointer base mà destructor base không virtual, hành vi là không xác định. Với interface chỉ cho phép mượn object và cấm `delete` qua base, có thể dùng destructor protected non-virtual; hãy chọn quyền truy cập theo hợp đồng ownership.\n\n`std::unique_ptr<Shape>` biểu đạt một owner cho mỗi object trong vector. Khi phần tử bị hủy, destructor ảo chọn đúng chuỗi hủy của derived. Nếu chỉ mượn object, reference hoặc pointer base có thể phù hợp hơn một smart pointer sở hữu.\n\n## Hợp đồng của lớp cơ sở\n\nMỗi public operation của base phải có ý nghĩa với mọi derived. Chẳng hạn, nếu `Shape::area()` hứa trả diện tích không âm, mọi subtype phải giữ được lời hứa đó. Không nên dùng public inheritance chỉ để tái sử dụng vài hàm; quan hệ “has-a” thường phù hợp với composition, còn quan hệ “is-a” phải đúng cả về hành vi.\n\nHàm override phải giữ ý nghĩa hợp đồng và không nên đòi hỏi điều kiện mạnh hơn caller vốn cần thỏa ở base. Derived có thể bổ sung bảo đảm, nhưng không nên phá kỳ vọng đã được công bố. Nếu một thao tác không có ý nghĩa với một subtype, đó có thể là dấu hiệu base class quá rộng.\n\n## Cơ chế dispatch và hành vi liên quan\n\n`virtual` cho phép dispatch động qua base reference/pointer; gọi hàm trên object trực tiếp vẫn biết kiểu tĩnh cụ thể. `final` trên class ngăn class khác kế thừa tiếp; `final` trên hàm ngăn override sâu hơn. Đây là ràng buộc thiết kế rõ ràng, không chỉ là gợi ý tối ưu hóa.\n\nĐừng gọi hàm virtual trong constructor hoặc destructor với kỳ vọng implementation của derived đang xây dựng hay đã bị hủy sẽ chạy. Trong constructor base, phần derived chưa hoàn tất; trong destructor base, phần derived đã được hủy. Lời gọi chỉ dispatch tới lớp đang thực thi constructor/destructor đó.\n\n## Slicing và chuyển đổi kiểu\n\nVới một base class có thể tạo object, nếu copy object derived vào biến base theo giá trị thì chỉ phần base được sao chép; phần derived bị cắt bỏ (**object slicing**). Dùng reference/pointer base khi cần giữ đa hình. Kiểu sở hữu trong một collection dị thể thường là `std::unique_ptr<Base>`; kiểu mượn có thể là `Base&` hoặc `Base*` với lifetime được bảo đảm.\n\nTên hàm trong derived có thể che các overload cùng tên của base dù tham số khác nhau. `override` giúp phát hiện sai chữ ký virtual, nhưng không tự giải quyết việc che tên overload; nếu muốn đưa overload của base vào scope, có thể dùng `using Base::function_name` sau khi kiểm tra ý nghĩa thiết kế.\n\n## Chọn đa hình runtime hay template\n\nKế thừa virtual hợp khi tập kiểu cụ thể có thể thay đổi trong runtime và chương trình cần xử lý chúng qua một interface chung. Template hợp khi các kiểu được xác định lúc biên dịch và có chung những thao tác cần thiết. Hai cách phục vụ nhu cầu khác nhau; xem [templates và namespace](/cpp/trung-cap/templates-namespaces).\n\n## Lỗi thường gặp\n\n- Quên `virtual` destructor rồi hủy derived qua base pointer.\n- Viết sai chữ ký và vô tình overload thay vì override; dùng `override` để compiler kiểm tra.\n- Dùng public inheritance cho quan hệ “has-a” hoặc chỉ để chia sẻ code.\n- Copy object derived vào biến base theo giá trị rồi bất ngờ mất phần derived.\n- Gọi virtual function trong constructor/destructor với kỳ vọng dispatch tới lớp dẫn xuất hơn.\n- Lưu pointer/reference base lâu hơn lifetime của object mà nó mượn.\n\n## Đọc tiếp\n\nXem [class và encapsulation](/cpp/trung-cap/classes-constructors), so sánh với [templates](/cpp/trung-cap/templates-namespaces), rồi tìm hiểu ownership bằng [smart pointers](/cpp/stl/raii-smart-pointers).",
     "sourcePath": "content/cpp/intermediate/inheritance-polymorphism.md",
     "headings": [
       {
-        "title": "Hàm ảo",
-        "id": "ham-ao"
+        "title": "Interface ảo và virtual destructor",
+        "id": "interface-ao-va-virtual-destructor"
       },
       {
-        "title": "Nguyên tắc thiết kế",
-        "id": "nguyen-tac-thiet-ke"
+        "title": "Hợp đồng của lớp cơ sở",
+        "id": "hop-ong-cua-lop-co-so"
+      },
+      {
+        "title": "Cơ chế dispatch và hành vi liên quan",
+        "id": "co-che-dispatch-va-hanh-vi-lien-quan"
+      },
+      {
+        "title": "Slicing và chuyển đổi kiểu",
+        "id": "slicing-va-chuyen-oi-kieu"
+      },
+      {
+        "title": "Chọn đa hình runtime hay template",
+        "id": "chon-a-hinh-runtime-hay-template"
       },
       {
         "title": "Lỗi thường gặp",
         "id": "loi-thuong-gap"
-      },
-      {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
       },
       {
         "title": "Đọc tiếp",
@@ -7188,7 +7224,7 @@ export const articles = [
   },
   {
     "title": "Templates và namespace",
-    "description": "Viết hàm generic, tránh trùng tên và tổ chức khai báo trong header C++.",
+    "description": "Viết hàm generic có yêu cầu kiểu rõ ràng và tổ chức tên trong header C++.",
     "slug": "/cpp/trung-cap/templates-namespaces",
     "category": "intermediate",
     "categoryLabel": "C++ trung cấp",
@@ -7201,7 +7237,7 @@ export const articles = [
       "generic programming",
       "header"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-22",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -7212,7 +7248,7 @@ export const articles = [
     ],
     "featured": false,
     "priority": 21060,
-    "body": "Template cho phép viết code làm việc với nhiều kiểu, miễn kiểu đó đáp ứng các thao tác mà code yêu cầu. Namespace nhóm tên để giảm xung đột giữa thư viện và module.\n\n## Function template\n\n```cpp\n#include <iostream>\n\nnamespace math_tools {\ntemplate <typename T>\nT add(T left, T right) {\n    return left + right;\n}\n}\n\nint main() {\n    std::cout << math_tools::add(2, 3) << '\\n';\n    std::cout << math_tools::add(1.5, 2.5) << '\\n';\n}\n```\n\nCompiler suy ra `T` từ đối số. Hai đối số ở đây cần cùng kiểu; `add(2, 1.5)` không suy ra một `T` duy nhất nếu không chỉ rõ hoặc thiết kế overload phù hợp. C++20 concepts có thể diễn tả yêu cầu kiểu tường minh.\n\n## Namespace và tổ chức mã\n\n`math_tools::add` chỉ rõ hàm thuộc namespace. Trong header công khai, giữ tên đủ rõ và tránh `using namespace std;` ở global scope vì nó có thể gây đụng tên cho mọi file include header đó.\n\nTemplate thường cần định nghĩa nhìn thấy tại nơi instantiate, vì vậy thường đặt định nghĩa trong header. Với hàm không template, header có thể khai báo còn `.cpp` cung cấp định nghĩa. Xem [translation units](/cpp/ky-thuat/header-source-modules).\n\n## Lỗi thường gặp\n\n- Khai báo template trong `.cpp` rồi không cung cấp định nghĩa cho caller khác translation unit.\n- Dùng `using namespace` trong public header.\n- Template yêu cầu nhiều operation ngầm mà không ghi rõ trong thiết kế.\n- Cho rằng template luôn nhanh hơn hoặc dễ debug hơn đa hình runtime.\n\n## Tự luyện\n\nViết template `maximum` cho hai giá trị cùng kiểu có thể so sánh. Thử `int`, `std::string` và kiểu không có `operator<` để quan sát yêu cầu của template.\n\n## Đọc tiếp\n\nXem [STL dựa trên templates](/cpp/stl/stl-la-gi) và [cách chia header/source](/cpp/ky-thuat/header-source-modules).",
+    "body": "Function template mô tả một họ hàm được tạo cho các kiểu khác nhau. Kiểu tham số có thể được suy ra từ lời gọi, còn compiler kiểm tra các phép toán mà thân hàm sử dụng khi template được instantiate. Namespace nhóm tên liên quan và hạn chế xung đột giữa thư viện, module hoặc nhóm phát triển.\n\n## Function template\n\n```cpp\n#include <iostream>\n#include <string>\n\nnamespace math_tools {\ntemplate <typename T>\nT maximum(T left, T right) {\n    return left < right ? right : left;\n}\n}\n\nint main() {\n    std::cout << math_tools::maximum(2, 3) << '\\n';\n    std::cout << math_tools::maximum(1.5, 2.5) << '\\n';\n    std::cout << math_tools::maximum(std::string{\"alpha\"},\n                                     std::string{\"beta\"}) << '\\n';\n}\n```\n\nCompiler suy ra `T` từ đối số. Hàm này yêu cầu `T` có thể truyền/đưa về kết quả theo cách dùng ở đây và hỗ trợ phép so sánh `<`. Hai đối số `int` và `double` không suy ra được cùng một `T`, vì vậy `maximum(2, 2.5)` không hợp lệ với template này. Có thể chỉ rõ `maximum<double>(2, 2.5)` nếu muốn cả hai đối số được chuyển sang `double`, hoặc thiết kế một hàm dùng kiểu chung phù hợp với yêu cầu của API.\n\nTemplate không tự ghi ra một danh sách kiểu cụ thể. Compiler tạo specialization phù hợp khi gặp lời gọi cần nó; lỗi trong thân template có thể chỉ xuất hiện lúc kiểu đó được dùng. Do vậy, hãy ghi nhận các operation mà kiểu đối số phải hỗ trợ, dù chuẩn C++17 chưa có cú pháp concepts để diễn đạt chúng thành ràng buộc ngay tại khai báo.\n\n## Namespace và tên đầy đủ\n\n`math_tools::maximum` ghi rõ hàm thuộc namespace nào. Scope này giảm khả năng đụng tên và giúp API thể hiện nơi khai báo. Từ C++17 có thể viết namespace lồng nhau gọn hơn:\n\n```cpp\nnamespace app::geometry {\nstruct Point {\n    double x{};\n    double y{};\n};\n}\n```\n\nTrong function hoặc một scope nhỏ, `using app::geometry::Point;` có thể giúp tránh lặp tên dài. Tránh `using namespace std;` trong header công khai hoặc namespace scope vì mọi file include header có thể nhận thêm các tên gây xung đột. Header nên include các khai báo mà nó trực tiếp cần thay vì trông chờ caller include hộ.\n\nMột namespace có thể mở rộng ở nhiều khai báo, thường qua nhiều header. Đặt tên theo domain của thư viện; không đặt hàm của mình vào `namespace std`, ngoại trừ những customization được chuẩn cho phép cụ thể.\n\n## Template trong header và translation unit\n\nThông thường, nơi instantiate template phải nhìn thấy định nghĩa của template, nên cả khai báo lẫn định nghĩa được đặt trong header. Nhiều translation unit có thể include cùng định nghĩa template nếu tuân thủ quy tắc ODR. Ngược lại, nếu định nghĩa một hàm thông thường không phải `inline` trong header rồi include header đó ở nhiều translation unit, chương trình có thể gặp multiple definition khi link. Xem [header, source và modules](/cpp/ky-thuat/header-source-modules).\n\nCó kỹ thuật explicit instantiation để định nghĩa template trong source file và chỉ phát hành một số specialization đã chọn, nhưng nó cần khai báo rõ các kiểu được hỗ trợ. Với template tổng quát dùng ở nhiều kiểu, đặt định nghĩa trong header là cách phổ biến.\n\n## Templates và đa hình runtime\n\nTemplate tạo code theo kiểu cụ thể tại compile time; virtual function dispatch qua interface base theo kiểu object tại runtime. Template hợp khi thao tác cần thiết được biết lúc biên dịch và muốn API hoạt động trên các kiểu đáp ứng những thao tác đó. Interface ảo hợp khi cần thay thế implementation lúc chạy hoặc tập kiểu cụ thể được tập hợp động. Mỗi cách có tradeoff về liên kết, lỗi biên dịch, khả năng mở rộng và cách sở hữu object; xem [kế thừa và đa hình](/cpp/trung-cap/inheritance-polymorphism).\n\nTemplate không mặc nhiên nhanh hơn hoặc dễ debug hơn. Việc instantiate nhiều kiểu có thể làm tăng thời gian biên dịch và kích thước chương trình; lỗi type checking có thể dài do phát sinh qua nhiều tầng template.\n\n## Concepts từ C++20\n\nC++20 thêm concepts để diễn đạt một số yêu cầu kiểu ngay trên template, giúp giao diện và chẩn đoán lỗi rõ hơn. Ví dụ dưới đây **không thuộc baseline C++17**:\n\n```cpp\n#include <concepts>\n\ntemplate <std::totally_ordered T>\n    requires std::copy_constructible<T>\nT maximum(T left, T right) {\n    return left < right ? right : left;\n}\n```\n\nVới tài liệu và code C++17, mô tả yêu cầu bằng API, overload hoặc trait phù hợp; không dùng cú pháp concepts nếu cấu hình biên dịch chưa nâng lên C++20.\n\n## Lỗi thường gặp\n\n- Đặt định nghĩa template trong `.cpp` nhưng không cung cấp specialization cho translation unit của caller.\n- Dùng `using namespace` trong public header và làm lộ tên vào caller.\n- Không nhận ra các operation ẩn mà thân template yêu cầu ở kiểu đối số.\n- Nghĩ rằng `T` luôn được suy ra thành kiểu chung của các đối số.\n- Dùng template chỉ vì muốn “generic” dù các implementation thật sự có hành vi khác nhau.\n- Cho rằng template luôn nhanh hơn hoặc luôn cho thông báo lỗi dễ hiểu hơn đa hình runtime.\n\n## Đọc tiếp\n\nXem [STL dựa trên templates](/cpp/stl/stl-la-gi), cách [chia header/source](/cpp/ky-thuat/header-source-modules), rồi so sánh với [đa hình runtime](/cpp/trung-cap/inheritance-polymorphism).",
     "sourcePath": "content/cpp/intermediate/templates-namespaces.md",
     "headings": [
       {
@@ -7220,16 +7256,24 @@ export const articles = [
         "id": "function-template"
       },
       {
-        "title": "Namespace và tổ chức mã",
-        "id": "namespace-va-to-chuc-ma"
+        "title": "Namespace và tên đầy đủ",
+        "id": "namespace-va-ten-ay-u"
+      },
+      {
+        "title": "Template trong header và translation unit",
+        "id": "template-trong-header-va-translation-unit"
+      },
+      {
+        "title": "Templates và đa hình runtime",
+        "id": "templates-va-a-hinh-runtime"
+      },
+      {
+        "title": "Concepts từ C++20",
+        "id": "concepts-tu-c20"
       },
       {
         "title": "Lỗi thường gặp",
         "id": "loi-thuong-gap"
-      },
-      {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
       },
       {
         "title": "Đọc tiếp",
@@ -7239,7 +7283,7 @@ export const articles = [
   },
   {
     "title": "File I/O và xử lý lỗi",
-    "description": "Đọc ghi file văn bản bằng streams, phát hiện lỗi mở file và xử lý dữ liệu đầu vào.",
+    "description": "Đọc ghi file văn bản bằng streams và phân biệt lỗi mở, lỗi dữ liệu với kết thúc file.",
     "slug": "/cpp/trung-cap/file-io-errors",
     "category": "intermediate",
     "categoryLabel": "C++ trung cấp",
@@ -7253,7 +7297,7 @@ export const articles = [
       "exception",
       "error handling"
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-10-22",
     "collection": "cpp",
     "collectionLabel": "C++",
     "collectionDescription": "Tài liệu C++17 thực hành, từ cú pháp nền tảng đến thuật toán và phần mềm hiện đại.",
@@ -7264,24 +7308,28 @@ export const articles = [
     ],
     "featured": false,
     "priority": 21070,
-    "body": "File stream đọc hoặc ghi dữ liệu qua file. Luôn kiểm tra trạng thái mở và trạng thái đọc/ghi; đường dẫn có thể sai, file có thể thiếu quyền hoặc nội dung có thể không hợp lệ.\n\n## Ghi rồi đọc file\n\n```cpp\n#include <fstream>\n#include <iostream>\n#include <string>\n\nint main() {\n    const std::string path{\"result.txt\"};\n    {\n        std::ofstream output{path};\n        if (!output) return 1;\n        output << \"C++17\\n\";\n        if (!output) return 1;\n    }\n\n    std::ifstream input{path};\n    if (!input) return 1;\n    std::string line;\n    if (!std::getline(input, line)) return 1;\n    std::cout << line << '\\n';\n}\n```\n\n`std::ofstream` mặc định tạo mới hoặc truncate file; đừng dùng khi cần giữ nội dung cũ. Truyền `std::ios::app` để nối thêm. `std::ifstream` đọc, `std::fstream` hỗ trợ cả hai.\n\n## Báo lỗi phù hợp\n\nVới ứng dụng, trả lỗi có ngữ cảnh hoặc ném exception theo hợp đồng API. Không chỉ trả `false` chung nếu caller cần biết file nào thất bại. Tránh in thông tin bí mật trong thông báo. Bài [exceptions](/cpp/ky-thuat/exceptions) phân tích cách chọn cơ chế báo lỗi.\n\n## Lỗi thường gặp\n\n- Ghi đè file do quên mode `app`.\n- Cố đọc file nhưng không kiểm tra `is_open()`/trạng thái stream.\n- Dùng `while (!input.eof())`; nên đọc theo kết quả của thao tác, ví dụ `while (input >> value)`.\n- Tin rằng tên file đến từ user là an toàn; kiểm tra quyền, thư mục gốc và path traversal.\n\n## Tự luyện\n\nĐọc danh sách số nguyên từ file, tính tổng và báo rõ nếu token không phải số. Kiểm tra file rỗng, file không tồn tại và dữ liệu lỗi ở giữa.\n\n## Đọc tiếp\n\nHọc [exceptions và error handling](/cpp/ky-thuat/exceptions) cùng [security khi xử lý file](/cpp/ky-thuat/security-cross-platform).",
+    "body": "File stream đọc hoặc ghi file thông qua các thao tác tương tự stream nhập xuất khác. `std::ifstream` thường dùng để đọc, `std::ofstream` để ghi, còn `std::fstream` có thể làm cả hai. Kiểm tra kết quả mở file, từng thao tác quan trọng và dữ liệu đọc được; tên file đúng cú pháp vẫn có thể không tồn tại hoặc không có quyền truy cập.\n\n## Ghi file rồi đọc dữ liệu\n\n```cpp\n#include <fstream>\n#include <iostream>\n#include <limits>\n\nint main() {\n    const char* path = \"numbers.txt\";\n\n    {\n        std::ofstream output{path, std::ios::out | std::ios::trunc};\n        if (!output) {\n            std::cerr << \"Cannot open output file\\n\";\n            return 1;\n        }\n\n        output << \"10\\n20\\n30\\n\";\n        if (!output) {\n            std::cerr << \"Write failed\\n\";\n            return 1;\n        }\n\n        output.close();\n        if (!output) {\n            std::cerr << \"Closing output file failed\\n\";\n            return 1;\n        }\n    }\n\n    std::ifstream input{path};\n    if (!input) {\n        std::cerr << \"Cannot open input file\\n\";\n        return 1;\n    }\n\n    long long sum{};\n    long long value{};\n    while (input >> value) {\n        if ((value > 0 && sum > std::numeric_limits<long long>::max() - value) ||\n            (value < 0 && sum < std::numeric_limits<long long>::min() - value)) {\n            std::cerr << \"Sum is out of range\\n\";\n            return 1;\n        }\n        sum += value;\n    }\n\n    if (input.bad()) {\n        std::cerr << \"Read failed\\n\";\n        return 1;\n    }\n    if (!input.eof()) {\n        std::cerr << \"Input contains an invalid or out-of-range integer token\\n\";\n        return 1;\n    }\n\n    std::cout << sum << '\\n';\n}\n```\n\n`std::ofstream` mặc định mở theo chế độ ghi và truncate file cũ. Đoạn trên nêu rõ `std::ios::trunc` để thể hiện việc thay nội dung. Dùng `std::ios::app` nếu muốn ghi nối ở cuối; không chọn mode theo thói quen mà hãy quyết định rõ có cần giữ dữ liệu cũ không.\n\nSau khi ghi, kiểm tra stream để phát hiện lỗi ghi. `close()` có thể phát hiện lỗi chỉ lộ ra lúc flush/đóng, nên ví dụ cũng kiểm tra trạng thái sau khi đóng. Scope riêng đóng file trước khi mở đọc; destructor của stream vẫn tự đóng khi scope kết thúc.\n\n## Đọc theo thao tác, không theo `eof()`\n\nVòng `while (input >> value)` chỉ vào thân vòng khi phép trích xuất thực sự đọc được một số. Nếu file có token lỗi như `12 abc 34`, vòng dừng ở `abc`; kiểm tra `!input.eof()` giúp phân biệt lỗi định dạng với kết thúc file bình thường. `bad()` cho biết lỗi I/O nghiêm trọng, chẳng hạn thiết bị đọc thất bại. File rỗng ở ví dụ trên được xem là danh sách không có số và có tổng bằng 0; nếu nghiệp vụ yêu cầu ít nhất một số thì cần kiểm tra thêm số phần tử đã đọc.\n\nVới văn bản theo dòng, dùng `std::getline(input, line)` và xử lý kết quả của từng lần gọi. Một dòng cuối không có ký tự newline vẫn có thể đọc thành công; không nên suy luận dữ liệu hợp lệ chỉ từ việc file có dấu xuống dòng cuối hay không.\n\n## Chế độ mở và dữ liệu văn bản\n\nCác mode thường dùng gồm `std::ios::in` để đọc, `std::ios::out` để ghi, `std::ios::app` để nối cuối file, `std::ios::trunc` để xóa nội dung cũ khi mở ghi và `std::ios::binary` để tránh xử lý chuyển đổi text mode của nền tảng. Có thể kết hợp các cờ bằng toán tử `|`.\n\nText stream xử lý ký tự theo quy tắc thư viện và nền tảng; `std::string` không tự xác định encoding cho nội dung. Nếu cần trao đổi file giữa hệ thống, hãy quy định encoding, dấu phân cách, cách biểu diễn số và xử lý newline. Với dữ liệu nhị phân, không nên ghi trực tiếp object tùy ý vì padding, endian, layout và phiên bản kiểu có thể khác nhau; hãy định nghĩa định dạng nhị phân rõ ràng.\n\n## Báo lỗi và đường dẫn\n\nỨng dụng có thể trả mã lỗi, trả một kiểu kết quả giàu thông tin hoặc ném exception theo hợp đồng API. Thông báo nên đủ ngữ cảnh để người gọi xác định thao tác nào thất bại, nhưng không nên tiết lộ nội dung nhạy cảm. Với thư viện, tránh in lỗi trực tiếp ra `std::cerr`; hãy trả thông tin lỗi để caller quyết định cách hiển thị.\n\nNếu đường dẫn đến từ input không đáng tin cậy, giới hạn truy cập trong thư mục được phép sau khi phân giải đường dẫn và liên kết tượng trưng phù hợp với nền tảng. So sánh chuỗi prefix đơn giản không đủ để ngăn path traversal. Kiểm tra quyền ở ứng dụng cũng không thay thế quyền của hệ điều hành. Xem thêm [security khi xử lý file](/cpp/ky-thuat/security-cross-platform).\n\n## Lỗi thường gặp\n\n- Mở bằng `ofstream` nhưng quên rằng mode mặc định sẽ truncate file cũ.\n- Chỉ kiểm tra mở file mà không kiểm tra thao tác đọc, ghi hoặc flush/close.\n- Dùng `while (!input.eof())`, khiến thân vòng chạy với dữ liệu chưa đọc hợp lệ.\n- Bỏ qua lỗi định dạng ở giữa file và tiếp tục dùng dữ liệu thiếu.\n- Tin rằng tên file từ người dùng an toàn hoặc chỉ dùng string prefix để giới hạn thư mục.\n- Ghi raw bytes của struct rồi giả định file tương thích giữa compiler, kiến trúc và phiên bản chương trình.\n\n## Đọc tiếp\n\nÔn [nhập xuất và điều kiện vòng lặp](/cpp/bat-dau/nhap-xuat-dieu-kien-vong-lap), tìm hiểu [exceptions và error handling](/cpp/ky-thuat/exceptions), cùng [security khi xử lý file](/cpp/ky-thuat/security-cross-platform).",
     "sourcePath": "content/cpp/intermediate/file-io-errors.md",
     "headings": [
       {
-        "title": "Ghi rồi đọc file",
-        "id": "ghi-roi-oc-file"
+        "title": "Ghi file rồi đọc dữ liệu",
+        "id": "ghi-file-roi-oc-du-lieu"
       },
       {
-        "title": "Báo lỗi phù hợp",
-        "id": "bao-loi-phu-hop"
+        "title": "Đọc theo thao tác, không theo `eof()`",
+        "id": "oc-theo-thao-tac-khong-theo-eof"
+      },
+      {
+        "title": "Chế độ mở và dữ liệu văn bản",
+        "id": "che-o-mo-va-du-lieu-van-ban"
+      },
+      {
+        "title": "Báo lỗi và đường dẫn",
+        "id": "bao-loi-va-uong-dan"
       },
       {
         "title": "Lỗi thường gặp",
         "id": "loi-thuong-gap"
-      },
-      {
-        "title": "Tự luyện",
-        "id": "tu-luyen"
       },
       {
         "title": "Đọc tiếp",
